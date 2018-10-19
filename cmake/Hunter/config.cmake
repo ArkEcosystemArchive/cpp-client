@@ -1,0 +1,1 @@
+hunter_config(CURL VERSION 7.61.1)
