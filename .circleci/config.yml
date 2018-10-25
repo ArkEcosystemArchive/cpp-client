@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Make scripts executable
+          name: Make scripts executable 
           command: sudo chmod -R +x ./travis/*.sh
       - run:
           name: Install
