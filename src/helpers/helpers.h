@@ -47,7 +47,7 @@
             input /= base;
             (c < 10) ? c += '0' : c += 'A' - 10;
             result = c + result;
-        } while (input);
+        } while (input != 0);
         return result;
     }
     /**/
