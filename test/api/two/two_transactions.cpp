@@ -221,6 +221,7 @@ TEST(api, test_two_transaction_unconfirmed)
     ]
     }
  */
+#if 0
 TEST(api, test_two_transactions)
 {
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
@@ -253,6 +254,7 @@ TEST(api, test_two_transactions)
     uint64_t fee = dataZero["fee"];
     ASSERT_TRUE(fee >= 0);
 }
+#endif
 
 /* test_two_transactions_transactions_unconfirmed
  * https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?limit=2&page=1
