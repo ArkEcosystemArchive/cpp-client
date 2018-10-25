@@ -11,6 +11,7 @@
 #define HTTP_H
 
 #include <memory>
+#include <string>
 #include <cstring>
 
 namespace Ark {
