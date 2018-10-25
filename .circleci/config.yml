@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build-macos-9-2:
+    macos:
+      xcode: "9.2.0"
+      
+    steps:
+      - checkout
+      - run:
+          name: Make scripts executable
+          command: sudo chmod -R +x ./travis/*.sh
+      - run:
+          name: Install
+          command: ./travis/install_platform_io.sh
+      - run:
+          name: Build
+          command: ./travis/script_platform_io.sh
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-macos-9-2
