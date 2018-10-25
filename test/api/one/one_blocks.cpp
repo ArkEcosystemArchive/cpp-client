@@ -192,6 +192,7 @@ TEST(api, test_one_blocks_height)
     ASSERT_STRNE("", id);
 }
 
+#if 0
 TEST(api, test_one_blocks_milestone)
 {
     Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
@@ -207,6 +208,7 @@ TEST(api, test_one_blocks_milestone)
     int milestone = root["milestone"];
     ASSERT_EQ(1, milestone);
 }
+#endif
 
 TEST(api, test_one_blocks_nethash)
 {
@@ -240,6 +242,7 @@ TEST(api, test_one_blocks_reward)
     ASSERT_TRUE(reward == 200000000);
 }
 
+#if 0
 TEST(api, test_one_blocks_status)
 {
     Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
@@ -273,6 +276,7 @@ TEST(api, test_one_blocks_status)
     uint64_t supply = root["supply"];
     ASSERT_TRUE(supply != 0);
 }
+#endif
 
 TEST(api, test_one_blocks_supply)
 {
