@@ -65,6 +65,9 @@ jobs:
       - checkout
       - run: COMPILER=clang++
       - run:
+          name: Install cmake
+          command: sudo brew install cmake
+      - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./travis/*.sh
       - run:
