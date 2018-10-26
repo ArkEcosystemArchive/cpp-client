@@ -62,6 +62,7 @@ jobs:
     macos:
       xcode: "9.2.0"
     steps:
+      - checkout
       - run: COMPILER=clang++
       - run:
           name: Make scripts executable 
