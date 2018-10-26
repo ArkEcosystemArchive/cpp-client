@@ -64,6 +64,9 @@ jobs:
     steps:
       - run: COMPILER=clang++
       - run:
+          name: Make scripts executable 
+          command: sudo chmod -R +x ./travis/*.sh
+      - run:
           name: Build
           command: ./travis/script_desktop.sh
 
