@@ -22,7 +22,7 @@ jobs:
           command: |
             sudo apt-add-repository ppa:ubuntu-toolchain-r/test  
             sudo apt-get update
-            sudo apt-get install g++-7 lcov
+            sudo apt-get install g++-7 lcov cmake
       - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./travis/*.sh
@@ -41,7 +41,7 @@ jobs:
           command: |
             sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
             sudo apt-get update
-            sudo apt-get install clang-5.0 lcov
+            sudo apt-get install clang-5.0 lcov cmake
       - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./travis/*.sh
