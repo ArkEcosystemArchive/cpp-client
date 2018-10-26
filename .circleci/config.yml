@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-linux:
+  build-linux-default:
     machine: true
     steps:
       - checkout
@@ -13,9 +13,51 @@ jobs:
       - run:
           name: Build
           command: ./travis/script_platform_io.sh
+  build-linux-gcc7:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-add-repository ppa:ubuntu-toolchain-r/test  
+            sudo apt-get update
+            sudo apt-get install g++-7 lcov
+      - run:
+          name: Make scripts executable 
+          command: sudo chmod -R +x ./travis/*.sh
+      - run:
+          name: Environment variables
+          command: CC=gcc-7 && CXX=g++-7
+      - run:
+          name: Build
+          command: ./travis/script_desktop.sh
+  build-linux-clang-5:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
+            sudo apt-get update
+            sudo apt-get install clang-5.0 lcov
+      - run:
+          name: Make scripts executable 
+          command: sudo chmod -R +x ./travis/*.sh
+      - run:
+          name: Environment variables
+          command: CC=clang-5.0 && CXX=clang++-5.0
+      - run:
+          name: Build
+          command: ./travis/script_desktop.sh
+
+          
 
 workflows:
   version: 2
   build:
     jobs:
-      - build-linux
+      - build-linux-default
+      - build-linux-gcc7
+      - build-linux-clang-5
