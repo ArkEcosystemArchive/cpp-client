@@ -21,8 +21,8 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get remove cmake cmake-data
-            sudo apt-add-repository ppa:ubuntu-toolchain-r/test 
-            sudo apt-add-repository ppa:george-edison55/cmake-3.x
+            sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test 
+            sudo apt-add-repository -y ppa:george-edison55/cmake-3.x
             sudo apt-get update
             sudo apt-get -y install g++-7 lcov cmake
       - run:
@@ -42,8 +42,8 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get remove cmake cmake-data
-            sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
-            sudo apt-add-repository ppa:george-edison55/cmake-3.x
+            sudo apt-add-repository -y "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
+            sudo apt-add-repository -y ppa:george-edison55/cmake-3.x
             sudo apt-get update
             sudo apt-get -y install clang-5.0 lcov cmake
       - run:
