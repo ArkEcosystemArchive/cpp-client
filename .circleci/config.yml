@@ -21,7 +21,6 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get remove cmake cmake-data
-            sudo apt-get install software-properties-common
             sudo apt-add-repository ppa:ubuntu-toolchain-r/test 
             sudo apt-add-repository ppa:george-edison55/cmake-3.x
             sudo apt-get update
@@ -43,7 +42,6 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get remove cmake cmake-data
-            sudo apt-get install software-properties-common
             sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
             sudo apt-add-repository ppa:george-edison55/cmake-3.x
             sudo apt-get update
