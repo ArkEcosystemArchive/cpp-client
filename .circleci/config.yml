@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Build
           command: ./travis/script_desktop.sh
-  build:
+  build-macos-9-2:
     macos:
       xcode: "9.2.0"
     steps:
@@ -77,3 +77,4 @@ workflows:
       - build-linux-default
       - build-linux-gcc7
       - build-linux-clang-5
+      - build-macos-9-2
