@@ -58,6 +58,15 @@ jobs:
       - run:
           name: Build
           command: ./travis/script_desktop.sh
+  build:
+    macos:
+      xcode: "9.2.0"
+    steps:
+      - run: COMPILER=clang++
+      - run:
+          name: Build
+          command: ./travis/script_desktop.sh
+
 
           
 
