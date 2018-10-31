@@ -13,7 +13,7 @@ std::string Ark::Client::API::ONE::Peers::get(
         strcat(uri, "?ip=");
         strcat(uri, ip);
         strcat(uri, "&port=");
-        strcat(uri, toString(port).c_str());
+        strcat(uri, std::to_string(port).c_str());
     return this->http->get(uri);
 };
 /**/
@@ -28,7 +28,7 @@ std::string Ark::Client::API::ONE::Peers::all(int limit)
     char uri[24] = {'\0'};
         strcpy(uri, Ark::Client::API::ONE::Paths::Peers::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
     return this->http->get(uri);
 };
 /**/

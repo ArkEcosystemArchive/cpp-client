@@ -19,8 +19,8 @@ std::string Ark::Client::API::TWO::Votes::all(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Votes::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }

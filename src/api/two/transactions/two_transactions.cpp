@@ -11,9 +11,9 @@ std::string Ark::Client::API::TWO::Transactions::getUnconfirmed(
         strcat(uri, "?id=");
         strcat(uri, identifier);
         strcat(uri, "&limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -26,9 +26,9 @@ std::string Ark::Client::API::TWO::Transactions::all(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Transactions::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -44,9 +44,9 @@ std::string Ark::Client::API::TWO::Transactions::get(
         strcat(uri, "/");
         strcat(uri, identifier);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -59,9 +59,9 @@ std::string Ark::Client::API::TWO::Transactions::allUnconfirmed(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Transactions::unconfirmed);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -74,8 +74,8 @@ std::string Ark::Client::API::TWO::Transactions::types(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Transactions::types);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }

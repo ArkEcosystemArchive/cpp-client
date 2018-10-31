@@ -31,7 +31,7 @@ std::string Ark::Client::API::ONE::Transactions::all(
         strcat(uri, ":");
         strcat(uri, (isDescending ? "desc" : "asc"));
         strcat(uri, "&limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
     return this->http->get(uri);
 }
 /**/

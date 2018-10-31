@@ -11,9 +11,9 @@ std::string Ark::Client::API::TWO::Wallets::get(
         strcat(uri, "/");
         strcat(uri, identifier);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -26,9 +26,9 @@ std::string Ark::Client::API::TWO::Wallets::all(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Wallets::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -41,9 +41,9 @@ std::string Ark::Client::API::TWO::Wallets::top(
     char uri[128] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Wallets::top);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -60,9 +60,9 @@ std::string Ark::Client::API::TWO::Wallets::transactions(
         strcat(uri, identifier);
         strcat(uri, "/transactions");
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -79,9 +79,9 @@ std::string Ark::Client::API::TWO::Wallets::transactionsSent(
         strcat(uri, identifier);
         strcat(uri, "/transactions/sent");
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -98,9 +98,9 @@ std::string Ark::Client::API::TWO::Wallets::transactionsReceived(
         strcat(uri, identifier);
         strcat(uri, "/transactions/received");
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -117,9 +117,9 @@ std::string Ark::Client::API::TWO::Wallets::votes(
         strcat(uri, identifier);
         strcat(uri, "/votes");
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -133,9 +133,9 @@ std::string Ark::Client::API::TWO::Wallets::search(
     char uri[96] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Wallets::search);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     std::string parameterBuffer;
         parameterBuffer += body.first;
         parameterBuffer += "=";
