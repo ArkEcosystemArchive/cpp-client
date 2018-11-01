@@ -28,7 +28,7 @@ std::string Ark::Client::API::ONE::Delegates::all(int limit)
     char uri[32] = {'\0'};
         strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
     return this->http->get(uri);
 };
 /**/

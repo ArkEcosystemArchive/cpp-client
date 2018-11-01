@@ -30,7 +30,7 @@ TEST(api, test_one_transactions_transaction)
     ASSERT_STREQ("4115750139916005265", blockid);
     
     int height = transaction["height"];
-    ASSERT_STREQ("2695914", toString(height).c_str());
+    ASSERT_STREQ("2695914", std::to_string(height).c_str());
     
     int type = transaction["type"];
     ASSERT_EQ(0, type);

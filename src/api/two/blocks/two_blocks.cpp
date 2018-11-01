@@ -19,9 +19,9 @@ std::string Ark::Client::API::TWO::Blocks::all(
     char uri[256] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Blocks::base);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     return this->http->get(uri);
 }
 
@@ -47,9 +47,9 @@ std::string Ark::Client::API::TWO::Blocks::search(
     char uri[96] = { '\0' };
         strcpy(uri, Ark::Client::API::TWO::Paths::Blocks::search);
         strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
+        strcat(uri, std::to_string(limit).c_str());
         strcat(uri, "&page=");
-        strcat(uri, toString(page).c_str());
+        strcat(uri, std::to_string(page).c_str());
     std::string parameterBuffer;
         parameterBuffer += bodyParameters.first;
         parameterBuffer += "=";
