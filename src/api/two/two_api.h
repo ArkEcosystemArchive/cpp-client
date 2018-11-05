@@ -34,7 +34,7 @@ class Two : public AbstractApi
         Ark::Client::API::TWO::Votes votes;
         Ark::Client::API::TWO::Wallets wallets;
 
-        Two(){ this->version_ = 2; };
+        Two() : AbstractApi(2) { }
 
         void setHost(const char *const newHost, const int newPort)
         {
