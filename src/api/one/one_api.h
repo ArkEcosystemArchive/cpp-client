@@ -34,7 +34,7 @@ class One : public AbstractApi
         Ark::Client::API::ONE::Signatures signatures;
         Ark::Client::API::ONE::Transactions transactions;
         
-        One() { this->version_ = 1; };
+        One() : AbstractApi(1) { }
 
         void setHost(const char *const newHost, const int newPort)
         {
