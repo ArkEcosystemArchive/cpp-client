@@ -22,11 +22,13 @@ namespace ONE {
 
 class Transactions : public ApiBase
 {
-    public:
-        std::string get(const char *const id);
-        std::string all(int limit = 5, const char *const orderBy = "timestamp", bool isDescending = true);
-        std::string getUnconfirmed(const char *const id);
-        std::string allUnconfirmed();
+public:
+  Transactions() = default;
+
+  std::string get(const char *const id);
+  std::string all(int limit = 5, const char *const orderBy = "timestamp", bool isDescending = true);
+  std::string getUnconfirmed(const char *const id);
+  std::string allUnconfirmed();
 };
 
 };

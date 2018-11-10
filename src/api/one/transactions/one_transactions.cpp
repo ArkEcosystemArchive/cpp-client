@@ -1,16 +1,16 @@
 
 #include "api/one/transactions/one_transactions.h"
 
+#include <cstring>
+
 /**
  * /api/transactions/get?id=
  **/
 std::string Ark::Client::API::ONE::Transactions::get(const char *const id)
 {
-    char uri[114 + 1] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Transactions::get);
-        strcat(uri, "?id=");
-        strcat(uri, id);
-    return this->http->get(uri);
+  char uri[114 + 1] = { };
+  std::snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Transactions::get, id);
+  return this->http->get(uri);
 }
 /**/
 
@@ -24,15 +24,17 @@ std::string Ark::Client::API::ONE::Transactions::all(
         const char *const orderBy,
         bool isDescending
 ) {
-    char uri[64] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Transactions::base);
-        strcat(uri, "?orderBy=");
-        strcat(uri, orderBy);
-        strcat(uri, ":");
-        strcat(uri, (isDescending ? "desc" : "asc"));
-        strcat(uri, "&limit=");
-        strcat(uri, std::to_string(limit).c_str());
-    return this->http->get(uri);
+  char uri[64] = { };
+  std::snprintf(
+    uri,
+    sizeof(uri),
+    "%s?orderBy=%s:%s&limit=%d",
+    Ark::Client::API::ONE::Paths::Transactions::base,
+    orderBy,
+    isDescending ? "desc" : "asc",
+    limit
+  );
+  return this->http->get(uri);
 }
 /**/
 
@@ -43,11 +45,9 @@ std::string Ark::Client::API::ONE::Transactions::all(
  **/
 std::string Ark::Client::API::ONE::Transactions::getUnconfirmed(const char *const id)
 {
-    char uri[126 + 1] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Transactions::getUnconfirmed);
-        strcat(uri, "?id=");
-        strcat(uri, id);
-    return this->http->get(uri);
+  char uri[126 + 1] = { };
+  std::snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Transactions::getUnconfirmed, id);
+  return this->http->get(uri);
 }
 /**/
 
@@ -58,6 +58,6 @@ std::string Ark::Client::API::ONE::Transactions::getUnconfirmed(const char *cons
  **/
 std::string Ark::Client::API::ONE::Transactions::allUnconfirmed()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Transactions::allUnconfirmed);
+  return this->http->get(Ark::Client::API::ONE::Paths::Transactions::allUnconfirmed);
 }
 /**/
