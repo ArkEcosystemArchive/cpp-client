@@ -190,10 +190,10 @@ TEST(api, test_two_node_syncing)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto nodeSycing = connection.api.node.sycing();
+    const auto nodeSyncing = connection.api.node.syncing();
 
-    DynamicJsonBuffer jsonBuffer(nodeSycing.size());
-    JsonObject& root = jsonBuffer.parseObject(nodeSycing);
+    DynamicJsonBuffer jsonBuffer(nodeSyncing.size());
+    JsonObject& root = jsonBuffer.parseObject(nodeSyncing);
 
     JsonObject& data = root["data"];
 
