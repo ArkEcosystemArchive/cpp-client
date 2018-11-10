@@ -1,7 +1,7 @@
 
 #include "api/one/peers/one_peers.h"
 
-#include <cstring>
+#include <cstdio>
 
 /**
  * /api/peers/get?ip=167.114.29.55&port=4002
@@ -11,7 +11,7 @@ std::string Ark::Client::API::ONE::Peers::get(
     const int port
 ) {
   char uri[68 + 1] = { };
-  std::snprintf(uri, sizeof(uri), "%s?ip=%s&port=%d", Ark::Client::API::ONE::Paths::Peers::get, ip, port);
+  snprintf(uri, sizeof(uri), "%s?ip=%s&port=%d", Ark::Client::API::ONE::Paths::Peers::get, ip, port);
   return this->http->get(uri);
 }
 /**/
@@ -24,7 +24,7 @@ std::string Ark::Client::API::ONE::Peers::get(
 std::string Ark::Client::API::ONE::Peers::all(int limit)
 {
   char uri[24] = { };
-  std::snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Peers::base, limit);
+  snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Peers::base, limit);
   return this->http->get(uri);
 }
 /**/

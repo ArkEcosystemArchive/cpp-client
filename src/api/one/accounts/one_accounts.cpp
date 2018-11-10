@@ -1,7 +1,7 @@
 
 #include "api/one/accounts/one_accounts.h"
 
-#include <cstring>
+#include <cstdio>
 
 /**
  * /api/accounts/getBalance?address=arkAddress
@@ -9,7 +9,7 @@
 std::string Ark::Client::API::ONE::Accounts::balance(const char *const arkAddress)
 {
   char uri[68 + 1] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::balance, arkAddress);
+  snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::balance, arkAddress);
   return this->http->get(uri);
 }
 /**/
@@ -22,7 +22,7 @@ std::string Ark::Client::API::ONE::Accounts::balance(const char *const arkAddres
 std::string Ark::Client::API::ONE::Accounts::publickey(const char *const arkAddress)
 {
   char uri[94 + 1] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::publicKey, arkAddress);
+  snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::publicKey, arkAddress);
   return this->http->get(uri);
 }
 /**/
@@ -35,7 +35,7 @@ std::string Ark::Client::API::ONE::Accounts::publickey(const char *const arkAddr
 std::string Ark::Client::API::ONE::Accounts::delegatesFee(const char *const arkAddress)
 {
   char uri[95 + 1] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::delegatesFee, arkAddress);
+  snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::delegatesFee, arkAddress);
   return this->http->get(uri);
 }
 /**/
@@ -48,7 +48,7 @@ std::string Ark::Client::API::ONE::Accounts::delegatesFee(const char *const arkA
 std::string Ark::Client::API::ONE::Accounts::delegates(const char *const arkAddress)
 {
   char uri[91 + 1] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::delegates, arkAddress);
+  snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::delegates, arkAddress);
   return this->http->get(uri);
 }
 /**/
@@ -62,7 +62,7 @@ std::string Ark::Client::API::ONE::Accounts::get(
     const char *const arkAddress
 ) {
   char uri[81 + 1] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::base, arkAddress);
+  snprintf(uri, sizeof(uri), "%s?address=%s", Ark::Client::API::ONE::Paths::Accounts::base, arkAddress);
   return this->http->get(uri);
 }
 /**/

@@ -1,7 +1,7 @@
 
 #include "api/one/delegates/one_delegates.h"
 
-#include <cstring>
+#include <cstdio>
 
 /**
  * /api/delegates/get?username="username"
@@ -13,7 +13,7 @@ std::string Ark::Client::API::ONE::Delegates::get(
   char uri[128] = { };
   const auto isUsername = std::strlen(parameter) <= 20;
 
-  std::snprintf(
+  snprintf(
     uri,
     sizeof(uri),
     "%s%s%s",
@@ -33,7 +33,7 @@ std::string Ark::Client::API::ONE::Delegates::get(
 std::string Ark::Client::API::ONE::Delegates::all(int limit)
 {
   char uri[32] = { };
-  std::snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Delegates::base, limit);
+  snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Delegates::base, limit);
   return this->http->get(uri);
 }
 /**/
@@ -58,7 +58,7 @@ std::string Ark::Client::API::ONE::Delegates::search(
     const char *const username)
 {
   char uri[69 + 1] = { };
-  std::snprintf(uri, sizeof(uri), "%s?q=%s", Ark::Client::API::ONE::Paths::Delegates::search, username);
+  snprintf(uri, sizeof(uri), "%s?q=%s", Ark::Client::API::ONE::Paths::Delegates::search, username);
   return this->http->get(uri);
 }
 /**/
@@ -82,7 +82,7 @@ std::string Ark::Client::API::ONE::Delegates::fee()
 std::string Ark::Client::API::ONE::Delegates::forgedByAccount(const char *const generatorPublicKey)
 {
   char uri[152 + 1] = { };
-  std::snprintf(uri, sizeof(uri), "%s?generatorPublicKey=%s", Ark::Client::API::ONE::Paths::Delegates::forgedByAccount, generatorPublicKey);
+  snprintf(uri, sizeof(uri), "%s?generatorPublicKey=%s", Ark::Client::API::ONE::Paths::Delegates::forgedByAccount, generatorPublicKey);
   return this->http->get(uri);
 }
 /**/
@@ -107,7 +107,7 @@ std::string Ark::Client::API::ONE::Delegates::voters(
     const char *const publicKey)
 {
   char uri[123 + 1] = { };
-  std::snprintf(uri, sizeof(uri), "%s?publicKey=%s", Ark::Client::API::ONE::Paths::Delegates::voters, publicKey);
+  snprintf(uri, sizeof(uri), "%s?publicKey=%s", Ark::Client::API::ONE::Paths::Delegates::voters, publicKey);
   return this->http->get(uri);
 }
 /**/

@@ -1,7 +1,7 @@
 
 #include "api/one/blocks/one_blocks.h"
 
-#include <cstring>
+#include <cstdio>
 
 /**
  * /api/blocks/get?id=_blockID
@@ -9,7 +9,7 @@
 std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
 {
   char uri[80] = { '\0' };
-  std::snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Blocks::get, blockId);
+  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Blocks::get, blockId);
   return this->http->get(uri);
 }
 /**/
@@ -25,7 +25,7 @@ std::string Ark::Client::API::ONE::Blocks::all(
   int limit /* = 10 */
 ) {
   char uri[48] = { '\0' };
-  std::snprintf(
+  snprintf(
     uri,
     sizeof(uri),
     "%s?orderBy=%s:%s&limit=%d",
