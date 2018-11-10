@@ -14,7 +14,7 @@ std::string Ark::Client::API::TWO::Blocks::get(const char *const blockId)
 
 std::string Ark::Client::API::TWO::Blocks::all(
   int limit,
-  const int page
+  int page
 ) {
   char uri[256] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Blocks::base, limit, page);
