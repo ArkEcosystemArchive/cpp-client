@@ -21,18 +21,20 @@ namespace ONE {
 
 class Blocks : public ApiBase
 {
-    public:
-        std::string get(const char *const blockId);
-        std::string all(const char *const orderBy = "height", bool isDescending = true, int limit = 10);
-        std::string epoch();
-        std::string fee();
-        std::string fees();
-        std::string height();
-        std::string milestone();
-        std::string nethash();
-        std::string reward();
-        std::string supply();
-        std::string status();
+public:
+  Blocks() = default;
+
+  std::string get(const char *const blockId);
+  std::string all(const char *const orderBy = "height", bool isDescending = true, int limit = 10);
+  std::string epoch();
+  std::string fee();
+  std::string fees();
+  std::string height();
+  std::string milestone();
+  std::string nethash();
+  std::string reward();
+  std::string supply();
+  std::string status();
 };
 
 };

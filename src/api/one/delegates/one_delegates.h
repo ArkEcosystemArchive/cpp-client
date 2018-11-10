@@ -21,15 +21,17 @@ namespace ONE {
 
 class Delegates : public ApiBase
 {
-    public:
-        std::string get(const char *const parameter);
-        std::string all(int limit = 5);
-        std::string count();
-        std::string search(const char *const username);
-        std::string fee();
-        std::string forgedByAccount(const char *const generatorPublicKey);
-        std::string nextForgers();
-        std::string voters(const char *const publicKey);
+public:
+  Delegates() = default;
+
+  std::string get(const char *const parameter);
+  std::string all(int limit = 5);
+  std::string count();
+  std::string search(const char *const username);
+  std::string fee();
+  std::string forgedByAccount(const char *const generatorPublicKey);
+  std::string nextForgers();
+  std::string voters(const char *const publicKey);
 };
 
 };

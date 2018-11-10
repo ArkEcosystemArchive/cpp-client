@@ -21,8 +21,10 @@ namespace ONE {
 
 class Signatures : public ApiBase
 {
-    public:
-        std::string fee();
+public:
+  Signatures() = default;
+
+  std::string fee();
 };
 
 };

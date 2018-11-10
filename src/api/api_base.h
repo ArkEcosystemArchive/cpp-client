@@ -19,14 +19,16 @@ namespace Client {
  **/
 class ApiBase : public virtual HTTP
 {
-    public:
-        ApiBase() {};
-        void setHost(
-                const char *const newHost,
-                const int newPort
-        ) {
-            this->http->setHost(newHost, newPort);
-        };
+protected:
+  ApiBase() = default;
+
+public:
+  void setHost(
+    const char *const newHost,
+    const int newPort
+  ) {
+    this->http->setHost(newHost, newPort);
+  }
 };
 /**/
 };
