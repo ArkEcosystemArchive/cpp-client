@@ -21,11 +21,13 @@ namespace TWO {
 
 class Delegates : public ApiBase
 {
-    public:
-        std::string get(const char *const identifier);
-        std::string all(int limit = 5, int page = 1);
-        std::string blocks(const char *const identifier, int limit = 5, int page = 1);
-        std::string voters(const char *const identifier, int limit = 5, int page = 1);
+public:
+  Delegates() = default;
+
+  std::string get(const char *const identifier);
+  std::string all(int limit = 5, int page = 1);
+  std::string blocks(const char *const identifier, int limit = 5, int page = 1);
+  std::string voters(const char *const identifier, int limit = 5, int page = 1);
 };
 
 };
