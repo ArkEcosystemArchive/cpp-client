@@ -22,15 +22,17 @@ namespace TWO {
 
 class Wallets : public ApiBase
 {
-    public:
-        std::string get(const char *const identifier, int limit = 5, int page = 1);
-        std::string all(int limit = 5, int page = 1);
-        std::string top(int limit = 5, int page = 1);
-        std::string transactions(const char *const identifier, int limit = 5, int page = 1);
-        std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1);
-        std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1);
-        std::string votes(const char *const identifier, int limit = 5, int page = 1);
-        std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
+public:
+  Wallets() = default;
+
+  std::string get(const char *const identifier, int limit = 5, int page = 1);
+  std::string all(int limit = 5, int page = 1);
+  std::string top(int limit = 5, int page = 1);
+  std::string transactions(const char *const identifier, int limit = 5, int page = 1);
+  std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1);
+  std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1);
+  std::string votes(const char *const identifier, int limit = 5, int page = 1);
+  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
 };
 
 };
