@@ -66,8 +66,8 @@ std::string Ark::Client::API::TWO::Wallets::transactionsSent(
   snprintf(
     uri,
     sizeof(uri),
-    Ark::Client::API::TWO::Paths::Wallets::base,
     "%s/%s/transactions/send?limit=%d&page=%d",
+    Ark::Client::API::TWO::Paths::Wallets::base,
     identifier,
     limit,
     page
