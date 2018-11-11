@@ -21,12 +21,14 @@ namespace TWO {
 
 class Transactions : public ApiBase
 {
-    public:
-        std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
-        std::string get(const char *const identifier, int limit = 5, int page = 1);
-        std::string all(int limit = 5, int page = 1);
-        std::string allUnconfirmed(int limit = 2, int page = 1);
-        std::string types(int limit = 5, int page = 1);
+public:
+  Transactions() = default;
+
+  std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
+  std::string get(const char *const identifier, int limit = 5, int page = 1);
+  std::string all(int limit = 5, int page = 1);
+  std::string allUnconfirmed(int limit = 2, int page = 1);
+  std::string types(int limit = 5, int page = 1);
 };
 
 };

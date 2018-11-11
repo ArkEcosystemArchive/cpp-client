@@ -21,10 +21,12 @@ namespace TWO {
 
 class Node : public ApiBase
 {
-    public:
-        std::string configuration();
-        std::string status();
-        std::string sycing();
+public:
+  Node() = default;
+
+  std::string configuration();
+  std::string status();
+  std::string syncing();
 };
 
 };

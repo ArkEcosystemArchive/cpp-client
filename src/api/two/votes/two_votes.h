@@ -21,9 +21,11 @@ namespace TWO {
 
 class Votes : public ApiBase
 {
-    public:
-        std::string get(const char *const identifier);
-        std::string all(int limit = 5, int page = 1);
+public:
+  Votes() = default;
+
+  std::string get(const char *const identifier);
+  std::string all(int limit = 5, int page = 1);
 };
 
 };
