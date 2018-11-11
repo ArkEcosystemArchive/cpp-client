@@ -25,31 +25,30 @@ namespace API {
 /***/
 class Two : public AbstractApi
 {
-    public:
-        Ark::Client::API::TWO::Blocks blocks;
-        Ark::Client::API::TWO::Delegates delegates;
-        Ark::Client::API::TWO::Node node;
-        Ark::Client::API::TWO::Peers peers;
-        Ark::Client::API::TWO::Transactions transactions;
-        Ark::Client::API::TWO::Votes votes;
-        Ark::Client::API::TWO::Wallets wallets;
+public:
+  Ark::Client::API::TWO::Blocks blocks;
+  Ark::Client::API::TWO::Delegates delegates;
+  Ark::Client::API::TWO::Node node;
+  Ark::Client::API::TWO::Peers peers;
+  Ark::Client::API::TWO::Transactions transactions;
+  Ark::Client::API::TWO::Votes votes;
+  Ark::Client::API::TWO::Wallets wallets;
 
-        Two() : AbstractApi(2) { }
+  Two() : AbstractApi(2) { }
 
-        void setHost(const char *const newHost, const int newPort)
-        {
-            this->blocks.setHost(newHost, newPort);
-            this->delegates.setHost(newHost, newPort);
-            this->node.setHost(newHost, newPort);
-            this->peers.setHost(newHost, newPort);
-            this->transactions.setHost(newHost, newPort);
-            this->votes.setHost(newHost, newPort);
-            this->wallets.setHost(newHost, newPort);
-        }
+  void setHost(const char *const newHost, int newPort) {
+    this->blocks.setHost(newHost, newPort);
+    this->delegates.setHost(newHost, newPort);
+    this->node.setHost(newHost, newPort);
+    this->peers.setHost(newHost, newPort);
+    this->transactions.setHost(newHost, newPort);
+    this->votes.setHost(newHost, newPort);
+    this->wallets.setHost(newHost, newPort);
+  }
 };
 /***/
-};
-};
-};
+}
+}
+}
 
 #endif

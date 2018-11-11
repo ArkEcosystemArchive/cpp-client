@@ -23,7 +23,7 @@ namespace Accounts
     const auto publicKey = "/api/accounts/getPublickey";
     const auto delegates = "/api/accounts/delegates";
     const auto delegatesFee = "/api/accounts/delegates/fee";
-};
+}
 /***/
 namespace Blocks
 {
@@ -38,7 +38,7 @@ namespace Blocks
     const auto reward = "/api/blocks/getReward";
     const auto status = "/api/blocks/getStatus";
     const auto supply = "/api/blocks/getSupply";
-};
+}
 /***/
 namespace Delegates
 {
@@ -50,26 +50,26 @@ namespace Delegates
     const auto nextForgers = "/api/delegates/getNextForgers";
     const auto search = "/api/delegates/search";
     const auto voters = "/api/delegates/voters";
-};
+}
 /***/
 namespace Loader
 {
     const auto status = "/api/loader/status";
     const auto sync = "/api/loader/status/sync";
     const auto autoconfigure = "/api/loader/autoconfigure";
-};
+}
 /***/
 namespace Peers
 {
     const auto base = "/api/peers";
     const auto get = "/api/peers/get";
     const auto version = "/api/peers/version";
-};
+}
 /***/
 namespace Signatures
 {
     const auto fee = "/api/signatures/fee";
-};
+}
 /***/
 namespace Transactions
 {
@@ -78,12 +78,12 @@ namespace Transactions
     const auto getUnconfirmed = "/api/transactions/unconfirmed/get";
     const auto allUnconfirmed = "/api/transactions/unconfirmed";
 
-};
+}
 
-};
-};
-};
-};
-};
+}
+}
+}
+}
+}
 
 #endif
