@@ -21,10 +21,12 @@ namespace ONE {
 
 class Loader : public ApiBase
 {
-    public:
-        std::string autoconfigure();
-        std::string status();
-        std::string sync();
+public:
+  Loader() = default;
+
+  std::string autoconfigure();
+  std::string status();
+  std::string sync();
 };
 
 };

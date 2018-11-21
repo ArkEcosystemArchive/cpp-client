@@ -21,11 +21,13 @@ namespace TWO {
 
 class Blocks : public ApiBase
 {
-    public:
-        std::string get(const char *const blockId);
-        std::string all(int limit = 5, int page = 1);
-        std::string transactions(const char *const blockId);
-        std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
+public:
+  Blocks() = default;
+
+  std::string get(const char *const blockId);
+  std::string all(int limit = 5, int page = 1);
+  std::string transactions(const char *const blockId);
+  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
 };
 
 };

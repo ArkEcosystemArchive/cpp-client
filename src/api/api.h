@@ -22,8 +22,11 @@ class AbstractApi : public virtual HTTP
 {
     protected:
         int version_;
+
+        AbstractApi(int version) : version_(version) { }
+
     public:
-        int version() { return this->version_; };
+        int version() const noexcept { return this->version_; }
 };
 /**/
 };

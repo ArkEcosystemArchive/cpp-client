@@ -21,10 +21,12 @@ namespace ONE {
 
 class Peers : public ApiBase
 {
-    public:
-        std::string get(const char *const ip, const int port);
-        std::string all(int limit = 5);
-        std::string version();
+public:
+  Peers() = default;
+
+  std::string get(const char *const ip, const int port);
+  std::string all(int limit = 5);
+  std::string version();
 };
 
 };

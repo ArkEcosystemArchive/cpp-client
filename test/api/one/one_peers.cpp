@@ -74,10 +74,10 @@ TEST(api, test_one_peers_peers)
     ASSERT_EQ(4001, port);
 
     int version = peersZero["version"];
-    ASSERT_STRNE("", toString(version).c_str());
+    ASSERT_STRNE("", std::to_string(version).c_str());
 
     int errors = peersZero["errors"];
-    ASSERT_STRNE("", toString(errors).c_str());
+    ASSERT_STRNE("", std::to_string(errors).c_str());
 
     const char* os = peersZero["os"];
     ASSERT_STRNE("", os);

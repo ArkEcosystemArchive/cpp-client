@@ -20,12 +20,12 @@ namespace Blocks
 {
     const auto base = "/api/v2/blocks";
     const auto search = "/api/v2/blocks/search";
-};
+}
 /***/
 namespace Delegates
 {
     const auto base = "/api/v2/delegates";
-};
+}
 /***/
 namespace Node
 {
@@ -33,12 +33,12 @@ namespace Node
     const auto configuration = "/api/v2/node/configuration";
     const auto status = "/api/v2/node/status";
     const auto syncing = "/api/v2/node/syncing";
-};
+}
 /***/
 namespace Peers
 {
     const auto base = "/api/v2/peers";
-};
+}
 /***/
 namespace Transactions
 {	
@@ -46,12 +46,12 @@ namespace Transactions
     const auto search = "/api/v2/transactions/search";
     const auto types = "/api/v2/transactions/types";
     const auto unconfirmed = "/api/v2/transactions/unconfirmed";
-};
+}
 /***/
 namespace Votes
 {
     const auto base = "/api/v2/votes";
-};
+}
 
 /***/
 namespace Wallets
@@ -59,12 +59,12 @@ namespace Wallets
     const auto base = "/api/v2/wallets";
     const auto search = "/api/v2/wallets/search";
     const auto top = "/api/v2/wallets/top";
-};
+}
 
-};
-};
-};
-};
-};
+}
+}
+}
+}
+}
 
 #endif

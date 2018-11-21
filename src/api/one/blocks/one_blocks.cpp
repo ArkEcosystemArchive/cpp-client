@@ -1,16 +1,16 @@
 
 #include "api/one/blocks/one_blocks.h"
 
+#include <cstdio>
+
 /**
  * /api/blocks/get?id=_blockID
  **/
 std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
 {
-    char uri[80] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Blocks::get);
-        strcat(uri, "?id=");
-        strcat(uri, blockId);
-    return this->http->get(uri);
+  char uri[80] = { '\0' };
+  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Blocks::get, blockId);
+  return this->http->get(uri);
 }
 /**/
 
@@ -20,19 +20,21 @@ std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
  * /api/blocks?orderBy=height:desc&limit=10
  **/
 std::string Ark::Client::API::ONE::Blocks::all(
-        const char *const orderBy,
-        bool isDescending,
-        int limit
+  const char *const orderBy /* = "height" */,
+  bool isDescending /* = true */,
+  int limit /* = 10 */
 ) {
-    char uri[48] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Blocks::base);
-        strcat(uri, "?orderBy=");
-        strcat(uri, orderBy);
-        strcat(uri, ":");
-        strcat(uri, (isDescending ? "desc" : "asc"));
-        strcat(uri, "&limit=");
-        strcat(uri, toString(limit).c_str());
-    return this->http->get(uri);
+  char uri[48] = { '\0' };
+  snprintf(
+    uri,
+    sizeof(uri),
+    "%s?orderBy=%s:%s&limit=%d",
+    Ark::Client::API::ONE::Paths::Blocks::base,
+    orderBy,
+    isDescending ? "desc" : "asc",
+    limit
+  );
+  return this->http->get(uri);
 }
 /**/
 

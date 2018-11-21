@@ -47,7 +47,7 @@ TEST(api, test_two_peer)
     ASSERT_STREQ("linux", os);
 
     int latency = data["latency"];
-    ASSERT_STRNE("", toString(latency).c_str());
+    ASSERT_STRNE("", std::to_string(latency).c_str());
 }
 
 /* test_two_peers_peers
@@ -115,5 +115,5 @@ TEST(api, test_two_peers)
     ASSERT_STRNE("", os);
 
     int latency = dataZero["latency"];
-    ASSERT_STRNE("", toString(latency).c_str());
+    ASSERT_STRNE("", std::to_string(latency).c_str());
 }

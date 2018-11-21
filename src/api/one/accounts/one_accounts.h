@@ -22,13 +22,13 @@ namespace ONE {
 
 class Accounts : public Ark::Client::ApiBase
 {
-    public:
-    Accounts(){};
-        std::string balance(const char *const arkAddress);
-        std::string publickey(const char *const arkAddress);
-        std::string delegatesFee(const char *const arkAddress);
-        std::string delegates(const char *const arkAddress);
-        std::string get(const char *const arkAddress);
+public:
+  Accounts() = default;
+  std::string balance(const char *const arkAddress);
+  std::string publickey(const char *const arkAddress);
+  std::string delegatesFee(const char *const arkAddress);
+  std::string delegates(const char *const arkAddress);
+  std::string get(const char *const arkAddress);
 };
 
 };

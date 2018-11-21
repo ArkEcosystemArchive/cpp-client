@@ -20,24 +20,25 @@ namespace Client {
 /**
  * Ark::Client::Connection<VersionedAPI>
  **/
-template <class AbstractApi>
+template <typename AbstractApi>
 class Connection : public virtual HTTP
 {
-    public:
-        AbstractApi api;
+public:
+  AbstractApi api;
 
-        Connection(){};
-        Connection(AbstractApi const &other) : api(other) {}
-        explicit Connection(
-                const char *const newHost,
-                const int newPort
-        ) {
-            this->http->setHost(newHost, newPort);
-            this->api.setHost(newHost, newPort);
-        };
+  Connection() = default;
+  Connection(const AbstractApi& other) : api(other) {}
+
+  Connection(
+    const char *const newHost,
+    int newPort
+  ) {
+    this->http->setHost(newHost, newPort);
+    this->api.setHost(newHost, newPort);
+  }
 };
 /**/
-};
-};
+}
+}
 
 #endif

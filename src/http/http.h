@@ -11,6 +11,7 @@
 #define HTTP_H
 
 #include <memory>
+#include <string>
 #include <cstring>
 
 namespace Ark {
@@ -34,27 +35,32 @@ class HTTP;
 class AbstractHTTP
 {
     protected:
-        AbstractHTTP() = default;
-
         char host_[17];
         int port_;
 
-    public:
-        virtual ~AbstractHTTP(){};
-        AbstractHTTP(AbstractHTTP const & other){
-            strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = other.port_;
-        };
+        AbstractHTTP() : host_(), port_(-1) { }
 
-        AbstractHTTP& operator=(AbstractHTTP&& other){
-            strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = other.port_;
-            return *this;
+        AbstractHTTP(AbstractHTTP&&) = delete;
+        AbstractHTTP& operator=(AbstractHTTP&&) = delete;
+
+        AbstractHTTP(const AbstractHTTP& other) : port_(other.port_) {
+          strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
         }
 
+        AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
+          if (this != &other) {
+            strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
+            this->port_ = other.port_;
+          }
+          return *this;
+        }
+
+    public:
+        virtual ~AbstractHTTP() {};
+
         /**/
-        const char *host() { return this->host_; };
-        int port() { return this->port_; };
+        const char* host() const noexcept { return this->host_; };
+        int port() const noexcept { return this->port_; };
 
         /**/
 

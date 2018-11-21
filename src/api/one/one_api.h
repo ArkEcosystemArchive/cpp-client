@@ -25,27 +25,26 @@ namespace API {
 /**/
 class One : public AbstractApi
 {
-    public:
-        Ark::Client::API::ONE::Accounts accounts;
-        Ark::Client::API::ONE::Blocks blocks;
-        Ark::Client::API::ONE::Delegates delegates;
-        Ark::Client::API::ONE::Loader loader;
-        Ark::Client::API::ONE::Peers peers;
-        Ark::Client::API::ONE::Signatures signatures;
-        Ark::Client::API::ONE::Transactions transactions;
+public:
+  Ark::Client::API::ONE::Accounts accounts;
+  Ark::Client::API::ONE::Blocks blocks;
+  Ark::Client::API::ONE::Delegates delegates;
+  Ark::Client::API::ONE::Loader loader;
+  Ark::Client::API::ONE::Peers peers;
+  Ark::Client::API::ONE::Signatures signatures;
+  Ark::Client::API::ONE::Transactions transactions;
         
-        One() { this->version_ = 1; };
+  One() : AbstractApi(1) { }
 
-        void setHost(const char *const newHost, const int newPort)
-        {
-            this->accounts.setHost(newHost, newPort);
-            this->blocks.setHost(newHost, newPort);
-            this->delegates.setHost(newHost, newPort);
-            this->loader.setHost(newHost, newPort);
-            this->peers.setHost(newHost, newPort);
-            this->signatures.setHost(newHost, newPort);
-            this->transactions.setHost(newHost, newPort);
-        }
+  void setHost(const char *const newHost, int newPort) {
+    this->accounts.setHost(newHost, newPort);
+    this->blocks.setHost(newHost, newPort);
+    this->delegates.setHost(newHost, newPort);
+    this->loader.setHost(newHost, newPort);
+    this->peers.setHost(newHost, newPort);
+    this->signatures.setHost(newHost, newPort);
+    this->transactions.setHost(newHost, newPort);
+  }
 };
 /**/
 };
