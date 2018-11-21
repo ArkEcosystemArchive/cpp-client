@@ -6,7 +6,7 @@
 
 > A simple C++ API client for the Ark Blockchain.
 
-[![Build Status](https://badgen.now.sh/travis/ArkEcosystem/cpp-client)](https://travis-ci.org/ArkEcosystem/cpp-client)
+[![Build Status](https://badgen.now.sh/circleci/github/ArkEcosystem/cpp-client)](https://circleci.com/gh/ArkEcosystem/cpp-client)
 [![Codecov](https://badgen.now.sh/codecov/c/github/arkecosystem/cpp-client)](https://codecov.io/gh/arkecosystem/cpp-client)
 [![Latest Version](https://badgen.now.sh/github/release/ArkEcosystem/cpp-client)](https://github.com/ArkEcosystem/cpp-client/releases)
 [![License: MIT](https://badgen.now.sh/badge/license/MIT/green)](https://opensource.org/licenses/MIT)
