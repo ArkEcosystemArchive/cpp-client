@@ -2,8 +2,8 @@
 /.history
 /.vs
 /.vscode
-/bin/Debug
-/lib/Debug
+/bin
+/lib
 /_Base
 /CMakeFiles
 
@@ -32,7 +32,7 @@
 /src/ALL_BUILD.vcxproj.filters
 /src/ALL_BUILD.vcxproj
 /test/Ark-Cpp-Client-tests.dir
-/Win32/Debug
+/Win32
 /test/NightlyMemoryCheck.vcxproj.filters
 /test/NightlyMemoryCheck.vcxproj
 /test/Nightly.vcxproj.filters
@@ -52,7 +52,7 @@
 /test/Ark-Cpp-Client-tests.sln
 /test/ALL_BUILD.vcxproj.filters
 /test/ALL_BUILD.vcxproj
-/_3rdParty/Hunter
+/_3rdParty
 /ZERO_CHECK.vcxproj.filters
 /ZERO_CHECK.vcxproj
 /cmake_install.cmake
