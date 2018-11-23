@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-tests)
 
-hunter_add_package(GTest)
+set(BUILD_GMOCK OFF FORCE)
 
-find_package(GTest CONFIG REQUIRED)
+add_subdirectory(lib/googletest)
 
 include(CTest)
 enable_testing()
@@ -41,10 +41,7 @@ set(TEST_TWO_SRC
 	${PROJECT_SOURCE_DIR}/api/two/two_wallets.cpp
 )
 
-find_library(Ark-Cpp-Client-tests
-	NAMES Ark-Cpp-Client-lib
-	PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-)
+find_library(Ark-Cpp-Client-tests PUBLIC)
 
 add_executable(Ark-Cpp-Client-tests
 	${TEST_API_SRC}
@@ -52,10 +49,7 @@ add_executable(Ark-Cpp-Client-tests
 	${TEST_TWO_SRC}
 )
 
-target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib)
-
-target_link_libraries(Ark-Cpp-Client-tests GTest::main) # GTest::gtest will be linked automatically
-target_link_libraries(Ark-Cpp-Client-tests GTest::gtest)
+target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib gtest gtest_main)
 
 add_test(NAME test COMMAND Ark-Cpp-Client-tests)
 
