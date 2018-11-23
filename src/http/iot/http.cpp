@@ -84,7 +84,7 @@ class PlatformHTTP : public AbstractHTTP
             http.setTimeout(3000);
             http.begin(this->host_, this->port_, request);
 
-            http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.addHeader("Content-Type", "application/json");
             http.POST(body);
             return http.getString().c_str();
         }
