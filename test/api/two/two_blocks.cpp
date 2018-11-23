@@ -106,7 +106,7 @@ TEST(api, test_two_block)
     ASSERT_EQ(1490101200, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2017-03-21T13:00:00Z", human);
+    ASSERT_STREQ("2017-03-21T13:00:00.000Z", human);
 }
 
 /* test_two_blocks_block_transactions

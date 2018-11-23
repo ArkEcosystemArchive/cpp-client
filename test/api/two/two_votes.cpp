@@ -81,7 +81,7 @@ TEST(api, test_two_vote)
     ASSERT_EQ(1535126067, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-08-24T15:54:27Z", human);
+    ASSERT_STREQ("2018-08-24T15:54:27.000Z", human);
 }
 
 /* test_two_votes
