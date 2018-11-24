@@ -170,13 +170,13 @@ TEST(api, test_two_block_transactions)
     JsonObject& dataZero = root["data"][0];
 
     int id = dataZero["id"];
-    ASSERT_NE(0, id);
+    ASSERT_EQ(0, id);
 
     const char* blockId = dataZero["blockId"];
     ASSERT_STRNE("", blockId);
 
     int type = dataZero["type"];
-    ASSERT_NE(0, type);
+    ASSERT_EQ(0, type);
 
     uint64_t amount = dataZero["amount"];
     ASSERT_TRUE(amount >= 0);
@@ -191,16 +191,16 @@ TEST(api, test_two_block_transactions)
     ASSERT_STRNE("", signature);
 
     int confirmations = dataZero["confirmations"];
-    ASSERT_NE(0, confirmations);
+    ASSERT_EQ(0, confirmations);
 
 
     JsonObject& timestamp = dataZero["timestamp"];
 
     int epoch = timestamp["epoch"];
-    ASSERT_NE(0, epoch);
+    ASSERT_EQ(0, epoch);
 
     int timestampUnix = timestamp["unix"];
-    ASSERT_NE(0, timestampUnix);
+    ASSERT_EQ(0, timestampUnix);
 
     const char* human = timestamp["human"];
     ASSERT_STRNE("", human);
@@ -278,7 +278,7 @@ TEST(api, test_two_blocks)
     JsonObject& dataZero = root["data"][0];
 
     int version = dataZero["version"];
-    ASSERT_NE(0, version);
+    ASSERT_EQ(0, version);
 }
 
 /* test_two_blocks_blocks_limit_page
@@ -354,7 +354,7 @@ TEST(api, test_two_blocks_limit_page)
     JsonObject& dataZero = root["data"][0];
 
     int version = dataZero["version"];
-    ASSERT_NE(0, version);
+    ASSERT_EQ(0, version);
 }
 
 /* test_two_blocks_search

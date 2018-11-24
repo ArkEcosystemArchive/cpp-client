@@ -159,7 +159,7 @@ TEST(api, test_two_delegate_blocks)
     ASSERT_STRNE("", id);
 
     int version = root["data"][0]["version"];
-    ASSERT_NE(0, version);
+    ASSERT_EQ(0, version);
 
     uint64_t height = root["data"][0]["height"];
     ASSERT_TRUE(height >= 0);
