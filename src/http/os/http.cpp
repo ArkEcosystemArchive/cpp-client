@@ -73,13 +73,6 @@ class PlatformHTTP : public AbstractHTTP
             curl = curl_easy_init();
             if(curl) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str()); // Set the URL that is about to receive our POST
-
-                /* make header with content-type */
-                struct curl_slist *header = NULL;
-                curl_slist_append(header, "Content-Type: application/json");
-
-                /* set header & body */
-                curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header); // Set Header
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST json data ex: "username=baldninja"
                 
                 /* skip https verification */
