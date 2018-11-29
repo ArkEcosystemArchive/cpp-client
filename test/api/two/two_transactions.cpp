@@ -81,7 +81,7 @@ TEST(api, test_two_transaction)
     ASSERT_EQ(1535126066, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-08-24T15:54:26Z", human);
+    ASSERT_STREQ("2018-08-24T15:54:26.000Z", human);
 }
 
 /* test_two_transactions_transaction_types
