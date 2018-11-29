@@ -73,7 +73,7 @@ class PlatformHTTP : public AbstractHTTP
             curl = curl_easy_init();
             if(curl) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str()); // Set the URL that is about to receive our POST
-                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST data ex: "username=baldninja"
+                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST json data ex: "username=baldninja"
                 
                 /* skip https verification */
                 curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L); // Do NOT verify peer
