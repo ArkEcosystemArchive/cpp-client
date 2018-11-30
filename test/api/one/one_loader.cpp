@@ -72,7 +72,7 @@ TEST(api, test_one_loader_sync)
     ASSERT_FALSE(syncing);
 
     int blocks = root["blocks"];
-    ASSERT_STRNE("", std::to_string(blocks).c_str());
+    ASSERT_GE(0, blocks);
 
     int height = root["height"];
     ASSERT_NE(0, height);

@@ -61,3 +61,7 @@
 /ALL_BUILD.vcxproj.filters
 /ALL_BUILD.vcxproj
 /src/Win32
+/test/Debug
+/src/Debug
+/test/Release
+/src/Release
