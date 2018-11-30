@@ -1,0 +1,3 @@
+[submodule "lib/cpp-client"]
+	path = lib/cpp-client
+	url = https://github.com/ArkEcosystem/cpp-client.git
