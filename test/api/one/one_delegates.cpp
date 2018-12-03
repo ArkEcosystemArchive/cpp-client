@@ -144,10 +144,10 @@ TEST(api, test_one_delegates_delegate_by_username)
     ASSERT_NE(0, rate);
 
     double approval = delegate["approval"];
-    ASSERT_TRUE(approval >= 0.00);
+    ASSERT_GE(approval, 0.00);
 
     double productivity = delegate["productivity"];
-    ASSERT_TRUE(productivity >= 0.00);
+    ASSERT_GE(productivity, 0.00);
 }
 
 TEST(api, test_one_delegates_delegates)
@@ -180,19 +180,19 @@ TEST(api, test_one_delegates_delegates)
         ASSERT_TRUE(vote >= 0);
 
         int producedblocks = delegates[i]["producedblocks"];
-        ASSERT_TRUE(producedblocks >= 0);
+        ASSERT_GE(producedblocks, 0);
 
         int missedblocks = delegates[i]["missedblocks"];
-        ASSERT_TRUE(missedblocks >= 0);
+        ASSERT_GE(missedblocks, 0);
 
         int rate = delegates[i]["rate"];
-        ASSERT_TRUE(rate >= 0);
+        ASSERT_GE(rate, 0);
 
         double approval = delegates[i]["approval"];
-        ASSERT_TRUE(approval >= 0.00);
+        ASSERT_GE(approval, 0.00);
 
         double productivity = delegates[i]["productivity"];
-        ASSERT_TRUE(productivity >= 0.00);
+        ASSERT_GE(productivity, 0.00);
     }
 }
 
@@ -207,7 +207,6 @@ TEST(api, test_one_delegates_voters)
 
     bool success = root["success"];
     ASSERT_TRUE(success);
-
 
     JsonObject& accountsZero = root["accounts"][0];
 
@@ -260,19 +259,19 @@ TEST(api, test_one_delegates_search)
     ASSERT_TRUE(vote >= 0);
 
     int producedblocks = delegate["producedblocks"];
-    ASSERT_TRUE(producedblocks >= 0);
+    ASSERT_GE(producedblocks, 0);
 
     int missedblocks = delegate["missedblocks"];
-    ASSERT_TRUE(missedblocks >= 0);
+    ASSERT_GE(missedblocks, 0);
 
     int rate = delegate["rate"];
-    ASSERT_TRUE(rate >= 0);
+    ASSERT_GE(rate, 0);
 
     double  approval = delegate["approval"];
-    ASSERT_TRUE(approval >= 0.00);
+    ASSERT_GE(approval, 0.00);
 
     double productivity = delegate["productivity"];
-    ASSERT_TRUE(productivity >= 0.00);
+    ASSERT_GE(productivity, 0.00);
 }
 
 TEST(api, test_one_delegates_count)

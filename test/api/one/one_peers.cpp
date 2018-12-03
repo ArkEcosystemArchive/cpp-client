@@ -15,7 +15,6 @@ TEST(api, test_one_peers_peer)
     bool success = root["success"];
     ASSERT_TRUE(success);
 
-
     JsonObject& peer = root["peer"];
 
     const char* ip = peer["ip"];
@@ -36,7 +35,7 @@ TEST(api, test_one_peers_peer)
     ASSERT_STRNE(NULL, os);
 
     int height = peer["height"];
-    ASSERT_TRUE(height >= 0);
+    ASSERT_GE(height, 0);
 
     const char* status = peer["status"];
     ASSERT_STREQ("OK", status);
@@ -74,22 +73,22 @@ TEST(api, test_one_peers_peers)
     ASSERT_EQ(4001, port);
 
     int version = peersZero["version"];
-    ASSERT_STRNE("", std::to_string(version).c_str());
+    ASSERT_NE(0, version);
 
     int errors = peersZero["errors"];
-    ASSERT_STRNE("", std::to_string(errors).c_str());
+    ASSERT_NE(0, errors);
 
     const char* os = peersZero["os"];
     ASSERT_STRNE("", os);
 
     int height = peersZero["height"];
-    ASSERT_TRUE(height >= 0);
+    ASSERT_GE(height, 0);
 
     const char* status = peersZero["status"];
     ASSERT_STREQ("OK", status);
 
     int delay = peersZero["delay"];
-    ASSERT_TRUE(delay >= 0);
+    ASSERT_GE(delay, 0);
 }
 #endif
 

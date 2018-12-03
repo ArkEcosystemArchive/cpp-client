@@ -162,10 +162,10 @@ TEST(api, test_two_node_status)
     JsonObject& data = root["data"];
 
     bool synced = data["synced"];
-    ASSERT_TRUE( (synced == true) || (synced == false) );
+    ASSERT_TRUE(synced || !synced);
 
     int now = data["now"];
-    ASSERT_TRUE(now >= 0);
+    ASSERT_GE(now, 0);
 
     const char* blocksCount = data["blocksCount"];
     ASSERT_STRNE("", blocksCount);
@@ -198,7 +198,7 @@ TEST(api, test_two_node_syncing)
     JsonObject& data = root["data"];
 
     bool syncing = data["syncing"];
-    ASSERT_TRUE( (syncing == true) || (syncing == false) );
+    ASSERT_TRUE(syncing || !syncing);
 
     const char* blocks = data["blocks"];
     ASSERT_STRNE("", blocks);
