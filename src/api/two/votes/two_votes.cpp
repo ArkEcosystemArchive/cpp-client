@@ -2,6 +2,7 @@
 #include "api/two/votes/two_votes.h"
 
 #include <cstdint>
+#include <cstdio>
 
 std::string Ark::Client::API::TWO::Votes::get(const char *const identifier)
 {

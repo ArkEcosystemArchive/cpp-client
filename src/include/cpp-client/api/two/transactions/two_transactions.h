@@ -7,27 +7,27 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef TWO_DELEGATES_H
-#define TWO_DELEGATES_H
+#ifndef TWO_TRANSACTIONS_H
+#define TWO_TRANSACTIONS_H
 
 #include "api/api_base.h"
 #include "api/two/two_paths.h"
-#include "helpers/helpers.h"
 
 namespace Ark {
 namespace Client {
 namespace API {
 namespace TWO {
 
-class Delegates : public ApiBase
+class Transactions : public ApiBase
 {
 public:
-  Delegates() = default;
+  Transactions() = default;
 
-  std::string get(const char *const identifier);
+  std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
+  std::string get(const char *const identifier, int limit = 5, int page = 1);
   std::string all(int limit = 5, int page = 1);
-  std::string blocks(const char *const identifier, int limit = 5, int page = 1);
-  std::string voters(const char *const identifier, int limit = 5, int page = 1);
+  std::string allUnconfirmed(int limit = 2, int page = 1);
+  std::string types(int limit = 5, int page = 1);
 };
 
 };

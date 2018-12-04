@@ -12,7 +12,6 @@
 
 #include "api/api_base.h"
 #include "api/one/one_paths.h"
-#include "helpers/helpers.h"
 
 namespace Ark {
 namespace Client {

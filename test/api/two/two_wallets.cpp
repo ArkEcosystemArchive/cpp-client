@@ -223,7 +223,8 @@ TEST(api, test_two_wallets_top)
     ASSERT_TRUE(balance >= 0);
 
     bool isDelegate = dataZero["isDelegate"];
-    ASSERT_STRNE("", std::to_string(isDelegate).c_str());
+    // as long as data was read, we don't really care (or know) what the expected value is
+    ASSERT_TRUE(isDelegate || !isDelegate);
 }
 
 /* test_two_wallets_transactions
