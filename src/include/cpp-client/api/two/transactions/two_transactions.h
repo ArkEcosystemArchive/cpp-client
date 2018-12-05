@@ -21,7 +21,7 @@ namespace TWO {
 class Transactions : public ApiBase
 {
 public:
-  Transactions() = default;
+  Transactions(HTTP& http) : ApiBase(http) { }
 
   std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
   std::string get(const char *const identifier, int limit = 5, int page = 1);

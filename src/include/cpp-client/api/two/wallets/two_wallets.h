@@ -22,7 +22,7 @@ namespace TWO {
 class Wallets : public ApiBase
 {
 public:
-  Wallets() = default;
+  Wallets(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const identifier, int limit = 5, int page = 1);
   std::string all(int limit = 5, int page = 1);

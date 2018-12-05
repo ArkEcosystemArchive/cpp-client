@@ -17,18 +17,11 @@ namespace Client {
 /**
  * Ark::Client::AbstractApi 
  **/
-class ApiBase : public virtual HTTP
-{
+class ApiBase {
 protected:
-  ApiBase() = default;
+  HTTP& http_;
 
-public:
-  void setHost(
-    const char *const newHost,
-    const int newPort
-  ) {
-    this->http->setHost(newHost, newPort);
-  }
+  ApiBase(HTTP& http) : http_(http) { }
 };
 /**/
 };

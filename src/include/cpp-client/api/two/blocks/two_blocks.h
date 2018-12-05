@@ -21,7 +21,7 @@ namespace TWO {
 class Blocks : public ApiBase
 {
 public:
-  Blocks() = default;
+  Blocks(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const blockId);
   std::string all(int limit = 5, int page = 1);
