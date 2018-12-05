@@ -27,6 +27,8 @@ protected:
 
 public:
   int version() const noexcept { return this->version_; }
+  const char* host() const noexcept { return http_.host(); };
+  int port() const noexcept { return http_.port(); };
 };
 /**/
 };

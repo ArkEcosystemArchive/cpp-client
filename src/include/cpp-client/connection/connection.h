@@ -21,8 +21,7 @@ namespace Client {
  * Ark::Client::Connection<VersionedAPI>
  **/
 template <typename AbstractApi>
-class Connection : public virtual HTTP
-{
+class Connection {
 public:
   AbstractApi api;
 
@@ -33,9 +32,12 @@ public:
     const char *const newHost,
     int newPort
   ) {
-    this->http->setHost(newHost, newPort);
     this->api.setHost(newHost, newPort);
   }
+
+  const char* host() const noexcept { return api.host(); };
+  int port() const noexcept { return api.port(); };
+
 };
 /**/
 }
