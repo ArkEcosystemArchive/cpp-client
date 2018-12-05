@@ -18,15 +18,15 @@ namespace Client {
 /**
  * Ark::Client::AbstractApi 
  **/
-class AbstractApi : public virtual HTTP
-{
-    protected:
-        int version_;
+class AbstractApi {
+protected:
+  HTTP http_;
+  int version_;
 
-        AbstractApi(int version) : version_(version) { }
+  AbstractApi(int version) : version_(version) { }
 
-    public:
-        int version() const noexcept { return this->version_; }
+public:
+  int version() const noexcept { return this->version_; }
 };
 /**/
 };

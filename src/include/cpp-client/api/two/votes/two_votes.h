@@ -21,7 +21,7 @@ namespace TWO {
 class Votes : public ApiBase
 {
 public:
-  Votes() = default;
+  Votes(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);

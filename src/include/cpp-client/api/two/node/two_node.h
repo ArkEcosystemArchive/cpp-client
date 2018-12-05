@@ -21,7 +21,7 @@ namespace TWO {
 class Node : public ApiBase
 {
 public:
-  Node() = default;
+  Node(HTTP& http) : ApiBase(http) { }
 
   std::string configuration();
   std::string status();

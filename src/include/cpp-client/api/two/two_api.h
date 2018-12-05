@@ -34,16 +34,10 @@ public:
   Ark::Client::API::TWO::Votes votes;
   Ark::Client::API::TWO::Wallets wallets;
 
-  Two() : AbstractApi(2) { }
+  Two() : AbstractApi(2), blocks(http_), delegates(http_), node(http_), peers(http_), transactions(http_), votes(http_), wallets(http_) { }
 
   void setHost(const char *const newHost, int newPort) {
-    this->blocks.setHost(newHost, newPort);
-    this->delegates.setHost(newHost, newPort);
-    this->node.setHost(newHost, newPort);
-    this->peers.setHost(newHost, newPort);
-    this->transactions.setHost(newHost, newPort);
-    this->votes.setHost(newHost, newPort);
-    this->wallets.setHost(newHost, newPort);
+    http_.setHostHTTP(newHost, newPort);
   }
 };
 /***/

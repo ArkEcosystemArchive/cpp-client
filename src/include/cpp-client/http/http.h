@@ -105,16 +105,31 @@ std::unique_ptr<AbstractHTTP> makeHTTP();
  **/
 class Ark::Client::HTTP
 {
-    public:
-        std::unique_ptr<Ark::Client::AbstractHTTP> http;
-        HTTP() : http(makeHTTP()) { }
-        ~HTTP(){};
-        void setHostHTTP(
-                const char *const newHost,
-                const int newPort
-        ) {
-            http->setHost(newHost, newPort);
-        };
+private:
+  std::unique_ptr<Ark::Client::AbstractHTTP> http;
+
+public:
+  HTTP() : http(makeHTTP()) { }
+        
+  void setHostHTTP(
+          const char* const newHost,
+          const int newPort
+  ) {
+      http->setHost(newHost, newPort);
+  }
+
+  std::string get(
+    const char* const request
+  ) {
+    return http->get(request);
+  }
+
+  std::string post(
+    const char* const request,
+    const char* body
+  ) {
+    return http->post(request, body);
+  }
 };
 /**/
 
