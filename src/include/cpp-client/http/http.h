@@ -110,7 +110,10 @@ private:
 
 public:
   HTTP() : http(makeHTTP()) { }
-        
+
+  const char* host() const noexcept { return http->host(); };
+  int port() const noexcept { return http->port(); };
+
   void setHostHTTP(
           const char* const newHost,
           const int newPort

@@ -21,7 +21,7 @@ std::string Ark::Client::API::ONE::Delegates::get(
     isUsername ? "?username=" : "?publicKey=",
     parameter
   );
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 /**/
 
@@ -34,7 +34,7 @@ std::string Ark::Client::API::ONE::Delegates::all(int limit)
 {
   char uri[32] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Delegates::base, limit);
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 /**/
 
@@ -45,7 +45,7 @@ std::string Ark::Client::API::ONE::Delegates::all(int limit)
  **/
 std::string Ark::Client::API::ONE::Delegates::count()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Delegates::count);
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::count);
 }
 /**/
 
@@ -59,7 +59,7 @@ std::string Ark::Client::API::ONE::Delegates::search(
 {
   char uri[69 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?q=%s", Ark::Client::API::ONE::Paths::Delegates::search, username);
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 /**/
 
@@ -70,7 +70,7 @@ std::string Ark::Client::API::ONE::Delegates::search(
  **/
 std::string Ark::Client::API::ONE::Delegates::fee()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Delegates::fee);
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::fee);
 }
 /**/
 
@@ -83,7 +83,7 @@ std::string Ark::Client::API::ONE::Delegates::forgedByAccount(const char *const 
 {
   char uri[152 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?generatorPublicKey=%s", Ark::Client::API::ONE::Paths::Delegates::forgedByAccount, generatorPublicKey);
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 /**/
 
@@ -94,7 +94,7 @@ std::string Ark::Client::API::ONE::Delegates::forgedByAccount(const char *const 
  **/
 std::string Ark::Client::API::ONE::Delegates::nextForgers()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Delegates::nextForgers);
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::nextForgers);
 }
 /**/
 
@@ -108,6 +108,6 @@ std::string Ark::Client::API::ONE::Delegates::voters(
 {
   char uri[123 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?publicKey=%s", Ark::Client::API::ONE::Paths::Delegates::voters, publicKey);
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 /**/

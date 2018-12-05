@@ -8,10 +8,10 @@ TEST(api, test_connection)
     int oneVersion = oneConnection.api.version();
     ASSERT_EQ(1, oneVersion);
 
-    const char* oneHost = oneConnection.http->host();
+    const char* oneHost = oneConnection.host();
     ASSERT_STREQ("5.39.9.250", oneHost);
 
-    int onePort = oneConnection.http->port();
+    int onePort = oneConnection.port();
     ASSERT_EQ(4001, onePort);
 
 
@@ -19,9 +19,9 @@ TEST(api, test_connection)
     int twoVersion = twoConnection.api.version();
     ASSERT_EQ(2, twoVersion);
 
-    const char* twoHost = twoConnection.http->host();
+    const char* twoHost = twoConnection.host();
     ASSERT_STREQ("167.114.29.55", twoHost);
 
-    int twoPort = twoConnection.http->port();
+    int twoPort = twoConnection.port();
     ASSERT_EQ(4003, twoPort);
 }

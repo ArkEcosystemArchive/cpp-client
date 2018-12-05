@@ -6,7 +6,7 @@
  **/
 std::string Ark::Client::API::ONE::Loader::autoconfigure()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Loader::autoconfigure);
+  return http_.get(Ark::Client::API::ONE::Paths::Loader::autoconfigure);
 }
 /**/
 
@@ -17,7 +17,7 @@ std::string Ark::Client::API::ONE::Loader::autoconfigure()
  **/
 std::string Ark::Client::API::ONE::Loader::status()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Loader::status);
+  return http_.get(Ark::Client::API::ONE::Paths::Loader::status);
 }
 /**/
 
@@ -28,6 +28,6 @@ std::string Ark::Client::API::ONE::Loader::status()
  **/
 std::string Ark::Client::API::ONE::Loader::sync()
 {
-  return this->http->get(Ark::Client::API::ONE::Paths::Loader::sync);
+  return http_.get(Ark::Client::API::ONE::Paths::Loader::sync);
 }
 /**/
