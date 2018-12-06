@@ -38,7 +38,7 @@ TEST(api, test_two_peer)
     ASSERT_EQ(4002, port);
 
     const char* version = data["version"];
-    ASSERT_STREQ("2.0.11", version);
+    ASSERT_STRNE("", version);
 
     int status = data["status"];
     ASSERT_EQ(200, status);
@@ -109,7 +109,7 @@ TEST(api, test_two_peers)
     ASSERT_EQ(4002, port);
 
     const char* version = dataZero["version"];
-    ASSERT_STREQ("2.0.11", version);
+    ASSERT_STRNE("", version);
 
     const char* os = dataZero["os"];
     ASSERT_STRNE("", os);
