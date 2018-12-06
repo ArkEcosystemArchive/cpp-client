@@ -5,6 +5,7 @@ project(Ark-Cpp-Client-tests)
 hunter_add_package(GTest)
 
 find_package(GTest CONFIG REQUIRED)
+find_package(GMock CONFIG REQUIRED)
 
 include(CTest)
 enable_testing()
@@ -49,7 +50,7 @@ add_executable(Ark-Cpp-Client-tests
 	${TEST_TWO_SRC}
 )
 
-target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib GTest::gtest GTest::main)
+target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib GTest::gtest GMock::gmock GMock::main)
 
 add_test(NAME test COMMAND Ark-Cpp-Client-tests)
 
