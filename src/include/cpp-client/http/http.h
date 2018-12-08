@@ -37,13 +37,14 @@ class AbstractHTTP
     protected:
         char host_[17];
         int port_;
+        int api_version_;
 
-        AbstractHTTP() : host_(), port_(-1) { }
+        AbstractHTTP() : host_(), port_(-1), api_version_(0) { }
 
         AbstractHTTP(AbstractHTTP&&) = delete;
         AbstractHTTP& operator=(AbstractHTTP&&) = delete;
 
-        AbstractHTTP(const AbstractHTTP& other) : port_(other.port_) {
+        AbstractHTTP(const AbstractHTTP& other) : port_(other.port_), api_version_(other.api_version_) {
           strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
         }
 
@@ -51,6 +52,7 @@ class AbstractHTTP
           if (this != &other) {
             strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
             this->port_ = other.port_;
+            this->api_version_ = other.api_version_;
           }
           return *this;
         }
@@ -61,6 +63,7 @@ class AbstractHTTP
         /**/
         const char* host() const noexcept { return this->host_; };
         int port() const noexcept { return this->port_; };
+        int api_version() const noexcept { return this->api_version_; }
 
         /**/
 
@@ -80,12 +83,14 @@ class AbstractHTTP
 
         bool setHost(
                 const char *const newHost,
-                const int newPort
+                int newPort,
+                int api_version
         ) {
             strncpy(this->host_, newHost, sizeof(this->host_) / sizeof(this->host_[0]));
             this->port_ = newPort;
+            this->api_version_ = api_version;
             return (this->port_ == newPort) && strcmp(this->host_, newHost);
-        };
+        }
 };
 /**/
 
@@ -113,12 +118,14 @@ public:
 
   const char* host() const noexcept { return http->host(); };
   int port() const noexcept { return http->port(); };
+  int api_version() const noexcept { return http->api_version(); };
 
   void setHostHTTP(
           const char* const newHost,
-          const int newPort
+          int newPort,
+          int api_version
   ) {
-      http->setHost(newHost, newPort);
+      http->setHost(newHost, newPort, api_version);
   }
 
   std::string get(

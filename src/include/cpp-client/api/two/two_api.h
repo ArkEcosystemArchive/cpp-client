@@ -35,10 +35,6 @@ public:
   Ark::Client::API::TWO::Wallets wallets;
 
   Two() : AbstractApi(2), blocks(http_), delegates(http_), node(http_), peers(http_), transactions(http_), votes(http_), wallets(http_) { }
-
-  void setHost(const char *const newHost, int newPort) {
-    http_.setHostHTTP(newHost, newPort);
-  }
 };
 /***/
 }

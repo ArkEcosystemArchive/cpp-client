@@ -35,10 +35,6 @@ public:
   Ark::Client::API::ONE::Transactions transactions;
         
   One() : AbstractApi(1), accounts(http_), blocks(http_), delegates(http_), loader(http_), peers(http_), signatures(http_), transactions(http_) { }
-
-  void setHost(const char *const newHost, int newPort) {
-    http_.setHostHTTP(newHost, newPort);
-  }
 };
 /**/
 };
