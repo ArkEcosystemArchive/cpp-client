@@ -83,7 +83,7 @@ TEST(api, test_one_blocks_block)
     ASSERT_STREQ("3045022100ceb8d595474bd277ff4e7b652edbeed970f98c02c5b6523020078bb8902ffa4d02206ed0c070d6964687ac2fb264b46911ec21de1265560f047246cdbbbeca524266", blockSignature);
 
     int confirmations = block["confirmations"];
-    ASSERT_TRUE(confirmations > 3000000);
+    ASSERT_GT(confirmations, 3000000);
 
     uint64_t totalForged = block["totalForged"];
     ASSERT_TRUE(totalForged == 240000000);

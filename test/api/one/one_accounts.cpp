@@ -73,31 +73,31 @@ TEST(api, test_one_accounts_delegates)
     JsonObject& delegatesZero = root["delegates"][0];
 
     const char* username = delegatesZero["username"];
-    ASSERT_EQ(NULL, username);
+    ASSERT_EQ(nullptr, username);
     
     const char* address = delegatesZero["address"];
-    ASSERT_EQ(NULL, address);
+    ASSERT_EQ(nullptr, address);
     
     const char* publicKey = delegatesZero["publicKey"];
-    ASSERT_EQ(NULL, publicKey);
+    ASSERT_EQ(nullptr, publicKey);
 
     const char* vote = delegatesZero["vote"];
-    ASSERT_EQ(NULL, vote);
+    ASSERT_EQ(nullptr, vote);
 
     int producedblocks = delegatesZero["producedblocks"];
-    ASSERT_EQ(NULL, producedblocks);
+    ASSERT_EQ(0, producedblocks);
 
     int missedblocks = delegatesZero["missedblocks"];
-    ASSERT_EQ(NULL, missedblocks);
+    ASSERT_EQ(0, missedblocks);
 
     int rate = delegatesZero["rate"];
-    ASSERT_EQ(NULL, rate);
+    ASSERT_EQ(0, rate);
 
     double approval = delegatesZero["approval"];
-    ASSERT_EQ(NULL, approval);
+    ASSERT_EQ(0.0, approval);
 
     double productivity = delegatesZero["productivity"];
-    ASSERT_EQ(NULL, productivity);
+    ASSERT_EQ(0.0, productivity);
 }
 
 TEST(api, test_one_accounts_delegates_fee)

@@ -69,7 +69,7 @@ TEST(api, test_two_transaction)
     ASSERT_STREQ("3045022100dc27398f4f3a24e55dc1ee87900de988254daa3fed71e82f4d6ef85ed4f9d9f8022025d71158cc15672863b2263622026ec19fa9cc9d2e8c78fa79eb2d8f4ef45fc7", signature);
 
     int confirmations = data["confirmations"];
-    ASSERT_TRUE(confirmations > 0);
+    ASSERT_GT(confirmations, 0);
 
 
     JsonObject& timestamp = data["timestamp"];
@@ -177,13 +177,13 @@ TEST(api, test_two_transaction_unconfirmed)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_TRUE(count >= 0);
+    ASSERT_GE(count, 0);
 
     int pageCount = meta["pageCount"];
-    ASSERT_TRUE(pageCount >= 0);
+    ASSERT_GE(pageCount, 0);
 
     int totalCount = meta["totalCount"];
-    ASSERT_TRUE(totalCount >= 0);
+    ASSERT_GE(totalCount, 0);
 }
 
 /* test_two_transactions_transactions
