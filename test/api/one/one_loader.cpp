@@ -5,7 +5,7 @@
 
 TEST(api, test_one_loader_autoconfigure)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto autoconfigureResponse = connection.api.loader.autoconfigure();
 
@@ -36,7 +36,7 @@ TEST(api, test_one_loader_autoconfigure)
 
 TEST(api, test_one_loader_status)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
     
     const auto statusResponse = connection.api.loader.status();
 
@@ -58,7 +58,7 @@ TEST(api, test_one_loader_status)
 
 TEST(api, test_one_loader_sync)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto syncResponse = connection.api.loader.sync();
 

@@ -5,9 +5,9 @@
 
 TEST(api, test_one_peers_peer)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
-    const auto peerResponse = connection.api.peers.get("5.39.9.250", 4001);
+    const auto peerResponse = connection.api.peers.get("5.196.105.32", 4003);
 
     DynamicJsonBuffer jsonBuffer(peerResponse.size());
     JsonObject& root = jsonBuffer.parseObject(peerResponse);
@@ -54,7 +54,7 @@ TEST(api, test_one_peers_peer)
 
 TEST(api, test_one_peers_peers)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto peersResponse = connection.api.peers.all(5);
 
@@ -94,7 +94,7 @@ TEST(api, test_one_peers_peers)
 
 TEST(api, test_one_peers_version)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto versionResponse = connection.api.peers.version();
 

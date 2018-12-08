@@ -31,7 +31,7 @@
  */
 TEST(api, test_one_blocks_block)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockResponse = connection.api.blocks.get("10000414802057079451");
 
@@ -91,7 +91,7 @@ TEST(api, test_one_blocks_block)
 
 TEST(api, test_one_blocks_blocks)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blocksResponse = connection.api.blocks.all();
 
@@ -112,7 +112,7 @@ TEST(api, test_one_blocks_blocks)
 
 TEST(api, test_one_blocks_epoch)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto epochResponse = 	connection.api.blocks.epoch();
 
@@ -128,7 +128,7 @@ TEST(api, test_one_blocks_epoch)
 
 TEST(api, test_one_blocks_fee)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockFeeResponse = connection.api.blocks.fee();
 
@@ -144,7 +144,7 @@ TEST(api, test_one_blocks_fee)
 
 TEST(api, test_one_blocks_fees)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockFeesResponse = connection.api.blocks.fees();
 
@@ -175,7 +175,7 @@ TEST(api, test_one_blocks_fees)
 
 TEST(api, test_one_blocks_height)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockHeightResponse = connection.api.blocks.height();
 
@@ -195,7 +195,7 @@ TEST(api, test_one_blocks_height)
 #if 0
 TEST(api, test_one_blocks_milestone)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockMilestoneResponse = connection.api.blocks.milestone();
 
@@ -212,7 +212,7 @@ TEST(api, test_one_blocks_milestone)
 
 TEST(api, test_one_blocks_nethash)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto nethashResponse = connection.api.blocks.nethash();
 
@@ -228,7 +228,7 @@ TEST(api, test_one_blocks_nethash)
 
 TEST(api, test_one_blocks_reward)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockRewardResponse = connection.api.blocks.reward();
 
@@ -245,7 +245,7 @@ TEST(api, test_one_blocks_reward)
 #if 0
 TEST(api, test_one_blocks_status)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockStatusResponse = connection.api.blocks.status();
 
@@ -280,7 +280,7 @@ TEST(api, test_one_blocks_status)
 
 TEST(api, test_one_blocks_supply)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto blockSupplyResponse = connection.api.blocks.supply();
 

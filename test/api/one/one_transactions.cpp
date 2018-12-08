@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_transactions_transaction)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionResponse = connection.api.transactions.get(transactionID);
 
@@ -64,7 +64,7 @@ TEST(api, test_one_transactions_transaction)
 
 TEST(api, test_one_transactions_transactions)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionsResponse = connection.api.transactions.all();
 
