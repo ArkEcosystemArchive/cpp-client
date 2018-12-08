@@ -18,10 +18,10 @@ TEST(api, test_one_peers_peer)
     JsonObject& peer = root["peer"];
 
     const char* ip = peer["ip"];
-    ASSERT_STREQ("5.39.9.250", ip);
+    ASSERT_STREQ("5.196.105.32", ip);
 
     int port = peer["port"];
-    ASSERT_EQ(4001, port);
+    ASSERT_EQ(4003, port);
 
     const char* version = peer["version"];
     ASSERT_STRNE("", version);
@@ -70,7 +70,7 @@ TEST(api, test_one_peers_peers)
     ASSERT_STRNE("", ip);
 
     int port = peersZero["port"];
-    ASSERT_EQ(4001, port);
+    ASSERT_EQ(4003, port);
 
     int version = peersZero["version"];
     ASSERT_NE(0, version);
@@ -110,5 +110,5 @@ TEST(api, test_one_peers_version)
     // ASSERT_STREQ("2.0.0", version);
 
     const char* build = root["build"];
-    ASSERT_STRNE(NULL, build);
+    ASSERT_STRNE("", build);
 }
