@@ -419,8 +419,7 @@ TEST(api, test_two_wallets_votes)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_TRUE(count > 0);
-
+    ASSERT_GT(count, 0);
 
     JsonObject& data = root["data"][0];
 
