@@ -22,7 +22,6 @@
  *          "payloadLength": 128,
  *          "payloadHash": "1ef9fad890a276cc184950571145998d43bd80b2f6e8bd1c8ac1ae33aeb02cea",
  *          "generatorPublicKey": "034682a4c4d2c8c0bc5f966dd422a83d2b433e212ef1f334f82cc3fe4676240933",
- *          "generatorId": "AdBSvLKPp6pMp5ZDsxkgjFu6KeCokncSMk",
  *          "blockSignature": "3045022100ceb8d595474bd277ff4e7b652edbeed970f98c02c5b6523020078bb8902ffa4d02206ed0c070d6964687ac2fb264b46911ec21de1265560f047246cdbbbeca524266",
  *          "confirmations": 3119185,
  *          "totalForged": "240000000"
@@ -75,9 +74,6 @@ TEST(api, test_one_blocks_block)
 
     const char* generatorPublicKey = block["generatorPublicKey"];
     ASSERT_STREQ("034682a4c4d2c8c0bc5f966dd422a83d2b433e212ef1f334f82cc3fe4676240933", generatorPublicKey);
-
-    const char* generatorId = block["generatorId"];
-    ASSERT_STREQ("AdBSvLKPp6pMp5ZDsxkgjFu6KeCokncSMk", generatorId);
 
     const char* blockSignature = block["blockSignature"];
     ASSERT_STREQ("3045022100ceb8d595474bd277ff4e7b652edbeed970f98c02c5b6523020078bb8902ffa4d02206ed0c070d6964687ac2fb264b46911ec21de1265560f047246cdbbbeca524266", blockSignature);
