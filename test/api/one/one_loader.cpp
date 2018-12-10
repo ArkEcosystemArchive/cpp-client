@@ -47,7 +47,7 @@ TEST(api, test_one_loader_status)
     ASSERT_TRUE(success);
 
     bool loaded = root["loaded"];
-    ASSERT_FALSE(loaded);
+    ASSERT_TRUE(loaded);
 
     int now = root["now"];
     ASSERT_NE(0, now);
