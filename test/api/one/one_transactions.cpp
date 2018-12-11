@@ -28,9 +28,6 @@ TEST(api, test_one_transactions_transaction)
     const char* blockid = transaction["blockid"];
     ASSERT_STREQ("4115750139916005265", blockid);
     
-    int height = transaction["height"];
-    ASSERT_EQ(2695914, height);
-    
     int type = transaction["type"];
     ASSERT_EQ(0, type);
     
