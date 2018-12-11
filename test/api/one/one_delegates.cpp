@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_delegates_fee)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateFeeResponse = connection.api.delegates.fee();
 
@@ -26,7 +26,7 @@ TEST(api, test_one_delegates_fee)
 
 TEST(api, test_one_delegates_forged_by_account)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto forgedByAccountResponse = connection.api.delegates.forgedByAccount(publicKey);
 
@@ -48,7 +48,7 @@ TEST(api, test_one_delegates_forged_by_account)
 
 TEST(api, test_one_delegates_next_forgers)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto nextForgersResponse = connection.api.delegates.nextForgers();
 
@@ -74,7 +74,7 @@ TEST(api, test_one_delegates_next_forgers)
 
 TEST(api, test_one_delegates_delegate_by_public_key)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     auto delegateResponse = connection.api.delegates.get(publicKey);
 
@@ -113,7 +113,7 @@ TEST(api, test_one_delegates_delegate_by_public_key)
 
 TEST(api, test_one_delegates_delegate_by_username)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateResponse = connection.api.delegates.get("acf");
 
@@ -152,7 +152,7 @@ TEST(api, test_one_delegates_delegate_by_username)
 
 TEST(api, test_one_delegates_delegates)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegatesResponse = connection.api.delegates.all();
 
@@ -198,7 +198,7 @@ TEST(api, test_one_delegates_delegates)
 
 TEST(api, test_one_delegates_voters)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto votersResponse = connection.api.delegates.voters(publicKey);
 
@@ -237,7 +237,7 @@ TEST(api, test_one_delegates_voters)
 
 TEST(api, test_one_delegates_search)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateResponse = connection.api.delegates.get("acf");
 
@@ -276,7 +276,7 @@ TEST(api, test_one_delegates_search)
 
 TEST(api, test_one_delegates_count)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegatesCountResponse = connection.api.delegates.count();
 

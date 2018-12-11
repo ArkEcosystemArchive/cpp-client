@@ -34,17 +34,7 @@ public:
   Ark::Client::API::ONE::Signatures signatures;
   Ark::Client::API::ONE::Transactions transactions;
         
-  One() : AbstractApi(1) { }
-
-  void setHost(const char *const newHost, int newPort) {
-    this->accounts.setHost(newHost, newPort);
-    this->blocks.setHost(newHost, newPort);
-    this->delegates.setHost(newHost, newPort);
-    this->loader.setHost(newHost, newPort);
-    this->peers.setHost(newHost, newPort);
-    this->signatures.setHost(newHost, newPort);
-    this->transactions.setHost(newHost, newPort);
-  }
+  One() : AbstractApi(1), accounts(http_), blocks(http_), delegates(http_), loader(http_), peers(http_), signatures(http_), transactions(http_) { }
 };
 /**/
 };

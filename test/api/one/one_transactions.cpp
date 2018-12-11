@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_transactions_transaction)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionResponse = connection.api.transactions.get(transactionID);
 
@@ -27,9 +27,6 @@ TEST(api, test_one_transactions_transaction)
     
     const char* blockid = transaction["blockid"];
     ASSERT_STREQ("4115750139916005265", blockid);
-    
-    int height = transaction["height"];
-    ASSERT_EQ(2695914, height);
     
     int type = transaction["type"];
     ASSERT_EQ(0, type);
@@ -64,7 +61,7 @@ TEST(api, test_one_transactions_transaction)
 
 TEST(api, test_one_transactions_transactions)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionsResponse = connection.api.transactions.all();
 

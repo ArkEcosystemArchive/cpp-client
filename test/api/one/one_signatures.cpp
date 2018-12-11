@@ -5,7 +5,7 @@
 
 TEST(api, test_one_signature_fees)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto signaturesFeeResponse = connection.api.signatures.fee();
 

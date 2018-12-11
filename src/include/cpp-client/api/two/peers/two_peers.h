@@ -21,7 +21,7 @@ namespace TWO {
 class Peers : public ApiBase
 {
 public:
-  Peers() = default;
+  Peers(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const ip);
   std::string all(int limit = 5, int page = 1);

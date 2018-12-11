@@ -8,7 +8,7 @@ std::string Ark::Client::API::TWO::Votes::get(const char *const identifier)
 {
   char uri[96] = { };
   snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Votes::base, identifier);
-  return this->http->get(uri);
+  return http_.get(uri);
 }
 
 /***/
@@ -19,5 +19,5 @@ std::string Ark::Client::API::TWO::Votes::all(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Votes::base, limit, page);
-  return this->http->get(uri);
+  return http_.get(uri);
 }

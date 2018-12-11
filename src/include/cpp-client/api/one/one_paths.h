@@ -20,7 +20,7 @@ namespace Accounts
 {
     const auto base = "/api/accounts";
     const auto balance = "/api/accounts/getBalance";
-    const auto publicKey = "/api/accounts/getPublickey";
+    const auto publicKey = "/api/accounts/getPublicKey";
     const auto delegates = "/api/accounts/delegates";
     const auto delegatesFee = "/api/accounts/delegates/fee";
 }

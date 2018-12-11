@@ -21,7 +21,7 @@ namespace TWO {
 class Delegates : public ApiBase
 {
 public:
-  Delegates() = default;
+  Delegates(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);

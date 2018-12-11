@@ -22,7 +22,7 @@ namespace ONE {
 class Transactions : public ApiBase
 {
 public:
-  Transactions() = default;
+  Transactions(HTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const id);
   std::string all(int limit = 5, const char *const orderBy = "timestamp", bool isDescending = true);

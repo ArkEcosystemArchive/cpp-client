@@ -22,7 +22,7 @@ namespace ONE {
 class Loader : public ApiBase
 {
 public:
-  Loader() = default;
+  Loader(HTTP& http) : ApiBase(http) { }
 
   std::string autoconfigure();
   std::string status();
