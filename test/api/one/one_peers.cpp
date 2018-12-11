@@ -7,7 +7,7 @@ TEST(api, test_one_peers_peer)
 {
     Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
-    const auto peerResponse = connection.api.peers.get("5.196.105.32", 4003);
+    const auto peerResponse = connection.api.peers.get("46.105.160.104", 4001);
 
     DynamicJsonBuffer jsonBuffer(peerResponse.size());
     JsonObject& root = jsonBuffer.parseObject(peerResponse);
@@ -18,10 +18,10 @@ TEST(api, test_one_peers_peer)
     JsonObject& peer = root["peer"];
 
     const char* ip = peer["ip"];
-    ASSERT_STREQ("5.196.105.32", ip);
+    ASSERT_STREQ("46.105.160.104", ip);
 
     int port = peer["port"];
-    ASSERT_EQ(4003, port);
+    ASSERT_EQ(4001, port);
 
     const char* version = peer["version"];
     ASSERT_STRNE("", version);
@@ -38,7 +38,7 @@ TEST(api, test_one_peers_peer)
     ASSERT_GE(height, 0);
 
     const char* status = peer["status"];
-    ASSERT_STREQ("OK", status);
+    ASSERT_STREQ("200", status);
 
     int delay = peer["delay"];
     ASSERT_NE(0, delay);
@@ -70,13 +70,13 @@ TEST(api, test_one_peers_peers)
     ASSERT_STRNE("", ip);
 
     int port = peersZero["port"];
-    ASSERT_EQ(4003, port);
+    ASSERT_EQ(4001, port);
 
     int version = peersZero["version"];
     ASSERT_NE(0, version);
 
     int errors = peersZero["errors"];
-    ASSERT_NE(0, errors);
+    ASSERT_EQ(0, errors);
 
     const char* os = peersZero["os"];
     ASSERT_STRNE("", os);
