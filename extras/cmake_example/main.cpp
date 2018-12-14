@@ -6,7 +6,7 @@
 int main(int argc, char* argv[]) {
 
   // Create a connection
-  Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+  Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
   
   // Check the API Version
   const auto apiVersion = connection.api.version();

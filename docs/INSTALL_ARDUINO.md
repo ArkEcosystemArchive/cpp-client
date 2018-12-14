@@ -46,7 +46,7 @@ void setup() {
   Serial.print("\nConnected, IP address: ");
   Serial.println(WiFi.localIP());
 
-  Ark::Client::Connection<Ark::Client::API::Two> connection(CustomNetwork);
+  Ark::Client::Connection<Ark::Client::Api> connection(CustomNetwork);
 
   Serial.println(arkClient.blocks.all().c_str());
   Serial.println();

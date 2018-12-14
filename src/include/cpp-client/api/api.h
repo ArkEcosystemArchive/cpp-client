@@ -10,32 +10,42 @@
 #ifndef API_H
 #define API_H
 
-#include "http/http.h"
+#include "api/api.h"
+#include "api/abstract.h"
+#include "api/blocks/blocks.h"
+#include "api/delegates/delegates.h"
+#include "api/node/node.h"
+#include "api/peers/peers.h"
+#include "api/transactions/transactions.h"
+#include "api/votes/votes.h"
+#include "api/wallets/wallets.h"
 
 namespace Ark {
 namespace Client {
-
-/**
- * Ark::Client::AbstractApi 
- **/
-class AbstractApi {
-protected:
-  HTTP http_;
-  int version_;
-
-  AbstractApi(int version) : version_(version) { }
-
+/***/
+class Api : public API::Abstract
+{
 public:
-  int version() const noexcept { return this->version_; }
-  const char* host() const noexcept { return http_.host(); };
-  int port() const noexcept { return http_.port(); };
+  Ark::Client::API::Blocks blocks;
+  Ark::Client::API::Delegates delegates;
+  Ark::Client::API::Node node;
+  Ark::Client::API::Peers peers;
+  Ark::Client::API::Transactions transactions;
+  Ark::Client::API::Votes votes;
+  Ark::Client::API::Wallets wallets;
 
-  void setHost(const char *const newHost, int newPort) {
-    http_.setHostHTTP(newHost, newPort, version_);
-  }
+  Api() :
+      API::Abstract(2),
+      blocks(http_),
+      delegates(http_),
+      node(http_),
+      peers(http_),
+      transactions(http_),
+      votes(http_),
+      wallets(http_) { }
 };
-/**/
-};
-};
+/***/
+}
+}
 
 #endif
