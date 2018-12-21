@@ -10,7 +10,7 @@
 #ifndef ONE_LOADER_H
 #define ONE_LOADER_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 #include <string>
 
@@ -19,10 +19,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Loader : public ApiBase
+class Loader : public API::Base
 {
 public:
-  Loader(HTTP& http) : ApiBase(http) { }
+  Loader(HTTP& http) : API::Base(http) { }
 
   std::string autoconfigure();
   std::string status();

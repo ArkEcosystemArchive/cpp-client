@@ -10,7 +10,7 @@
 #ifndef TWO_WALLETS_H
 #define TWO_WALLETS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 #include <string>
 
@@ -19,10 +19,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Wallets : public ApiBase
+class Wallets : public API::Base
 {
 public:
-  Wallets(HTTP& http) : ApiBase(http) { }
+  Wallets(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const identifier, int limit = 5, int page = 1);
   std::string all(int limit = 5, int page = 1);

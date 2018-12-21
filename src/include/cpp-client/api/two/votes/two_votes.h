@@ -10,7 +10,7 @@
 #ifndef TWO_VOTES_H
 #define TWO_VOTES_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Votes : public ApiBase
+class Votes : public API::Base
 {
 public:
-  Votes(HTTP& http) : ApiBase(http) { }
+  Votes(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);
