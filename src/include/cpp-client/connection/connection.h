@@ -18,15 +18,15 @@
 namespace Ark {
 namespace Client {
 /**
- * Ark::Client::Connection<VersionedAPI>
+ * Ark::Client::Connection<API_INTERFACE>
  **/
-template <typename AbstractApi>
+template <typename API_INTERFACE>
 class Connection {
 public:
-  AbstractApi api;
+  API_INTERFACE api;
 
   Connection() = default;
-  Connection(const AbstractApi& other) : api(other) {}
+  Connection(const API_INTERFACE& other) : api(other) {}
 
   Connection(
     const char *const newHost,
