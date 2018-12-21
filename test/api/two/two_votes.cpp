@@ -152,7 +152,7 @@ TEST(api, test_two_votes)
     ASSERT_EQ(3, type);
 
     uint64_t fee = dataZero["fee"];
-    ASSERT_TRUE(fee == 98500000);
+    ASSERT_GT(fee, 0);
 
     int confirmations = dataZero["confirmations"];
     ASSERT_NE(0, confirmations);
