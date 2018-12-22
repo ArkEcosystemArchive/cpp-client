@@ -22,16 +22,6 @@ set(TEST_API_SRC
 	${PROJECT_SOURCE_DIR}/connection/connection.cpp
 )
 
-set(TEST_ONE_SRC
-	${PROJECT_SOURCE_DIR}/api/one/one_accounts.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_blocks.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_delegates.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_loader.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_peers.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_signatures.cpp
-	${PROJECT_SOURCE_DIR}/api/one/one_transactions.cpp
-)
-
 set(TEST_TWO_SRC
 	${PROJECT_SOURCE_DIR}/api/two/two_blocks.cpp
 	${PROJECT_SOURCE_DIR}/api/two/two_delegates.cpp
@@ -46,7 +36,6 @@ find_library(Ark-Cpp-Client-tests PUBLIC)
 
 add_executable(Ark-Cpp-Client-tests
 	${TEST_API_SRC}
-	${TEST_ONE_SRC}
 	${TEST_TWO_SRC}
 )
 
