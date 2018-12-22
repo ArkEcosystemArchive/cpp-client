@@ -19,9 +19,10 @@ namespace Client {
  **/
 class ApiBase {
 protected:
-  HTTP& http_;
+  IHTTP* http_;
 
-  ApiBase(HTTP& http) : http_(http) { }
+  template <typename HTTPType>
+  ApiBase(HTTPType& http) : http_(static_cast<IHTTP*>(&http)) { }
 };
 /**/
 };

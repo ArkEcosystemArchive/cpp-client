@@ -10,7 +10,7 @@ std::string Ark::Client::API::TWO::Wallets::get(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s/%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Wallets::base, identifier, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -21,7 +21,7 @@ std::string Ark::Client::API::TWO::Wallets::all(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Wallets::base, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -32,7 +32,7 @@ std::string Ark::Client::API::TWO::Wallets::top(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Wallets::top, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -52,7 +52,7 @@ std::string Ark::Client::API::TWO::Wallets::transactions(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -72,7 +72,7 @@ std::string Ark::Client::API::TWO::Wallets::transactionsSent(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -92,7 +92,7 @@ std::string Ark::Client::API::TWO::Wallets::transactionsReceived(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -112,7 +112,7 @@ std::string Ark::Client::API::TWO::Wallets::votes(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -136,5 +136,5 @@ std::string Ark::Client::API::TWO::Wallets::search(
   parameterBuffer += body.first;
   parameterBuffer += "=";
   parameterBuffer += body.second;
-  return http_.post(uri, parameterBuffer.c_str());
+  return http_->post(uri, parameterBuffer.c_str());
 }

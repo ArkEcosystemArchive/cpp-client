@@ -19,19 +19,34 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Wallets : public ApiBase
+class IWallets : public ApiBase
 {
 public:
-  Wallets(HTTP& http) : ApiBase(http) { }
+  IWallets(IHTTP& http) : ApiBase(http) { }
 
-  std::string get(const char *const identifier, int limit = 5, int page = 1);
-  std::string all(int limit = 5, int page = 1);
-  std::string top(int limit = 5, int page = 1);
-  std::string transactions(const char *const identifier, int limit = 5, int page = 1);
-  std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1);
-  std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1);
-  std::string votes(const char *const identifier, int limit = 5, int page = 1);
-  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
+  virtual std::string get(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+  virtual std::string top(int limit = 5, int page = 1) = 0;
+  virtual std::string transactions(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string votes(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1) = 0;
+};
+
+class Wallets : public IWallets
+{
+public:
+  Wallets(IHTTP& http) : IWallets(http) { }
+
+  std::string get(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string all(int limit = 5, int page = 1) override;
+  std::string top(int limit = 5, int page = 1) override;
+  std::string transactions(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string votes(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1) override;
 };
 
 };

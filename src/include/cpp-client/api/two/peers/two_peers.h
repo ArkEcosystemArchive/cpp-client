@@ -18,13 +18,23 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Peers : public ApiBase
+class IPeers : public ApiBase
+{
+protected:
+  IPeers(IHTTP& http) : ApiBase(http) { }
+
+public:
+  virtual std::string get(const char *const ip) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+};
+
+class Peers : public IPeers
 {
 public:
-  Peers(HTTP& http) : ApiBase(http) { }
+  Peers(IHTTP& http) : IPeers(http) { }
 
-  std::string get(const char *const ip);
-  std::string all(int limit = 5, int page = 1);
+  std::string get(const char *const ip) override;
+  std::string all(int limit = 5, int page = 1) override;
 };
 
 };

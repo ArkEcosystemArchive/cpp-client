@@ -21,7 +21,7 @@ namespace ONE {
 class Peers : public ApiBase
 {
 public:
-  Peers(HTTP& http) : ApiBase(http) { }
+  Peers(IHTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const ip, const int port);
   std::string all(int limit = 5);

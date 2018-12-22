@@ -22,7 +22,7 @@ namespace ONE {
 class Signatures : public ApiBase
 {
 public:
-  Signatures(HTTP& http) : ApiBase(http) { }
+  Signatures(IHTTP& http) : ApiBase(http) { }
 
   std::string fee();
 };

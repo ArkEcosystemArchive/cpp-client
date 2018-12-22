@@ -21,7 +21,7 @@ namespace ONE {
 class Blocks : public ApiBase
 {
 public:
-  Blocks(HTTP& http) : ApiBase(http) { }
+  Blocks(IHTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const blockId);
   std::string all(const char *const orderBy = "height", bool isDescending = true, int limit = 10);

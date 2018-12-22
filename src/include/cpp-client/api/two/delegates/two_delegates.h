@@ -18,15 +18,27 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Delegates : public ApiBase
+class IDelegates : public ApiBase
+{
+protected:
+  IDelegates(IHTTP& http) : ApiBase(http) { }
+
+public:
+  virtual std::string get(const char *const identifier) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+  virtual std::string blocks(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string voters(const char *const identifier, int limit = 5, int page = 1) = 0;
+};
+
+class Delegates : public IDelegates
 {
 public:
-  Delegates(HTTP& http) : ApiBase(http) { }
+  Delegates(IHTTP& http) : IDelegates(http) { }
 
-  std::string get(const char *const identifier);
-  std::string all(int limit = 5, int page = 1);
-  std::string blocks(const char *const identifier, int limit = 5, int page = 1);
-  std::string voters(const char *const identifier, int limit = 5, int page = 1);
+  std::string get(const char *const identifier) override;
+  std::string all(int limit = 5, int page = 1) override;
+  std::string blocks(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string voters(const char *const identifier, int limit = 5, int page = 1) override;
 };
 
 };

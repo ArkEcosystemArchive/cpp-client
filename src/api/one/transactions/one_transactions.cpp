@@ -10,7 +10,7 @@ std::string Ark::Client::API::ONE::Transactions::get(const char *const id)
 {
   char uri[114 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Transactions::get, id);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -34,7 +34,7 @@ std::string Ark::Client::API::ONE::Transactions::all(
     isDescending ? "desc" : "asc",
     limit
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -47,7 +47,7 @@ std::string Ark::Client::API::ONE::Transactions::getUnconfirmed(const char *cons
 {
   char uri[126 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Transactions::getUnconfirmed, id);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -58,6 +58,6 @@ std::string Ark::Client::API::ONE::Transactions::getUnconfirmed(const char *cons
  **/
 std::string Ark::Client::API::ONE::Transactions::allUnconfirmed()
 {
-  return http_.get(Ark::Client::API::ONE::Paths::Transactions::allUnconfirmed);
+  return http_->get(Ark::Client::API::ONE::Paths::Transactions::allUnconfirmed);
 }
 /**/

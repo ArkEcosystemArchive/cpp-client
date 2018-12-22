@@ -16,14 +16,27 @@
 
 namespace Ark {
 namespace Client {
-/***
- * Ark::Client::HTTP
- * @brief: Forward Delcaration
- **/
-class HTTP;
-/**/
 
-/***/
+class IHTTP {
+protected:
+  IHTTP() = default;
+
+public:
+  virtual const char* host() const /*noexcept*/ = 0;
+  virtual int port() const /*noexcept*/ = 0;
+  virtual int api_version() const /*noexcept*/ = 0;
+
+  virtual bool setHost(
+    const char *const newHost,
+    int newPort,
+    int api_version
+  ) = 0;
+
+  virtual std::string get(const char *const request) = 0;
+  virtual std::string post(const char *const request, const char *body) = 0;
+
+  /**/
+};
 
 /***
  * Ark::Client::AbstractHTTP
@@ -32,7 +45,7 @@ class HTTP;
  * entry point for integrating the HTTPClient
  * library for different boards/chipsets
  **/
-class AbstractHTTP
+class AbstractHTTP : public IHTTP
 {
     protected:
         char host_[17];
@@ -61,31 +74,15 @@ class AbstractHTTP
         virtual ~AbstractHTTP() {};
 
         /**/
-        const char* host() const noexcept { return this->host_; };
-        int port() const noexcept { return this->port_; };
-        int api_version() const noexcept { return this->api_version_; }
-
-        /**/
-
-        virtual std::string get(
-                const char *const request
-        ) = 0;
-
-        /**/
-
-        virtual std::string post(
-                const char *const request,
-                const char *body
-        ) = 0;
-
-        /**/
-
+        const char* host() const /*noexcept*/ override { return this->host_; };
+        int port() const /*noexcept*/ override { return this->port_; };
+        int api_version() const /*noexcept*/ override { return this->api_version_; }
 
         bool setHost(
                 const char *const newHost,
                 int newPort,
                 int api_version
-        ) {
+        ) override {
             strncpy(this->host_, newHost, sizeof(this->host_) / sizeof(this->host_[0]));
             this->port_ = newPort;
             this->api_version_ = api_version;
@@ -99,47 +96,11 @@ class AbstractHTTP
 /***
  * HTTP object factory
  **/
-std::unique_ptr<AbstractHTTP> makeHTTP();
+std::unique_ptr<IHTTP> makeHTTP();
 /**/
 
+
 };
-};
-
-/***
- * Ark::Client::HTTP
- **/
-class Ark::Client::HTTP
-{
-private:
-  std::unique_ptr<Ark::Client::AbstractHTTP> http;
-
-public:
-  HTTP() : http(makeHTTP()) { }
-
-  const char* host() const noexcept { return http->host(); };
-  int port() const noexcept { return http->port(); };
-  int api_version() const noexcept { return http->api_version(); };
-
-  void setHostHTTP(
-          const char* const newHost,
-          int newPort,
-          int api_version
-  ) {
-      http->setHost(newHost, newPort, api_version);
-  }
-
-  std::string get(
-    const char* const request
-  ) {
-    return http->get(request);
-  }
-
-  std::string post(
-    const char* const request,
-    const char* body
-  ) {
-    return http->post(request, body);
-  }
 };
 /**/
 

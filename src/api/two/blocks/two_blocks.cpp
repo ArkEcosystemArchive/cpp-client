@@ -7,7 +7,7 @@ std::string Ark::Client::API::TWO::Blocks::get(const char *const blockId)
 {
   char uri[80] = { };
   snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Blocks::base, blockId);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -18,7 +18,7 @@ std::string Ark::Client::API::TWO::Blocks::all(
 ) {
   char uri[256] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Blocks::base, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -27,7 +27,7 @@ std::string Ark::Client::API::TWO::Blocks::transactions(const char *const blockI
 {
   char uri[256] = {  };
   snprintf(uri, sizeof(uri), "%s/%s/transactions", Ark::Client::API::TWO::Paths::Blocks::base, blockId);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -44,5 +44,5 @@ std::string Ark::Client::API::TWO::Blocks::search(
   parameterBuffer += bodyParameters.first;
   parameterBuffer += "=";
   parameterBuffer += bodyParameters.second;
-  return http_.post(uri, parameterBuffer.c_str());
+  return http_->post(uri, parameterBuffer.c_str());
 }
