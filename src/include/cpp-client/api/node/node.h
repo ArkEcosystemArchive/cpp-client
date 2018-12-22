@@ -17,14 +17,23 @@ namespace Ark {
 namespace Client {
 namespace API {
 
-class Node : public API::Base
+class INode : public API::Base
 {
-  public:
-    Node(IHTTP& http) : API::Base(http) { }
+protected:
+  INode(IHTTP& http) : API::Base(http) { }
 
-    std::string configuration();
-    std::string status();
-    std::string syncing();
+  virtual std::string configuration() = 0;
+  virtual std::string status() = 0;
+  virtual std::string syncing() = 0;
+};
+
+class Node : public INode {
+public:
+  Node(IHTTP& http) : INode(http) { }
+
+  std::string configuration() override;
+  std::string status() override;
+  std::string syncing() override;
 };
 
 };

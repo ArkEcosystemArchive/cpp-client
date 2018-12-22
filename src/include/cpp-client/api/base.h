@@ -23,7 +23,7 @@ protected:
   IHTTP* http_;
 
   template <typename HTTPType>
-  Base(HTTPType& http) : http_(static_cast<IHTTP*>(&http)) { }
+  explicit Base(HTTPType& http) : http_(static_cast<IHTTP*>(&http)) { }
 };
 /**/
 };

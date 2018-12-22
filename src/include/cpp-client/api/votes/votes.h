@@ -17,13 +17,23 @@ namespace Ark {
 namespace Client {
 namespace API {
 
-class Votes : public API::Base
+class IVotes : public API::Base
 {
-  public:
-    Votes(HTTP& http) : API::Base(http) { }
+protected:
+  IVotes(IHTTP& http) : API::Base(http) { }
 
-    std::string get(const char *const identifier);
-    std::string all(int limit = 5, int page = 1);
+public:
+  virtual std::string get(const char *const identifier) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+};
+
+class Votes : public IVotes
+{
+public:
+  Votes(IHTTP& http) : IVotes(http) { }
+
+  std::string get(const char *const identifier) override;
+  std::string all(int limit = 5, int page = 1) override;
 };
 
 };
