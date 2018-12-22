@@ -20,7 +20,7 @@ namespace API {
 class Node : public API::Base
 {
   public:
-    Node(HTTP& http) : API::Base(http) { }
+    Node(IHTTP& http) : API::Base(http) { }
 
     std::string configuration();
     std::string status();

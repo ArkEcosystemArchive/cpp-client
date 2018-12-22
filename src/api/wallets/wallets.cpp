@@ -52,7 +52,7 @@ std::string Ark::Client::API::Wallets::transactions(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -72,7 +72,7 @@ std::string Ark::Client::API::Wallets::transactionsSent(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -92,7 +92,7 @@ std::string Ark::Client::API::Wallets::transactionsReceived(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -112,7 +112,7 @@ std::string Ark::Client::API::Wallets::votes(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/

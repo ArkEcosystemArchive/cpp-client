@@ -10,42 +10,32 @@
 #ifndef API_H
 #define API_H
 
-#include "api/api.h"
-#include "api/abstract.h"
-#include "api/blocks/blocks.h"
-#include "api/delegates/delegates.h"
-#include "api/node/node.h"
-#include "api/peers/peers.h"
-#include "api/transactions/transactions.h"
-#include "api/votes/votes.h"
-#include "api/wallets/wallets.h"
+#include "http/http.h"
 
 namespace Ark {
 namespace Client {
-/***/
-class Api : public API::Abstract
-{
-  public:
-    API::Blocks blocks;
-    API::Delegates delegates;
-    API::Node node;
-    API::Peers peers;
-    API::Transactions transactions;
-    API::Votes votes;
-    API::Wallets wallets;
 
-    Api() :
-        API::Abstract(2),
-        blocks(http_),
-        delegates(http_),
-        node(http_),
-        peers(http_),
-        transactions(http_),
-        votes(http_),
-        wallets(http_) {}
+/**
+ * Ark::Client::AbstractApi 
+ **/
+class AbstractApi {
+protected:
+  HTTP http_;
+  int version_;
+
+  AbstractApi(int version) : version_(version) { }
+
+public:
+  int version() const noexcept { return this->version_; }
+  const char* host() const noexcept { return http_.host(); };
+  int port() const noexcept { return http_.port(); };
+
+  void setHost(const char *const newHost, int newPort) {
+    http_->setHost(newHost, newPort, version_);
+  }
 };
-/***/
-}
-}
+/**/
+};
+};
 
 #endif
