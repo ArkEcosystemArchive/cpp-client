@@ -21,7 +21,7 @@ namespace ONE {
 class Delegates : public API::Base
 {
 public:
-  Delegates(HTTP& http) : API::Base(http) { }
+  Delegates(IHTTP& http) : ApiBase(http) { }
 
   std::string get(const char *const parameter);
   std::string all(int limit = 5);

@@ -10,7 +10,7 @@ std::string Ark::Client::API::TWO::Transactions::getUnconfirmed(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?id=%s&limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::unconfirmed, identifier, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -21,7 +21,7 @@ std::string Ark::Client::API::TWO::Transactions::all(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::base, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -33,7 +33,7 @@ std::string Ark::Client::API::TWO::Transactions::get(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s/%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::base, identifier, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -44,7 +44,7 @@ std::string Ark::Client::API::TWO::Transactions::allUnconfirmed(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::unconfirmed, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -55,7 +55,7 @@ std::string Ark::Client::API::TWO::Transactions::types(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::types, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 std::string Ark::Client::API::TWO::Transactions::search(const std::map<std::string, std::string>& body_parameters, int limit /* = 5 */, int page /* = 1 */) {

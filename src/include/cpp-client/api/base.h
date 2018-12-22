@@ -20,9 +20,10 @@ namespace API {
  **/
 class Base {
 protected:
-  HTTP& http_;
+  IHTTP* http_;
 
-  Base(HTTP& http) : http_(http) { }
+  template <typename HTTPType>
+  explicit Base(HTTPType& http) : http_(static_cast<IHTTP*>(&http)) { }
 };
 /**/
 };

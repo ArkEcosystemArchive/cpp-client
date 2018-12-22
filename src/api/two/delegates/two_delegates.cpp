@@ -7,7 +7,7 @@ std::string Ark::Client::API::TWO::Delegates::get(const char *const identifier)
 {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Delegates::base, identifier);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -18,7 +18,7 @@ std::string Ark::Client::API::TWO::Delegates::all(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Delegates::base, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -30,7 +30,7 @@ std::string Ark::Client::API::TWO::Delegates::blocks(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s/%s/blocks?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Delegates::base, identifier, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -42,5 +42,5 @@ std::string Ark::Client::API::TWO::Delegates::voters(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s/%s/voters?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Delegates::base, identifier, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }

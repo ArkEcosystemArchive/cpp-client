@@ -21,10 +21,24 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Transactions : public API::Base
+class ITransactions : public API::Base
+{
+protected:
+  ITransactions(IHTTP& http) : API::Base(http) { }
+
+public:
+  virtual std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1) = 0;
+  virtual std::string get(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+  virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
+  virtual std::string types(int limit = 5, int page = 1) = 0;
+  virtual std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) = 0;
+};
+
+class Transactions : public ITransactions
 {
 public:
-  Transactions(HTTP& http) : API::Base(http) { }
+  Transactions(IHTTP& http) : ITransactions(http) { }
 
   std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
   std::string get(const char *const identifier, int limit = 5, int page = 1);

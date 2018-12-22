@@ -23,7 +23,7 @@ namespace ONE {
 class Accounts : public API::Base
 {
 public:
-  Accounts(HTTP& http) : API::Base(http) { }
+  Accounts(IHTTP& http) : ApiBase(http) { }
 
   std::string balance(const char *const arkAddress);
   std::string publickey(const char *const arkAddress);

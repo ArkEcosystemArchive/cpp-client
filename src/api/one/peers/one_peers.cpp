@@ -12,7 +12,7 @@ std::string Ark::Client::API::ONE::Peers::get(
 ) {
   char uri[68 + 1] = { };
   snprintf(uri, sizeof(uri), "%s?ip=%s&port=%d", Ark::Client::API::ONE::Paths::Peers::get, ip, port);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -25,7 +25,7 @@ std::string Ark::Client::API::ONE::Peers::all(int limit)
 {
   char uri[24] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Peers::base, limit);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -36,6 +36,6 @@ std::string Ark::Client::API::ONE::Peers::all(int limit)
  **/
 std::string Ark::Client::API::ONE::Peers::version()
 {
-  return http_.get(Ark::Client::API::ONE::Paths::Peers::version);
+  return http_->get(Ark::Client::API::ONE::Paths::Peers::version);
 }
 /**/

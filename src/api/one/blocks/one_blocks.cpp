@@ -10,7 +10,7 @@ std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
 {
   char uri[80] = { '\0' };
   snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Blocks::get, blockId);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -34,7 +34,7 @@ std::string Ark::Client::API::ONE::Blocks::all(
     isDescending ? "desc" : "asc",
     limit
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 /**/
 
@@ -45,7 +45,7 @@ std::string Ark::Client::API::ONE::Blocks::all(
  **/
 std::string Ark::Client::API::ONE::Blocks::epoch()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::epoch);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::epoch);
 }
 /**/
 
@@ -56,7 +56,7 @@ std::string Ark::Client::API::ONE::Blocks::epoch()
  **/
 std::string Ark::Client::API::ONE::Blocks::fee()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::fee);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::fee);
 }
 /**/
 
@@ -67,7 +67,7 @@ std::string Ark::Client::API::ONE::Blocks::fee()
  **/
 std::string Ark::Client::API::ONE::Blocks::fees()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::fees);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::fees);
 }
 /**/
 
@@ -78,7 +78,7 @@ std::string Ark::Client::API::ONE::Blocks::fees()
  **/
 std::string Ark::Client::API::ONE::Blocks::height()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::height);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::height);
 }
 /**/
 
@@ -89,7 +89,7 @@ std::string Ark::Client::API::ONE::Blocks::height()
  **/
 std::string Ark::Client::API::ONE::Blocks::milestone()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::milestone);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::milestone);
 }
 /**/
 
@@ -100,7 +100,7 @@ std::string Ark::Client::API::ONE::Blocks::milestone()
  **/
 std::string Ark::Client::API::ONE::Blocks::nethash()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::nethash);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::nethash);
 }
 /**/
 
@@ -111,7 +111,7 @@ std::string Ark::Client::API::ONE::Blocks::nethash()
  **/
 std::string Ark::Client::API::ONE::Blocks::reward()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::reward);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::reward);
 }
 /**/
 
@@ -122,7 +122,7 @@ std::string Ark::Client::API::ONE::Blocks::reward()
  **/
 std::string Ark::Client::API::ONE::Blocks::supply()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::supply);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::supply);
 }
 /**/
 
@@ -133,6 +133,6 @@ std::string Ark::Client::API::ONE::Blocks::supply()
  **/
 std::string Ark::Client::API::ONE::Blocks::status()
 {
-    return http_.get(Ark::Client::API::ONE::Paths::Blocks::status);
+    return http_->get(Ark::Client::API::ONE::Paths::Blocks::status);
 }
 /**/

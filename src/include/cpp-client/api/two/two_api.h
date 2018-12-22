@@ -34,7 +34,7 @@ public:
   Ark::Client::API::TWO::Votes votes;
   Ark::Client::API::TWO::Wallets wallets;
 
-  Two() : Abstract(2), blocks(http_), delegates(http_), node(http_), peers(http_), transactions(http_), votes(http_), wallets(http_) { }
+  Two() : Abstract(2), blocks(*http_), delegates(*http_), node(*http_), peers(*http_), transactions(*http_), votes(*http_), wallets(*http_) { }
 };
 /***/
 }

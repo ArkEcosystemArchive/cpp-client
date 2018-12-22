@@ -34,7 +34,7 @@ public:
   Ark::Client::API::ONE::Signatures signatures;
   Ark::Client::API::ONE::Transactions transactions;
         
-  One() : Abstract(1), accounts(http_), blocks(http_), delegates(http_), loader(http_), peers(http_), signatures(http_), transactions(http_) { }
+  One() : AbstractApi(1), accounts(*http_), blocks(*http_), delegates(*http_), loader(*http_), peers(*http_), signatures(*http_), transactions(*http_) { }
 };
 /**/
 };

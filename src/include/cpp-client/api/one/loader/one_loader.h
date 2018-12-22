@@ -22,7 +22,7 @@ namespace ONE {
 class Loader : public API::Base
 {
 public:
-  Loader(HTTP& http) : API::Base(http) { }
+  Loader(IHTTP& http) : ApiBase(http) { }
 
   std::string autoconfigure();
   std::string status();
