@@ -80,4 +80,5 @@
 /examples/cmake_example/cmake_install.cmake
 /examples/cmake_example/ALL_BUILD.vcxproj.filters
 /examples/cmake_example/ALL_BUILD.vcxproj
+/examples/cmake_example/Win32
 /examples/cmake_example/Debug
