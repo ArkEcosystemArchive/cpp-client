@@ -81,13 +81,13 @@
 /extras/cmake_example/ALL_BUILD.vcxproj.filters
 /extras/cmake_example/ALL_BUILD.vcxproj
 /extras/cmake_example/Debug
-/examples/cmake_example/lib/Debug
-/examples/cmake_example/Cpp-Client-Example.dir/Debug
+/examples/cmake_example/lib/
+/examples/cmake_example/Cpp-Client-Example.dir
 /examples/cmake_example/Debug
 /examples/cmake_example/lib/cpp-client
 /examples/cmake_example/CMakeFiles
-/examples/cmake_example/bin/Debug
-/examples/cmake_example/_3rdParty/Hunter
+/examples/cmake_example/bin
+/examples/cmake_example/_3rdParty
 /examples/cmake_example/ZERO_CHECK.vcxproj.filters
 /examples/cmake_example/ZERO_CHECK.vcxproj
 /examples/cmake_example/Cpp-Client-Example.vcxproj.filters
@@ -97,4 +97,4 @@
 /examples/cmake_example/CMakeCache.txt
 /examples/cmake_example/ALL_BUILD.vcxproj.filters
 /examples/cmake_example/ALL_BUILD.vcxproj
-/examples/cmake_example/Win32/Debug
+/examples/cmake_example/Win32
