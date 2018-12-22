@@ -226,6 +226,12 @@ TEST(api, test_block_transactions)
 
     const auto blockTransactionsResponse = connection.api.blocks.transactions("14126007750611341900");
 
+    EXPECT_CALL(connection.api.blocks, transactions("14126007750611341900"))
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+    const auto blockTransactionsResponse = connection.api.blocks.transactions("14126007750611341900");
+
     DynamicJsonBuffer jsonBuffer(blockTransactionsResponse.size());
     JsonObject& root = jsonBuffer.parseObject(blockTransactionsResponse);
 
