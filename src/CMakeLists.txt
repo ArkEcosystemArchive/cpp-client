@@ -10,6 +10,16 @@ set(PLATFORM_SRC
 	http/os/http.cpp
 )
 
+set(API_ONE_SRC 
+	api/one/accounts/one_accounts.cpp
+	api/one/blocks/one_blocks.cpp
+	api/one/delegates/one_delegates.cpp
+	api/one/loader/one_loader.cpp
+	api/one/peers/one_peers.cpp
+	api/one/signatures/one_signatures.cpp
+	api/one/transactions/one_transactions.cpp
+)
+
 set(API_TWO_SRC 
 	api/two/blocks/two_blocks.cpp
 	api/two/delegates/two_delegates.cpp
@@ -22,6 +32,7 @@ set(API_TWO_SRC
 
 add_library(Ark-Cpp-Client-lib STATIC
 	${PLATFORM_SRC}
+	${API_ONE_SRC}
 	${API_TWO_SRC}
 )
 
