@@ -1,7 +1,13 @@
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include "mocks/mock_api.h"
+
 #include "arkClient.h"
 #include "utils/json.h"
+
+using testing::Return;
 
 /* test_two_transactions_transaction
  * https://dexplorer.ark.io:8443/api/v2/transactions/b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850
@@ -32,12 +38,35 @@
  */
 TEST(api, test_two_transaction)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto transaction = connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
+    const std::string response = R"({
+        "data": {
+            "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+            "blockId": "4271682877946294396",
+            "type": 0,
+            "amount": 32106400000,
+            "fee": 10000000,
+            "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+            "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
+            "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
+            "confirmations": 1928,
+            "timestamp": {
+                "epoch": 32794053,
+                "unix": 1522895253,
+                "human": "2018-04-05T02:27:33Z"
+            }
+        }
+    })";
+
+    EXPECT_CALL(connection.api.transactions, get("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa"))
+      .Times(1)
+      .WillOnce(Return(response));
+
+    const auto transaction = connection.api.transactions.get("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
 
     DynamicJsonBuffer jsonBuffer(transaction.size());
     JsonObject& root = jsonBuffer.parseObject(transaction);
@@ -103,10 +132,28 @@ TEST(api, test_two_transaction)
  */
 TEST(api, test_two_transaction_types)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+			  "data": {
+			    "TRANSFER": 0,
+			    "SECOND_SIGNATURE": 1,
+			    "DELEGATE_REGISTRATION": 2,
+			    "VOTE": 3,
+			    "MULTI_SIGNATURE": 4,
+			    "IPFS": 5,
+			    "TIMELOCK_TRANSFER": 6,
+			    "MULTI_PAYMENT": 7,
+			    "DELEGATE_RESIGNATION": 8
+			  }
+			})";
+
+    EXPECT_CALL(connection.api.transactions, types())
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto types = connection.api.transactions.types();
 
@@ -164,12 +211,36 @@ TEST(api, test_two_transaction_types)
  */
 TEST(api, test_two_transaction_unconfirmed)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
+    const std::string response = R"({
+			  "data": {
+			    "id": "dummy",
+			    "blockId": "dummy",
+			    "type": 0,
+			    "amount": 10000000,
+			    "fee": 10000000,
+			    "sender": "dummy",
+			    "recipient": "dummy",
+			    "signature": "dummy",
+			    "vendorField": "dummy",
+			    "confirmations": 10,
+			    "timestamp": {
+			      "epoch": 40505460,
+			      "unix": 1530606660,
+			      "human": "2018-07-03T08:31:00Z"
+			    }
+			  }
+			})";
+
+    EXPECT_CALL(connection.api.transactions, getUnconfirmed("dummy"))
+      .Times(1)
+      .WillOnce(Return(response));
+
+    const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
 
     DynamicJsonBuffer jsonBuffer(transactionUnconfirmed.size());
     JsonObject& root = jsonBuffer.parseObject(transactionUnconfirmed);
@@ -224,10 +295,45 @@ TEST(api, test_two_transaction_unconfirmed)
 #if 0
 TEST(api, test_two_transactions)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+      "meta": {
+          "count": 2,
+          "pageCount": 127430,
+          "totalCount": 254860,
+          "next": "/v2/transactions?page=2",
+          "previous": null,
+          "self": "/v2/transactions?page=1",
+          "first": "/v2/transactions?page=1",
+          "last": "/v2/transactions?page=127430"
+      },
+      "data": [
+          {
+              "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+              "blockId": "4271682877946294396",
+              "type": 0,
+              "amount": 32106400000,
+              "fee": 10000000,
+              "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+              "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
+              "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
+              "confirmations": 1924,
+              "timestamp": {
+                  "epoch": 32794053,
+                  "unix": 1522895253,
+                  "human": "2018-04-05T02:27:33Z"
+              }
+          }
+      ]
+  })";
+
+    EXPECT_CALL(connection.api.transactions, all(2, 1)
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto transactions = connection.api.transactions.all(2, 1);
 
@@ -277,10 +383,46 @@ TEST(api, test_two_transactions)
  */
 TEST(api, test_two_transactions_unconfirmed)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+      "meta": {
+	      "count": 1,
+	      "pageCount": 1,
+	      "totalCount": 1,
+	      "next": null,
+	      "previous": null,
+	      "self": "/api/transactions/unconfirmed?page=1&limit=1",
+	      "first": "/api/transactions/unconfirmed?page=1&limit=1",
+	      "last": "/api/transactions/unconfirmed?page=1&limit=1"
+      },
+      "data": [
+	      {
+		      "id": "dummy",
+		      "blockId": "dummy",
+		      "type": 0,
+		      "amount": 10000000,
+		      "fee": 10000000,
+		      "sender": "dummy",
+		      "recipient": "dummy",
+		      "signature": "dummy",
+		      "vendorField": "dummy",
+		      "confirmations": 10,
+		      "timestamp": {
+			      "epoch": 40505460,
+			      "unix": 1530606660,
+			      "human": "2018-07-03T08:31:00Z"
+		      }
+	      }
+      ]
+      })";
+
+    EXPECT_CALL(connection.api.transactions, allUnconfirmed(5, 1))
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto transactionsUnconfirmed = connection.api.transactions.allUnconfirmed(5, 1);
 
@@ -299,19 +441,57 @@ TEST(api, test_two_transactions_unconfirmed)
     ASSERT_TRUE(totalCount >= 0);
 }
 
+#if 0 // TODO
 /* test_two_transactions_transactions_search
  * 
  * Expected Response:
  */
 TEST(api, test_two_transactions_search)
 {
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+			  "meta": {
+			    "count": 1,
+			    "pageCount": 1,
+			    "totalCount": 1,
+			    "next": null,
+			    "previous": null,
+			    "self": "/api/transactions/search?page=1&limit=1",
+			    "first": "/api/transactions/search?page=1&limit=1",
+			    "last": "/api/transactions/search?page=1&limit=1"
+			  },
+			  "data": [
+			    {
+			      "id": "dummy",
+			      "blockId": "dummy",
+			      "type": 0,
+			      "amount": 10000000,
+			      "fee": 10000000,
+			      "sender": "dummy",
+			      "recipient": "dummy",
+			      "signature": "dummy",
+			      "vendorField": "dummy",
+			      "confirmations": 10,
+			      "timestamp": {
+			        "epoch": 40505460,
+			        "unix": 1530606660,
+			        "human": "2018-07-03T08:31:00Z"
+			      }
+			    }
+			  ]
+			})";
+
+    EXPECT_CALL(connection.api.transactions, search(5, 1))
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto transactions = connection.api.transactions.get("4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", 5, 1);
 
     // DynamicJsonBuffer jsonBuffer(transactions.size());
     // JsonObject& root = jsonBuffer.parseObject(transactions);
 }
+#endif
