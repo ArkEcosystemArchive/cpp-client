@@ -547,10 +547,12 @@ TEST(api, test_transactions_search)
     EXPECT_CALL(connection.api.transactions, search(5, 1))
       .Times(1)
       .WillOnce(Return(response));
-	const std::map<std::string, std::string> body = {
-	  {"id", "927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37"}
-	};
-	const auto transactions = connection.api.transactions.search(body, 5, 1);
+
+    const auto transactions = connection.api.transactions.get("4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", 5, 1);
+    const std::map<std::string, std::string> body = {
+      {"id", "927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37"}
+    };
+    const auto transactions = connection.api.transactions.search(body, 5, 1);
 
 	DynamicJsonBuffer jsonBuffer(transactions.size());
 	JsonObject& root = jsonBuffer.parseObject(transactions);
