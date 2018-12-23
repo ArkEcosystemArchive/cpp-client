@@ -1,9 +1,15 @@
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include "mocks/mock_api.h"
+
 #include "arkClient.h"
 #include "utils/json.h"
 
-/* test_peers_peer
+using testing::Return;
+
+/* test_two_peers_peer
  * https://dexplorer.ark.io:8443/api/v2/peers/167.114.29.54
  * Expected Response:
     {
@@ -19,10 +25,24 @@
  */
 TEST(api, test_peer)
 {
-    Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+        "data": {
+            "ip": "167.114.29.55",
+            "port": 4002,
+            "version": "1.1.1",
+            "status": "OK",
+            "latency": 355
+        }
+    })";
+
+    EXPECT_CALL(connection.api.peers, get("167.114.29.49"))
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto peer = connection.api.peers.get("167.114.29.49");
 
@@ -78,10 +98,36 @@ TEST(api, test_peer)
  */
 TEST(api, test_peers)
 {
-    Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.55", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+        "meta": {
+            "count": 2,
+            "pageCount": 1,
+            "totalCount": 2,
+            "next": null,
+            "previous": null,
+            "self": "/v2/peers?page=1",
+            "first": "/v2/peers?page=1",
+            "last": "/v2/peers?page=1"
+        },
+        "data": [
+            {
+                "ip": "167.114.29.53",
+                "port": 4002,
+                "version": "1.1.1",
+                "status": "OK",
+                "latency": 1390
+            }
+        ]
+    })";
+
+    EXPECT_CALL(connection.api.peers, all(5, 1))
+      .Times(1)
+      .WillOnce(Return(response));
 
     const auto peers = connection.api.peers.all(5, 1);
 
