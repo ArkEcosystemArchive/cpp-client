@@ -4,12 +4,10 @@
 #include <cstdio>
 
 std::string Ark::Client::API::TWO::Transactions::getUnconfirmed(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+  const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?id=%s&limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::unconfirmed, identifier, limit, page);
+  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::TWO::Paths::Transactions::unconfirmed, identifier);
   return http_->get(uri);
 }
 
@@ -27,12 +25,10 @@ std::string Ark::Client::API::TWO::Transactions::all(
 /***/
 
 std::string Ark::Client::API::TWO::Transactions::get(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+  const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::base, identifier, limit, page);
+  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Transactions::base, identifier);
   return http_->get(uri);
 }
 
@@ -49,12 +45,9 @@ std::string Ark::Client::API::TWO::Transactions::allUnconfirmed(
 
 /***/
 
-std::string Ark::Client::API::TWO::Transactions::types(
-  int limit /* = 5 */,
-  int page /* = 1 */
-) {
+std::string Ark::Client::API::TWO::Transactions::types() {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Transactions::types, limit, page);
+  snprintf(uri, sizeof(uri), "%s", Ark::Client::API::TWO::Paths::Transactions::types);
   return http_->get(uri);
 }
 

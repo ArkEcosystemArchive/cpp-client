@@ -27,8 +27,8 @@ protected:
   ITransactions(IHTTP& http) : API::Base(http) { }
 
 public:
-  virtual std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1) = 0;
-  virtual std::string get(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string getUnconfirmed(const char *const identifier) = 0;
+  virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
   virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
   virtual std::string types(int limit = 5, int page = 1) = 0;
@@ -40,8 +40,8 @@ class Transactions : public ITransactions
 public:
   Transactions(IHTTP& http) : ITransactions(http) { }
 
-  std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
-  std::string get(const char *const identifier, int limit = 5, int page = 1);
+  std::string getUnconfirmed(const char *const identifier);
+  std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);
   std::string allUnconfirmed(int limit = 2, int page = 1);
   std::string types(int limit = 5, int page = 1);
