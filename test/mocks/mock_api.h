@@ -59,11 +59,11 @@ class MockTransactions : public Ark::Client::API::TWO::ITransactions
 public:
   MockTransactions(Ark::Client::IHTTP& http) : ITransactions(http) { }
 
-  MOCK_METHOD3(getUnconfirmed, std::string(const char* const, int, int));
-  MOCK_METHOD3(get, std::string(const char* const, int, int));
+  MOCK_METHOD1(getUnconfirmed, std::string(const char* const));
+  MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD2(all, std::string(int, int));
   MOCK_METHOD2(allUnconfirmed, std::string(int, int));
-  MOCK_METHOD2(types, std::string(int, int));
+  MOCK_METHOD0(types, std::string());
 };
 
 class MockVotes : public Ark::Client::API::TWO::IVotes
