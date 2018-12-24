@@ -23,6 +23,9 @@ class INode : public API::Base
 protected:
   INode(IHTTP& http) : API::Base(http) { }
 
+public:
+  virtual ~INode() { }
+
   virtual std::string configuration() = 0;
   virtual std::string status() = 0;
   virtual std::string syncing() = 0;

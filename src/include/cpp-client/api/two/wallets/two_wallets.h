@@ -23,8 +23,11 @@ namespace TWO {
 
 class IWallets : public API::Base
 {
+protected:
+  IWallets(IHTTP& http) : ApiBase(http) { }
+
 public:
-  IWallets(IHTTP& http) : API::Base(http) { }
+  virtual ~IWallets() { }
 
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;

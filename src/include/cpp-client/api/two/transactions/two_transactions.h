@@ -27,6 +27,8 @@ protected:
   ITransactions(IHTTP& http) : API::Base(http) { }
 
 public:
+  virtual ~ITransactions() { }
+
   virtual std::string getUnconfirmed(const char *const identifier) = 0;
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;

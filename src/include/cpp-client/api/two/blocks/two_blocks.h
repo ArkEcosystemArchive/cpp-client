@@ -27,6 +27,8 @@ namespace TWO {
     IBlocks(IHTTP& http) : API::Base(http) { }
 
   public:
+    virtual ~IBlocks() { }
+
     virtual std::string get(const char *const blockId) = 0;
     virtual std::string all(int limit = 5, int page = 1) = 0;
     virtual std::string transactions(const char *const blockId) = 0;
