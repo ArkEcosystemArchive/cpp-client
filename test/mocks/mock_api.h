@@ -80,7 +80,7 @@ class MockWallets : public Ark::Client::API::TWO::IWallets
 public:
   MockWallets(Ark::Client::IHTTP& http) : IWallets(http) { }
 
-  MOCK_METHOD3(get, std::string(const char* const, int, int));
+  MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD2(all, std::string(int, int));
   MOCK_METHOD2(top, std::string(int, int));
   MOCK_METHOD3(transactions, std::string(const char* const, int, int));
