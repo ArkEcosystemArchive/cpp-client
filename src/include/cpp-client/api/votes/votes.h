@@ -23,6 +23,8 @@ protected:
   IVotes(IHTTP& http) : API::Base(http) { }
 
 public:
+  virtual ~IVotes() { }
+
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
 };

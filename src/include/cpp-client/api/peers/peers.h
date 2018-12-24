@@ -23,6 +23,8 @@ protected:
   IPeers(IHTTP& http) : API::Base(http) { }
 
 public:
+  virtual ~IPeers() { }
+
   virtual std::string get(const char *const ip) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
 };
