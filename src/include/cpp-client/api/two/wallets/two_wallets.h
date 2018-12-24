@@ -26,7 +26,7 @@ class IWallets : public API::Base
 public:
   IWallets(IHTTP& http) : API::Base(http) { }
 
-  virtual std::string get(const char *const identifier, int limit = 5, int page = 1) = 0;
+  virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
   virtual std::string top(int limit = 5, int page = 1) = 0;
   virtual std::string transactions(const char *const identifier, int limit = 5, int page = 1) = 0;
@@ -41,7 +41,7 @@ class Wallets : public IWallets
 public:
   Wallets(IHTTP& http) : IWallets(http) { }
 
-  std::string get(const char *const identifier, int limit = 5, int page = 1) override;
+  std::string get(const char *const identifier) override;
   std::string all(int limit = 5, int page = 1) override;
   std::string top(int limit = 5, int page = 1) override;
   std::string transactions(const char *const identifier, int limit = 5, int page = 1) override;

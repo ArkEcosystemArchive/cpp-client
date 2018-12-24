@@ -4,12 +4,10 @@
 #include <cstdio>
 
 std::string Ark::Client::API::TWO::Wallets::get(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+  const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s?limit=%d&page=%d", Ark::Client::API::TWO::Paths::Wallets::base, identifier, limit, page);
+  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Wallets::base, identifier);
   return http_->get(uri);
 }
 
