@@ -31,7 +31,7 @@ An example `Connection` that connects to a v2 API of a node, would be created as
 
 ```cpp
 // Create a connection
-Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 ```
 
 ### Making an API Request
@@ -89,7 +89,7 @@ void setup() {
     Serial.print("\nConnected, IP address: ");
     Serial.println(WiFi.localIP());
 
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+    Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
     auto allBlocks = arkClient.blocks.all();
     Serial.println(allBlocks.c_str());

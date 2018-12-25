@@ -10,30 +10,19 @@ set(PLATFORM_SRC
 	http/os/http.cpp
 )
 
-set(API_ONE_SRC 
-	api/one/accounts/one_accounts.cpp
-	api/one/blocks/one_blocks.cpp
-	api/one/delegates/one_delegates.cpp
-	api/one/loader/one_loader.cpp
-	api/one/peers/one_peers.cpp
-	api/one/signatures/one_signatures.cpp
-	api/one/transactions/one_transactions.cpp
-)
-
-set(API_TWO_SRC 
-	api/two/blocks/two_blocks.cpp
-	api/two/delegates/two_delegates.cpp
-	api/two/node/two_node.cpp
-	api/two/peers/two_peers.cpp
-	api/two/transactions/two_transactions.cpp
-	api/two/votes/two_votes.cpp
-	api/two/wallets/two_wallets.cpp
+set(API_SRC 
+	api/blocks/blocks.cpp
+	api/delegates/delegates.cpp
+	api/node/node.cpp
+	api/peers/peers.cpp
+	api/transactions/transactions.cpp
+	api/votes/votes.cpp
+	api/wallets/wallets.cpp
 )
 
 add_library(Ark-Cpp-Client-lib STATIC
 	${PLATFORM_SRC}
-	${API_ONE_SRC}
-	${API_TWO_SRC}
+	${API_SRC}
 )
 
 set(cpp_client_build_include_dirs
