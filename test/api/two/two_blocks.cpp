@@ -6,6 +6,7 @@
 #include "utils/json.h"
 
 using testing::Return;
+using testing::_;
 
 /* test_two_blocks_block
  * https://dexplorer.ark.io:8443/api/v2/blocks/13114381566690093367
@@ -77,7 +78,7 @@ TEST(api, test_two_block)
         }
     })";
 
-    EXPECT_CALL(connection.api.blocks, get("58328125061111756"))
+    EXPECT_CALL(connection.api.blocks, get(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
@@ -89,62 +90,65 @@ TEST(api, test_two_block)
     JsonObject& data = root["data"];
 
     const char* id = data["id"];
-    ASSERT_STREQ("13114381566690093367", id);
+    ASSERT_STREQ("58328125061111756", id);
 
     int version = data["version"];
     ASSERT_EQ(0, version);
 
     int height = data["height"];
-    ASSERT_EQ(1, height);
+    ASSERT_EQ(3035362, height);
 
 
     JsonObject& forged = data["forged"];
 
     uint64_t reward = forged["reward"];
-    ASSERT_TRUE(reward >= 0);
+    ASSERT_TRUE(reward == 200000000);
 
     uint64_t fee = forged["fee"];
     ASSERT_TRUE(fee == 0);
 
     uint64_t total = forged["total"];
-    ASSERT_TRUE(total == 0);
+    ASSERT_TRUE(total == 200000000);
 
 
     JsonObject& payload = data["payload"];
 
     const char* hash = payload["hash"];
-    ASSERT_STREQ("2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867", hash);
+    ASSERT_STREQ("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", hash);
 
     int length = payload["length"];
-    ASSERT_EQ(11395, length);
+    ASSERT_EQ(0, length);
 
 
     JsonObject& generator = data["generator"];
 
+    const char* username = generator["username"];
+    ASSERT_STREQ("genesis_6", username);
+
     const char* address = generator["address"];
-    ASSERT_STREQ("D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax", address);
+    ASSERT_STREQ("D5e2FzTPqdEHridjzpFZCCVyepAu6Vpmk4", address);
 
     const char* publicKey = generator["publicKey"];
-    ASSERT_STREQ("03d3fdad9c5b25bf8880e6b519eb3611a5c0b31adebc8455f0e096175b28321aff", publicKey);
+    ASSERT_STREQ("023e577a7b3362e0aba70e6911d230e86d729b4cb640f0e0b25637b812a3e38b53", publicKey);
 
 
     const char* signature = data["signature"];
-    ASSERT_STREQ("3044022035694a9b99a9236655c658eb07fc3b02ce5edcc24b76424a7287c54ed3822b0602203621e92defb360490610f763d85e94c2db2807a4bd7756cc8a6a585463ef7bae", signature);
+    ASSERT_STREQ("3044022047aeb0c9cfbb5709aba4c177009bfdc7804ef597073fb9ca6cb614d7e3d1af2d02207234119d02ca26600ece045c59266945081b4c8237370576aaad7c61a09fe0ad", signature);
 
     int transactions = data["transactions"];
-    ASSERT_EQ(52, transactions);
+    ASSERT_EQ(0, transactions);
 
 
     JsonObject& timestamp = data["timestamp"];
 
     int epoch = timestamp["epoch"];
-    ASSERT_EQ(0, epoch);
+    ASSERT_EQ(32816544, epoch);
 
     int timestampUnix = timestamp["unix"];
-    ASSERT_EQ(1490101200, timestampUnix);
+    ASSERT_EQ(1522917744, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2017-03-21T13:00:00.000Z", human);
+    ASSERT_STREQ("2018-04-05T08:42:24Z", human);
 }
 
 /* test_two_blocks_block_transactions
@@ -220,7 +224,7 @@ TEST(api, test_two_block_transactions)
         ]
     })";
 
-    EXPECT_CALL(connection.api.blocks, transactions("14126007750611341900"))
+    EXPECT_CALL(connection.api.blocks, transactions(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
@@ -232,52 +236,52 @@ TEST(api, test_two_block_transactions)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_EQ(0, count);
+    ASSERT_EQ(1, count);
 
     int pageCount = meta["pageCount"];
-    ASSERT_EQ(0, pageCount);
+    ASSERT_EQ(1, pageCount);
 
     int totalCount = meta["totalCount"];
-    ASSERT_EQ(0, totalCount);
+    ASSERT_EQ(1, totalCount);
 
 
     JsonObject& dataZero = root["data"][0];
 
-    int id = dataZero["id"];
-    ASSERT_EQ(0, id);
+    const char* id = dataZero["id"];
+    ASSERT_STREQ("57415c61e6e7f10a6f9820d5124b3916f3c3a036b360f4802f0eb484f86f3369", id);
 
     const char* blockId = dataZero["blockId"];
-    ASSERT_STRNE("", blockId);
+    ASSERT_STREQ("14126007750611341900", blockId);
 
     int type = dataZero["type"];
     ASSERT_EQ(0, type);
 
     uint64_t amount = dataZero["amount"];
-    ASSERT_TRUE(amount >= 0);
+    ASSERT_TRUE(amount = 1000000000000000);
 
     uint64_t fee = dataZero["fee"];
-    ASSERT_TRUE(fee >= 0);
+    ASSERT_TRUE(fee == 10000000);
 
     const char* sender = dataZero["sender"];
-    ASSERT_STRNE("", sender);
+    ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", sender);
 
     const char* signature = dataZero["signature"];
-    ASSERT_STRNE("", signature);
+    ASSERT_STREQ("3045022100878335a71ab6769f3c1e2895041ad24d6c58cdcfe1151c639e65289e5287b0a8022010800bcfdc3223a9c59a6b014e8adf72f1c34df8a46afe655b021930b03e214e", signature);
 
     int confirmations = dataZero["confirmations"];
-    ASSERT_EQ(0, confirmations);
+    ASSERT_EQ(3034848, confirmations);
 
 
     JsonObject& timestamp = dataZero["timestamp"];
 
     int epoch = timestamp["epoch"];
-    ASSERT_EQ(0, epoch);
+    ASSERT_EQ(3909196, epoch);
 
     int timestampUnix = timestamp["unix"];
-    ASSERT_EQ(0, timestampUnix);
+    ASSERT_EQ(1494010396, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STRNE("", human);
+    ASSERT_STREQ("2017-05-05T18:53:16Z", human);
 }
 
 /* test_two_blocks_blocks
