@@ -84,24 +84,24 @@ TEST(api, test_two_transaction)
     ASSERT_STREQ("2018-08-24T15:54:26.000Z", human);
 }
 
-/* test_two_transactions_transaction_types
+/* test_transactions_transaction_types
  * https://dexplorer.ark.io:8443/api/v2/transactions/types
  * Expected Response:
     {
         "data": {
-            "TRANSFER": 0,
-            "SECOND_SIGNATURE": 1,
-            "DELEGATE_REGISTRATION": 2,
-            "VOTE": 3,
-            "MULTI_SIGNATURE": 4,
-            "IPFS": 5,
-            "TIMELOCK_TRANSFER": 6,
-            "MULTI_PAYMENT": 7,
-            "DELEGATE_RESIGNATION": 8
+            "Transfer": 0,
+            "SecondSignature": 1,
+            "DelegateRegistration": 2,
+            "Vote": 3,
+            "MultiSignature": 4,
+            "Ipfs": 5,
+            "TimelockTransfer": 6,
+            "MultiPayment": 7,
+            "DelegateResignation": 8
         }
     }
  */
-TEST(api, test_two_transaction_types)
+TEST(api, test_transaction_types)
 {
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
@@ -115,32 +115,32 @@ TEST(api, test_two_transaction_types)
 
     JsonObject& data = root["data"];
 
-    int TRANSFER = data["TRANSFER"];
-    ASSERT_EQ(0, TRANSFER);
+    int Transfer = data["Transfer"];
+    ASSERT_EQ(0, Transfer);
 
-    int SECOND_SIGNATURE = data["SECOND_SIGNATURE"];
-    ASSERT_EQ(1, SECOND_SIGNATURE);
+    int SecondSignature = data["SecondSignature"];
+    ASSERT_EQ(1, SecondSignature);
 
-    int DELEGATE_REGISTRATION = data["DELEGATE_REGISTRATION"];
-    ASSERT_EQ(2, DELEGATE_REGISTRATION);
+    int DelegateRegistration = data["DelegateRegistration"];
+    ASSERT_EQ(2, DelegateRegistration);
 
-    int VOTE = data["VOTE"];
-    ASSERT_EQ(3, VOTE);
+    int Vote = data["Vote"];
+    ASSERT_EQ(3, Vote);
 
-    int MULTI_SIGNATURE = data["MULTI_SIGNATURE"];
-    ASSERT_EQ(4, MULTI_SIGNATURE);
+    int MultiSignature = data["MultiSignature"];
+    ASSERT_EQ(4, MultiSignature);
 
-    int IPFS = data["IPFS"];
-    ASSERT_EQ(5, IPFS);
+    int Ipfs = data["Ipfs"];
+    ASSERT_EQ(5, Ipfs);
 
-    int TIMELOCK_TRANSFER = data["TIMELOCK_TRANSFER"];
-    ASSERT_EQ(6, TIMELOCK_TRANSFER);
+    int TimelockTransfer = data["TimelockTransfer"];
+    ASSERT_EQ(6, TimelockTransfer);
 
-    int MULTI_PAYMENT = data["MULTI_PAYMENT"];
-    ASSERT_EQ(7, MULTI_PAYMENT);
+    int MultiPayment = data["MultiPayment"];
+    ASSERT_EQ(7, MultiPayment);
 
-    int DELEGATE_RESIGNATION = data["DELEGATE_RESIGNATION"];
-    ASSERT_EQ(8, DELEGATE_RESIGNATION);
+    int DelegateResignation = data["DelegateResignation"];
+    ASSERT_EQ(8, DelegateResignation);
 }
 
 /* test_two_transactions_transaction_unconfirmed
