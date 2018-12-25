@@ -299,9 +299,68 @@ TEST(api, test_two_transactions_unconfirmed)
     ASSERT_TRUE(totalCount >= 0);
 }
 
+/* test_two_transactions_transactions_search_all
+ *
+ * Expected Response:
+ */
+TEST(api, test_two_transactions_search_all)
+{
+  Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
+
+  const std::map<std::string, std::string> body = { };
+  const auto transactions = connection.api.transactions.search(body, 5, 1);
+
+  DynamicJsonBuffer jsonBuffer(transactions.size());
+  JsonObject& root = jsonBuffer.parseObject(transactions);
+
+  JsonObject& meta = root["meta"];
+
+  int count = meta["count"];
+  ASSERT_TRUE(count >= 0);
+
+  int pageCount = meta["pageCount"];
+  ASSERT_TRUE(pageCount >= 0);
+
+  int totalCount = meta["totalCount"];
+  ASSERT_TRUE(totalCount >= 0);
+}
+
 /* test_two_transactions_transactions_search
  * 
  * Expected Response:
+ {
+ "meta":{
+  "count":1,
+  "pageCount":1,
+  "totalCount":1,
+  "next":null,
+  "previous":null,
+  "self":"/api/v2/transactions/search?limit=5&page=1",
+  "first":"/api/v2/transactions/search?limit=5&page=1",
+  "last":"/api/v2/transactions/search?limit=5&page=1"},
+  "data":[
+    {
+    "id":"927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37",
+    "blockId":"13624088937920625389",
+    "version":1,
+    "type":3,
+    "amount":0,
+    "fee":84219776,
+    "sender":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
+    "recipient":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
+    "signature":"3044022073337aefa7727cc1cf39e478ffe65cf5c66c5761b5848418d87307df250a68a5022053d4d5264b329e63cadad84fc6ec479fe5e430eaabd6177db1e9c283027ec2fa",
+    "asset":
+      {
+      "votes":["+0389301207e25addec690be9efa3b2ca2d111b86386da7ff5fcc1c0344954b2acc"]
+      },
+    "confirmations":871,
+    "timestamp":{"epoch":55498801,"unix":1545600001,"human":"2018-12-23T21:20:01.000Z"}
+    }
+  ]
+}
  */
 TEST(api, test_two_transactions_search)
 {
@@ -310,8 +369,39 @@ TEST(api, test_two_transactions_search)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto transactions = connection.api.transactions.get("4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", 5, 1);
+    const std::map<std::string, std::string> body = {
+      {"id", "927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37"}
+    };
+    const auto transactions = connection.api.transactions.search(body, 5, 1);
 
-    // DynamicJsonBuffer jsonBuffer(transactions.size());
-    // JsonObject& root = jsonBuffer.parseObject(transactions);
+    DynamicJsonBuffer jsonBuffer(transactions.size());
+    JsonObject& root = jsonBuffer.parseObject(transactions);
+
+    JsonObject& meta = root["meta"];
+
+    int count = meta["count"];
+    ASSERT_TRUE(count >= 0);
+
+    int pageCount = meta["pageCount"];
+    ASSERT_TRUE(pageCount >= 0);
+
+    int totalCount = meta["totalCount"];
+    ASSERT_TRUE(totalCount >= 0);
+
+    JsonObject& data = root["data"][0];
+
+    const char* id = data["id"];
+    ASSERT_STREQ("927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37", id);
+
+    int version = data["version"];
+    ASSERT_EQ(1, version);
+
+    const char* sender = data["sender"];
+    ASSERT_STREQ("DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj", sender);
+
+    const char* recipient = data["recipient"];
+    ASSERT_STREQ("DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj", recipient);
+
+    const char* signature = data["signature"];
+    ASSERT_STREQ("3044022073337aefa7727cc1cf39e478ffe65cf5c66c5761b5848418d87307df250a68a5022053d4d5264b329e63cadad84fc6ec479fe5e430eaabd6177db1e9c283027ec2fa", signature);
 }

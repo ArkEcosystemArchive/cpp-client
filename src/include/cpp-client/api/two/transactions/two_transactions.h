@@ -13,6 +13,9 @@
 #include "api/base.h"
 #include "api/two/two_paths.h"
 
+#include <map>
+#include <string>
+
 namespace Ark {
 namespace Client {
 namespace API {
@@ -28,6 +31,7 @@ public:
   std::string all(int limit = 5, int page = 1);
   std::string allUnconfirmed(int limit = 2, int page = 1);
   std::string types(int limit = 5, int page = 1);
+  std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1);
 };
 
 };
