@@ -12,6 +12,8 @@
 
 #include "api/api_base.h"
 #include "api/two/two_paths.h"
+
+#include <map>
 #include <string>
 
 namespace Ark {
@@ -31,7 +33,7 @@ public:
   std::string transactionsReceived(const char *const identifier, int limit = 5, int page = 1);
   std::string transactionsSent(const char *const identifier, int limit = 5, int page = 1);
   std::string votes(const char *const identifier, int limit = 5, int page = 1);
-  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
+  std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1);
 };
 
 };

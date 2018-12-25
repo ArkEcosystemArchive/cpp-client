@@ -13,6 +13,9 @@
 #include "api/api_base.h"
 #include "api/two/two_paths.h"
 
+#include <string>
+#include <map>
+
 namespace Ark {
 namespace Client {
 namespace API {
@@ -26,7 +29,7 @@ public:
   std::string get(const char *const blockId);
   std::string all(int limit = 5, int page = 1);
   std::string transactions(const char *const blockId);
-  std::string search(std::pair<const char*, const char*> bodyParameters, int limit = 5, int page = 1);
+  std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1);
 };
 
 };
