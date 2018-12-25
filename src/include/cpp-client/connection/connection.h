@@ -10,7 +10,6 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "api/api.h"
 #include "api/one/one_api.h"
 #include "api/two/two_api.h"
 #include "http/http.h"
@@ -18,15 +17,15 @@
 namespace Ark {
 namespace Client {
 /**
- * Ark::Client::Connection<VersionedAPI>
+ * Ark::Client::Connection<TAPI>
  **/
-template <typename AbstractApi>
+template <typename TAPI>
 class Connection {
 public:
-  AbstractApi api;
+  TAPI api;
 
   Connection() = default;
-  Connection(const AbstractApi& other) : api(other) {}
+  Connection(const TAPI& other) : api(other) {}
 
   Connection(
     const char *const newHost,

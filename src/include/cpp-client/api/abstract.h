@@ -7,23 +7,24 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef API_H
-#define API_H
+#ifndef ABSTRACT_H
+#define ABSTRACT_H
 
 #include "http/http.h"
 
 namespace Ark {
 namespace Client {
+namespace API {
 
 /**
- * Ark::Client::AbstractApi 
+ * Ark::Client::API::Abstract
  **/
-class AbstractApi {
+class Abstract {
 protected:
   HTTP http_;
   int version_;
 
-  AbstractApi(int version) : version_(version) { }
+  Abstract(int version) : version_(version) { }
 
 public:
   int version() const noexcept { return this->version_; }
@@ -35,6 +36,7 @@ public:
   }
 };
 /**/
+};
 };
 };
 

@@ -10,7 +10,7 @@
 #ifndef ONE_SIGNATURES_H
 #define ONE_SIGNATURES_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 #include <string>
 
@@ -19,10 +19,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Signatures : public ApiBase
+class Signatures : public API::Base
 {
 public:
-  Signatures(HTTP& http) : ApiBase(http) { }
+  Signatures(HTTP& http) : API::Base(http) { }
 
   std::string fee();
 };
