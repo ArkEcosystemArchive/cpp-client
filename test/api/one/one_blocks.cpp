@@ -87,7 +87,7 @@ TEST(api, test_one_blocks_block)
 
 TEST(api, test_one_blocks_blocks)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
+    Ark::Client::Connection<Ark::Client::API::One> connection("167.114.29.55", 4003);
 
     const auto blocksResponse = connection.api.blocks.all();
 
