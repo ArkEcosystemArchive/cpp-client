@@ -10,7 +10,7 @@
 #ifndef TWO_PEERS_H
 #define TWO_PEERS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Peers : public ApiBase
+class Peers : public API::Base
 {
 public:
-  Peers(HTTP& http) : ApiBase(http) { }
+  Peers(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const ip);
   std::string all(int limit = 5, int page = 1);

@@ -10,7 +10,7 @@
 #ifndef ONE_DELEGATES_H
 #define ONE_DELEGATES_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Delegates : public ApiBase
+class Delegates : public API::Base
 {
 public:
-  Delegates(HTTP& http) : ApiBase(http) { }
+  Delegates(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const parameter);
   std::string all(int limit = 5);

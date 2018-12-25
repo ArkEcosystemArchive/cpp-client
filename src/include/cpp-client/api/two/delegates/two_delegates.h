@@ -10,7 +10,7 @@
 #ifndef TWO_DELEGATES_H
 #define TWO_DELEGATES_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Delegates : public ApiBase
+class Delegates : public API::Base
 {
 public:
-  Delegates(HTTP& http) : ApiBase(http) { }
+  Delegates(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);

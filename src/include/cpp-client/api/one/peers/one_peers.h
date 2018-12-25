@@ -10,7 +10,7 @@
 #ifndef ONE_PEERS_H
 #define ONE_PEERS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Peers : public ApiBase
+class Peers : public API::Base
 {
 public:
-  Peers(HTTP& http) : ApiBase(http) { }
+  Peers(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const ip, const int port);
   std::string all(int limit = 5);

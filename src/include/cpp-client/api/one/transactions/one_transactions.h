@@ -10,7 +10,7 @@
 #ifndef ONE_TRANSACTIONS_H
 #define ONE_TRANSACTIONS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 #include <string>
 
@@ -19,10 +19,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Transactions : public ApiBase
+class Transactions : public API::Base
 {
 public:
-  Transactions(HTTP& http) : ApiBase(http) { }
+  Transactions(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const id);
   std::string all(int limit = 5, const char *const orderBy = "timestamp", bool isDescending = true);

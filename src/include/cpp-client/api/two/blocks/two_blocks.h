@@ -10,7 +10,7 @@
 #ifndef TWO_BLOCKS_H
 #define TWO_BLOCKS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 
 #include <string>
@@ -21,10 +21,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Blocks : public ApiBase
+class Blocks : public API::Base
 {
 public:
-  Blocks(HTTP& http) : ApiBase(http) { }
+  Blocks(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const blockId);
   std::string all(int limit = 5, int page = 1);

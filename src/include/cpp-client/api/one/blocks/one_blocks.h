@@ -10,7 +10,7 @@
 #ifndef ONE_BLOCKS_H
 #define ONE_BLOCKS_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Blocks : public ApiBase
+class Blocks : public API::Base
 {
 public:
-  Blocks(HTTP& http) : ApiBase(http) { }
+  Blocks(HTTP& http) : API::Base(http) { }
 
   std::string get(const char *const blockId);
   std::string all(const char *const orderBy = "height", bool isDescending = true, int limit = 10);
