@@ -155,24 +155,6 @@ TEST(api, test_transaction_types)
       .Times(1)
       .WillOnce(Return(response));
 
-    const std::string response = R"({
-			  "data": {
-			    "TRANSFER": 0,
-			    "SECOND_SIGNATURE": 1,
-			    "DELEGATE_REGISTRATION": 2,
-			    "VOTE": 3,
-			    "MULTI_SIGNATURE": 4,
-			    "IPFS": 5,
-			    "TIMELOCK_TRANSFER": 6,
-			    "MULTI_PAYMENT": 7,
-			    "DELEGATE_RESIGNATION": 8
-			  }
-			})";
-
-    EXPECT_CALL(connection.api.transactions, types())
-      .Times(1)
-      .WillOnce(Return(response));
-
     const auto types = connection.api.transactions.types();
 
     DynamicJsonBuffer jsonBuffer(types.size());
@@ -253,12 +235,6 @@ TEST(api, test_two_transaction_unconfirmed)
 			    }
 			  }
 			})";
-
-    EXPECT_CALL(connection.api.transactions, getUnconfirmed("dummy"))
-      .Times(1)
-      .WillOnce(Return(response));
-
-    const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
 
     EXPECT_CALL(connection.api.transactions, getUnconfirmed("dummy"))
       .Times(1)

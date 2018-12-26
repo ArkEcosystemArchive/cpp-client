@@ -24,7 +24,7 @@ namespace TWO {
 class IWallets : public API::Base
 {
 protected:
-  IWallets(IHTTP& http) : ApiBase(http) { }
+  IWallets(IHTTP& http) : API::Base(http) { }
 
 public:
   virtual ~IWallets() { }

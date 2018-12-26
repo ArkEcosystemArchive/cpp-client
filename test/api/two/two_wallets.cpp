@@ -7,6 +7,7 @@
 #include "utils/json.h"
 
 using testing::Return;
+using testing::_;
 
 /* test_two_vote_identifier
  * https://dexplorer.ark.io:8443/api/v2/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu
@@ -218,21 +219,17 @@ TEST(api, test_two_wallets_search)
         ]
     })";
 
-    
-    EXPECT_CALL(connection.api.wallets, search(std::make_pair("address", "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"), 5, 1))
-      .Times(1)
-      .WillOnce(Return(response));
     const std::map<std::string, std::string> body_parameters = {
-      {"username", "baldninja"},
-      {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
-      {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
+     {"username", "baldninja"},
+     {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
+     {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
     };
 
-    const auto walletsSearch = connection.api.wallets.search(body_parameters);
-
-    const auto walletsSearch = connection.api.wallets.search(std::make_pair("address", "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"), 5, 1);
-
-    const auto walletsSearch = connection.api.wallets.search(std::make_pair("address", "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"), 5, 1);
+    EXPECT_CALL(connection.api.wallets, search(_, _, _))
+      .Times(1)
+      .WillOnce(Return(response));
+   
+    const auto walletsSearch = connection.api.wallets.search(body_parameters, 5, 1);
 
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);
@@ -413,12 +410,6 @@ TEST(api, test_two_wallets_transactions)
             }
         ]
     })";
-
-    EXPECT_CALL(connection.api.wallets, transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1))
-      .Times(1)
-      .WillOnce(Return(response));
-
-    const auto walletsTransactions = connection.api.wallets.transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1);
 
     EXPECT_CALL(connection.api.wallets, transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1))
       .Times(1)

@@ -33,7 +33,7 @@ public:
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
   virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
-  virtual std::string types(int limit = 5, int page = 1) = 0;
+  virtual std::string types() = 0;
   virtual std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) = 0;
 };
 
@@ -46,7 +46,7 @@ public:
   std::string get(const char *const identifier);
   std::string all(int limit = 5, int page = 1);
   std::string allUnconfirmed(int limit = 2, int page = 1);
-  std::string types(int limit = 5, int page = 1);
+  std::string types();
   std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1);
 };
 

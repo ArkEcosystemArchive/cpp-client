@@ -22,7 +22,7 @@ public:
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD2(all, std::string(int, int));
   MOCK_METHOD1(transactions, std::string(const char* const));
-  MOCK_METHOD3(search, std::string(std::pair<const char*, const char*>, int, int));
+  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
 };
 
 class MockDelegates : public Ark::Client::API::TWO::IDelegates
@@ -64,6 +64,7 @@ public:
   MOCK_METHOD2(all, std::string(int, int));
   MOCK_METHOD2(allUnconfirmed, std::string(int, int));
   MOCK_METHOD0(types, std::string());
+  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
 };
 
 class MockVotes : public Ark::Client::API::TWO::IVotes
@@ -87,10 +88,10 @@ public:
   MOCK_METHOD3(transactionsReceived, std::string(const char* const, int, int));
   MOCK_METHOD3(transactionsSent, std::string(const char* const, int, int));
   MOCK_METHOD3(votes, std::string(const char* const, int, int));
-  MOCK_METHOD3(search, std::string(std::pair<const char*, const char*>, int, int));
+  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
 };
 
-class MockApi : public Ark::Client::AbstractApi
+class MockApi : public Ark::Client::API::Abstract
 {
 public:
   MockBlocks blocks;
@@ -101,7 +102,7 @@ public:
   MockVotes votes;
   MockWallets wallets;
 
-  MockApi() : AbstractApi(new MockHTTP(), 2), blocks(*http_), delegates(*http_), node(*http_), peers(*http_), transactions(*http_), votes(*http_), wallets(*http_) { }
+  MockApi() : Abstract(new MockHTTP(), 2), blocks(*http_), delegates(*http_), node(*http_), peers(*http_), transactions(*http_), votes(*http_), wallets(*http_) { }
 };
 
 #endif
