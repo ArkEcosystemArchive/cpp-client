@@ -60,5 +60,5 @@ std::string Ark::Client::API::Transactions::search(const std::map<std::string, s
   for (const auto& p : body_parameters) {
     parameterBuffer += p.first + '=' + p.second + '&';
   }
-  return http_.post(uri, parameterBuffer.c_str());
+  return http_->post(uri, parameterBuffer.c_str());
 }

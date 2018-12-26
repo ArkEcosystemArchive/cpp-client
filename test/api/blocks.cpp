@@ -571,11 +571,17 @@ TEST(api, test_blocks_search)
         ]
     })";
 
-    EXPECT_CALL(connection.api.blocks, search(std::make_pair("id", "8337447655053578871"), 5, 1))
+    const std::map<std::string, std::string> body = {
+      {"id", "8337447655053578871"},
+      {"previousBlock", "6440284271011893973"},
+      {"version", "0"}
+    };
+
+    EXPECT_CALL(connection.api.blocks, search(_, _, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-    const auto walletsSearch = connection.api.blocks.search(std::make_pair("id", "8337447655053578871"), 5, 1);
+    const auto walletsSearch = connection.api.blocks.search(body, 5, 1);
 
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);

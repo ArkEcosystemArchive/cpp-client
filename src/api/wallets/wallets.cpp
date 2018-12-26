@@ -133,5 +133,5 @@ std::string Ark::Client::API::Wallets::search(
   for (const auto& p : bodyParameters) {
     parameterBuffer += p.first + '=' + p.second + '&';
   }
-  return http_.post(uri, parameterBuffer.c_str());
+  return http_->post(uri, parameterBuffer.c_str());
 }
