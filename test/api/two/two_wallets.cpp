@@ -232,6 +232,8 @@ TEST(api, test_two_wallets_search)
 
     const auto walletsSearch = connection.api.wallets.search(std::make_pair("address", "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"), 5, 1);
 
+    const auto walletsSearch = connection.api.wallets.search(std::make_pair("address", "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"), 5, 1);
+
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);
 
@@ -411,6 +413,12 @@ TEST(api, test_two_wallets_transactions)
             }
         ]
     })";
+
+    EXPECT_CALL(connection.api.wallets, transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1))
+      .Times(1)
+      .WillOnce(Return(response));
+
+    const auto walletsTransactions = connection.api.wallets.transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1);
 
     EXPECT_CALL(connection.api.wallets, transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1))
       .Times(1)
