@@ -18,7 +18,8 @@ namespace API {
 /**
  * Ark::Client::API::Abstract 
  **/
-class Abstract {
+class Abstract
+{
   protected:
     HTTP http_;
     int version_;

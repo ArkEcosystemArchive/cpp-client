@@ -409,7 +409,12 @@ TEST(api, test_blocks_search)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto walletsSearch = connection.api.blocks.search({"id", "8337447655053578871"});
+    const std::map<std::string, std::string> body = {
+      {"id", "8337447655053578871"},
+      {"previousBlock", "6440284271011893973"},
+      {"version", "0"}
+    };
+    const auto walletsSearch = connection.api.blocks.search(body);
 
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);

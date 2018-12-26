@@ -25,24 +25,24 @@ namespace Client {
 /***/
 class Api : public API::Abstract
 {
-public:
-  Ark::Client::API::Blocks blocks;
-  Ark::Client::API::Delegates delegates;
-  Ark::Client::API::Node node;
-  Ark::Client::API::Peers peers;
-  Ark::Client::API::Transactions transactions;
-  Ark::Client::API::Votes votes;
-  Ark::Client::API::Wallets wallets;
+  public:
+    API::Blocks blocks;
+    API::Delegates delegates;
+    API::Node node;
+    API::Peers peers;
+    API::Transactions transactions;
+    API::Votes votes;
+    API::Wallets wallets;
 
-  Api() :
-      API::Abstract(2),
-      blocks(http_),
-      delegates(http_),
-      node(http_),
-      peers(http_),
-      transactions(http_),
-      votes(http_),
-      wallets(http_) { }
+    Api() :
+        API::Abstract(2),
+        blocks(http_),
+        delegates(http_),
+        node(http_),
+        peers(http_),
+        transactions(http_),
+        votes(http_),
+        wallets(http_) {}
 };
 /***/
 }
