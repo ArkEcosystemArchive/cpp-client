@@ -10,7 +10,7 @@
 #ifndef TWO_NODE_H
 #define TWO_NODE_H
 
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/two/two_paths.h"
 
 namespace Ark {
@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 namespace TWO {
 
-class Node : public ApiBase
+class Node : public API::Base
 {
 public:
-  Node(HTTP& http) : ApiBase(http) { }
+  Node(HTTP& http) : API::Base(http) { }
 
   std::string configuration();
   std::string status();

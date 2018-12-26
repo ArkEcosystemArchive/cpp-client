@@ -10,7 +10,7 @@
 #ifndef ONE_API_H
 #define ONE_API_H
 
-#include "api/api.h"
+#include "api/abstract.h"
 #include "api/one/accounts/one_accounts.h"
 #include "api/one/blocks/one_blocks.h"
 #include "api/one/delegates/one_delegates.h"
@@ -23,7 +23,7 @@ namespace Ark {
 namespace Client {
 namespace API {
 /**/
-class One : public AbstractApi
+class One : public API::Abstract
 {
 public:
   Ark::Client::API::ONE::Accounts accounts;
@@ -34,7 +34,7 @@ public:
   Ark::Client::API::ONE::Signatures signatures;
   Ark::Client::API::ONE::Transactions transactions;
         
-  One() : AbstractApi(1), accounts(http_), blocks(http_), delegates(http_), loader(http_), peers(http_), signatures(http_), transactions(http_) { }
+  One() : Abstract(1), accounts(http_), blocks(http_), delegates(http_), loader(http_), peers(http_), signatures(http_), transactions(http_) { }
 };
 /**/
 };

@@ -10,7 +10,7 @@
 #ifndef TWO_API_H
 #define TWO_API_H
 
-#include "api/api.h"
+#include "api/abstract.h"
 #include "api/two/blocks/two_blocks.h"
 #include "api/two/delegates/two_delegates.h"
 #include "api/two/node/two_node.h"
@@ -23,7 +23,7 @@ namespace Ark {
 namespace Client {
 namespace API {
 /***/
-class Two : public AbstractApi
+class Two : public API::Abstract
 {
 public:
   Ark::Client::API::TWO::Blocks blocks;
@@ -34,7 +34,7 @@ public:
   Ark::Client::API::TWO::Votes votes;
   Ark::Client::API::TWO::Wallets wallets;
 
-  Two() : AbstractApi(2), blocks(http_), delegates(http_), node(http_), peers(http_), transactions(http_), votes(http_), wallets(http_) { }
+  Two() : Abstract(2), blocks(http_), delegates(http_), node(http_), peers(http_), transactions(http_), votes(http_), wallets(http_) { }
 };
 /***/
 }

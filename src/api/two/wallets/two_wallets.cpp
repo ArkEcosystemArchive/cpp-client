@@ -118,7 +118,7 @@ std::string Ark::Client::API::TWO::Wallets::votes(
 /***/
 
 std::string Ark::Client::API::TWO::Wallets::search(
-  std::pair<const char*, const char*> body,
+  const std::map<std::string, std::string>& bodyParameters,
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
@@ -132,9 +132,8 @@ std::string Ark::Client::API::TWO::Wallets::search(
     page
   );
   std::string parameterBuffer;
-  parameterBuffer.reserve(strlen(body.first) + strlen(body.second) + 2);
-  parameterBuffer += body.first;
-  parameterBuffer += "=";
-  parameterBuffer += body.second;
+  for (const auto& p : bodyParameters) {
+    parameterBuffer += p.first + '=' + p.second + '&';
+  }
   return http_.post(uri, parameterBuffer.c_str());
 }

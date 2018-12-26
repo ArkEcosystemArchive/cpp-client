@@ -7,23 +7,25 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef API_BASE_H
-#define API_BASE_H
+#ifndef BASE_H
+#define BASE_H
 
 #include "http/http.h"
 
 namespace Ark {
 namespace Client {
+namespace API {
 /**
- * Ark::Client::AbstractApi 
+ * Ark::Client::API::Base 
  **/
-class ApiBase {
+class Base {
 protected:
   HTTP& http_;
 
-  ApiBase(HTTP& http) : http_(http) { }
+  Base(HTTP& http) : http_(http) { }
 };
 /**/
+};
 };
 };
 

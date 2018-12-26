@@ -11,7 +11,7 @@
 #define ONE_ACCOUNTS_H
 
 #include "http/http.h"
-#include "api/api_base.h"
+#include "api/base.h"
 #include "api/one/one_paths.h"
 #include <string>
 
@@ -20,10 +20,10 @@ namespace Client {
 namespace API {
 namespace ONE {
 
-class Accounts : public Ark::Client::ApiBase
+class Accounts : public API::Base
 {
 public:
-  Accounts(HTTP& http) : ApiBase(http) { }
+  Accounts(HTTP& http) : API::Base(http) { }
 
   std::string balance(const char *const arkAddress);
   std::string publickey(const char *const arkAddress);
