@@ -167,13 +167,13 @@ TEST(api, test_node_configuration)
     JsonObject& data = root["data"];
 
     const char* nethash = data["nethash"];
-    ASSERT_STREQ("2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867", nethash);
+    ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", nethash);
 
     const char* token = data["token"];
     ASSERT_STREQ("DARK", token);
 
     const char* symbol = data["symbol"];
-    ASSERT_STREQ("D\xD1\xA6", symbol);
+    ASSERT_STREQ(u8"DѦ", symbol);
 
     const char* explorer = data["explorer"];
     ASSERT_STREQ("https://dexplorer.ark.io", explorer);
@@ -185,7 +185,7 @@ TEST(api, test_node_configuration)
     JsonObject& ports = data["ports"];
 
     int core_p2p = ports["@arkecosystem/core-p2p"];
-    ASSERT_EQ(4002, core_p2p);
+    ASSERT_EQ(4000, core_p2p);
 
     int core_api = ports["@arkecosystem/core-api"];
     ASSERT_EQ(4003, core_api);
@@ -213,7 +213,7 @@ TEST(api, test_node_status)
         "data": {
             "synced": false,
             "now": 3034451,
-            "blocksCount": -36
+            "blocksCount": 36
         }
     })";
 
@@ -229,13 +229,13 @@ TEST(api, test_node_status)
     JsonObject& data = root["data"];
 
     bool synced = data["synced"];
-    ASSERT_TRUE(synced || !synced);
+    ASSERT_FALSE(synced);
 
     int now = data["now"];
-    ASSERT_GE(now, 0);
+    ASSERT_EQ(3034451, now);
 
-    const char* blocksCount = data["blocksCount"];
-    ASSERT_STRNE("", blocksCount);
+    int blocksCount = data["blocksCount"];
+    ASSERT_EQ(36, blocksCount);
 }
 
 /* test_node_status
@@ -260,7 +260,7 @@ TEST(api, test_node_syncing)
     const std::string response = R"({
         "data": {
             "syncing": true,
-            "blocks": -36,
+            "blocks": 36,
             "height": 3034451,
             "id": "5444078994968869529"
         }
@@ -278,14 +278,14 @@ TEST(api, test_node_syncing)
     JsonObject& data = root["data"];
 
     bool syncing = data["syncing"];
-    ASSERT_TRUE(syncing || !syncing);
+    ASSERT_TRUE(syncing);
 
-    const char* blocks = data["blocks"];
-    ASSERT_STRNE("", blocks);
+    int blocks = data["blocks"];
+    ASSERT_EQ(36, blocks);
 
     uint64_t height = data["height"];
-    ASSERT_TRUE(height >= 0);
+    ASSERT_TRUE(3034451ull == height);
 
     const char* id = data["id"];
-    ASSERT_STRNE("", id);
+    ASSERT_STREQ("5444078994968869529", id);
 }
