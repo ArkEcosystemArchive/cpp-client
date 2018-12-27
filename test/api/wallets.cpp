@@ -38,7 +38,7 @@ TEST(api, test_wallet)
         }
     })";
 
-    EXPECT_CALL(connection.api.wallets, get("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN"))
+    EXPECT_CALL(connection.api.wallets, get(_))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -50,16 +50,16 @@ TEST(api, test_wallet)
     JsonObject& data = root["data"];
 
     const char* address = data["address"];
-    ASSERT_STREQ("DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu", address);
+    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
     const char* publicKey = data["publicKey"];
-    ASSERT_STREQ("023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359", publicKey);
+    ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
 
     uint64_t balance = data["balance"];
-    ASSERT_TRUE(balance >= 0);
+    ASSERT_TRUE(balance == 12534670000000);
 
     bool isDelegate = data["isDelegate"];
-    ASSERT_TRUE((isDelegate == true || isDelegate == false) == true);
+    ASSERT_TRUE(isDelegate);
 }
 
 /* test_wallets
@@ -115,7 +115,7 @@ TEST(api, test_wallets)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, all(5, 1))
+    EXPECT_CALL(connection.api.wallets, all(_, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -139,16 +139,16 @@ TEST(api, test_wallets)
     JsonObject& dataZero = root["data"][0];
 
     const char* address = dataZero["address"];
-    ASSERT_STRNE("", address);
+    ASSERT_STREQ("D59NTfV92ca9QevUydvMiFMFdubbCaAVCV", address);
 
     const char* publicKey = dataZero["publicKey"];
-    ASSERT_STRNE("", publicKey);
+    ASSERT_STREQ("037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a", publicKey);
 
     uint64_t balance = dataZero["balance"];
     ASSERT_TRUE(balance >= 0);
 
     bool isDelegate = dataZero["isDelegate"];
-    ASSERT_TRUE((isDelegate == true || isDelegate == false) == true);
+    ASSERT_FALSE(isDelegate);
 }
 
 /* test_wallets_search
@@ -248,11 +248,43 @@ TEST(api, test_wallets_search)
 
     JsonObject& dataZero = root["data"][0];;
 
-    const char* address = dataZero["address"];
-    ASSERT_STRNE("", address);
+    const char* id = dataZero["id"];
+    ASSERT_STREQ("08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e", id);
 
-    const char* publicKey = dataZero["publicKey"];
-    ASSERT_STRNE("", publicKey);
+    const char* blockId = dataZero["blockId"];
+    ASSERT_STREQ("14847399772737279404", blockId);
+
+    int type = dataZero["type"];
+    ASSERT_EQ(3, type);
+
+    uint64_t amount = dataZero["amount"];
+    ASSERT_TRUE(0ull == amount);
+
+    uint64_t fee = dataZero["fee"];
+    ASSERT_TRUE(100000000ull == fee);
+
+    const char* sender = dataZero["sender"];
+    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
+
+    const char* recipient = dataZero["recipient"];
+    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
+
+    const char* signature = dataZero["signature"];
+    ASSERT_STREQ("304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e", signature);
+
+    int confirmations = dataZero["confirmations"];
+    ASSERT_EQ(1636029, confirmations);
+
+    JsonObject& timestamp = dataZero["timestamp"];
+
+    int epoch = timestamp["epoch"];
+    ASSERT_EQ(17094358, epoch);
+
+    int timestampUnix = timestamp["unix"];
+    ASSERT_EQ(1507195558, timestampUnix);
+
+    const char* human = timestamp["human"];
+    ASSERT_STREQ("2017-10-05T09:25:58Z", human);
 }
 
 /* test_wallets_top_limit_page
@@ -288,6 +320,16 @@ TEST(api, test_wallets_top)
     ASSERT_EQ(2, apiVersion);
 
     const std::string response = R"({
+        "meta": {
+            "count": 2,
+            "pageCount": 1,
+            "totalCount": 2,
+            "next": "/api/v2/wallets/top?limit=5&page=1",
+            "previous": null,
+            "self": "/api/v2/wallets/top?limit=5&page=1",
+            "first": "/api/v2/wallets/top?limit=5&page=1",
+            "last": "/api/v2/wallets/top?limit=5&page=1"
+        },
         "data": [
             {
                 "address": "DGihocTkwDygiFvmg6aG8jThYTic47GzU9",
@@ -301,11 +343,10 @@ TEST(api, test_wallets_top)
                 "balance": 554107676293547,
                 "isDelegate": false
             },
-            ...
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, top(5, 1))
+    EXPECT_CALL(connection.api.wallets, top(_, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -329,14 +370,30 @@ TEST(api, test_wallets_top)
     JsonObject& dataZero = root["data"][0];
 
     const char* address = dataZero["address"];
-    ASSERT_STRNE("", address);
+    ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", address);
+
+    const char* publicKey = dataZero["publicKey"];
+    ASSERT_STREQ("024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231", publicKey);
 
     uint64_t balance = dataZero["balance"];
-    ASSERT_TRUE(balance >= 0);
+    ASSERT_TRUE(balance == 11499593462120632ull);
 
     bool isDelegate = dataZero["isDelegate"];
-    // as long as data was read, we don't really care (or know) what the expected value is
-    ASSERT_TRUE(isDelegate || !isDelegate);
+    ASSERT_FALSE(isDelegate);
+
+    JsonObject& dataOne = root["data"][1];
+
+    address = dataOne["address"];
+    ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", address);
+
+    publicKey = dataOne["publicKey"];
+    ASSERT_STREQ("0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd", publicKey);
+
+    balance = dataOne["balance"];
+    ASSERT_TRUE(balance == 554107676293547ull);
+
+    isDelegate = dataOne["isDelegate"];
+    ASSERT_FALSE(isDelegate);
 }
 
 /* test_wallets_transactions
@@ -411,7 +468,7 @@ TEST(api, test_wallets_transactions)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1))
+    EXPECT_CALL(connection.api.wallets, transactions(_, _, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -423,7 +480,7 @@ TEST(api, test_wallets_transactions)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_NE(0, count);
+    ASSERT_EQ(2, count);
 }
 
 /* test_wallets_transactions_received
@@ -484,7 +541,7 @@ TEST(api, test_wallets_transactions_received)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactionsReceived("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1))
+    EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -567,7 +624,7 @@ TEST(api, test_wallets_transactions_sent)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactionsSent("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1))
+    EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -670,7 +727,7 @@ TEST(api, test_wallets_votes)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, votes("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 1, 1))
+    EXPECT_CALL(connection.api.wallets, votes(_, _, _))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -687,5 +744,5 @@ TEST(api, test_wallets_votes)
     JsonObject& data = root["data"][0];
 
     const char* sender = data["sender"];
-    ASSERT_STREQ("DNjuJEDQkhrJ7cA9FZ2iVXt5anYiM8Jtc9", sender);
+    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
 }
