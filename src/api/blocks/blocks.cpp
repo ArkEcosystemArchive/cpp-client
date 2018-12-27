@@ -33,16 +33,15 @@ std::string Ark::Client::API::Blocks::transactions(const char *const blockId)
 /***/
 
 std::string Ark::Client::API::Blocks::search(
-  std::pair<const char*, const char*> bodyParameters,
+  const std::map<std::string, std::string>& bodyParameters,
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
   char uri[96] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Blocks::search, limit, page);
   std::string parameterBuffer;
-  parameterBuffer.reserve(strlen(bodyParameters.first) + strlen(bodyParameters.second) + 1);
-  parameterBuffer += bodyParameters.first;
-  parameterBuffer += "=";
-  parameterBuffer += bodyParameters.second;
+  for (const auto& p : bodyParameters) {
+    parameterBuffer += p.first + '=' + p.second + '&';
+  }
   return http_.post(uri, parameterBuffer.c_str());
 }
