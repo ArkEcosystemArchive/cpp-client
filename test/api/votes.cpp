@@ -7,6 +7,7 @@
 #include "utils/json.h"
 
 using testing::Return;
+using testing::_;
 
 /* test_two_vote
  * https://dexplorer.ark.io:8443/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2
@@ -66,7 +67,7 @@ TEST(api, test_vote)
         }
     })";
 
-    EXPECT_CALL(connection.api.votes, get("beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6"))
+    EXPECT_CALL(connection.api.votes, get(_))
       .Times(1)
       .WillOnce(Return(response));
 
@@ -78,42 +79,42 @@ TEST(api, test_vote)
     JsonObject& data = root["data"];
 
     const char* id = data["id"];
-    ASSERT_STREQ("d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2", id);
+    ASSERT_STREQ("beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6", id);
 
     const char* blockId = data["blockId"];
-    ASSERT_STREQ("8320994199422256846", blockId);
+    ASSERT_STREQ("13661015019049808045", blockId);
 
     int type = data["type"];
     ASSERT_EQ(3, type);
 
     uint64_t amount = data["amount"];
-    ASSERT_TRUE(amount >= 0);
+    ASSERT_TRUE(amount == 0);
 
     uint64_t fee = data["fee"];
     ASSERT_TRUE(fee == 100000000);
 
     const char* sender = data["sender"];
-    ASSERT_STREQ("DP8CKM9bSb2crRZyaxLxjaK1mdrtuDuGJr", sender);
+    ASSERT_STREQ("DAp7JjULVgqzd4jLofkUyLRovHRPUTQwiZ", sender);
 
     const char* recipient = data["recipient"];
-    ASSERT_STREQ("DP8CKM9bSb2crRZyaxLxjaK1mdrtuDuGJr", recipient);
+    ASSERT_STREQ("DAp7JjULVgqzd4jLofkUyLRovHRPUTQwiZ", recipient);
 
     const char* signature = data["signature"];
-    ASSERT_STREQ("304402202fda01999d02d2d099a5e5e199cc6a24ca32b1e644ec855d1b9004b5068b45450220653c65a9bf48742104671e69a597b86517160f6ff87a92b89b62c290b312493c", signature);
+    ASSERT_STREQ("3045022100e9a743c5aa0df427f49af61d35fe617182479f7e8d368ce23b7ec43ab6d269c80220193aafd4ccb3eedbd76ded7ea99f31629013dc3af60540029fe98b274d42d284", signature);
 
     int confirmations = data["confirmations"];
-    ASSERT_GT(confirmations, 0);
+    ASSERT_EQ(48189, confirmations);
 
     JsonObject& timestamp = data["timestamp"];
 
     int epoch = timestamp["epoch"];
-    ASSERT_EQ(45024867, epoch);
+    ASSERT_EQ(32338609, epoch);
 
     int timestampUnix = timestamp["unix"];
-    ASSERT_EQ(1535126067, timestampUnix);
+    ASSERT_EQ(1522439809, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-08-24T15:54:27.000Z", human);
+    ASSERT_STREQ("2018-03-30T19:56:49Z", human);
 }
 
 /* test_votes
@@ -198,7 +199,7 @@ TEST(api, test_votes)
         ]
     })";
 
-    EXPECT_CALL(connection.api.votes, all(5, 1))
+    EXPECT_CALL(connection.api.votes, all(_, _))
       .Times(1)
       .WillOnce(Return(response));
 
