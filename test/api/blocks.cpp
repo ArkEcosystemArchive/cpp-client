@@ -595,14 +595,43 @@ TEST(api, test_blocks_search)
     JsonObject& dataZero = root["data"][0];
 
     const char* id = dataZero["id"];
-    ASSERT_STREQ("8337447655053578871", id);
+    ASSERT_STREQ("57415c61e6e7f10a6f9820d5124b3916f3c3a036b360f4802f0eb484f86f3369", id);
 
-    const char* previous = dataZero["previous"];
-    ASSERT_STREQ("6440284271011893973", previous);
+    const char* blockId = dataZero["blockId"];
+    ASSERT_STREQ("14126007750611341900", blockId);
 
+    int type = dataZero["type"];
+    ASSERT_EQ(0, type);
 
-    JsonObject& generator = dataZero["generator"];
+    uint64_t amount = dataZero["amount"];
+    ASSERT_TRUE(1000000000000000ull == amount);
 
-    const char* username = generator["username"];
-    ASSERT_STREQ("genesis_46", username);
+    uint64_t fee = dataZero["fee"];
+    ASSERT_TRUE(10000000ull == fee);
+
+    const char* sender = dataZero["sender"];
+    ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", sender);
+
+    const char* recipient = dataZero["recipient"];
+    ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", recipient);
+
+    const char* signature = dataZero["signature"];
+    ASSERT_STREQ("3045022100878335a71ab6769f3c1e2895041ad24d6c58cdcfe1151c639e65289e5287b0a8022010800bcfdc3223a9c59a6b014e8adf72f1c34df8a46afe655b021930b03e214e", signature);
+
+    const char* vendorField = dataZero["vendorField"];
+    ASSERT_STREQ("yo", vendorField);
+
+    int confirmations = dataZero["confirmations"];
+    ASSERT_EQ(3034848, confirmations);
+
+    JsonObject& timestamp = dataZero["timestamp"];
+
+    uint64_t epoch = timestamp["epoch"];
+    ASSERT_TRUE(3909196ull == epoch);
+
+    int64_t unix = timestamp["unix"];
+    ASSERT_TRUE(1494010396ull == unix);
+
+    const char* human = timestamp["human"];
+    ASSERT_STREQ("2017-05-05T18:53:16Z", human);
 }
