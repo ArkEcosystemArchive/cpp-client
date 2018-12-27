@@ -22,6 +22,8 @@ protected:
   IHTTP() = default;
 
 public:
+  virtual ~IHTTP() { }
+
   virtual const char* host() const /*noexcept*/ = 0;
   virtual int port() const /*noexcept*/ = 0;
   virtual int api_version() const /*noexcept*/ = 0;
