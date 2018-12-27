@@ -105,7 +105,7 @@ TEST(api, test_delegate)
     int missed = blocks["missed"];
     ASSERT_EQ(0, missed);
 
-    JsonObject& last = data["last"];
+    JsonObject& last = blocks["last"];
 
     const char* last_id = last["id"];
     ASSERT_STREQ("10652480998435361357", last_id);
