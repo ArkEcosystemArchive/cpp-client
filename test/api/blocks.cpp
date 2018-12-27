@@ -629,7 +629,7 @@ TEST(api, test_blocks_search)
     uint64_t epoch = timestamp["epoch"];
     ASSERT_TRUE(3909196ull == epoch);
 
-    int64_t unix = timestamp["unix"];
+    uint64_t unix = timestamp["unix"];
     ASSERT_TRUE(1494010396ull == unix);
 
     const char* human = timestamp["human"];
