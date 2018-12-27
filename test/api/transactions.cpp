@@ -283,8 +283,8 @@ TEST(api, test_transaction_unconfirmed)
     uint64_t epoch = timestamp["epoch"];
     ASSERT_TRUE(40505460ull == epoch);
 
-    uint64_t unix = timestamp["unix"];
-    ASSERT_TRUE(1530606660ull == unix);
+    uint64_t unix_timestamp = timestamp["unix"];
+    ASSERT_TRUE(1530606660ull == unix_timestamp);
 
     const char* human = timestamp["human"];
     ASSERT_STREQ("2018-07-03T08:31:00Z", human);

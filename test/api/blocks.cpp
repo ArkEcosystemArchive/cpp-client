@@ -629,8 +629,8 @@ TEST(api, test_blocks_search)
     uint64_t epoch = timestamp["epoch"];
     ASSERT_TRUE(3909196ull == epoch);
 
-    uint64_t unix = timestamp["unix"];
-    ASSERT_TRUE(1494010396ull == unix);
+    uint64_t unix_timestamp = timestamp["unix"];
+    ASSERT_TRUE(1494010396ull == unix_timestamp);
 
     const char* human = timestamp["human"];
     ASSERT_STREQ("2017-05-05T18:53:16Z", human);

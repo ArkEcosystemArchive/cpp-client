@@ -115,8 +115,8 @@ TEST(api, test_delegate)
     uint64_t epoch = timestamp["epoch"];
     ASSERT_TRUE(32816112ull == epoch);
 
-    uint64_t unix = timestamp["unix"];
-    ASSERT_TRUE(1522917312ull == unix);
+    uint64_t unix_timestamp = timestamp["unix"];
+    ASSERT_TRUE(1522917312ull == unix_timestamp);
 
     const char* human = timestamp["human"];
     ASSERT_STREQ("2018-04-05T08:35:12Z", human);
