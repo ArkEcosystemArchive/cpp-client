@@ -20,17 +20,33 @@ namespace Ark {
 namespace Client {
 namespace API {
 
-class Transactions : public API::Base
+class ITransactions : public API::Base
+{
+protected:
+  ITransactions(IHTTP& http) : API::Base(http) { }
+
+public:
+  virtual ~ITransactions() { }
+
+  virtual std::string getUnconfirmed(const char *const identifier) = 0;
+  virtual std::string get(const char *const identifier) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+  virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
+  virtual std::string types() = 0;
+  virtual std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) = 0;
+};
+
+class Transactions : public ITransactions
 {
   public:
-    Transactions(HTTP& http) : API::Base(http) { }
+    Transactions(IHTTP& http) : ITransactions(http) { }
 
-    std::string getUnconfirmed(const char *const identifier, int limit = 2, int page = 1);
-    std::string get(const char *const identifier, int limit = 5, int page = 1);
-    std::string all(int limit = 5, int page = 1);
-    std::string allUnconfirmed(int limit = 2, int page = 1);
-    std::string types(int limit = 5, int page = 1);
-    std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1);
+    std::string getUnconfirmed(const char *const identifier) override;
+    std::string get(const char *const identifier) override;
+    std::string all(int limit = 5, int page = 1) override;
+    std::string allUnconfirmed(int limit = 2, int page = 1) override;
+    std::string types() override;
+    std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) override;
 };
 
 };

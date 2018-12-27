@@ -20,15 +20,28 @@ namespace Ark {
 namespace Client {
 namespace API {
 
-class Blocks : public API::Base
+  class IBlocks : public API::Base
+  {
+  protected:
+    IBlocks(IHTTP& http) : API::Base(http) { }
+
+  public:
+    virtual ~IBlocks() { }
+    virtual std::string get(const char *const blockId) = 0;
+    virtual std::string all(int limit = 5, int page = 1) = 0;
+    virtual std::string transactions(const char *const blockId) = 0;
+    virtual std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) = 0;
+  };
+
+class Blocks : public IBlocks
 {
   public:
-    Blocks(HTTP& http) : API::Base(http) { }
+    Blocks(IHTTP& http) : IBlocks(http) { }
 
-    std::string get(const char *const blockId);
-    std::string all(int limit = 5, int page = 1);
-    std::string transactions(const char *const blockId);
-    std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1);
+    std::string get(const char *const blockId) override;
+    std::string all(int limit = 5, int page = 1) override;
+    std::string transactions(const char *const blockId) override;
+    std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) override;
 };
 
 };

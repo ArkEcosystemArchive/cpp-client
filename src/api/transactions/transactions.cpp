@@ -3,11 +3,11 @@
 
 #include <cstdio>
 
-std::string Ark::Client::API::TWO::Transactions::getUnconfirmed(
+std::string Ark::Client::API::Transactions::getUnconfirmed(
   const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::TWO::Paths::Transactions::unconfirmed, identifier);
+  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::Paths::Transactions::unconfirmed, identifier);
   return http_->get(uri);
 }
 
@@ -24,11 +24,11 @@ std::string Ark::Client::API::Transactions::all(
 
 /***/
 
-std::string Ark::Client::API::TWO::Transactions::get(
+std::string Ark::Client::API::Transactions::get(
   const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::TWO::Paths::Transactions::base, identifier);
+  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::Paths::Transactions::base, identifier);
   return http_->get(uri);
 }
 
@@ -45,9 +45,9 @@ std::string Ark::Client::API::Transactions::allUnconfirmed(
 
 /***/
 
-std::string Ark::Client::API::TWO::Transactions::types() {
+std::string Ark::Client::API::Transactions::types() {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s", Ark::Client::API::TWO::Paths::Transactions::types);
+  snprintf(uri, sizeof(uri), "%s", Ark::Client::API::Paths::Transactions::types);
   return http_->get(uri);
 }
 

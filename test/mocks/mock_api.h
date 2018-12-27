@@ -14,7 +14,7 @@
 #include "http/http.h"
 #include "mocks/mock_http.h"
 
-class MockBlocks : public Ark::Client::API::TWO::IBlocks
+class MockBlocks : public Ark::Client::API::IBlocks
 {
 public:
   MockBlocks(Ark::Client::IHTTP& http) : IBlocks(http) { }
@@ -25,7 +25,7 @@ public:
   MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
 };
 
-class MockDelegates : public Ark::Client::API::TWO::IDelegates
+class MockDelegates : public Ark::Client::API::IDelegates
 {
 public:
   MockDelegates(Ark::Client::IHTTP& http) : IDelegates(http) { }
@@ -36,7 +36,7 @@ public:
   MOCK_METHOD3(voters, std::string(const char* const, int, int));
 };
 
-class MockNode : public Ark::Client::API::TWO::INode {
+class MockNode : public Ark::Client::API::INode {
 public:
   MockNode(Ark::Client::IHTTP& http) : INode(http) { }
 
@@ -45,7 +45,7 @@ public:
   MOCK_METHOD0(syncing, std::string());
 };
 
-class MockPeers : public Ark::Client::API::TWO::IPeers
+class MockPeers : public Ark::Client::API::IPeers
 {
 public:
   MockPeers(Ark::Client::IHTTP& http) : IPeers(http) { }
@@ -54,7 +54,7 @@ public:
   MOCK_METHOD2(all, std::string(int, int));
 };
 
-class MockTransactions : public Ark::Client::API::TWO::ITransactions
+class MockTransactions : public Ark::Client::API::ITransactions
 {
 public:
   MockTransactions(Ark::Client::IHTTP& http) : ITransactions(http) { }
@@ -67,7 +67,7 @@ public:
   MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
 };
 
-class MockVotes : public Ark::Client::API::TWO::IVotes
+class MockVotes : public Ark::Client::API::IVotes
 {
 public:
   MockVotes(Ark::Client::IHTTP& http) : IVotes(http) { }
@@ -76,7 +76,7 @@ public:
   MOCK_METHOD2(all, std::string(int, int));
 };
 
-class MockWallets : public Ark::Client::API::TWO::IWallets
+class MockWallets : public Ark::Client::API::IWallets
 {
 public:
   MockWallets(Ark::Client::IHTTP& http) : IWallets(http) { }

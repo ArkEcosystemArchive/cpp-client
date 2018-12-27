@@ -3,7 +3,7 @@
 
 #include <cstdio>
 
-std::string Ark::Client::API::TWO::Wallets::get(
+std::string Ark::Client::API::Wallets::get(
   const char *const identifier
 ) {
   char uri[128] = { };
