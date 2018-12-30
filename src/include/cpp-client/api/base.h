@@ -18,11 +18,12 @@ namespace API {
 /**
  * Ark::Client::API::Base 
  **/
-class Base
-{
-  protected:
-    HTTP& http_;
-    Base(HTTP& http) : http_(http) { }
+class Base {
+protected:
+  IHTTP* http_;
+
+  template <typename HTTPType>
+  explicit Base(HTTPType& http) : http_(static_cast<IHTTP*>(&http)) { }
 };
 /**/
 };

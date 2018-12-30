@@ -1,3 +1,4 @@
 # run PlatformIO builds
 platformio run
-platformio run -d ./test
+# Disable PIO tests until GMock support is available.
+#platformio run -d ./test

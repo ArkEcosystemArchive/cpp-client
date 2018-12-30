@@ -17,13 +17,25 @@ namespace Ark {
 namespace Client {
 namespace API {
 
-class Peers : public API::Base
+class IPeers : public API::Base
 {
-  public:
-    Peers(HTTP& http) : API::Base(http) { }
+protected:
+  IPeers(IHTTP& http) : API::Base(http) { }
 
-    std::string get(const char *const ip);
-    std::string all(int limit = 5, int page = 1);
+public:
+  virtual ~IPeers() { }
+
+  virtual std::string get(const char *const ip) = 0;
+  virtual std::string all(int limit = 5, int page = 1) = 0;
+};
+
+class Peers : public IPeers
+{
+public:
+  Peers(IHTTP& http) : IPeers(http) { }
+
+  std::string get(const char *const ip) override;
+  std::string all(int limit = 5, int page = 1) override;
 };
 
 };

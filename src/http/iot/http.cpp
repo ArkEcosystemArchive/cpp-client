@@ -94,8 +94,8 @@ class PlatformHTTP : public AbstractHTTP
 /**
  * HTTP object factory
  **/
-std::unique_ptr<AbstractHTTP> makeHTTP() {
-    return std::unique_ptr<AbstractHTTP>(new PlatformHTTP());
+std::unique_ptr<IHTTP> makeHTTP() {
+    return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
 /**/
 };

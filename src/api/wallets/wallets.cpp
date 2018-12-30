@@ -4,13 +4,11 @@
 #include <cstdio>
 
 std::string Ark::Client::API::Wallets::get(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+  const char *const identifier
 ) {
   char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s?limit=%d&page=%d", Ark::Client::API::Paths::Wallets::base, identifier, limit, page);
-  return http_.get(uri);
+  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::Paths::Wallets::base, identifier);
+  return http_->get(uri);
 }
 
 /***/
@@ -21,7 +19,7 @@ std::string Ark::Client::API::Wallets::all(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Wallets::base, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -32,7 +30,7 @@ std::string Ark::Client::API::Wallets::top(
 ) {
   char uri[128] = { };
   snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Wallets::top, limit, page);
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -52,7 +50,7 @@ std::string Ark::Client::API::Wallets::transactions(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -72,7 +70,7 @@ std::string Ark::Client::API::Wallets::transactionsSent(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -92,7 +90,7 @@ std::string Ark::Client::API::Wallets::transactionsReceived(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -112,7 +110,7 @@ std::string Ark::Client::API::Wallets::votes(
     limit,
     page
   );
-  return http_.get(uri);
+  return http_->get(uri);
 }
 
 /***/
@@ -135,5 +133,5 @@ std::string Ark::Client::API::Wallets::search(
   for (const auto& p : bodyParameters) {
     parameterBuffer += p.first + '=' + p.second + '&';
   }
-  return http_.post(uri, parameterBuffer.c_str());
+  return http_->post(uri, parameterBuffer.c_str());
 }
