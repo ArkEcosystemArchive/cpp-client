@@ -16,11 +16,11 @@
 namespace Ark {
 namespace Client {
 namespace API {
-
-  class IDelegates : public API::Base
-  {
+/**/
+class IDelegates : public API::Base
+{
   protected:
-    IDelegates(IHTTP& http) : API::Base(http) { }
+    IDelegates(Host& host, IHTTP& http) : API::Base(host, http) { }
 
   public:
     virtual ~IDelegates() { }
@@ -29,19 +29,19 @@ namespace API {
     virtual std::string all(int limit = 5, int page = 1) = 0;
     virtual std::string blocks(const char *const identifier, int limit = 5, int page = 1) = 0;
     virtual std::string voters(const char *const identifier, int limit = 5, int page = 1) = 0;
-  };
-
+};
+/**/
 class Delegates : public IDelegates
 {
   public:
-    Delegates(IHTTP& http) : IDelegates(http) { }
+    Delegates(Host& host, IHTTP& http) : IDelegates(host, http) { }
 
     std::string get(const char *const identifier) override;
     std::string all(int limit = 5, int page = 1) override;
     std::string blocks(const char *const identifier, int limit = 5, int page = 1) override;
     std::string voters(const char *const identifier, int limit = 5, int page = 1) override;
 };
-
+/**/
 };
 };
 };

@@ -1,13 +1,11 @@
 
 #include "api/delegates/delegates.h"
 
-#include <cstdio>
-
 std::string Ark::Client::API::Delegates::get(const char *const identifier)
 {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::Paths::Delegates::base, identifier);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Delegates::get(this->host_, identifier).c_str()
+  );
 }
 
 /***/
@@ -16,9 +14,9 @@ std::string Ark::Client::API::Delegates::all(
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Delegates::base, limit, page);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Delegates::all(this->host_, limit, page).c_str()
+  );
 }
 
 /***/
@@ -28,9 +26,9 @@ std::string Ark::Client::API::Delegates::blocks(
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s/blocks?limit=%d&page=%d", Ark::Client::API::Paths::Delegates::base, identifier, limit, page);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Delegates::blocks(this->host_, identifier, limit, page).c_str()
+  );
 }
 
 /***/
@@ -40,7 +38,7 @@ std::string Ark::Client::API::Delegates::voters(
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s/voters?limit=%d&page=%d", Ark::Client::API::Paths::Delegates::base, identifier, limit, page);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Delegates::voters(this->host_, identifier, limit, page).c_str()
+  );
 }

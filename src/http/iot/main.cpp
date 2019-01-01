@@ -1,4 +1,3 @@
-
 #include "helpers/helpers.h"
 
 #if (defined PLATFORMIO && !defined UNIT_TEST)

@@ -10,6 +10,7 @@
 #ifndef ABSTRACT_H
 #define ABSTRACT_H
 
+#include "host/host.h"
 #include "http/http.h"
 
 namespace Ark {
@@ -18,22 +19,22 @@ namespace API {
 /**
  * Ark::Client::API::Abstract 
  **/
-class Abstract {
-protected:
-  std::unique_ptr<IHTTP> http_;
-  int version_;
+class Abstract
+{
+  protected:
+    Host host_;
+    std::unique_ptr<IHTTP> http_;
+    int version_;
 
-  Abstract(IHTTP* http, int version) : http_(http), version_(version) { }
-  explicit Abstract(int version) : http_(makeHTTP()), version_(version) { }
+    Abstract(IHTTP* http, int version) : http_(http), version_(version) { }
+    explicit Abstract(int version) : http_(makeHTTP()), version_(version) { }
 
-public:
-  int version() const noexcept { return this->version_; }
-  const char* host() const noexcept { return http_->host(); };
-  int port() const noexcept { return http_->port(); };
+  public:
+    int version() const noexcept { return this->version_; };
 
-  void setHost(const char *const newHost, int newPort) {
-    http_->setHost(newHost, newPort, version_);
-  }
+    void setHost(const char *const newHost, int newPort) {
+      this->host_.set(newHost, newPort);
+    };
 };
 /**/
 };

@@ -1,5 +1,3 @@
-
-
 #include "helpers/helpers.h"
 #include "http/http.h"
 
@@ -32,16 +30,13 @@ class PlatformHTTP : public AbstractHTTP
     std::string get(
         const char *const request
     ) override {
-      std::ostringstream ss;
-      ss << this->host_ << ":" << this->port_ << request;
-
       CURL *curl;
       CURLcode res;
       std::string readBuffer;
 
       curl = curl_easy_init();
       if (curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str());
+        curl_easy_setopt(curl, CURLOPT_URL, request);
 
         curl_slist *header_list = nullptr;
         header_list = curl_slist_append(header_list, "Content-Type: application/json");
@@ -65,12 +60,9 @@ class PlatformHTTP : public AbstractHTTP
     /**/
 
     std::string post(
-            const char *const request,
-            const char *body
+        const char *const request,
+        const char *body
     ) override {
-        std::ostringstream ss;
-        ss << this->host_ << ":" << this->port_ << request;
-
         /* https://curl.haxx.se/libcurl/c/http-post.html */
         CURL *curl;
         CURLcode res;
@@ -79,7 +71,7 @@ class PlatformHTTP : public AbstractHTTP
         curl_global_init(CURL_GLOBAL_ALL);
         curl = curl_easy_init();
         if(curl) {
-          curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str()); // Set the URL that is about to receive our POST
+          curl_easy_setopt(curl, CURLOPT_URL, request); // Set the URL that is about to receive our POST
           curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST json data ex: "username=baldninja"
 
           /* skip https verification */
@@ -109,7 +101,7 @@ class PlatformHTTP : public AbstractHTTP
  * HTTP Object Factory
  **/
 std::unique_ptr<IHTTP> makeHTTP() {
-    return std::unique_ptr<IHTTP>(new PlatformHTTP());
+  return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
 /**/
 };

@@ -1,116 +1,82 @@
 
 #include "api/wallets/wallets.h"
 
-#include <cstdio>
-
 std::string Ark::Client::API::Wallets::get(
-  const char *const identifier
+    const char *const identifier
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s/%s", Ark::Client::API::Paths::Wallets::base, identifier);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::get(this->host_, identifier).c_str()
+  );
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::all(
-  int limit /* = 5 */,
-  int page /* = 1 */
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Wallets::base, limit, page);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::all(this->host_, limit, page).c_str()
+  );
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::top(
-  int limit /* = 5 */,
-  int page /* = 1 */
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(uri, sizeof(uri), "%s?limit=%d&page=%d", Ark::Client::API::Paths::Wallets::top, limit, page);
-  return http_->get(uri);
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::top(this->host_, limit, page).c_str()
+  );
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::transactions(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+    const char *const identifier,
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(
-    uri,
-    sizeof(uri),
-    "%s/%s/transactions?limit=%d&page=%d",
-    Ark::Client::API::Paths::Wallets::base,
-    identifier,
-    limit,
-    page
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::transactions(this->host_, identifier, limit, page).c_str()
   );
-  return http_->get(uri);
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::transactionsSent(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+    const char *const identifier,
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(
-    uri,
-    sizeof(uri),
-    "%s/%s/transactions/sent?limit=%d&page=%d",
-    Ark::Client::API::Paths::Wallets::base,
-    identifier,
-    limit,
-    page
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::transactionsSent(this->host_, identifier, limit, page).c_str()
   );
-  return http_->get(uri);
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::transactionsReceived(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+    const char *const identifier,
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(
-    uri,
-    sizeof(uri),
-    "%s/%s/transactions/received?limit=%d&page=%d",
-    Ark::Client::API::Paths::Wallets::base,
-    identifier,
-    limit,
-    page
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::transactionsReceived(this->host_, identifier, limit, page).c_str()
   );
-  return http_->get(uri);
 }
 
 /***/
 
 std::string Ark::Client::API::Wallets::votes(
-  const char *const identifier,
-  int limit /* = 5 */,
-  int page /* = 1 */
+    const char *const identifier,
+    int limit /* = 5 */,
+    int page /* = 1 */
 ) {
-  char uri[128] = { };
-  snprintf(
-    uri,
-    sizeof(uri),
-    "%s/%s/votes?limit=%d&page=%d",
-    Ark::Client::API::Paths::Wallets::base,
-    identifier,
-    limit,
-    page
+  return http_->get(
+    Ark::Client::API::Paths::Wallets::votes(this->host_, identifier, limit, page).c_str()
   );
-  return http_->get(uri);
 }
 
 /***/
@@ -120,18 +86,8 @@ std::string Ark::Client::API::Wallets::search(
   int limit /* = 5 */,
   int page /* = 1 */
 ) {
-  char uri[96] = { };
-  snprintf(
-    uri,
-    sizeof(uri),
-    "%s?limit=%d&page=%d",
-    Ark::Client::API::Paths::Wallets::search,
-    limit,
-    page
+  const auto searchPathPair = Ark::Client::API::Paths::Wallets::search(this->host_, bodyParameters, limit, page);
+  return http_->post(
+    searchPathPair.first.c_str(), searchPathPair.second.c_str()
   );
-  std::string parameterBuffer;
-  for (const auto& p : bodyParameters) {
-    parameterBuffer += p.first + '=' + p.second + '&';
-  }
-  return http_->post(uri, parameterBuffer.c_str());
 }

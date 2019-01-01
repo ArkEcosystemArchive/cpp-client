@@ -10,9 +10,9 @@ TEST(api, test_connection)
     int version = connection.api.version();
     ASSERT_EQ(2, version);
 
-    const char* host = connection.host();
-    ASSERT_STREQ("167.114.29.55", host);
+    const char* ip = connection.host.ip();
+    ASSERT_STREQ("167.114.29.55", ip);
 
-    int port = connection.port();
+    int port = connection.host.port();
     ASSERT_EQ(4003, port);
 }

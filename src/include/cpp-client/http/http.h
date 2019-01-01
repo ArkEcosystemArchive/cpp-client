@@ -17,27 +17,18 @@
 namespace Ark {
 namespace Client {
 
-class IHTTP {
-protected:
-  IHTTP() = default;
+class IHTTP
+{
+  protected:
+    IHTTP() = default;
 
-public:
-  virtual ~IHTTP() { }
+  public:
+    virtual ~IHTTP() { }
 
-  virtual const char* host() const /*noexcept*/ = 0;
-  virtual int port() const /*noexcept*/ = 0;
-  virtual int api_version() const /*noexcept*/ = 0;
+    virtual int api_version() const /*noexcept*/ = 0;
 
-  virtual bool setHost(
-    const char *const newHost,
-    int newPort,
-    int api_version
-  ) = 0;
-
-  virtual std::string get(const char *const request) = 0;
-  virtual std::string post(const char *const request, const char *body) = 0;
-
-  /**/
+    virtual std::string get(const char *const request) = 0;
+    virtual std::string post(const char *const request, const char *body) = 0;
 };
 
 /***
@@ -49,47 +40,27 @@ public:
  **/
 class AbstractHTTP : public IHTTP
 {
-    protected:
-        char host_[17];
-        int port_;
-        int api_version_;
+  protected:
+    int api_version_;
 
-        AbstractHTTP() : host_(), port_(-1), api_version_(0) { }
+    AbstractHTTP() : api_version_(0) { };
 
-        AbstractHTTP(AbstractHTTP&&) = delete;
-        AbstractHTTP& operator=(AbstractHTTP&&) = delete;
+    AbstractHTTP(AbstractHTTP&&) = delete;
+    AbstractHTTP& operator=(AbstractHTTP&&) = delete;
 
-        AbstractHTTP(const AbstractHTTP& other) : port_(other.port_), api_version_(other.api_version_) {
-          strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-        }
+    AbstractHTTP(const AbstractHTTP& other) : api_version_(other.api_version_) { };
 
-        AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
-          if (this != &other) {
-            strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = other.port_;
-            this->api_version_ = other.api_version_;
-          }
-          return *this;
-        }
+    AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
+      if (this != &other) {
+        this->api_version_ = other.api_version_;
+      }
+      return *this;
+    };
 
-    public:
-        virtual ~AbstractHTTP() {};
+  public:
+    virtual ~AbstractHTTP() {};
 
-        /**/
-        const char* host() const /*noexcept*/ override { return this->host_; };
-        int port() const /*noexcept*/ override { return this->port_; };
-        int api_version() const /*noexcept*/ override { return this->api_version_; }
-
-        bool setHost(
-                const char *const newHost,
-                int newPort,
-                int api_version
-        ) override {
-            strncpy(this->host_, newHost, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = newPort;
-            this->api_version_ = api_version;
-            return (this->port_ == newPort) && strcmp(this->host_, newHost);
-        }
+    int api_version() const /*noexcept*/ override { return this->api_version_; }
 };
 /**/
 
@@ -100,7 +71,6 @@ class AbstractHTTP : public IHTTP
  **/
 std::unique_ptr<IHTTP> makeHTTP();
 /**/
-
 
 };
 };

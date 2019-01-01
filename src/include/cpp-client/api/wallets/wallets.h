@@ -19,13 +19,13 @@
 namespace Ark {
 namespace Client {
 namespace API {
-
+/**/
 class IWallets : public API::Base
 {
-protected:
-    IWallets(IHTTP& http) : API::Base(http) { }
+  protected:
+    IWallets(Host& host, IHTTP& http) : API::Base(host, http) { }
 
-public:
+  public:
     virtual std::string get(const char *const identifier) = 0;
     virtual std::string all(int limit = 5, int page = 1) = 0;
     virtual std::string top(int limit = 5, int page = 1) = 0;
@@ -35,11 +35,11 @@ public:
     virtual std::string votes(const char *const identifier, int limit = 5, int page = 1) = 0;
     virtual std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) = 0;
 };
-
+/**/
 class Wallets : public IWallets
 {
   public:
-    Wallets(IHTTP& http) : IWallets(http) { }
+    Wallets(Host& host, IHTTP& http) : IWallets(host, http) { }
 
     std::string get(const char *const identifier) override;
     std::string all(int limit = 5, int page = 1) override;
@@ -50,7 +50,7 @@ class Wallets : public IWallets
     std::string votes(const char *const identifier, int limit = 5, int page = 1) override;
     std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) override;
 };
-
+/**/
 };
 };
 };
