@@ -1,6 +1,3 @@
-
-
-
 #include "http/http.h"
 #include "helpers/helpers.h"
 #include <memory>
@@ -15,7 +12,6 @@
 namespace Ark {
 namespace Client {
 namespace {
-
 /**
 *
 **/
@@ -28,12 +24,10 @@ class PlatformHTTP : public AbstractHTTP
 
     int tryConnection(
         HTTPClient &httpClient,
-        const char *const peer,
-        int port,
         const char *const request
     ) {
-      if (!httpClient.begin(peer, port, request)) {
-        /* Bad HTTP begin */
+      if (!httpClient.begin(request))
+      { /* Bad HTTP begin */
         return -1;
       }
       int code = httpClient.GET();
@@ -41,8 +35,8 @@ class PlatformHTTP : public AbstractHTTP
       while (code != HTTP_CODE_OK)
       { //error
         httpClient.end();
-        if (count >=2) {
-          /* Bad connection. Try another peer */
+        if (count >=2)
+        { /* Bad connection. Try another peer */
           return code;
         };
         /* Bad HTTP GET.\nRetrying connection.. */
@@ -50,7 +44,7 @@ class PlatformHTTP : public AbstractHTTP
         httpClient.addHeader("Content-Type", "application/json");
         httpClient.addHeader("API-Version", "2");
         httpClient.addHeader("Accept", "application/vnd.ark.core-api.v2+json");
-        httpClient.begin(peer, port, request);
+        httpClient.begin(request);
         code = httpClient.GET();
         count++;
       };
@@ -65,8 +59,8 @@ class PlatformHTTP : public AbstractHTTP
       HTTPClient httpClient;
       httpClient.setReuse(false);
       httpClient.setTimeout(3000);
-      if (int code = tryConnection(httpClient, this->host_, this->port_, request) != 200) {
-        /* error */
+      if (int code = tryConnection(httpClient, request) != 200)
+      { /* error */
         return httpClient.errorToString(-code).c_str(); // <- note `-` symbol.
       }
       return httpClient.getString().c_str();
@@ -81,7 +75,7 @@ class PlatformHTTP : public AbstractHTTP
       HTTPClient httpClient;
       httpClient.setReuse(true);
       httpClient.setTimeout(3000);
-      httpClient.begin(this->host_, this->port_, request);
+      httpClient.begin(request);
       httpClient.addHeader("Content-Type", "application/x-www-form-urlencoded");
       httpClient.POST(body);
       return httpClient.getString().c_str();
@@ -95,7 +89,7 @@ class PlatformHTTP : public AbstractHTTP
  * HTTP object factory
  **/
 std::unique_ptr<IHTTP> makeHTTP() {
-    return std::unique_ptr<IHTTP>(new PlatformHTTP());
+  return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
 /**/
 };

@@ -22,6 +22,14 @@ set(TEST_CONNECTION_SRC
 	${PROJECT_SOURCE_DIR}/connection/connection.cpp
 )
 
+set(TEST_HOST_SRC
+	${PROJECT_SOURCE_DIR}/host/host.cpp
+)
+
+set(TEST_API_PATHS_SRC
+	${PROJECT_SOURCE_DIR}/api/paths.cpp
+)
+
 set(TEST_API_SRC
 	${PROJECT_SOURCE_DIR}/api/blocks.cpp
 	${PROJECT_SOURCE_DIR}/api/delegates.cpp
@@ -36,6 +44,8 @@ find_library(Ark-Cpp-Client-tests PUBLIC)
 
 add_executable(Ark-Cpp-Client-tests
 	${TEST_CONNECTION_SRC}
+	${TEST_HOST_SRC}
+	${TEST_API_PATHS_SRC}
 	${TEST_API_SRC}
 )
 

@@ -61,6 +61,45 @@ const auto walletsSearch = connection.api.wallets.search({"username", "baldninja
 
 # 
 
+### Getting an API Path
+
+There are instances when a client may use a gateway or bridge to do http get/post;  
+for this we have provided an interface for obtaining a properly formatted API Path for a given API Endpoint.  
+Below are examples of how to access the Path interface:
+
+```cpp
+Ark::Client::Host dummyHost("0.0.0.0:4003");
+
+std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, 5 /* limit */, 1 /* page */);
+// blocksAllPath will be the string "0.0.0.0:4003/api/v2/blocks?limit=5&page=1"
+
+std::string delegatesGetPath = Ark::Client::API::Paths::Delegates::get(dummyHost, "boldninja");
+// delegatesGetPath will be the string "0.0.0.0:4003/api/v2/delegates/boldninja"
+
+std::string nodeConfigurationPath = Ark::Client::API::Paths::Node::configuration(dummyHost);
+// nodeConfigurationPath will be the string "0.0.0.0:4003/api/v2/node/configuration"
+
+std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, 5 /* limit */, 1 /* page */);
+// peersAllPath will be the string "0.0.0.0:4003/api/v2/peers?limit=5&page=1"
+
+std::string transactionsTypesPath = Ark::Client::API::Paths::Transactions::types(dummyHost);
+// transactionsTypesPath will be the string "0.0.0.0:4003/api/v2/transactions/types"
+
+std::string votesGetPath = Ark::Client::API::Paths::Votes::get(dummyHost, "d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
+// votesGetPath will be the string "0.0.0.0:4003/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2"
+
+// the following is an example of formatting a path and body parameters for an http post
+const std::map<std::string, std::string> searchBody = {
+    {"username", "baldninja"},
+    {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
+    {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
+};
+
+std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, 5, 1);
+// walletsSearchPath.first will be the string "0.0.0.0:4003/api/v2/wallets/search?limit=5&page=1"
+// walletsSearchPath.second will be the string "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja"
+```
+
 # Arduino
 **Arduino IDE:**  
 Download and install the Arduino IDE (>=1.8.5) from the following link:  

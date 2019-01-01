@@ -12,6 +12,7 @@
 
 #include "api/api.h"
 #include "api/abstract.h"
+#include "host/host.h"
 #include "http/http.h"
 
 namespace Ark {
@@ -24,19 +25,18 @@ class Connection
 {
   public:
     TAPI api;
+    Host host;
 
     Connection() = default;
     Connection(const TAPI& other) : api(other) {}
 
     Connection(
-      const char *const newHost,
-      int newPort
+        const char *const newIP,
+        int newPort
     ) {
-      this->api.setHost(newHost, newPort);
+      this->host.set(newIP, newPort);
+      this->api.setHost(newIP, newPort);
     };
-
-    const char* host() const noexcept { return api.host(); };
-    int port() const noexcept { return api.port(); };
 };
 /**/
 }

@@ -6,11 +6,19 @@ project(Ark-Cpp-Client-lib)
 hunter_add_package(CURL)
 find_package(CURL CONFIG REQUIRED)
 
-set(PLATFORM_SRC 
+set(PLATFORM_SRC
 	http/os/http.cpp
 )
 
-set(API_SRC 
+set(HOST_SRC
+	host/host.cpp
+)
+
+set(API_PATHS_SRC
+	api/paths.cpp
+)
+
+set(API_SRC
 	api/blocks/blocks.cpp
 	api/delegates/delegates.cpp
 	api/node/node.cpp
@@ -22,6 +30,8 @@ set(API_SRC
 
 add_library(Ark-Cpp-Client-lib STATIC
 	${PLATFORM_SRC}
+	${HOST_SRC}
+	${API_PATHS_SRC}
 	${API_SRC}
 )
 
@@ -29,6 +39,7 @@ set(cpp_client_build_include_dirs
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/include/cpp-client
 )
+
 include_directories(${cpp_client_build_include_dirs})
 
 target_include_directories( ${PROJECT_NAME}

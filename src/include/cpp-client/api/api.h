@@ -22,7 +22,7 @@
 
 namespace Ark {
 namespace Client {
-
+/**/
 class Api : public API::Abstract
 {
   public:
@@ -36,13 +36,13 @@ class Api : public API::Abstract
 
     Api() :
         API::Abstract(2),
-        blocks(*http_),
-        delegates(*http_),
-        node(*http_),
-        peers(*http_),
-        transactions(*http_),
-        votes(*http_),
-        wallets(*http_) {}
+        blocks(host_, *http_),
+        delegates(host_, *http_),
+        node(host_, *http_),
+        peers(host_, *http_),
+        transactions(host_, *http_),
+        votes(host_, *http_),
+        wallets(host_, *http_) { }
 };
 /**/
 };
