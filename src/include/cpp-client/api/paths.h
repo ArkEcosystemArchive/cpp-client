@@ -23,7 +23,7 @@ namespace Paths {
 
 namespace Blocks
 {
-  static const char* base() { return "/api/v2/blocks"; };
+  const char* base() { return "/api/v2/blocks"; };
   /***/
   extern std::string get(Host& newHost, const char *const blockId);
   /***/
@@ -39,7 +39,7 @@ namespace Blocks
 
 namespace Delegates
 {
-  static const char* base() { return "/api/v2/delegates"; };
+  const char* base() { return "/api/v2/delegates"; };
   /***/
   extern std::string get(Host& newHost, const char *const identifier);
   /***/
@@ -55,7 +55,7 @@ namespace Delegates
 
 namespace Node
 {
-  static const char* base() { return "/api/v2/node"; };
+  const char* base() { return "/api/v2/node"; };
   /***/
   extern std::string configuration(Host& newHost);
   /***/
@@ -69,7 +69,7 @@ namespace Node
 
 namespace Peers
 {
-  static const char* base() { return "/api/v2/peers"; };
+  const char* base() { return "/api/v2/peers"; };
   /***/
   extern std::string get(Host& newHost, const char *const ip);
   /***/
@@ -81,7 +81,7 @@ namespace Peers
 
 namespace Transactions
 {
-  static const char* base() { return "/api/v2/transactions"; };
+  const char* base() { return "/api/v2/transactions"; };
   /***/
   extern std::string getUnconfirmed(Host& newHost, const char *const identifier);
   /***/
@@ -101,7 +101,7 @@ namespace Transactions
 
 namespace Votes
 {
-  static const char* base() { return "/api/v2/votes"; };
+  const char* base() { return "/api/v2/votes"; };
   /***/
   extern std::string get(Host& newHost, const char *const identifier);
   /***/
@@ -113,7 +113,7 @@ namespace Votes
 
 namespace Wallets
 {
-  static const char* base() { return "/api/v2/wallets"; };
+  const char* base() { return "/api/v2/wallets"; };
   /***/
   extern std::string get(Host& newHost, const char *const identifier);
   /***/
