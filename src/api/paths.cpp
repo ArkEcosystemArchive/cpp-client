@@ -43,9 +43,9 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
   char uri[96] = { };
   snprintf(uri, sizeof(uri), "%s%s/search?limit=%d&page=%d", newHost.toString().c_str(), Ark::Client::API::Paths::Blocks::base(), limit, page);
   std::string parameterBuffer;
-  int count = 0;
+  auto count = 0ul;
   for (const auto& p : bodyParameters) {
-    count++;
+    ++count;
     parameterBuffer += p.first + '=' + p.second;
     if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
       parameterBuffer += '&';
@@ -228,9 +228,9 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::searc
   char uri[96] = { };
   snprintf(uri, sizeof(uri), "%s%s/search?limit=%d&page=%d", newHost.toString().c_str(), Ark::Client::API::Paths::Transactions::base(), limit, page);
   std::string parameterBuffer;
-  int count = 0;
+  auto count = 0ul;
   for (const auto& p : bodyParameters) {
-    count++;
+    ++count;
     parameterBuffer += p.first + '=' + p.second;
     if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
       parameterBuffer += '&';
@@ -364,9 +364,9 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Wallets::search(
   char uri[96] = { };
   snprintf(uri, sizeof(uri), "%s%s/search?limit=%d&page=%d", newHost.toString().c_str(), Ark::Client::API::Paths::Wallets::base(), limit, page);
   std::string parameterBuffer;
-  int count = 0;
+  auto count = 0ul;
   for (const auto& p : bodyParameters) {
-    count++;
+    ++count;
     parameterBuffer += p.first + '=' + p.second;
     if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
       parameterBuffer += '&';
