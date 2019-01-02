@@ -4,6 +4,9 @@
 /**
  * Blocks
  **/
+
+const char* Ark::Client::API::Paths::Blocks::base() { return "/api/v2/blocks"; }
+
 std::string Ark::Client::API::Paths::Blocks::get(Host& newHost, const char *const blockId)
 {
   char url[128] = {};
@@ -59,6 +62,9 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
 /**
  * Delegates
  **/
+
+const char* Ark::Client::API::Paths::Delegates::base() { return "/api/v2/delegates"; }
+
 std::string Ark::Client::API::Paths::Delegates::get(Host& newHost, const char *const identifier)
 {
   char url[128] = {};
@@ -109,6 +115,9 @@ std::string Ark::Client::API::Paths::Delegates::voters(
 /**
  * Delegates
  **/
+
+const char* Ark::Client::API::Paths::Node::base() { return "/api/v2/node"; }
+
 std::string Ark::Client::API::Paths::Node::configuration(Host& newHost)
 {
   char url[128] = {};
@@ -139,6 +148,9 @@ std::string Ark::Client::API::Paths::Node::syncing(Host& newHost)
 /**
  * Peers
  **/
+
+const char* Ark::Client::API::Paths::Peers::base() { return "/api/v2/peers"; }
+
 std::string Ark::Client::API::Paths::Peers::get(Host& newHost, const char *const ip)
 {
   char url[128] = {};
@@ -163,6 +175,9 @@ std::string Ark::Client::API::Paths::Peers::all(
 /**
  * Transactions
  **/
+
+const char* Ark::Client::API::Paths::Transactions::base() { return "/api/v2/transactions"; }
+
 std::string Ark::Client::API::Paths::Transactions::getUnconfirmed(
     Host& newHost,
     const char *const identifier
@@ -244,6 +259,9 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::searc
 /**
  * Votes
  **/
+
+const char* Ark::Client::API::Paths::Votes::base() { return "/api/v2/votes"; }
+
 std::string Ark::Client::API::Paths::Votes::get(Host& newHost, const char *const identifier)
 {
   char url[128] = { };
@@ -268,6 +286,9 @@ std::string Ark::Client::API::Paths::Votes::all(
 /**
  * Wallets
  **/
+
+const char* Ark::Client::API::Paths::Wallets::base() { return "/api/v2/wallets"; }
+
 std::string Ark::Client::API::Paths::Wallets::get(
     Host& newHost,
     const char *const identifier
