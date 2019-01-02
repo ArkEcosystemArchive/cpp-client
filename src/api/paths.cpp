@@ -113,7 +113,7 @@ std::string Ark::Client::API::Paths::Delegates::voters(
 /******/
 
 /**
- * Delegates
+ * Node
  **/
 
 const char* Ark::Client::API::Paths::Node::base() { return "/api/v2/node"; }
