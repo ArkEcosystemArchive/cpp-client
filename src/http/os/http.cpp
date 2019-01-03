@@ -42,6 +42,14 @@ class PlatformHTTP : public AbstractHTTP
             curl = curl_easy_init();
             if (curl) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str());
+                curl_slist *header_list = nullptr;
+
+                header_list = curl_slist_append(header_list, "Content-Type: application/json");
+                header_list = curl_slist_append(header_list, "API-Version: 1");
+                header_list = curl_slist_append(header_list, "Accept: application/vnd.ark.core-api.v1+json");
+                //header_list = curl_slist_append(header_list, "Accept: application/json");
+
+                curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
                 /* skip https verification */
                 curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -50,6 +58,7 @@ class PlatformHTTP : public AbstractHTTP
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
                 res = curl_easy_perform(curl);
+                curl_slist_free_all(header_list);
                 curl_easy_cleanup(curl);
             }
             return readBuffer;
@@ -73,7 +82,7 @@ class PlatformHTTP : public AbstractHTTP
             curl = curl_easy_init();
             if(curl) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str()); // Set the URL that is about to receive our POST
-                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST data ex: "username=baldninja"
+                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST json data ex: "username=baldninja"
                 
                 /* skip https verification */
                 curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L); // Do NOT verify peer

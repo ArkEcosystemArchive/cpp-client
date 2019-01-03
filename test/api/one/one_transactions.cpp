@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_transactions_transaction)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionResponse = connection.api.transactions.get(transactionID);
 
@@ -20,7 +20,6 @@ TEST(api, test_one_transactions_transaction)
     bool success = root["success"];
     ASSERT_TRUE(success);
 
-
     JsonObject& transaction = root["transaction"];
 
     const char* id = transaction["id"];
@@ -28,9 +27,6 @@ TEST(api, test_one_transactions_transaction)
     
     const char* blockid = transaction["blockid"];
     ASSERT_STREQ("4115750139916005265", blockid);
-    
-    int height = transaction["height"];
-    ASSERT_STREQ("2695914", toString(height).c_str());
     
     int type = transaction["type"];
     ASSERT_EQ(0, type);
@@ -60,12 +56,12 @@ TEST(api, test_one_transactions_transaction)
     ASSERT_STREQ("3044022071b272d2dc8011e269e691b70aba4bc5b299bdc275fdf96cff98ee0132fdfee702201ff4db13d3aeb3969e207754c14796a36611f112e4cb7cfab8a6280c5c9d7f2b", signature);
 
     int confirmations = transaction["confirmations"];
-    ASSERT_TRUE(confirmations >= 0);
+    ASSERT_GE(confirmations, 0);
 }
 
 TEST(api, test_one_transactions_transactions)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto transactionsResponse = connection.api.transactions.all();
 
@@ -77,7 +73,7 @@ TEST(api, test_one_transactions_transactions)
 
     JsonArray& transactions = root["transactions"];
 
-    for (int i = 0; i < 5; i++)
+    for (auto i = 0; i < 5; ++i)
     {
         const char* id = transactions[i]["id"];
         ASSERT_STRNE("", id);
@@ -86,10 +82,10 @@ TEST(api, test_one_transactions_transactions)
         ASSERT_STRNE("", blockid);
 
         int type = transactions[i]["type"];
-        ASSERT_TRUE(type >= 0);
+        ASSERT_GE(type, 0);
 
         int timestamp = transactions[i]["timestamp"];
-        ASSERT_TRUE(timestamp >= 0);
+        ASSERT_GE(timestamp, 0);
 
         uint64_t amount = transactions[i]["amount"];
         ASSERT_TRUE(amount >= 0);
@@ -113,6 +109,6 @@ TEST(api, test_one_transactions_transactions)
         ASSERT_STRNE("", signature);
 
         int confirmations = transactions[i]["confirmations"];
-        ASSERT_TRUE(confirmations >= 0);
+        ASSERT_GE(confirmations, 0);
     };
 }

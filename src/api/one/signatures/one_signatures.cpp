@@ -6,6 +6,6 @@
  **/
 std::string Ark::Client::API::ONE::Signatures::fee()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Signatures::fee);
-};
+  return http_.get(Ark::Client::API::ONE::Paths::Signatures::fee);
+}
 /**/

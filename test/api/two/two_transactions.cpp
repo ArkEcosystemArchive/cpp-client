@@ -69,7 +69,7 @@ TEST(api, test_two_transaction)
     ASSERT_STREQ("3045022100dc27398f4f3a24e55dc1ee87900de988254daa3fed71e82f4d6ef85ed4f9d9f8022025d71158cc15672863b2263622026ec19fa9cc9d2e8c78fa79eb2d8f4ef45fc7", signature);
 
     int confirmations = data["confirmations"];
-    ASSERT_TRUE(confirmations > 0);
+    ASSERT_GT(confirmations, 0);
 
 
     JsonObject& timestamp = data["timestamp"];
@@ -81,27 +81,27 @@ TEST(api, test_two_transaction)
     ASSERT_EQ(1535126066, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-08-24T15:54:26Z", human);
+    ASSERT_STREQ("2018-08-24T15:54:26.000Z", human);
 }
 
-/* test_two_transactions_transaction_types
+/* test_transactions_transaction_types
  * https://dexplorer.ark.io:8443/api/v2/transactions/types
  * Expected Response:
     {
         "data": {
-            "TRANSFER": 0,
-            "SECOND_SIGNATURE": 1,
-            "DELEGATE_REGISTRATION": 2,
-            "VOTE": 3,
-            "MULTI_SIGNATURE": 4,
-            "IPFS": 5,
-            "TIMELOCK_TRANSFER": 6,
-            "MULTI_PAYMENT": 7,
-            "DELEGATE_RESIGNATION": 8
+            "Transfer": 0,
+            "SecondSignature": 1,
+            "DelegateRegistration": 2,
+            "Vote": 3,
+            "MultiSignature": 4,
+            "Ipfs": 5,
+            "TimelockTransfer": 6,
+            "MultiPayment": 7,
+            "DelegateResignation": 8
         }
     }
  */
-TEST(api, test_two_transaction_types)
+TEST(api, test_transaction_types)
 {
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
@@ -115,32 +115,32 @@ TEST(api, test_two_transaction_types)
 
     JsonObject& data = root["data"];
 
-    int TRANSFER = data["TRANSFER"];
-    ASSERT_EQ(0, TRANSFER);
+    int Transfer = data["Transfer"];
+    ASSERT_EQ(0, Transfer);
 
-    int SECOND_SIGNATURE = data["SECOND_SIGNATURE"];
-    ASSERT_EQ(1, SECOND_SIGNATURE);
+    int SecondSignature = data["SecondSignature"];
+    ASSERT_EQ(1, SecondSignature);
 
-    int DELEGATE_REGISTRATION = data["DELEGATE_REGISTRATION"];
-    ASSERT_EQ(2, DELEGATE_REGISTRATION);
+    int DelegateRegistration = data["DelegateRegistration"];
+    ASSERT_EQ(2, DelegateRegistration);
 
-    int VOTE = data["VOTE"];
-    ASSERT_EQ(3, VOTE);
+    int Vote = data["Vote"];
+    ASSERT_EQ(3, Vote);
 
-    int MULTI_SIGNATURE = data["MULTI_SIGNATURE"];
-    ASSERT_EQ(4, MULTI_SIGNATURE);
+    int MultiSignature = data["MultiSignature"];
+    ASSERT_EQ(4, MultiSignature);
 
-    int IPFS = data["IPFS"];
-    ASSERT_EQ(5, IPFS);
+    int Ipfs = data["Ipfs"];
+    ASSERT_EQ(5, Ipfs);
 
-    int TIMELOCK_TRANSFER = data["TIMELOCK_TRANSFER"];
-    ASSERT_EQ(6, TIMELOCK_TRANSFER);
+    int TimelockTransfer = data["TimelockTransfer"];
+    ASSERT_EQ(6, TimelockTransfer);
 
-    int MULTI_PAYMENT = data["MULTI_PAYMENT"];
-    ASSERT_EQ(7, MULTI_PAYMENT);
+    int MultiPayment = data["MultiPayment"];
+    ASSERT_EQ(7, MultiPayment);
 
-    int DELEGATE_RESIGNATION = data["DELEGATE_RESIGNATION"];
-    ASSERT_EQ(8, DELEGATE_RESIGNATION);
+    int DelegateResignation = data["DelegateResignation"];
+    ASSERT_EQ(8, DelegateResignation);
 }
 
 /* test_two_transactions_transaction_unconfirmed
@@ -177,13 +177,13 @@ TEST(api, test_two_transaction_unconfirmed)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_TRUE(count >= 0);
+    ASSERT_GE(count, 0);
 
     int pageCount = meta["pageCount"];
-    ASSERT_TRUE(pageCount >= 0);
+    ASSERT_GE(pageCount, 0);
 
     int totalCount = meta["totalCount"];
-    ASSERT_TRUE(totalCount >= 0);
+    ASSERT_GE(totalCount, 0);
 }
 
 /* test_two_transactions_transactions
@@ -221,6 +221,7 @@ TEST(api, test_two_transaction_unconfirmed)
     ]
     }
  */
+#if 0
 TEST(api, test_two_transactions)
 {
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
@@ -253,6 +254,7 @@ TEST(api, test_two_transactions)
     uint64_t fee = dataZero["fee"];
     ASSERT_TRUE(fee >= 0);
 }
+#endif
 
 /* test_two_transactions_transactions_unconfirmed
  * https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?limit=2&page=1
@@ -297,9 +299,68 @@ TEST(api, test_two_transactions_unconfirmed)
     ASSERT_TRUE(totalCount >= 0);
 }
 
+/* test_two_transactions_transactions_search_all
+ *
+ * Expected Response:
+ */
+TEST(api, test_two_transactions_search_all)
+{
+  Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
+
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
+
+  const std::map<std::string, std::string> body = { };
+  const auto transactions = connection.api.transactions.search(body, 5, 1);
+
+  DynamicJsonBuffer jsonBuffer(transactions.size());
+  JsonObject& root = jsonBuffer.parseObject(transactions);
+
+  JsonObject& meta = root["meta"];
+
+  int count = meta["count"];
+  ASSERT_TRUE(count >= 0);
+
+  int pageCount = meta["pageCount"];
+  ASSERT_TRUE(pageCount >= 0);
+
+  int totalCount = meta["totalCount"];
+  ASSERT_TRUE(totalCount >= 0);
+}
+
 /* test_two_transactions_transactions_search
  * 
  * Expected Response:
+ {
+ "meta":{
+  "count":1,
+  "pageCount":1,
+  "totalCount":1,
+  "next":null,
+  "previous":null,
+  "self":"/api/v2/transactions/search?limit=5&page=1",
+  "first":"/api/v2/transactions/search?limit=5&page=1",
+  "last":"/api/v2/transactions/search?limit=5&page=1"},
+  "data":[
+    {
+    "id":"927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37",
+    "blockId":"13624088937920625389",
+    "version":1,
+    "type":3,
+    "amount":0,
+    "fee":84219776,
+    "sender":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
+    "recipient":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
+    "signature":"3044022073337aefa7727cc1cf39e478ffe65cf5c66c5761b5848418d87307df250a68a5022053d4d5264b329e63cadad84fc6ec479fe5e430eaabd6177db1e9c283027ec2fa",
+    "asset":
+      {
+      "votes":["+0389301207e25addec690be9efa3b2ca2d111b86386da7ff5fcc1c0344954b2acc"]
+      },
+    "confirmations":871,
+    "timestamp":{"epoch":55498801,"unix":1545600001,"human":"2018-12-23T21:20:01.000Z"}
+    }
+  ]
+}
  */
 TEST(api, test_two_transactions_search)
 {
@@ -308,8 +369,39 @@ TEST(api, test_two_transactions_search)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto transactions = connection.api.transactions.get("4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", 5, 1);
+    const std::map<std::string, std::string> body = {
+      {"id", "927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37"}
+    };
+    const auto transactions = connection.api.transactions.search(body, 5, 1);
 
-    // DynamicJsonBuffer jsonBuffer(transactions.size());
-    // JsonObject& root = jsonBuffer.parseObject(transactions);
+    DynamicJsonBuffer jsonBuffer(transactions.size());
+    JsonObject& root = jsonBuffer.parseObject(transactions);
+
+    JsonObject& meta = root["meta"];
+
+    int count = meta["count"];
+    ASSERT_TRUE(count >= 0);
+
+    int pageCount = meta["pageCount"];
+    ASSERT_TRUE(pageCount >= 0);
+
+    int totalCount = meta["totalCount"];
+    ASSERT_TRUE(totalCount >= 0);
+
+    JsonObject& data = root["data"][0];
+
+    const char* id = data["id"];
+    ASSERT_STREQ("927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37", id);
+
+    int version = data["version"];
+    ASSERT_EQ(1, version);
+
+    const char* sender = data["sender"];
+    ASSERT_STREQ("DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj", sender);
+
+    const char* recipient = data["recipient"];
+    ASSERT_STREQ("DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj", recipient);
+
+    const char* signature = data["signature"];
+    ASSERT_STREQ("3044022073337aefa7727cc1cf39e478ffe65cf5c66c5761b5848418d87307df250a68a5022053d4d5264b329e63cadad84fc6ec479fe5e430eaabd6177db1e9c283027ec2fa", signature);
 }

@@ -139,7 +139,13 @@ TEST(api, test_two_wallets_search)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto walletsSearch = connection.api.wallets.search({"username", "baldninja"});
+    const std::map<std::string, std::string> body_parameters = {
+      {"username", "baldninja"},
+      {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
+      {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
+    };
+
+    const auto walletsSearch = connection.api.wallets.search(body_parameters);
 
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);
@@ -223,7 +229,8 @@ TEST(api, test_two_wallets_top)
     ASSERT_TRUE(balance >= 0);
 
     bool isDelegate = dataZero["isDelegate"];
-    ASSERT_STRNE("", toString(isDelegate).c_str());
+    // as long as data was read, we don't really care (or know) what the expected value is
+    ASSERT_TRUE(isDelegate || !isDelegate);
 }
 
 /* test_two_wallets_transactions
@@ -418,8 +425,7 @@ TEST(api, test_two_wallets_votes)
     JsonObject& meta = root["meta"];
 
     int count = meta["count"];
-    ASSERT_TRUE(count > 0);
-
+    ASSERT_GT(count, 0);
 
     JsonObject& data = root["data"][0];
 

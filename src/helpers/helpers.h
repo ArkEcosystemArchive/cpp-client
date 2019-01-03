@@ -20,6 +20,9 @@
 
 #define USE_IOT
 
+// Including missing implementations of std::to_string
+#include "stl/details/to_string.h"
+
 /**/
 
 #include <Arduino.h>
@@ -32,32 +35,6 @@
 #undef max
 /**/
 
-    /**/
-    template <typename T>
-    std::string toString(T val) {
-        return String(val).c_str();
-    };
-    /**/
-    const static inline std::string toString(uint64_t input)
-    {
-        std::string result;
-        uint8_t base = 10;
-        do {
-            char c = input % base;
-            input /= base;
-            (c < 10) ? c += '0' : c += 'A' - 10;
-            result = c + result;
-        } while (input);
-        return result;
-    }
-    /**/
-#else
-    /**/
-    template <typename T>
-    std::string toString(T val) {
-        return std::to_string(val);
-    }
-    /**/
 #endif
 
 #endif

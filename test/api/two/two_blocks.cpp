@@ -54,7 +54,7 @@ TEST(api, test_two_block)
     ASSERT_STREQ("13114381566690093367", id);
 
     int version = data["version"];
-    ASSERT_STREQ("0", toString(version).c_str());
+    ASSERT_EQ(0, version);
 
     int height = data["height"];
     ASSERT_EQ(1, height);
@@ -106,7 +106,7 @@ TEST(api, test_two_block)
     ASSERT_EQ(1490101200, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2017-03-21T13:00:00Z", human);
+    ASSERT_STREQ("2017-03-21T13:00:00.000Z", human);
 }
 
 /* test_two_blocks_block_transactions
@@ -170,13 +170,13 @@ TEST(api, test_two_block_transactions)
     JsonObject& dataZero = root["data"][0];
 
     int id = dataZero["id"];
-    ASSERT_STRNE("", toString(id).c_str());
+    ASSERT_EQ(0, id);
 
     const char* blockId = dataZero["blockId"];
     ASSERT_STRNE("", blockId);
 
     int type = dataZero["type"];
-    ASSERT_STRNE("", toString(type).c_str());
+    ASSERT_EQ(0, type);
 
     uint64_t amount = dataZero["amount"];
     ASSERT_TRUE(amount >= 0);
@@ -191,16 +191,16 @@ TEST(api, test_two_block_transactions)
     ASSERT_STRNE("", signature);
 
     int confirmations = dataZero["confirmations"];
-    ASSERT_STRNE("", toString(confirmations).c_str());
+    ASSERT_EQ(0, confirmations);
 
 
     JsonObject& timestamp = dataZero["timestamp"];
 
     int epoch = timestamp["epoch"];
-    ASSERT_STRNE("", toString(epoch).c_str());
+    ASSERT_EQ(0, epoch);
 
     int timestampUnix = timestamp["unix"];
-    ASSERT_STRNE("", toString(timestampUnix).c_str());
+    ASSERT_EQ(0, timestampUnix);
 
     const char* human = timestamp["human"];
     ASSERT_STRNE("", human);
@@ -278,7 +278,7 @@ TEST(api, test_two_blocks)
     JsonObject& dataZero = root["data"][0];
 
     int version = dataZero["version"];
-    ASSERT_STRNE("", toString(version).c_str());
+    ASSERT_EQ(0, version);
 }
 
 /* test_two_blocks_blocks_limit_page
@@ -354,7 +354,7 @@ TEST(api, test_two_blocks_limit_page)
     JsonObject& dataZero = root["data"][0];
 
     int version = dataZero["version"];
-    ASSERT_STRNE("", toString(version).c_str());
+    ASSERT_EQ(0, version);
 }
 
 /* test_two_blocks_search
@@ -409,7 +409,12 @@ TEST(api, test_two_blocks_search)
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
 
-    const auto walletsSearch = connection.api.blocks.search({"id", "8337447655053578871"});
+    const std::map<std::string, std::string> body = {
+      {"id", "8337447655053578871"},
+      {"previousBlock", "6440284271011893973"},
+      {"version", "0"}
+    };
+    const auto walletsSearch = connection.api.blocks.search(body);
 
     DynamicJsonBuffer jsonBuffer(walletsSearch.size());
     JsonObject& root = jsonBuffer.parseObject(walletsSearch);

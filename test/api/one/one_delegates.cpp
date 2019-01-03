@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_delegates_fee)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateFeeResponse = connection.api.delegates.fee();
 
@@ -26,7 +26,7 @@ TEST(api, test_one_delegates_fee)
 
 TEST(api, test_one_delegates_forged_by_account)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto forgedByAccountResponse = connection.api.delegates.forgedByAccount(publicKey);
 
@@ -48,7 +48,7 @@ TEST(api, test_one_delegates_forged_by_account)
 
 TEST(api, test_one_delegates_next_forgers)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto nextForgersResponse = connection.api.delegates.nextForgers();
 
@@ -74,7 +74,7 @@ TEST(api, test_one_delegates_next_forgers)
 
 TEST(api, test_one_delegates_delegate_by_public_key)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     auto delegateResponse = connection.api.delegates.get(publicKey);
 
@@ -113,7 +113,7 @@ TEST(api, test_one_delegates_delegate_by_public_key)
 
 TEST(api, test_one_delegates_delegate_by_username)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateResponse = connection.api.delegates.get("acf");
 
@@ -144,15 +144,15 @@ TEST(api, test_one_delegates_delegate_by_username)
     ASSERT_NE(0, rate);
 
     double approval = delegate["approval"];
-    ASSERT_TRUE(approval >= 0.00);
+    ASSERT_GE(approval, 0.00);
 
     double productivity = delegate["productivity"];
-    ASSERT_TRUE(productivity >= 0.00);
+    ASSERT_GE(productivity, 0.00);
 }
 
 TEST(api, test_one_delegates_delegates)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegatesResponse = connection.api.delegates.all();
 
@@ -180,25 +180,25 @@ TEST(api, test_one_delegates_delegates)
         ASSERT_TRUE(vote >= 0);
 
         int producedblocks = delegates[i]["producedblocks"];
-        ASSERT_TRUE(producedblocks >= 0);
+        ASSERT_GE(producedblocks, 0);
 
         int missedblocks = delegates[i]["missedblocks"];
-        ASSERT_TRUE(missedblocks >= 0);
+        ASSERT_GE(missedblocks, 0);
 
         int rate = delegates[i]["rate"];
-        ASSERT_TRUE(rate >= 0);
+        ASSERT_GE(rate, 0);
 
         double approval = delegates[i]["approval"];
-        ASSERT_TRUE(approval >= 0.00);
+        ASSERT_GE(approval, 0.00);
 
         double productivity = delegates[i]["productivity"];
-        ASSERT_TRUE(productivity >= 0.00);
+        ASSERT_GE(productivity, 0.00);
     }
 }
 
 TEST(api, test_one_delegates_voters)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto votersResponse = connection.api.delegates.voters(publicKey);
 
@@ -207,7 +207,6 @@ TEST(api, test_one_delegates_voters)
 
     bool success = root["success"];
     ASSERT_TRUE(success);
-
 
     JsonObject& accountsZero = root["accounts"][0];
 
@@ -238,7 +237,7 @@ TEST(api, test_one_delegates_voters)
 
 TEST(api, test_one_delegates_search)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateResponse = connection.api.delegates.get("acf");
 
@@ -260,24 +259,24 @@ TEST(api, test_one_delegates_search)
     ASSERT_TRUE(vote >= 0);
 
     int producedblocks = delegate["producedblocks"];
-    ASSERT_TRUE(producedblocks >= 0);
+    ASSERT_GE(producedblocks, 0);
 
     int missedblocks = delegate["missedblocks"];
-    ASSERT_TRUE(missedblocks >= 0);
+    ASSERT_GE(missedblocks, 0);
 
     int rate = delegate["rate"];
-    ASSERT_TRUE(rate >= 0);
+    ASSERT_GE(rate, 0);
 
     double  approval = delegate["approval"];
-    ASSERT_TRUE(approval >= 0.00);
+    ASSERT_GE(approval, 0.00);
 
     double productivity = delegate["productivity"];
-    ASSERT_TRUE(productivity >= 0.00);
+    ASSERT_GE(productivity, 0.00);
 }
 
 TEST(api, test_one_delegates_count)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegatesCountResponse = connection.api.delegates.count();
 

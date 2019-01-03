@@ -1,16 +1,16 @@
 
 #include "api/one/blocks/one_blocks.h"
 
+#include <cstdio>
+
 /**
  * /api/blocks/get?id=_blockID
  **/
 std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
 {
-    char uri[80] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Blocks::get);
-        strcat(uri, "?id=");
-        strcat(uri, blockId);
-    return this->http->get(uri);
+  char uri[80] = { '\0' };
+  snprintf(uri, sizeof(uri), "%s?id=%s", Ark::Client::API::ONE::Paths::Blocks::get, blockId);
+  return http_.get(uri);
 }
 /**/
 
@@ -20,19 +20,21 @@ std::string Ark::Client::API::ONE::Blocks::get(const char *const blockId)
  * /api/blocks?orderBy=height:desc&limit=10
  **/
 std::string Ark::Client::API::ONE::Blocks::all(
-        const char *const orderBy,
-        bool isDescending,
-        int limit
+  const char *const orderBy /* = "height" */,
+  bool isDescending /* = true */,
+  int limit /* = 10 */
 ) {
-    char uri[48] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Blocks::base);
-        strcat(uri, "?orderBy=");
-        strcat(uri, orderBy);
-        strcat(uri, ":");
-        strcat(uri, (isDescending ? "desc" : "asc"));
-        strcat(uri, "&limit=");
-        strcat(uri, toString(limit).c_str());
-    return this->http->get(uri);
+  char uri[48] = { '\0' };
+  snprintf(
+    uri,
+    sizeof(uri),
+    "%s?orderBy=%s:%s&limit=%d",
+    Ark::Client::API::ONE::Paths::Blocks::base,
+    orderBy,
+    isDescending ? "desc" : "asc",
+    limit
+  );
+  return http_.get(uri);
 }
 /**/
 
@@ -43,7 +45,7 @@ std::string Ark::Client::API::ONE::Blocks::all(
  **/
 std::string Ark::Client::API::ONE::Blocks::epoch()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::epoch);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::epoch);
 }
 /**/
 
@@ -54,7 +56,7 @@ std::string Ark::Client::API::ONE::Blocks::epoch()
  **/
 std::string Ark::Client::API::ONE::Blocks::fee()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::fee);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::fee);
 }
 /**/
 
@@ -65,7 +67,7 @@ std::string Ark::Client::API::ONE::Blocks::fee()
  **/
 std::string Ark::Client::API::ONE::Blocks::fees()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::fees);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::fees);
 }
 /**/
 
@@ -76,7 +78,7 @@ std::string Ark::Client::API::ONE::Blocks::fees()
  **/
 std::string Ark::Client::API::ONE::Blocks::height()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::height);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::height);
 }
 /**/
 
@@ -87,7 +89,7 @@ std::string Ark::Client::API::ONE::Blocks::height()
  **/
 std::string Ark::Client::API::ONE::Blocks::milestone()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::milestone);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::milestone);
 }
 /**/
 
@@ -98,7 +100,7 @@ std::string Ark::Client::API::ONE::Blocks::milestone()
  **/
 std::string Ark::Client::API::ONE::Blocks::nethash()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::nethash);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::nethash);
 }
 /**/
 
@@ -109,7 +111,7 @@ std::string Ark::Client::API::ONE::Blocks::nethash()
  **/
 std::string Ark::Client::API::ONE::Blocks::reward()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::reward);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::reward);
 }
 /**/
 
@@ -120,7 +122,7 @@ std::string Ark::Client::API::ONE::Blocks::reward()
  **/
 std::string Ark::Client::API::ONE::Blocks::supply()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::supply);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::supply);
 }
 /**/
 
@@ -131,6 +133,6 @@ std::string Ark::Client::API::ONE::Blocks::supply()
  **/
 std::string Ark::Client::API::ONE::Blocks::status()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Blocks::status);
+    return http_.get(Ark::Client::API::ONE::Paths::Blocks::status);
 }
 /**/

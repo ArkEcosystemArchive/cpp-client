@@ -56,7 +56,7 @@ TEST(api, test_two_delegate)
     ASSERT_STREQ("023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359", publicKey);
 
     uint64_t votes = data["votes"];
-    ASSERT_TRUE(votes >= 0);
+    ASSERT_GE(votes, 0);
 
     int rank = data["rank"];
     ASSERT_NE(0, rank);
@@ -68,7 +68,7 @@ TEST(api, test_two_delegate)
     ASSERT_NE(0, produced);
 
     int missed = blocks["missed"];
-    ASSERT_TRUE(missed >= 0);
+    ASSERT_GE(missed, 0);
 
 
     JsonObject& production = data["production"];
@@ -159,7 +159,7 @@ TEST(api, test_two_delegate_blocks)
     ASSERT_STRNE("", id);
 
     int version = root["data"][0]["version"];
-    ASSERT_STRNE("", toString(version).c_str());
+    ASSERT_EQ(0, version);
 
     uint64_t height = root["data"][0]["height"];
     ASSERT_TRUE(height >= 0);
@@ -236,7 +236,7 @@ TEST(api, test_two_delegate_voters)
     ASSERT_STRNE("", publicKey);
 
     bool isDelegate = dataZero["isDelegate"];
-    ASSERT_TRUE(isDelegate == true || isDelegate == false);
+    ASSERT_TRUE(isDelegate || !isDelegate);
 }
 
 /* test_two_delegates_delegates

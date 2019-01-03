@@ -5,9 +5,9 @@
 
 TEST(api, test_one_peers_peer)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
-    const auto peerResponse = connection.api.peers.get("5.39.9.250", 4001);
+    const auto peerResponse = connection.api.peers.get("46.105.160.104", 4001);
 
     DynamicJsonBuffer jsonBuffer(peerResponse.size());
     JsonObject& root = jsonBuffer.parseObject(peerResponse);
@@ -15,11 +15,10 @@ TEST(api, test_one_peers_peer)
     bool success = root["success"];
     ASSERT_TRUE(success);
 
-
     JsonObject& peer = root["peer"];
 
     const char* ip = peer["ip"];
-    ASSERT_STREQ("5.39.9.250", ip);
+    ASSERT_STREQ("46.105.160.104", ip);
 
     int port = peer["port"];
     ASSERT_EQ(4001, port);
@@ -36,10 +35,10 @@ TEST(api, test_one_peers_peer)
     ASSERT_STRNE(NULL, os);
 
     int height = peer["height"];
-    ASSERT_TRUE(height >= 0);
+    ASSERT_GE(height, 0);
 
     const char* status = peer["status"];
-    ASSERT_STREQ("OK", status);
+    ASSERT_STREQ("200", status);
 
     int delay = peer["delay"];
     ASSERT_NE(0, delay);
@@ -55,7 +54,7 @@ TEST(api, test_one_peers_peer)
 
 TEST(api, test_one_peers_peers)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto peersResponse = connection.api.peers.all(5);
 
@@ -74,28 +73,28 @@ TEST(api, test_one_peers_peers)
     ASSERT_EQ(4001, port);
 
     int version = peersZero["version"];
-    ASSERT_STRNE("", toString(version).c_str());
+    ASSERT_NE(0, version);
 
     int errors = peersZero["errors"];
-    ASSERT_STRNE("", toString(errors).c_str());
+    ASSERT_EQ(0, errors);
 
     const char* os = peersZero["os"];
     ASSERT_STRNE("", os);
 
     int height = peersZero["height"];
-    ASSERT_TRUE(height >= 0);
+    ASSERT_GE(height, 0);
 
     const char* status = peersZero["status"];
     ASSERT_STREQ("OK", status);
 
     int delay = peersZero["delay"];
-    ASSERT_TRUE(delay >= 0);
+    ASSERT_GE(delay, 0);
 }
 #endif
 
 TEST(api, test_one_peers_version)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto versionResponse = connection.api.peers.version();
 
@@ -111,5 +110,5 @@ TEST(api, test_one_peers_version)
     // ASSERT_STREQ("2.0.0", version);
 
     const char* build = root["build"];
-    ASSERT_STRNE(NULL, build);
+    ASSERT_STRNE("", build);
 }

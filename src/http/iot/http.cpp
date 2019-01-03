@@ -12,10 +12,6 @@
     #include <HTTPClient.h>
 #endif
 
-#if (defined ESP32 || defined ESP8266)
-    #include <WiFiClientSecure.h>
-#endif
-
 namespace Ark {
 namespace Client {
 namespace {

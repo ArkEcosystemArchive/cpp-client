@@ -10,7 +10,7 @@ namespace
 
 TEST(api, test_one_accounts_account)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto accountResponse = connection.api.accounts.get(arkAddress);
 
@@ -44,7 +44,7 @@ TEST(api, test_one_accounts_account)
 
 TEST(api, test_one_accounts_balance)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto accountBalanceResponse = connection.api.accounts.balance(arkAddress);
 
@@ -63,7 +63,7 @@ TEST(api, test_one_accounts_balance)
 
 TEST(api, test_one_accounts_delegates)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegateResponse = connection.api.accounts.delegates(arkAddress);
 
@@ -73,36 +73,36 @@ TEST(api, test_one_accounts_delegates)
     JsonObject& delegatesZero = root["delegates"][0];
 
     const char* username = delegatesZero["username"];
-    ASSERT_EQ(NULL, username);
+    ASSERT_EQ(nullptr, username);
     
     const char* address = delegatesZero["address"];
-    ASSERT_EQ(NULL, address);
+    ASSERT_EQ(nullptr, address);
     
     const char* publicKey = delegatesZero["publicKey"];
-    ASSERT_EQ(NULL, publicKey);
+    ASSERT_EQ(nullptr, publicKey);
 
     const char* vote = delegatesZero["vote"];
-    ASSERT_EQ(NULL, vote);
+    ASSERT_EQ(nullptr, vote);
 
     int producedblocks = delegatesZero["producedblocks"];
-    ASSERT_EQ(NULL, producedblocks);
+    ASSERT_EQ(0, producedblocks);
 
     int missedblocks = delegatesZero["missedblocks"];
-    ASSERT_EQ(NULL, missedblocks);
+    ASSERT_EQ(0, missedblocks);
 
     int rate = delegatesZero["rate"];
-    ASSERT_EQ(NULL, rate);
+    ASSERT_EQ(0, rate);
 
     double approval = delegatesZero["approval"];
-    ASSERT_EQ(NULL, approval);
+    ASSERT_EQ(0.0, approval);
 
     double productivity = delegatesZero["productivity"];
-    ASSERT_EQ(NULL, productivity);
+    ASSERT_EQ(0.0, productivity);
 }
 
 TEST(api, test_one_accounts_delegates_fee)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto delegatesFeeResponse = connection.api.accounts.delegatesFee(arkAddress);
 
@@ -118,7 +118,7 @@ TEST(api, test_one_accounts_delegates_fee)
 
 TEST(api, test_one_accounts_public_key)
 {
-    Ark::Client::Connection<Ark::Client::API::One> connection("5.39.9.250", 4001);
+    Ark::Client::Connection<Ark::Client::API::One> connection("5.196.105.32", 4003);
 
     const auto pubkeyResponse = connection.api.accounts.publickey(arkAddress);
 

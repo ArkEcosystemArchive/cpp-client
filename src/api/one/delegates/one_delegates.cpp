@@ -1,6 +1,8 @@
 
 #include "api/one/delegates/one_delegates.h"
 
+#include <cstdio>
+
 /**
  * /api/delegates/get?username="username"
  * /api/delegates/get?publicKey=publicKey
@@ -8,14 +10,19 @@
 std::string Ark::Client::API::ONE::Delegates::get(
     const char *const parameter
 ) {
-    char uri[128] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::get);
-    bool isUsername = (strlen(parameter) <= 20);
-    auto key = (isUsername) ? ("?username=") : ("?publicKey=");
-        strcat(uri, key);
-        strcat(uri, parameter);
-    return this->http->get(uri);
-};
+  char uri[128] = { };
+  const auto isUsername = std::strlen(parameter) <= 20;
+
+  snprintf(
+    uri,
+    sizeof(uri),
+    "%s%s%s",
+    Ark::Client::API::ONE::Paths::Delegates::get,
+    isUsername ? "?username=" : "?publicKey=",
+    parameter
+  );
+  return http_.get(uri);
+}
 /**/
 
 /***/
@@ -25,12 +32,10 @@ std::string Ark::Client::API::ONE::Delegates::get(
  **/
 std::string Ark::Client::API::ONE::Delegates::all(int limit)
 {
-    char uri[32] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::base);
-        strcat(uri, "?limit=");
-        strcat(uri, toString(limit).c_str());
-    return this->http->get(uri);
-};
+  char uri[32] = { };
+  snprintf(uri, sizeof(uri), "%s?limit=%d", Ark::Client::API::ONE::Paths::Delegates::base, limit);
+  return http_.get(uri);
+}
 /**/
 
 /***/
@@ -40,8 +45,8 @@ std::string Ark::Client::API::ONE::Delegates::all(int limit)
  **/
 std::string Ark::Client::API::ONE::Delegates::count()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Delegates::count);
-};
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::count);
+}
 /**/
 
 /***/
@@ -52,12 +57,10 @@ std::string Ark::Client::API::ONE::Delegates::count()
 std::string Ark::Client::API::ONE::Delegates::search(
     const char *const username)
 {
-    char uri[69 + 1] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::search);
-        strcat(uri, "?q=");
-        strcat(uri, username);
-    return this->http->get(uri);
-};
+  char uri[69 + 1] = { };
+  snprintf(uri, sizeof(uri), "%s?q=%s", Ark::Client::API::ONE::Paths::Delegates::search, username);
+  return http_.get(uri);
+}
 /**/
 
 /***/
@@ -67,8 +70,8 @@ std::string Ark::Client::API::ONE::Delegates::search(
  **/
 std::string Ark::Client::API::ONE::Delegates::fee()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Delegates::fee);
-};
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::fee);
+}
 /**/
 
 /***/
@@ -78,12 +81,10 @@ std::string Ark::Client::API::ONE::Delegates::fee()
  **/
 std::string Ark::Client::API::ONE::Delegates::forgedByAccount(const char *const generatorPublicKey)
 {
-    char uri[152 + 1];
-        strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::forgedByAccount);
-        strcat(uri, "?generatorPublicKey=");
-        strcat(uri, generatorPublicKey);
-    return this->http->get(uri);
-};
+  char uri[152 + 1] = { };
+  snprintf(uri, sizeof(uri), "%s?generatorPublicKey=%s", Ark::Client::API::ONE::Paths::Delegates::forgedByAccount, generatorPublicKey);
+  return http_.get(uri);
+}
 /**/
 
 /***/
@@ -93,8 +94,8 @@ std::string Ark::Client::API::ONE::Delegates::forgedByAccount(const char *const 
  **/
 std::string Ark::Client::API::ONE::Delegates::nextForgers()
 {
-    return this->http->get(Ark::Client::API::ONE::Paths::Delegates::nextForgers);
-};
+  return http_.get(Ark::Client::API::ONE::Paths::Delegates::nextForgers);
+}
 /**/
 
 /***/
@@ -105,10 +106,8 @@ std::string Ark::Client::API::ONE::Delegates::nextForgers()
 std::string Ark::Client::API::ONE::Delegates::voters(
     const char *const publicKey)
 {
-    char uri[123 + 1] = {'\0'};
-        strcpy(uri, Ark::Client::API::ONE::Paths::Delegates::voters);
-        strcat(uri, "?publicKey=");
-        strcat(uri, publicKey);
-    return this->http->get(uri);
-};
+  char uri[123 + 1] = { };
+  snprintf(uri, sizeof(uri), "%s?publicKey=%s", Ark::Client::API::ONE::Paths::Delegates::voters, publicKey);
+  return http_.get(uri);
+}
 /**/

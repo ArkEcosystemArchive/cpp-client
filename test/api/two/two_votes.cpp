@@ -68,9 +68,8 @@ TEST(api, test_two_vote)
     const char* signature = data["signature"];
     ASSERT_STREQ("304402202fda01999d02d2d099a5e5e199cc6a24ca32b1e644ec855d1b9004b5068b45450220653c65a9bf48742104671e69a597b86517160f6ff87a92b89b62c290b312493c", signature);
 
-
     int confirmations = data["confirmations"];
-    ASSERT_TRUE(confirmations > 0);
+    ASSERT_GT(confirmations, 0);
 
     JsonObject& timestamp = data["timestamp"];
 
@@ -81,7 +80,7 @@ TEST(api, test_two_vote)
     ASSERT_EQ(1535126067, timestampUnix);
 
     const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-08-24T15:54:27Z", human);
+    ASSERT_STREQ("2018-08-24T15:54:27.000Z", human);
 }
 
 /* test_two_votes
@@ -153,7 +152,7 @@ TEST(api, test_two_votes)
     ASSERT_EQ(3, type);
 
     uint64_t fee = dataZero["fee"];
-    ASSERT_TRUE( fee == 100000000);
+    ASSERT_GT(fee, 0);
 
     int confirmations = dataZero["confirmations"];
     ASSERT_NE(0, confirmations);

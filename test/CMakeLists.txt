@@ -7,15 +7,14 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 include(CTest)
+enable_testing()
 
 set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
-set(COVERAGE OFF CACHE BOOL "Coverage")
-
 include_directories(${PROJECT_SOURCE_DIR}/../src)
 include_directories(${PROJECT_SOURCE_DIR}/../test)
-include_directories(${PROJECT_SOURCE_DIR}/include/ArduinoJson)
+include_directories(${PROJECT_SOURCE_DIR}/lib/ArduinoJson)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set(TEST_API_SRC
@@ -42,10 +41,7 @@ set(TEST_TWO_SRC
 	${PROJECT_SOURCE_DIR}/api/two/two_wallets.cpp
 )
 
-find_library(Ark-Cpp-Client-tests
-	NAMES Ark-Cpp-Client-lib
-	PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-)
+find_library(Ark-Cpp-Client-tests PUBLIC)
 
 add_executable(Ark-Cpp-Client-tests
 	${TEST_API_SRC}
@@ -53,14 +49,16 @@ add_executable(Ark-Cpp-Client-tests
 	${TEST_TWO_SRC}
 )
 
-target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib)
-
-target_link_libraries(Ark-Cpp-Client-tests GTest::main) # GTest::gtest will be linked automatically
-target_link_libraries(Ark-Cpp-Client-tests GTest::gtest)
-
-if (COVERAGE)
-	target_compile_options(tests PRIVATE --coverage)
-	target_link_libraries(tests PRIVATE --coverage)
-endif()
+target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib GTest::gtest GTest::main)
 
 add_test(NAME test COMMAND Ark-Cpp-Client-tests)
+
+if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+  include("${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake")
+
+  setup_target_for_coverage(${PROJECT_NAME}_coverage Ark-Cpp-Client-tests coverage)
+
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+ endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
+
