@@ -2,7 +2,8 @@
 
 #if (defined PLATFORMIO && defined UNIT_TEST)
 
-#include <AUnit.h>
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #if (defined ESP8266 || defined ESP32)
 
@@ -52,7 +53,9 @@ void setup_network()
 
 namespace
 {
+
 void setup_network() {}
+
 }
 
 #endif
@@ -62,12 +65,12 @@ void setup() {
 	while (!Serial); // for the Arduino Leonardo/Micro only
 	delay(100);
 	setup_network();
-	aunit::TestRunner::setTimeout(0);
+  testing::gmock_setup();
 	delay(1000);
 }
 
 void loop() {
-	aunit::TestRunner::run();
+  testing::gmock_loop();
 }
 
 #endif
