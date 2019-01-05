@@ -40,7 +40,7 @@ class PlatformHTTP : public AbstractHTTP
             std::string readBuffer;
 
             curl = curl_easy_init();
-            if (curl) {
+            if (curl != nullptr) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str());
                 curl_slist *header_list = nullptr;
 
@@ -80,7 +80,7 @@ class PlatformHTTP : public AbstractHTTP
 
             curl_global_init(CURL_GLOBAL_ALL);
             curl = curl_easy_init();
-            if(curl) {
+            if(curl != nullptr) {
                 curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str()); // Set the URL that is about to receive our POST
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body); // Now specify the POST json data ex: "username=baldninja"
                 
