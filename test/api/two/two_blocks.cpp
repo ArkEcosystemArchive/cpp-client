@@ -36,8 +36,7 @@
         }
     }
  */
-TEST(api, test_two_block)
-{
+TEST(api, test_two_block) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -143,8 +142,7 @@ TEST(api, test_two_block)
     ]
     }
  */
-TEST(api, test_two_block_transactions)
-{
+TEST(api, test_two_block_transactions) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -251,8 +249,7 @@ TEST(api, test_two_block_transactions)
         ]
     }
  */
-TEST(api, test_two_blocks)
-{
+TEST(api, test_two_blocks) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -327,8 +324,7 @@ TEST(api, test_two_blocks)
         ]
     }
  */
-TEST(api, test_two_blocks_limit_page)
-{
+TEST(api, test_two_blocks_limit_page) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -402,8 +398,7 @@ TEST(api, test_two_blocks_limit_page)
     ]
     }
  */
-TEST(api, test_two_blocks_search)
-{
+TEST(api, test_two_blocks_search) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

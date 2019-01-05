@@ -17,8 +17,7 @@
     }
     }
  */
-TEST(api, test_two_peer)
-{
+TEST(api, test_two_peer) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
@@ -76,8 +75,7 @@ TEST(api, test_two_peer)
     ]
     }
  */
-TEST(api, test_two_peers)
-{
+TEST(api, test_two_peers) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

@@ -32,8 +32,7 @@
         }
     }
  */
-TEST(api, test_two_delegate)
-{
+TEST(api, test_two_delegate) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -135,8 +134,7 @@ TEST(api, test_two_delegate)
     ]
     }
  */
-TEST(api, test_two_delegate_blocks)
-{
+TEST(api, test_two_delegate_blocks) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     const auto delegateBlocksResponse = connection.api.delegates.blocks("boldninja", 3, 1);
@@ -203,8 +201,7 @@ TEST(api, test_two_delegate_blocks)
     ]
     }
  */
-TEST(api, test_two_delegate_voters)
-{
+TEST(api, test_two_delegate_voters) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -280,8 +277,7 @@ TEST(api, test_two_delegate_voters)
     ]
     }
  */
-TEST(api, test_two_delegates)
-{
+TEST(api, test_two_delegates) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

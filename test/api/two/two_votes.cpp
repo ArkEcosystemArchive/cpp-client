@@ -30,8 +30,7 @@
     }
     }
  */
-TEST(api, test_two_vote)
-{
+TEST(api, test_two_vote) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -122,8 +121,7 @@ TEST(api, test_two_vote)
     ]
     }
  */
-TEST(api, test_two_votes)
-{
+TEST(api, test_two_votes) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

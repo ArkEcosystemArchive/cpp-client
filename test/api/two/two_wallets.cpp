@@ -16,8 +16,7 @@
     }
     }
  */
-TEST(api, test_two_wallet)
-{
+TEST(api, test_two_wallet) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -68,8 +67,7 @@ TEST(api, test_two_wallet)
     ]
     }
  */
-TEST(api, test_two_wallets)
-{
+TEST(api, test_two_wallets) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -132,8 +130,7 @@ TEST(api, test_two_wallets)
     ]
     }
  */
-TEST(api, test_two_wallets_search)
-{
+TEST(api, test_two_wallets_search) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -196,8 +193,7 @@ TEST(api, test_two_wallets_search)
     ]
     }
  */
-TEST(api, test_two_wallets_top)
-{
+TEST(api, test_two_wallets_top) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -267,8 +263,7 @@ TEST(api, test_two_wallets_top)
     ]
   }
  */
-TEST(api, test_two_wallets_transactions)
-{
+TEST(api, test_two_wallets_transactions) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -304,8 +299,7 @@ TEST(api, test_two_wallets_transactions)
     ]
     }
  */
-TEST(api, test_two_wallets_transactions_received)
-{
+TEST(api, test_two_wallets_transactions_received) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -347,8 +341,7 @@ TEST(api, test_two_wallets_transactions_received)
     ]
     }
  */
-TEST(api, test_two_wallets_transactions_sent)
-{
+TEST(api, test_two_wallets_transactions_sent) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
  
     auto apiVersion = connection.api.version();
@@ -410,8 +403,7 @@ TEST(api, test_two_wallets_transactions_sent)
     ]
     }
  */
-TEST(api, test_two_wallets_votes)
-{
+TEST(api, test_two_wallets_votes) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
