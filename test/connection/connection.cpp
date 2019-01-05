@@ -2,8 +2,7 @@
 #include "gtest/gtest.h"
 #include "arkClient.h"
 
-TEST(api, test_connection)
-{
+TEST(api, test_connection) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::One> oneConnection("5.196.105.32", 4003);
     int oneVersion = oneConnection.api.version();
     ASSERT_EQ(1, oneVersion);

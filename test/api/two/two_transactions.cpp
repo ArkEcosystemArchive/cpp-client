@@ -30,8 +30,7 @@
     }
     }
  */
-TEST(api, test_two_transaction)
-{
+TEST(api, test_two_transaction) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -101,8 +100,7 @@ TEST(api, test_two_transaction)
         }
     }
  */
-TEST(api, test_transaction_types)
-{
+TEST(api, test_transaction_types) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -162,8 +160,7 @@ TEST(api, test_transaction_types)
     ]
     }
  */
-TEST(api, test_two_transaction_unconfirmed)
-{
+TEST(api, test_two_transaction_unconfirmed) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -222,8 +219,7 @@ TEST(api, test_two_transaction_unconfirmed)
     }
  */
 #if 0
-TEST(api, test_two_transactions)
-{
+TEST(api, test_two_transactions) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -275,8 +271,7 @@ TEST(api, test_two_transactions)
     ]
     }
  */
-TEST(api, test_two_transactions_unconfirmed)
-{
+TEST(api, test_two_transactions_unconfirmed) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -303,8 +298,7 @@ TEST(api, test_two_transactions_unconfirmed)
  *
  * Expected Response:
  */
-TEST(api, test_two_transactions_search_all)
-{
+TEST(api, test_two_transactions_search_all) { // NOLINT
   Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
   auto apiVersion = connection.api.version();
@@ -362,8 +356,7 @@ TEST(api, test_two_transactions_search_all)
   ]
 }
  */
-TEST(api, test_two_transactions_search)
-{
+TEST(api, test_two_transactions_search) { // NOLINT
     Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
