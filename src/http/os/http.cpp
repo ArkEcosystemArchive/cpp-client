@@ -57,7 +57,7 @@ class PlatformHTTP : public AbstractHTTP
 
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-                res = curl_easy_perform(curl);
+                curl_easy_perform(curl);
                 curl_slist_free_all(header_list);
                 curl_easy_cleanup(curl);
             }
