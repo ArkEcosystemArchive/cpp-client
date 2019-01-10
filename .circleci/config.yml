@@ -48,7 +48,7 @@ jobs:
             sudo apt-add-repository -y "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
             sudo apt-add-repository -y ppa:george-edison55/cmake-3.x
             sudo apt-get update
-            sudo apt-get -y install clang-5.0 clang-tidy-5.0 lcov cmake
+            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake
       - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./.circleci/*.sh
@@ -61,6 +61,10 @@ jobs:
       - run:
           name: Clang Tidy
           command: ./.circleci/clang_tidy.sh
+      - run:
+          name: Clang Format
+          command: ./.circleci/clang_format.sh
+          
   build-macos-9-2:
     macos:
       xcode: "9.2.0"
