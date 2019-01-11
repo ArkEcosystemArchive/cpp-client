@@ -34,28 +34,27 @@ class PlatformHTTP : public AbstractHTTP
       CURLcode res;
       std::string readBuffer;
 
-            curl = curl_easy_init();
-            if (curl != nullptr) {
-                curl_easy_setopt(curl, CURLOPT_URL, ss.str().c_str());
-                curl_slist *header_list = nullptr;
+      curl = curl_easy_init();
+      if (curl != nullptr) {
+        curl_easy_setopt(curl, CURLOPT_URL, request);
 
-			curl_slist *header_list = nullptr;
-			header_list = curl_slist_append(header_list, "Content-Type: application/json");
-			header_list = curl_slist_append(header_list, "API-Version: 2");
-			header_list = curl_slist_append(header_list, "Accept: application/vnd.ark.core-api.v2+json");
-			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
+        curl_slist *header_list = nullptr;
+        header_list = curl_slist_append(header_list, "Content-Type: application/json");
+        header_list = curl_slist_append(header_list, "API-Version: 2");
+        header_list = curl_slist_append(header_list, "Accept: application/vnd.ark.core-api.v2+json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
-			/* skip https verification */
-			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+        /* skip https verification */
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
         res = curl_easy_perform(curl);
         curl_slist_free_all(header_list);
         curl_easy_cleanup(curl);
-        }
-        return readBuffer;
+      }
+      return readBuffer;
     }
 
     /**/

@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 #include "host/host.h"
 
-TEST(api, test_host)
-{
+TEST(api, test_host) { // NOLINT
     Ark::Client::Host host("167.114.29.55", 4003);
 
     const char* ip = host.ip();

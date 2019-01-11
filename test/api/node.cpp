@@ -104,7 +104,7 @@ using testing::Return;
     }
 */
 TEST(api, test_two_node_configuration) { // NOLINT
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
@@ -202,7 +202,7 @@ TEST(api, test_two_node_configuration) { // NOLINT
     }
  */
 TEST(api, test_two_node_status) { // NOLINT
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
@@ -249,7 +249,7 @@ TEST(api, test_two_node_status) { // NOLINT
     }
  */
 TEST(api, test_two_node_syncing) { // NOLINT
-    Ark::Client::Connection<Ark::Client::API::Two> connection("167.114.29.54", 4003);
+     Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
