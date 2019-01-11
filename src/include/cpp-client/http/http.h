@@ -16,14 +16,20 @@
 
 namespace Ark {
 namespace Client {
-/***
- * Ark::Client::HTTP
- * @brief: Forward Delcaration
- **/
-class HTTP;
-/**/
 
-/***/
+class IHTTP
+{
+  protected:
+    IHTTP() = default;
+
+  public:
+    virtual ~IHTTP() { }
+
+    virtual int api_version() const /*noexcept*/ = 0;
+
+    virtual std::string get(const char *const request) = 0;
+    virtual std::string post(const char *const request, const char *body) = 0;
+};
 
 /***
  * Ark::Client::AbstractHTTP
@@ -32,65 +38,29 @@ class HTTP;
  * entry point for integrating the HTTPClient
  * library for different boards/chipsets
  **/
-class AbstractHTTP
+class AbstractHTTP : public IHTTP
 {
-    protected:
-        char host_[17];
-        int port_;
-        int api_version_;
+  protected:
+    int api_version_;
 
-        AbstractHTTP() : host_(), port_(-1), api_version_(0) { }
+    AbstractHTTP() : api_version_(0) { };
 
-        AbstractHTTP(AbstractHTTP&&) = delete;
-        AbstractHTTP& operator=(AbstractHTTP&&) = delete;
+    AbstractHTTP(AbstractHTTP&&) = delete;
+    AbstractHTTP& operator=(AbstractHTTP&&) = delete;
 
-        AbstractHTTP(const AbstractHTTP& other) : port_(other.port_), api_version_(other.api_version_) {
-          strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-        }
+    AbstractHTTP(const AbstractHTTP& other) : api_version_(other.api_version_) { };
 
-        AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
-          if (this != &other) {
-            strncpy(this->host_, other.host_, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = other.port_;
-            this->api_version_ = other.api_version_;
-          }
-          return *this;
-        }
+    AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
+      if (this != &other) {
+        this->api_version_ = other.api_version_;
+      }
+      return *this;
+    };
 
-    public:
-        virtual ~AbstractHTTP() {};
+  public:
+    virtual ~AbstractHTTP() {};
 
-        /**/
-        const char* host() const noexcept { return this->host_; };
-        int port() const noexcept { return this->port_; };
-        int api_version() const noexcept { return this->api_version_; }
-
-        /**/
-
-        virtual std::string get(
-                const char *const request
-        ) = 0;
-
-        /**/
-
-        virtual std::string post(
-                const char *const request,
-                const char *body
-        ) = 0;
-
-        /**/
-
-
-        bool setHost(
-                const char *const newHost,
-                int newPort,
-                int api_version
-        ) {
-            strncpy(this->host_, newHost, sizeof(this->host_) / sizeof(this->host_[0]));
-            this->port_ = newPort;
-            this->api_version_ = api_version;
-            return (this->port_ == newPort) && strcmp(this->host_, newHost);
-        }
+    int api_version() const /*noexcept*/ override { return this->api_version_; }
 };
 /**/
 
@@ -99,47 +69,10 @@ class AbstractHTTP
 /***
  * HTTP object factory
  **/
-std::unique_ptr<AbstractHTTP> makeHTTP();
+std::unique_ptr<IHTTP> makeHTTP();
 /**/
 
 };
-};
-
-/***
- * Ark::Client::HTTP
- **/
-class Ark::Client::HTTP
-{
-private:
-  std::unique_ptr<Ark::Client::AbstractHTTP> http;
-
-public:
-  HTTP() : http(makeHTTP()) { }
-
-  const char* host() const noexcept { return http->host(); };
-  int port() const noexcept { return http->port(); };
-  int api_version() const noexcept { return http->api_version(); };
-
-  void setHostHTTP(
-          const char* const newHost,
-          int newPort,
-          int api_version
-  ) {
-      http->setHost(newHost, newPort, api_version);
-  }
-
-  std::string get(
-    const char* const request
-  ) {
-    return http->get(request);
-  }
-
-  std::string post(
-    const char* const request,
-    const char* body
-  ) {
-    return http->post(request, body);
-  }
 };
 /**/
 

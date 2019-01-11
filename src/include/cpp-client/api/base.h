@@ -10,6 +10,7 @@
 #ifndef BASE_H
 #define BASE_H
 
+#include "host/host.h"
 #include "http/http.h"
 
 namespace Ark {
@@ -18,11 +19,14 @@ namespace API {
 /**
  * Ark::Client::API::Base 
  **/
-class Base {
-protected:
-  HTTP& http_;
+class Base
+{
+  protected:
+    Host& host_;
+    IHTTP* http_;
 
-  Base(HTTP& http) : http_(http) { }
+    template <typename HTTPType>
+    explicit Base(Host& host, HTTPType& http) : host_(host), http_(static_cast<IHTTP*>(&http)) { }
 };
 /**/
 };
