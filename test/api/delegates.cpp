@@ -37,8 +37,7 @@ using testing::_;
         }
     }
  */
-TEST(api, test_delegate)
-{
+TEST(api, test_delegate) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -186,8 +185,7 @@ TEST(api, test_delegate)
     ]
     }
  */
-TEST(api, test_delegate_blocks)
-{
+TEST(api, test_delegate_blocks) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     const std::string expected_response = R"({
@@ -300,8 +298,7 @@ TEST(api, test_delegate_blocks)
     ]
     }
  */
-TEST(api, test_delegate_voters)
-{
+TEST(api, test_delegate_voters) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -402,8 +399,7 @@ TEST(api, test_delegate_voters)
     ]
     }
  */
-TEST(api, test_delegates)
-{
+TEST(api, test_delegates) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

@@ -36,8 +36,7 @@ using testing::_;
     }
     }
  */
-TEST(api, test_vote)
-{
+TEST(api, test_vote) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -156,8 +155,7 @@ TEST(api, test_vote)
     ]
     }
  */
-TEST(api, test_votes)
-{
+TEST(api, test_votes) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();

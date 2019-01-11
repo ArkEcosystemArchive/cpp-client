@@ -50,8 +50,8 @@ if(ENABLE_CLANG_TIDY)
 
     list(APPEND RUN_CLANG_TIDY_BIN_ARGS
         -clang-tidy-binary ${CLANG_TIDY_BIN}
-        -header-filter=.*
-        -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor
+        "\"-header-filter=.*\\b(src|test|examples)\\b\\/(?!lib).*\""     #Only run clang tidy on src, test, examples and skip 3rd party libraries
+        -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor,-cppcoreguidelines-*
     )
 
     add_custom_target(

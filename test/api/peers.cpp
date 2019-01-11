@@ -24,9 +24,8 @@ using testing::_;
     }
     }
  */
-TEST(api, test_peer)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+TEST(api, test_two_peer) { // NOLINT
+     Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);
@@ -98,9 +97,8 @@ TEST(api, test_peer)
     ]
     }
  */
-TEST(api, test_peers)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_two_peers) { // NOLINT
+     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
     ASSERT_EQ(2, apiVersion);

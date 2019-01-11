@@ -22,8 +22,7 @@ using testing::_;
     }
     }
  */
-TEST(api, test_wallet)
-{
+TEST(api, test_wallet) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -87,8 +86,7 @@ TEST(api, test_wallet)
     ]
     }
  */
-TEST(api, test_wallets)
-{
+TEST(api, test_wallets) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -176,8 +174,7 @@ TEST(api, test_wallets)
     ]
     }
  */
-TEST(api, test_wallets_search)
-{
+TEST(api, test_wallets_search) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -312,8 +309,7 @@ TEST(api, test_wallets_search)
     ]
     }
  */
-TEST(api, test_wallets_top)
-{
+TEST(api, test_wallets_top) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -430,8 +426,7 @@ TEST(api, test_wallets_top)
     ]
   }
  */
-TEST(api, test_wallets_transactions)
-{
+TEST(api, test_wallets_transactions) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -502,8 +497,7 @@ TEST(api, test_wallets_transactions)
     ]
     }
  */
-TEST(api, test_wallets_transactions_received)
-{
+TEST(api, test_wallets_transactions_received) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
@@ -581,8 +575,7 @@ TEST(api, test_wallets_transactions_received)
     ]
     }
  */
-TEST(api, test_wallets_transactions_sent)
-{
+TEST(api, test_wallets_transactions_sent) {  // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
  
     auto apiVersion = connection.api.version();
@@ -684,8 +677,7 @@ TEST(api, test_wallets_transactions_sent)
     ]
     }
  */
-TEST(api, test_wallets_votes)
-{
+TEST(api, test_wallets_votes) { // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
     auto apiVersion = connection.api.version();
