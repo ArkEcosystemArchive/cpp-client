@@ -8,8 +8,7 @@ namespace {
   Ark::Client::Host testHost("0.0.0.0", 4003);
 }
 
-TEST(paths, test_blocks)
-{
+TEST(paths, test_blocks) { // NOLINT
   const auto base = Ark::Client::API::Paths::Blocks::base();
   ASSERT_STREQ("/api/v2/blocks", base);
 
@@ -34,8 +33,7 @@ TEST(paths, test_blocks)
 
 /***/
 
-TEST(paths, test_delegates)
-{
+TEST(paths, test_delegates) { // NOLINT
   const auto base = Ark::Client::API::Paths::Delegates::base();
   ASSERT_STREQ("/api/v2/delegates", base);
 
@@ -55,8 +53,7 @@ TEST(paths, test_delegates)
 
 /***/
 
-TEST(paths, test_node)
-{
+TEST(paths, test_node) { // NOLINT
   const auto base = Ark::Client::API::Paths::Node::base();
   ASSERT_STREQ("/api/v2/node", base);
   
@@ -72,8 +69,7 @@ TEST(paths, test_node)
 
 /***/
 
-TEST(paths, test_peers)
-{
+TEST(paths, test_peers) { // NOLINT
   const auto base = Ark::Client::API::Paths::Peers::base();
   ASSERT_STREQ("/api/v2/peers", base);
 
@@ -86,8 +82,7 @@ TEST(paths, test_peers)
 
 /***/
 
-TEST(paths, test_transactions)
-{
+TEST(paths, test_transactions) { // NOLINT
   const auto base = Ark::Client::API::Paths::Transactions::base();
   ASSERT_STREQ("/api/v2/transactions", base);
 
@@ -116,8 +111,7 @@ TEST(paths, test_transactions)
 
 /***/
 
-TEST(paths, test_votes)
-{
+TEST(paths, test_votes) { // NOLINT
   const auto base = Ark::Client::API::Paths::Votes::base();
   ASSERT_STREQ("/api/v2/votes", base);
 
@@ -130,8 +124,7 @@ TEST(paths, test_votes)
 
 /***/
 
-TEST(paths, test_wallets)
-{
+TEST(paths, test_wallets) { // NOLINT
   const auto base = Ark::Client::API::Paths::Wallets::base();
   ASSERT_STREQ("/api/v2/wallets", base);
 
