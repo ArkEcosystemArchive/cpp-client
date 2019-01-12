@@ -8,7 +8,7 @@
 using testing::Return;
 using testing::_;
 
-/* test_two_blocks_block
+/* test_blocks_block
  * https://dexplorer.ark.io:8443/api/v2/blocks/13114381566690093367
  * Expected Response:
     {
