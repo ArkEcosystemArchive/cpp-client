@@ -1,12 +1,12 @@
 
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "arkClient.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 #include "mocks/mock_api.h"
 #include "utils/json.h"
 
-using testing::Return;
 using testing::_;
+using testing::Return;
 
 /* test_two_delegates_delegate
  * https://dexplorer.ark.io:8443/api/v2/delegates/boldninja
@@ -37,13 +37,13 @@ using testing::_;
         }
     }
  */
-TEST(api, test_delegate) { // NOLINT
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_delegate) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string expected_response = R"({
+  const std::string expected_response = R"({
         "data": {
             "username": "boldninja",
             "address": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
@@ -69,79 +69,75 @@ TEST(api, test_delegate) { // NOLINT
         }
     })";
 
-    EXPECT_CALL(connection.api.delegates, get(_))
-      .Times(1)
-      .WillOnce(Return(expected_response));
+  EXPECT_CALL(connection.api.delegates, get(_)).Times(1).WillOnce(Return(expected_response));
 
-    const auto delegateResponse = connection.api.delegates.get("boldninja");
+  const auto delegateResponse = connection.api.delegates.get("boldninja");
 
-    DynamicJsonBuffer jsonBuffer(delegateResponse.size());
-    JsonObject& root = jsonBuffer.parseObject(delegateResponse);
+  DynamicJsonBuffer jsonBuffer(delegateResponse.size());
+  JsonObject& root = jsonBuffer.parseObject(delegateResponse);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* username = data["username"];
-    ASSERT_STREQ("boldninja", username);
+  const char* username = data["username"];
+  ASSERT_STREQ("boldninja", username);
 
-    const char* address = data["address"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
+  const char* address = data["address"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-    const char* publicKey = data["publicKey"];
-    ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const char* publicKey = data["publicKey"];
+  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
 
-    uint64_t votes = data["votes"];
-    ASSERT_EQ(0, votes);
+  uint64_t votes = data["votes"];
+  ASSERT_EQ(0, votes);
 
-    int rank = data["rank"];
-    ASSERT_EQ(29, rank);
+  int rank = data["rank"];
+  ASSERT_EQ(29, rank);
 
+  JsonObject& blocks = data["blocks"];
 
-    JsonObject& blocks = data["blocks"];
+  int produced = blocks["produced"];
+  ASSERT_EQ(0, produced);
 
-    int produced = blocks["produced"];
-    ASSERT_EQ(0, produced);
+  int missed = blocks["missed"];
+  ASSERT_EQ(0, missed);
 
-    int missed = blocks["missed"];
-    ASSERT_EQ(0, missed);
+  JsonObject& last = blocks["last"];
 
-    JsonObject& last = blocks["last"];
+  const char* last_id = last["id"];
+  ASSERT_STREQ("10652480998435361357", last_id);
 
-    const char* last_id = last["id"];
-    ASSERT_STREQ("10652480998435361357", last_id);
+  JsonObject& timestamp = last["timestamp"];
 
-    JsonObject& timestamp = last["timestamp"];
+  uint64_t epoch = timestamp["epoch"];
+  ASSERT_TRUE(32816112ull == epoch);
 
-    uint64_t epoch = timestamp["epoch"];
-    ASSERT_TRUE(32816112ull == epoch);
+  uint64_t unix_timestamp = timestamp["unix"];
+  ASSERT_TRUE(1522917312ull == unix_timestamp);
 
-    uint64_t unix_timestamp = timestamp["unix"];
-    ASSERT_TRUE(1522917312ull == unix_timestamp);
+  const char* human = timestamp["human"];
+  ASSERT_STREQ("2018-04-05T08:35:12Z", human);
 
-    const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-04-05T08:35:12Z", human);
+  JsonObject& production = data["production"];
 
+  double approval = production["approval"];
+  ASSERT_EQ(0.10, approval);
 
-    JsonObject& production = data["production"];
-
-    double approval = production["approval"];
-    ASSERT_EQ(0.10, approval);
-
-    double productivity = production["productivity"];
-    ASSERT_EQ(0.0, productivity);
+  double productivity = production["productivity"];
+  ASSERT_EQ(0.0, productivity);
 }
 
 /* test_delegates_delegate_blocks
  * https://dexplorer.ark.io:8443/api/v2/delegates/boldninja/blocks?limit=3&page=1
- * 
+ *
  * currently returning:
  *  {
  *      "statusCode": 500,
  *      "error": "Internal Server Error",
  *      "message": "An internal server error occurred"
  *  }
- * 
+ *
  * -
- * 
+ *
  * Expected Response:
     {
     "meta": {
@@ -185,10 +181,10 @@ TEST(api, test_delegate) { // NOLINT
     ]
     }
  */
-TEST(api, test_delegate_blocks) { // NOLINT
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_delegate_blocks) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    const std::string expected_response = R"({
+  const std::string expected_response = R"({
         "meta": {
             "count": 2,
             "pageCount": 29919,
@@ -230,48 +226,45 @@ TEST(api, test_delegate_blocks) { // NOLINT
         ]
     })";
 
-    EXPECT_CALL(connection.api.delegates, blocks(_, _, _))
-      .Times(1)
-      .WillOnce(Return(expected_response));
+  EXPECT_CALL(connection.api.delegates, blocks(_, _, _)).Times(1).WillOnce(Return(expected_response));
 
-    const auto delegateBlocksResponse = connection.api.delegates.blocks("boldninja", 3, 1);
+  const auto delegateBlocksResponse = connection.api.delegates.blocks("boldninja", 3, 1);
 
-    DynamicJsonBuffer jsonBuffer(delegateBlocksResponse.size());
-    JsonObject& root = jsonBuffer.parseObject(delegateBlocksResponse);
+  DynamicJsonBuffer jsonBuffer(delegateBlocksResponse.size());
+  JsonObject& root = jsonBuffer.parseObject(delegateBlocksResponse);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_EQ(2, count);
+  int count = meta["count"];
+  ASSERT_EQ(2, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_EQ(29919, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_EQ(29919, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_EQ(59838, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_EQ(59838, totalCount);
 
-    const char* id = root["data"][0]["id"];
-    ASSERT_STREQ("10652480998435361357", id);
+  const char* id = root["data"][0]["id"];
+  ASSERT_STREQ("10652480998435361357", id);
 
-    int version = root["data"][0]["version"];
-    ASSERT_EQ(0, version);
+  int version = root["data"][0]["version"];
+  ASSERT_EQ(0, version);
 
-    uint64_t height = root["data"][0]["height"];
-    ASSERT_TRUE(3035318ull == height);
+  uint64_t height = root["data"][0]["height"];
+  ASSERT_TRUE(3035318ull == height);
 
-    const char* previous = root["data"][0]["previous"];
-    ASSERT_STREQ("12548322724277171379", previous);
+  const char* previous = root["data"][0]["previous"];
+  ASSERT_STREQ("12548322724277171379", previous);
 
-    const char* username = root["data"][0]["generator"]["username"];
-    ASSERT_STREQ("boldninja", username);
+  const char* username = root["data"][0]["generator"]["username"];
+  ASSERT_STREQ("boldninja", username);
 
-    const char* address = root["data"][0]["generator"]["address"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
+  const char* address = root["data"][0]["generator"]["address"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-    const char* publicKey = root["data"][0]["generator"]["publicKey"];
-    ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const char* publicKey = root["data"][0]["generator"]["publicKey"];
+  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
 }
-
 
 /* test_delegates_delegate_voters
  * https://dexplorer.ark.io:8443/api/v2/delegates/boldninja/voters?limit=5&page=1
@@ -298,13 +291,13 @@ TEST(api, test_delegate_blocks) { // NOLINT
     ]
     }
  */
-TEST(api, test_delegate_voters) { // NOLINT
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_delegate_voters) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string expected_response = R"({
+  const std::string expected_response = R"({
         "meta": {
             "count": 2,
             "pageCount": 10,
@@ -325,37 +318,34 @@ TEST(api, test_delegate_voters) { // NOLINT
         ]
     })";
 
-    EXPECT_CALL(connection.api.delegates, voters(_, _, _))
-      .Times(1)
-      .WillOnce(Return(expected_response));
+  EXPECT_CALL(connection.api.delegates, voters(_, _, _)).Times(1).WillOnce(Return(expected_response));
 
-    const auto delegateVotersResponse = connection.api.delegates.voters("boldninja", 5, 1);
+  const auto delegateVotersResponse = connection.api.delegates.voters("boldninja", 5, 1);
 
-    DynamicJsonBuffer jsonBuffer(delegateVotersResponse.size());
-    JsonObject& root = jsonBuffer.parseObject(delegateVotersResponse);
+  DynamicJsonBuffer jsonBuffer(delegateVotersResponse.size());
+  JsonObject& root = jsonBuffer.parseObject(delegateVotersResponse);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
+  JsonObject& dataZero = root["data"][0];
 
-    JsonObject& dataZero = root["data"][0];
+  const char* address = dataZero["address"];
+  ASSERT_STREQ("D5mbS6mpP5UheuciNscpDLgC127kYjRtkK", address);
 
-    const char* address = dataZero["address"];
-    ASSERT_STREQ("D5mbS6mpP5UheuciNscpDLgC127kYjRtkK", address);
+  const char* publicKey = dataZero["publicKey"];
+  ASSERT_STREQ("03f7e0b1ab14985990416f72ed0b206c20b9efa35156e4528c8ff749fa0eea5d5a", publicKey);
 
-    const char* publicKey = dataZero["publicKey"];
-    ASSERT_STREQ("03f7e0b1ab14985990416f72ed0b206c20b9efa35156e4528c8ff749fa0eea5d5a", publicKey);
-
-    bool isDelegate = dataZero["isDelegate"];
-    ASSERT_FALSE(isDelegate);
+  bool isDelegate = dataZero["isDelegate"];
+  ASSERT_FALSE(isDelegate);
 }
 
 /* test_delegates_delegates
@@ -399,13 +389,13 @@ TEST(api, test_delegate_voters) { // NOLINT
     ]
     }
  */
-TEST(api, test_delegates) { // NOLINT
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_delegates) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string expected_response = R"({
+  const std::string expected_response = R"({
         "meta": {
             "count": 2,
             "pageCount": 99,
@@ -443,37 +433,35 @@ TEST(api, test_delegates) { // NOLINT
         ]
     })";
 
-    EXPECT_CALL(connection.api.delegates, all(5, 1))
-      .Times(1)
-      .WillOnce(Return(expected_response));
+  EXPECT_CALL(connection.api.delegates, all(5, 1)).Times(1).WillOnce(Return(expected_response));
 
-    const auto delegates = connection.api.delegates.all(5, 1);
+  const auto delegates = connection.api.delegates.all(5, 1);
 
-    DynamicJsonBuffer jsonBuffer(delegates.size());
-    JsonObject& root = jsonBuffer.parseObject(delegates);
+  DynamicJsonBuffer jsonBuffer(delegates.size());
+  JsonObject& root = jsonBuffer.parseObject(delegates);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
-    JsonObject& dataZero = root["data"][0];
+  JsonObject& dataZero = root["data"][0];
 
-    const char* username = dataZero["username"];
-    ASSERT_STREQ("dark_jmc", username);
+  const char* username = dataZero["username"];
+  ASSERT_STREQ("dark_jmc", username);
 
-    const char* address = dataZero["address"];
-    ASSERT_STREQ("D5PXQVeJmchVrZFHL7cALZK8mWWzjCaVfz", address);
+  const char* address = dataZero["address"];
+  ASSERT_STREQ("D5PXQVeJmchVrZFHL7cALZK8mWWzjCaVfz", address);
 
-    const char* publicKey = dataZero["publicKey"];
-    ASSERT_STREQ("02a9a0ac34a94f9d27fd9b4b56eb3c565a9a3f61e660f269775fb456f7f3301586", publicKey);
+  const char* publicKey = dataZero["publicKey"];
+  ASSERT_STREQ("02a9a0ac34a94f9d27fd9b4b56eb3c565a9a3f61e660f269775fb456f7f3301586", publicKey);
 
-    uint64_t votes = dataZero["votes"];
-    ASSERT_TRUE(0ull == votes);
+  uint64_t votes = dataZero["votes"];
+  ASSERT_TRUE(0ull == votes);
 }

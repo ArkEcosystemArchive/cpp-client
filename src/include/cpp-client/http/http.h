@@ -10,25 +10,24 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+#include <cstring>
 #include <memory>
 #include <string>
-#include <cstring>
 
 namespace Ark {
 namespace Client {
 
-class IHTTP
-{
-  protected:
-    IHTTP() = default;
+class IHTTP {
+ protected:
+  IHTTP() = default;
 
-  public:
-    virtual ~IHTTP() { }
+ public:
+  virtual ~IHTTP() {}
 
-    virtual int api_version() const /*noexcept*/ = 0;
+  virtual int api_version() const /*noexcept*/ = 0;
 
-    virtual std::string get(const char *const request) = 0;
-    virtual std::string post(const char *const request, const char *body) = 0;
+  virtual std::string get(const char* const request) = 0;
+  virtual std::string post(const char* const request, const char* body) = 0;
 };
 
 /***
@@ -38,29 +37,28 @@ class IHTTP
  * entry point for integrating the HTTPClient
  * library for different boards/chipsets
  **/
-class AbstractHTTP : public IHTTP
-{
-  protected:
-    int api_version_;
+class AbstractHTTP : public IHTTP {
+ protected:
+  int api_version_;
 
-    AbstractHTTP() : api_version_(0) { };
+  AbstractHTTP() : api_version_(0){};
 
-    AbstractHTTP(AbstractHTTP&&) = delete;
-    AbstractHTTP& operator=(AbstractHTTP&&) = delete;
+  AbstractHTTP(AbstractHTTP&&) = delete;
+  AbstractHTTP& operator=(AbstractHTTP&&) = delete;
 
-    AbstractHTTP(const AbstractHTTP& other) : api_version_(other.api_version_) { };
+  AbstractHTTP(const AbstractHTTP& other) : api_version_(other.api_version_){};
 
-    AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
-      if (this != &other) {
-        this->api_version_ = other.api_version_;
-      }
-      return *this;
-    };
+  AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
+    if (this != &other) {
+      this->api_version_ = other.api_version_;
+    }
+    return *this;
+  };
 
-  public:
-    virtual ~AbstractHTTP() {};
+ public:
+  virtual ~AbstractHTTP(){};
 
-    int api_version() const /*noexcept*/ override { return this->api_version_; }
+  int api_version() const /*noexcept*/ override { return this->api_version_; }
 };
 /**/
 
@@ -72,8 +70,8 @@ class AbstractHTTP : public IHTTP
 std::unique_ptr<IHTTP> makeHTTP();
 /**/
 
-};
-};
+};  // namespace Client
+};  // namespace Ark
 /**/
 
 #endif
