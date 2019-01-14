@@ -1,7 +1,7 @@
 {
   "name": "Ark-Cpp-Client",
-  "keywords": "ark ecosystem, crypto, blockchain, arduino",
-  "description": "Cpp Wrapper for the Ark Ecosystem",
+  "keywords": "ark ecosystem, crypto, blockchain, iot, arduino",
+  "description": "Official Blockchain IoT Cpp Client library provided by the Ark Ecosystem.",
   "homepage": "https://github.com/ArkEcosystem/Cpp-Client",
   "repository": {
     "type": "git",
@@ -10,13 +10,9 @@
   "version": "1.0.0",
   "authors": [
     {
-      "name": "Simon Downey",
-      "email": "simon@ark.io",
-      "url": "https://github.com/sleepdefic1t"
-    },
-    {
-      "name": "Chris Johnson",
-      "url": "https://github.com/ciband"
+      "name": "the Ark Ecosystem",
+      "email": "info@ark.io",
+      "url": "https://github.com/ArkEcosystem"
     }
   ],
   "frameworks": "arduino",
