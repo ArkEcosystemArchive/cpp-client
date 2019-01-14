@@ -53,13 +53,24 @@ class PlatformHTTP : public AbstractHTTP
 
     /**/
 
+    // Arduino's HTTPClient requires that a single-line HTTP request string begins with 'http://'.
+    // This is only a consideration on IoT platforms.
+    inline std::string toHttpStr(const char *const request) {
+      // char[7 (size of char string "http://") + 'request' string-length + 1 (for the null terminator '\0')]
+      char httpRequest[7 + std::strlen(request) + 1];
+      snprintf(httpRequest, sizeof(httpRequest), "http://%s%c", request, '\0');
+      return httpRequest;
+    }
+
+    /**/
+
     std::string get(
         const char *const request
     ) override {
       HTTPClient httpClient;
       httpClient.setReuse(false);
       httpClient.setTimeout(3000);
-      if (int code = tryConnection(httpClient, request) != 200)
+      if (int code = tryConnection(httpClient, toHttpStr(request).c_str()) != 200)
       { /* error */
         return httpClient.errorToString(-code).c_str(); // <- note `-` symbol.
       }
@@ -75,7 +86,7 @@ class PlatformHTTP : public AbstractHTTP
       HTTPClient httpClient;
       httpClient.setReuse(true);
       httpClient.setTimeout(3000);
-      httpClient.begin(request);
+      httpClient.begin(toHttpStr(request).c_str());
       httpClient.addHeader("Content-Type", "application/x-www-form-urlencoded");
       httpClient.POST(body);
       return httpClient.getString().c_str();
