@@ -40,8 +40,7 @@ class PlatformHTTP : public AbstractHTTP
 
         curl_slist *header_list = nullptr;
         header_list = curl_slist_append(header_list, "Content-Type: application/json");
-        header_list = curl_slist_append(header_list, "API-Version: 2");
-        header_list = curl_slist_append(header_list, "Accept: application/vnd.ark.core-api.v2+json");
+        header_list = curl_slist_append(header_list, "Accept: application/vnd.core-api.v2+json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
         /* skip https verification */
