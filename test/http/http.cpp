@@ -43,7 +43,7 @@ TEST(api, test_http_post) { // NOLINT
 // This tests the use of "http://" in single-line HTTP requests.
 TEST(api, test_http_request_strings) { // NOLINT
 
-    char requests[3][42] = {
+    char requests[3][43] = {
         "167.114.29.55:4003/api/node/status",        // No HTTP
         "http://167.114.29.55:4003/api/node/status", // HTTP
         "https://167.114.29.55:4003/api/node/status" // HTTPS
