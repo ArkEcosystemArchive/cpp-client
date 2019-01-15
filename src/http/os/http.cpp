@@ -54,10 +54,9 @@ class PlatformHTTP : public AbstractHTTP {
         curl_easy_cleanup(curl);
       }
       curl_easy_cleanup(curl); /* always cleanup */
+      curl_global_cleanup();
+      return readBuffer;
     }
-    curl_global_cleanup();
-    return readBuffer;
-  };
   /**/
 };
 /**/
