@@ -27,57 +27,31 @@ class PlatformHTTP : public AbstractHTTP {
 
   /**/
 
-  std::string get(const char *const request) override {
-    CURL *curl;
-    CURLcode res;
-    std::string readBuffer;
+    std::string get(
+        const char *const request
+    ) override {
+      CURL *curl;
+      CURLcode res;
+      std::string readBuffer;
 
-    curl = curl_easy_init();
-    if (curl != nullptr) {
-      curl_easy_setopt(curl, CURLOPT_URL, request);
+      curl = curl_easy_init();
+      if (curl != nullptr) {
+        curl_easy_setopt(curl, CURLOPT_URL, request);
 
-      curl_slist *header_list = nullptr;
-      header_list = curl_slist_append(header_list, "Content-Type: application/json");
-      header_list = curl_slist_append(header_list, "API-Version: 2");
-      header_list = curl_slist_append(header_list, "Accept: application/vnd.ark.core-api.v2+json");
-      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
+        curl_slist *header_list = nullptr;
+        header_list = curl_slist_append(header_list, "Content-Type: application/json");
+        header_list = curl_slist_append(header_list, "API-Version: 2");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
-      /* skip https verification */
-      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+        /* skip https verification */
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
-      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-      curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-      res = curl_easy_perform(curl);
-      curl_slist_free_all(header_list);
-      curl_easy_cleanup(curl);
-    }
-    return readBuffer;
-  }
-
-  /**/
-
-  std::string post(const char *const request, const char *body) override {
-    // https://curl.haxx.se/libcurl/c/http-post.html
-    CURL *curl;
-    CURLcode res;
-    std::string readBuffer;
-
-    curl_global_init(CURL_GLOBAL_ALL);
-    curl = curl_easy_init();
-    if (curl != nullptr) {
-      curl_easy_setopt(curl, CURLOPT_URL, request);      // Set the URL that is about to receive our POST
-      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);  // Now specify the POST json data ex: "username=baldninja"
-
-      /* skip https verification */
-      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);  // Do NOT verify peer
-      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);  // Do NOT verify host
-
-      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-      curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-      res = curl_easy_perform(curl);  // Perform the request, res will get the return code
-      if (res != CURLE_OK) {          // Check for errors
-        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(curl);
+        curl_slist_free_all(header_list);
+        curl_easy_cleanup(curl);
       }
       curl_easy_cleanup(curl); /* always cleanup */
     }
