@@ -42,7 +42,7 @@ class PlatformHTTP : public AbstractHTTP
         /* Bad HTTP GET.\nRetrying connection.. */
         delay(1000);
         httpClient.addHeader("Content-Type", "application/json");
-        httpClient.addHeader("Accept", "application/vnd.core-api.v2+json");
+        httpClient.addHeader("API-Version", "2");
         httpClient.begin(request);
         code = httpClient.GET();
         count++;
