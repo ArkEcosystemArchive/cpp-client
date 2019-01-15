@@ -46,17 +46,8 @@ class PlatformHTTP : public AbstractHTTP {
         code = httpClient.GET();
         count++;
       }
-      /* Bad HTTP GET.\nRetrying connection.. */
-      delay(1000);
-      httpClient.addHeader("Content-Type", "application/json");
-      httpClient.addHeader("API-Version", "2");
-      httpClient.addHeader("Accept", "application/vnd.ark.core-api.v2+json");
-      httpClient.begin(request);
-      code = httpClient.GET();
-      count++;
-    };
-    return code;
-  };
+      return code;
+    }
 
   /**/
 
@@ -83,8 +74,6 @@ class PlatformHTTP : public AbstractHTTP {
       }
       return httpClient.getString().c_str();
     }
-    return httpClient.getString().c_str();
-  }
 
   /**/
 
