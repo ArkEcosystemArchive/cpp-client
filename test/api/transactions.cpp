@@ -10,7 +10,7 @@
 using testing::Return;
 using testing::_;
 
-/* test_two_transactions_transaction
+/* test_transactions_transaction
  * https://dexplorer.ark.io:8443/api/v2/transactions/b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850
  * Expected Response:
     {
