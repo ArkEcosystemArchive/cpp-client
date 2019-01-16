@@ -9,7 +9,7 @@
 using testing::Return;
 using testing::_;
 
-/* test_two_vote
+/* test_vote
  * https://dexplorer.ark.io:8443/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2
  * Expected Response:
     {
