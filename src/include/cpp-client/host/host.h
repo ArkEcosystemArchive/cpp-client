@@ -10,39 +10,38 @@
 #ifndef HOST_H
 #define HOST_H
 
-#include <string>
-#include <cstring>
 #include <cstdio>
+#include <cstring>
+#include <string>
 
 namespace Ark {
 namespace Client {
 /***
  * Ark::Client::Host
  **/
-class Host
-{
-  protected:
-    char ip_[17];
-    int port_;
+class Host {
+ protected:
+  char ip_[17];
+  int port_;
 
-    Host(Host&&) = delete;
-    Host& operator=(Host&&) = delete;
-    Host(const Host& other);
-    Host& operator=(const Host& other) noexcept;
+  Host(Host&&) = delete;
+  Host& operator=(Host&&) = delete;
+  Host(const Host& other);
+  Host& operator=(const Host& other) noexcept;
 
-  public:
-    Host();
-    Host(const char *const newIP, int newPort);
+ public:
+  Host();
+  Host(const char* const newIP, int newPort);
 
-    bool set(const char *const newIP, int newPort);
+  bool set(const char* const newIP, int newPort);
 
-    const char* ip() const noexcept;
-    int port() const noexcept;
+  const char* ip() const noexcept;
+  int port() const noexcept;
 
-    std::string toString(); // e.g. "167.114.29.49:4003"
+  std::string toString();  // e.g. "167.114.29.49:4003"
 };
 /**/
-};
-};
+};  // namespace Client
+};  // namespace Ark
 
 #endif

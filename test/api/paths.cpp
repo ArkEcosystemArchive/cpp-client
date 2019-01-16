@@ -1,14 +1,14 @@
 
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "arkClient.h"
 
 namespace {
-  Ark::Client::Host testHost("0.0.0.0", 4003);
+Ark::Client::Host testHost("0.0.0.0", 4003);
 }
 
-TEST(paths, test_blocks) { // NOLINT
+TEST(paths, test_blocks) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Blocks::base();
   ASSERT_STREQ("/api/v2/blocks", base);
 
@@ -22,10 +22,7 @@ TEST(paths, test_blocks) { // NOLINT
   ASSERT_STREQ("0.0.0.0:4003/api/v2/blocks/58328125061111756/transactions", transactions.c_str());
 
   const std::map<std::string, std::string> searchBody = {
-    {"id", "8337447655053578871"},
-    {"previousBlock", "6440284271011893973"},
-    {"version", "0"}
-  };
+      {"id", "8337447655053578871"}, {"previousBlock", "6440284271011893973"}, {"version", "0"}};
   const auto search = Ark::Client::API::Paths::Blocks::search(testHost, searchBody, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/blocks/search?limit=5&page=1", search.first.c_str());
   ASSERT_STREQ("id=8337447655053578871&previousBlock=6440284271011893973&version=0", search.second.c_str());
@@ -33,7 +30,7 @@ TEST(paths, test_blocks) { // NOLINT
 
 /***/
 
-TEST(paths, test_delegates) { // NOLINT
+TEST(paths, test_delegates) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Delegates::base();
   ASSERT_STREQ("/api/v2/delegates", base);
 
@@ -48,28 +45,27 @@ TEST(paths, test_delegates) { // NOLINT
 
   const auto voters = Ark::Client::API::Paths::Delegates::voters(testHost, "boldninja", 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/delegates/boldninja/voters?limit=5&page=1", voters.c_str());
-
 }
 
 /***/
 
-TEST(paths, test_node) { // NOLINT
+TEST(paths, test_node) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Node::base();
   ASSERT_STREQ("/api/v2/node", base);
-  
+
   const auto configuration = Ark::Client::API::Paths::Node::configuration(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/node/configuration", configuration.c_str());
-  
+
   const auto status = Ark::Client::API::Paths::Node::status(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/node/status", status.c_str());
-  
+
   const auto syncing = Ark::Client::API::Paths::Node::syncing(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/node/syncing", syncing.c_str());
 }
 
 /***/
 
-TEST(paths, test_peers) { // NOLINT
+TEST(paths, test_peers) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Peers::base();
   ASSERT_STREQ("/api/v2/peers", base);
 
@@ -82,18 +78,23 @@ TEST(paths, test_peers) { // NOLINT
 
 /***/
 
-TEST(paths, test_transactions) { // NOLINT
+TEST(paths, test_transactions) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Transactions::base();
   ASSERT_STREQ("/api/v2/transactions", base);
 
-  const auto getUnconfirmed = Ark::Client::API::Paths::Transactions::getUnconfirmed(testHost, "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/unconfirmed/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", getUnconfirmed.c_str());
+  const auto getUnconfirmed = Ark::Client::API::Paths::Transactions::getUnconfirmed(
+      testHost, "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
+  ASSERT_STREQ(
+      "0.0.0.0:4003/api/v2/transactions/unconfirmed/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48",
+      getUnconfirmed.c_str());
 
   const auto all = Ark::Client::API::Paths::Transactions::all(testHost, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions?limit=5&page=1", all.c_str());
 
-  const auto get = Ark::Client::API::Paths::Transactions::get(testHost, "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48", get.c_str());
+  const auto get = Ark::Client::API::Paths::Transactions::get(
+      testHost, "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48",
+               get.c_str());
 
   const auto allUnconfirmed = Ark::Client::API::Paths::Transactions::allUnconfirmed(testHost, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/unconfirmed?limit=5&page=1", allUnconfirmed.c_str());
@@ -101,9 +102,7 @@ TEST(paths, test_transactions) { // NOLINT
   const auto types = Ark::Client::API::Paths::Transactions::types(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/types", types.c_str());
 
-  const std::map<std::string, std::string> searchBody = {
-    {"id", "dummy"}
-  };
+  const std::map<std::string, std::string> searchBody = {{"id", "dummy"}};
   const auto search = Ark::Client::API::Paths::Transactions::search(testHost, searchBody, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/search?limit=5&page=1", search.first.c_str());
   ASSERT_STREQ("id=dummy", search.second.c_str());
@@ -111,12 +110,14 @@ TEST(paths, test_transactions) { // NOLINT
 
 /***/
 
-TEST(paths, test_votes) { // NOLINT
+TEST(paths, test_votes) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Votes::base();
   ASSERT_STREQ("/api/v2/votes", base);
 
-  const auto get = Ark::Client::API::Paths::Votes::get(testHost, "d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2", get.c_str());
+  const auto get =
+      Ark::Client::API::Paths::Votes::get(testHost, "d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2",
+               get.c_str());
 
   const auto all = Ark::Client::API::Paths::Votes::all(testHost, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/votes?limit=5&page=1", all.c_str());
@@ -124,7 +125,7 @@ TEST(paths, test_votes) { // NOLINT
 
 /***/
 
-TEST(paths, test_wallets) { // NOLINT
+TEST(paths, test_wallets) {  // NOLINT
   const auto base = Ark::Client::API::Paths::Wallets::base();
   ASSERT_STREQ("/api/v2/wallets", base);
 
@@ -137,24 +138,32 @@ TEST(paths, test_wallets) { // NOLINT
   const auto top = Ark::Client::API::Paths::Wallets::top(testHost, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/top?limit=5&page=1", top.c_str());
 
-  const auto transactions = Ark::Client::API::Paths::Wallets::transactions(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=5&page=1", transactions.c_str());
+  const auto transactions =
+      Ark::Client::API::Paths::Wallets::transactions(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=5&page=1",
+               transactions.c_str());
 
-  const auto sent = Ark::Client::API::Paths::Wallets::transactionsSent(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=5&page=1", sent.c_str());
+  const auto sent =
+      Ark::Client::API::Paths::Wallets::transactionsSent(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=5&page=1",
+               sent.c_str());
 
-  const auto received = Ark::Client::API::Paths::Wallets::transactionsReceived(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=5&page=1", received.c_str());
+  const auto received =
+      Ark::Client::API::Paths::Wallets::transactionsReceived(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=5&page=1",
+               received.c_str());
 
   const auto votes = Ark::Client::API::Paths::Wallets::votes(testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/votes?limit=5&page=1", votes.c_str());
-  
+
   const std::map<std::string, std::string> searchBody = {
-    {"username", "baldninja"},
-    {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
-    {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
-  };
+      {"username", "baldninja"},
+      {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
+      {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}};
   const auto search = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/wallets/search?limit=5&page=1", search.first.c_str());
-  ASSERT_STREQ("address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja", search.second.c_str());
+  ASSERT_STREQ(
+      "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey="
+      "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja",
+      search.second.c_str());
 }

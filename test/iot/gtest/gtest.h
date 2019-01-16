@@ -1,5 +1,3 @@
-
-
 #ifndef __GTEST_H__
 #define __GTEST_H__
 

@@ -10,8 +10,8 @@
 #ifndef API_H
 #define API_H
 
-#include "api/api.h"
 #include "api/abstract.h"
+#include "api/api.h"
 #include "api/blocks/blocks.h"
 #include "api/delegates/delegates.h"
 #include "api/node/node.h"
@@ -23,29 +23,28 @@
 namespace Ark {
 namespace Client {
 /**/
-class Api : public API::Abstract
-{
-  public:
-    API::Blocks blocks;
-    API::Delegates delegates;
-    API::Node node;
-    API::Peers peers;
-    API::Transactions transactions;
-    API::Votes votes;
-    API::Wallets wallets;
+class Api : public API::Abstract {
+ public:
+  API::Blocks blocks;
+  API::Delegates delegates;
+  API::Node node;
+  API::Peers peers;
+  API::Transactions transactions;
+  API::Votes votes;
+  API::Wallets wallets;
 
-    Api() :
-        API::Abstract(2),
+  Api()
+      : API::Abstract(2),
         blocks(host_, *http_),
         delegates(host_, *http_),
         node(host_, *http_),
         peers(host_, *http_),
         transactions(host_, *http_),
         votes(host_, *http_),
-        wallets(host_, *http_) { }
+        wallets(host_, *http_) {}
 };
 /**/
-};
-};
+};  // namespace Client
+};  // namespace Ark
 
 #endif

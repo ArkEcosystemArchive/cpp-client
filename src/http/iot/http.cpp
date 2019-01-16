@@ -1,26 +1,25 @@
 #include "http/http.h"
-#include "helpers/helpers.h"
 #include <memory>
 #include <vector>
+#include "helpers/helpers.h"
 
 #ifdef ESP8266
-    #include <ESP8266HTTPClient.h>
+#include <ESP8266HTTPClient.h>
 #else
-    #include <HTTPClient.h>
+#include <HTTPClient.h>
 #endif
 
 namespace Ark {
 namespace Client {
 namespace {
 /**
-*
-**/
-class PlatformHTTP : public AbstractHTTP
-{
-  public:
-    PlatformHTTP() = default;
+ *
+ **/
+class PlatformHTTP : public AbstractHTTP {
+ public:
+  PlatformHTTP() = default;
 
-    /**/
+  /**/
 
     int tryConnection(
         HTTPClient &httpClient,
@@ -46,11 +45,11 @@ class PlatformHTTP : public AbstractHTTP
         httpClient.begin(request);
         code = httpClient.GET();
         count++;
-      };
+      }
       return code;
-    };
+    }
 
-    /**/
+  /**/
 
     // Arduino's HTTPClient requires that a single-line HTTP request string begins with 'http://'.
     // This is only a consideration on IoT platforms.
@@ -76,7 +75,7 @@ class PlatformHTTP : public AbstractHTTP
       return httpClient.getString().c_str();
     }
 
-    /**/
+  /**/
 
     std::string post(
         const char *const request,
@@ -93,7 +92,7 @@ class PlatformHTTP : public AbstractHTTP
     /**/
 };
 /**/
-}
+}  // namespace
 
 /**
  * HTTP object factory
@@ -102,5 +101,5 @@ std::unique_ptr<IHTTP> makeHTTP() {
   return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
 /**/
-};
-};
+}  // namespace Client
+}  // namespace Ark
