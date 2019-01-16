@@ -9,7 +9,7 @@
 using testing::_;
 using testing::Return;
 
-/* test_two_vote_identifier
+/* test_vote_identifier
  * https://dexplorer.ark.io:8443/api/v2/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu
  * Expected Response:
     {

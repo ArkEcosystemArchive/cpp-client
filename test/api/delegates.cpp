@@ -8,7 +8,7 @@
 using testing::_;
 using testing::Return;
 
-/* test_two_delegates_delegate
+/* test_delegates_delegate
  * https://dexplorer.ark.io:8443/api/v2/delegates/boldninja
  * Expected Response:
     {

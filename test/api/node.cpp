@@ -9,7 +9,7 @@
 
 using testing::Return;
 
-/* test_two_node_configuration
+/* test_node_configuration
  * https://dexplorer.ark.io:8443/api/v2/node/configuration
  * Expected Response:
     {
@@ -102,8 +102,8 @@ using testing::Return;
         ]
     }
     }
-*/
-TEST(api, test_two_node_configuration) {  // NOLINT
+
+TEST(api, test_node_configuration) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
   auto apiVersion = connection.api.version();
@@ -198,7 +198,7 @@ TEST(api, test_two_node_configuration) {  // NOLINT
         }
     }
  */
-TEST(api, test_two_node_status) {  // NOLINT
+TEST(api, test_node_status) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
   auto apiVersion = connection.api.version();
@@ -243,7 +243,7 @@ TEST(api, test_two_node_status) {  // NOLINT
     }
     }
  */
-TEST(api, test_two_node_syncing) {  // NOLINT
+TEST(api, test_node_syncing) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
   auto apiVersion = connection.api.version();

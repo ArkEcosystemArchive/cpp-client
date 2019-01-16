@@ -1,4 +1,3 @@
-
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -206,7 +205,8 @@ TEST(api, test_transaction_types) {  // NOLINT
         "last": null
     },
     "data": [
-        
+        
+
     ]
     }
  */
@@ -402,7 +402,8 @@ TEST(api, test_transactions) {  // NOLINT
         "last": "string"
     },
     "data": [
-        
+        
+
     ]
     }
  */

@@ -10,7 +10,7 @@
 using testing::_;
 using testing::Return;
 
-/* test_two_peers_peer
+/* test_peers_peer
  * https://dexplorer.ark.io:8443/api/v2/peers/167.114.29.54
  * Expected Response:
     {
@@ -24,7 +24,7 @@ using testing::Return;
     }
     }
  */
-TEST(api, test_two_peer) {  // NOLINT
+TEST(api, test_peer) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
   auto apiVersion = connection.api.version();
@@ -95,7 +95,7 @@ TEST(api, test_two_peer) {  // NOLINT
     ]
     }
  */
-TEST(api, test_two_peers) {  // NOLINT
+TEST(api, test_peers) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
   auto apiVersion = connection.api.version();
