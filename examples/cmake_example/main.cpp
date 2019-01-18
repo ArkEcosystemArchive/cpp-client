@@ -2,12 +2,10 @@
 
 #include <iostream>
 
-
 int main(int argc, char* argv[]) {
-
   // Create a connection
   Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
-  
+
   // Check the API Version
   const auto apiVersion = connection.api.version();
   std::cout << "API Version: " << apiVersion << "\n\n";
@@ -29,7 +27,8 @@ int main(int argc, char* argv[]) {
   std::cout << "Response for peer '167.114.29.49':\n";
   std::cout << peer << "\n\n";
 
-  const auto transaction = connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
+  const auto transaction =
+      connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
   std::cout << "Response for transaction 'b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850':\n";
   std::cout << transaction << "\n\n";
 
@@ -37,7 +36,7 @@ int main(int argc, char* argv[]) {
   std::cout << "Response for votes 'd202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2':\n";
   std::cout << vote << "\n\n";
 
-  const auto walletsSearch = connection.api.wallets.search({ "username", "baldninja" });
+  const auto walletsSearch = connection.api.wallets.search({"username", "baldninja"});
   std::cout << "Response for wallet search 'username=baldninja':\n";
   std::cout << walletsSearch << std::endl;
 

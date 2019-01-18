@@ -1,16 +1,16 @@
 
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "mocks/mock_api.h"
 
 #include "arkClient.h"
 #include "utils/json.h"
 
-using testing::Return;
 using testing::_;
+using testing::Return;
 
-/* test_two_peers_peer
+/* test_peers_peer
  * https://dexplorer.ark.io:8443/api/v2/peers/167.114.29.54
  * Expected Response:
     {
@@ -24,13 +24,13 @@ using testing::_;
     }
     }
  */
-TEST(api, test_two_peer) { // NOLINT
-     Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+TEST(api, test_peer) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "data": {
             "ip": "167.114.29.55",
             "port": 4002,
@@ -41,34 +41,32 @@ TEST(api, test_two_peer) { // NOLINT
         }
     })";
 
-    EXPECT_CALL(connection.api.peers, get(_))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.peers, get(_)).Times(1).WillOnce(Return(response));
 
-    const auto peer = connection.api.peers.get("167.114.29.49");
+  const auto peer = connection.api.peers.get("167.114.29.49");
 
-    DynamicJsonBuffer jsonBuffer(peer.size());
-    JsonObject& root = jsonBuffer.parseObject(peer);
+  DynamicJsonBuffer jsonBuffer(peer.size());
+  JsonObject& root = jsonBuffer.parseObject(peer);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* ip = data["ip"];
-    ASSERT_STREQ("167.114.29.55", ip);
+  const char* ip = data["ip"];
+  ASSERT_STREQ("167.114.29.55", ip);
 
-    int port = data["port"];
-    ASSERT_EQ(4002, port);
+  int port = data["port"];
+  ASSERT_EQ(4002, port);
 
-    const char* version = data["version"];
-    ASSERT_STREQ("1.1.1", version);
+  const char* version = data["version"];
+  ASSERT_STREQ("1.1.1", version);
 
-    int status = data["status"];
-    ASSERT_EQ(200, status);
+  int status = data["status"];
+  ASSERT_EQ(200, status);
 
-    const char* os = data["os"];
-    ASSERT_STREQ("linux", os);
+  const char* os = data["os"];
+  ASSERT_STREQ("linux", os);
 
-    int latency = data["latency"];
-    ASSERT_EQ(355, latency);
+  int latency = data["latency"];
+  ASSERT_EQ(355, latency);
 }
 
 /* test_peers_peers
@@ -97,13 +95,13 @@ TEST(api, test_two_peer) { // NOLINT
     ]
     }
  */
-TEST(api, test_two_peers) { // NOLINT
-     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_peers) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 1,
@@ -126,44 +124,41 @@ TEST(api, test_two_peers) { // NOLINT
         ]
     })";
 
-    EXPECT_CALL(connection.api.peers, all(_, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.peers, all(_, _)).Times(1).WillOnce(Return(response));
 
-    const auto peers = connection.api.peers.all(5, 1);
+  const auto peers = connection.api.peers.all(5, 1);
 
-    DynamicJsonBuffer jsonBuffer(peers.size());
-    JsonObject& root = jsonBuffer.parseObject(peers);
+  DynamicJsonBuffer jsonBuffer(peers.size());
+  JsonObject& root = jsonBuffer.parseObject(peers);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
+  JsonObject& dataZero = root["data"][0];
 
-    JsonObject& dataZero = root["data"][0];
+  const char* ip = dataZero["ip"];
+  ASSERT_STREQ("167.114.29.53", ip);
 
-    const char* ip = dataZero["ip"];
-    ASSERT_STREQ("167.114.29.53", ip);
+  int port = dataZero["port"];
+  ASSERT_EQ(4002, port);
 
-    int port = dataZero["port"];
-    ASSERT_EQ(4002, port);
+  const char* version = dataZero["version"];
+  ASSERT_STREQ("1.1.1", version);
 
-    const char* version = dataZero["version"];
-    ASSERT_STREQ("1.1.1", version);
+  int status = dataZero["status"];
+  ASSERT_EQ(200, status);
 
-    int status = dataZero["status"];
-    ASSERT_EQ(200, status);
+  const char* os = dataZero["os"];
+  ASSERT_STREQ("linux", os);
 
-    const char* os = dataZero["os"];
-    ASSERT_STREQ("linux", os);
-
-    int latency = dataZero["latency"];
-    ASSERT_EQ(1390, latency);
+  int latency = dataZero["latency"];
+  ASSERT_EQ(1390, latency);
 }
