@@ -34,6 +34,8 @@ class ITransactions : public API::Base {
   virtual std::string types() = 0;
   virtual std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5,
                              int page = 1) = 0;
+  virtual std::string send(std::string& jsonTransaction) = 0;
+
 };
 /**/
 class Transactions : public ITransactions {
@@ -46,6 +48,7 @@ class Transactions : public ITransactions {
   std::string allUnconfirmed(int limit = 2, int page = 1) override;
   std::string types() override;
   std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) override;
+  std::string send(std::string& jsonTransaction) override;
 };
 /**/
 };  // namespace API

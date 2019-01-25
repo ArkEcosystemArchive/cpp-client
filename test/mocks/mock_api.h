@@ -62,6 +62,7 @@ class MockTransactions : public Ark::Client::API::ITransactions {
   MOCK_METHOD2(allUnconfirmed, std::string(int, int));
   MOCK_METHOD0(types, std::string());
   MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
+  MOCK_METHOD1(send, std::string(std::string&));
 };
 
 class MockVotes : public Ark::Client::API::IVotes {
