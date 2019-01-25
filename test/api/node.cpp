@@ -102,7 +102,7 @@ using testing::Return;
         ]
     }
     }
-
+*/
 TEST(api, test_node_configuration) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
