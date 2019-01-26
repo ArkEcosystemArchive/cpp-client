@@ -109,7 +109,7 @@ TEST(paths, test_transactions) {  // NOLINT
 
   std::string jsonTransaction = "{\"id\":\"5ab523d18ac948da82700a71fc0b3c9e764fc0cba91927cb1aa63354564ad23f\",\"signature\":\"3045022100a6da60f9b3e20c80f491d168b8c51a85e0ec56a2448f9e10fc4bcc05a2bf79b8022078fa21b7d46e14c62d38f07e408fdb52f7b6a671894c6d0762913ca4a55e7a99\",\"timestamp\":4076176416,\"type\":0,\"fee\":10000000,\"senderPublicKey\":\"02f21aca9b6d224ea86a1689f57910534af21c3cc9f80602fed252c13e275f0699\",\"amount\":1,\"recipientId\":\"DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA\",\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}";
   const auto send = Ark::Client::API::Paths::Transactions::send(testHost, jsonTransaction);
-  ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/", send.first.c_str());
+  ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions", send.first.c_str());
   ASSERT_STREQ(jsonTransaction.c_str(), send.second.c_str());
 }
 
