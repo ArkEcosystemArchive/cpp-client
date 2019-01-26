@@ -234,7 +234,7 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::send(
   snprintf(
     uri,
     sizeof(uri),
-    "%s%s/",
+    "%s%s",
     newHost.toString().c_str(),
     Ark::Client::API::Paths::Transactions::base());
   return {uri, jsonTransaction.c_str()};
