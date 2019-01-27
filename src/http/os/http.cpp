@@ -69,6 +69,13 @@ class PlatformHTTP : public AbstractHTTP {
       curl_easy_setopt(curl, CURLOPT_URL, request);      // Set the URL that is about to receive our POST
       curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);  // Now specify the POST json data ex: "username=baldninja"
 
+      /* set the header content-type */
+      curl_slist *header_list = nullptr;
+      header_list = (body[0] == '{')
+        ? curl_slist_append(header_list, "Content-Type: application/json")
+        : curl_slist_append(header_list, "Content-Type: application/x-www-form-urlencoded");
+      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
+      
       /* skip https verification */
       curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);  // Do NOT verify peer
       curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);  // Do NOT verify host
