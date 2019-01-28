@@ -1,7 +1,7 @@
 #include "http/http.h"
 #include <memory>
 #include <vector>
-#include "helpers/helpers.h"
+#include "helpers/client_helpers.h"
 
 #ifdef ESP8266
 #include <ESP8266HTTPClient.h>
