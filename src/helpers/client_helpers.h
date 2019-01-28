@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef HELPERS_H
-#define HELPERS_H
+#ifndef CLIENT_HELPERS_H
+#define CLIENT_HELPERS_H
 
 #include <cstring>
 #include <string>

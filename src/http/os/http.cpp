@@ -1,5 +1,5 @@
 #include "http/http.h"
-#include "helpers/helpers.h"
+#include "helpers/client_helpers.h"
 
 #ifndef USE_IOT
 
