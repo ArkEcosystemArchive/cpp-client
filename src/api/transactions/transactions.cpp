@@ -36,3 +36,11 @@ std::string Ark::Client::API::Transactions::search(const std::map<std::string, s
   const auto searchPathPair = Ark::Client::API::Paths::Transactions::search(this->host_, bodyParameters, limit, page);
   return http_->post(searchPathPair.first.c_str(), searchPathPair.second.c_str());
 }
+
+/***/
+
+std::string Ark::Client::API::Transactions::send(std::string& jsonTransaction) {
+  const auto pathPair = Ark::Client::API::Paths::Transactions::send(this->host_, jsonTransaction);
+  return http_->post(pathPair.first.c_str(), pathPair.second.c_str());
+};
+

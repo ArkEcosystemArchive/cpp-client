@@ -94,6 +94,8 @@ extern std::pair<std::string, std::string> search(Host& newHost,
                                                   const std::map<std::string, std::string>& bodyParameters,
                                                   int limit = 5, int page = 1);
 /***/
+extern std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
+/***/
 };  // namespace Transactions
 
 /***/

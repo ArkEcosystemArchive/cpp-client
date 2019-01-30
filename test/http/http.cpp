@@ -20,7 +20,8 @@ TEST(api, test_http_get) { // NOLINT
     ASSERT_TRUE(obj.containsKey("data"));
 }
 
-TEST(api, test_http_post) { // NOLINT
+// Tests POSTing of HTTP body.
+TEST(api, test_http_post_body) { // NOLINT
     // Create the HTTP object
     const auto http = Ark::Client::makeHTTP();
 
@@ -38,6 +39,27 @@ TEST(api, test_http_post) { // NOLINT
     // Test JSON object for the "meta" key.
     // The correct response will include this key
     ASSERT_TRUE(obj.containsKey("meta"));
+}
+
+// Tests POSTing of JSON.
+TEST(api, test_http_post_json) { // NOLINT
+    // Create the HTTP object
+    const auto http = Ark::Client::makeHTTP();
+
+    // Create a Request URL and an empty Transaction JSON.
+    const auto request = "167.114.29.55:4003/api/v2/transactions";
+    const auto txJson = "{\"transactions\":[]}";
+
+    // Post the 'request' and 'txJson' for a response using HTTP
+    const auto response = http->post(request, txJson);
+
+    // Create a JSON object of the result
+    DynamicJsonBuffer jsonBuffer(response.length());
+    JsonObject& obj = jsonBuffer.parseObject(response.c_str());
+
+    // Test JSON object for the "message" key.
+    // The correct response will include the following
+    ASSERT_STREQ("child \"transactions\" fails because [\"transactions\" must contain at least 1 items]", obj["message"]);
 }
 
 // This tests the use of "http://" in single-line HTTP requests.

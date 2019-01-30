@@ -575,3 +575,67 @@ TEST(api, test_transactions_search) {  // NOLINT
   const char* signature = data["signature"];
   ASSERT_STREQ("dummy", signature);
 }
+
+/* test_transactions_transactions_send
+ *
+ * Expected Response:
+ * {
+ *  "data": {
+ *      "accept": [
+ *          "dummy"
+ *      ],
+ *      "broadcast": [
+ *          "dummy"
+ *      ],
+ *      "excess": [],
+ *      "invalid": []
+ *  },
+ *  "errors": null
+ * }
+ */
+TEST(api, test_transactions_send) {  // NOLINT
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+
+    auto apiVersion = connection.api.version();
+    ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+        "data": {
+            "accept": [
+                "dummy"
+            ],
+            "broadcast": [
+                "dummy"
+            ],
+            "excess": [],
+            "invalid": []
+            },
+            "errors": null
+        })";
+
+    EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
+
+    std::string jsonTransaction = "{\"transactions\":[{\"type\":0,\"amount\":1,\"fee\":10000000,\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\",\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\",\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\",\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\",\"timestamp\":58351951,\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}]}";
+    
+    const auto transaction = connection.api.transactions.send(jsonTransaction);
+
+    DynamicJsonBuffer jsonBuffer(transaction.size());
+    JsonObject& root = jsonBuffer.parseObject(transaction);
+
+    JsonObject& data = root["data"];
+
+    std::string accept = data["accept"];
+    ASSERT_TRUE(accept.length() != 0);
+
+    std::string broadcast = data["broadcast"];
+    ASSERT_TRUE(broadcast.length() != 0);
+
+    std::string excess = data["excess"];
+    ASSERT_TRUE(excess.length() == 2);
+
+    std::string invalid = data["invalid"];
+    ASSERT_TRUE(invalid.length() == 2);
+
+    std::string errors = data["errors"];
+    ASSERT_TRUE(errors.length() == 0 );
+}

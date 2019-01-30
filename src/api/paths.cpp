@@ -227,6 +227,19 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::searc
   return {uri, parameterBuffer.c_str()};
 }
 
+/***/
+
+std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::send(Host& newHost, std::string& jsonTransaction) {
+  char uri[96] = {};
+  snprintf(
+    uri,
+    sizeof(uri),
+    "%s%s",
+    newHost.toString().c_str(),
+    Ark::Client::API::Paths::Transactions::base());
+  return {uri, jsonTransaction.c_str()};
+}
+
 /******/
 
 /**
@@ -345,5 +358,3 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Wallets::search(
   }
   return {uri, parameterBuffer.c_str()};
 }
-
-/***/
