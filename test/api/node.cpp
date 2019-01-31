@@ -1,6 +1,6 @@
 
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "mocks/mock_api.h"
 
@@ -9,7 +9,7 @@
 
 using testing::Return;
 
-/* test_two_node_configuration
+/* test_node_configuration
  * https://dexplorer.ark.io:8443/api/v2/node/configuration
  * Expected Response:
     {
@@ -103,14 +103,13 @@ using testing::Return;
     }
     }
 */
-TEST(api, test_node_configuration)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+TEST(api, test_node_configuration) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
           "data": {
           "nethash": "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",
             "token" : "DARK",
@@ -155,40 +154,37 @@ TEST(api, test_node_configuration)
         }
     })";
 
-    EXPECT_CALL(connection.api.node, configuration())
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.node, configuration()).Times(1).WillOnce(Return(response));
 
-    const auto nodeConfiguration = connection.api.node.configuration();
+  const auto nodeConfiguration = connection.api.node.configuration();
 
-    DynamicJsonBuffer jsonBuffer(nodeConfiguration.size());
-    JsonObject& root = jsonBuffer.parseObject(nodeConfiguration);
+  DynamicJsonBuffer jsonBuffer(nodeConfiguration.size());
+  JsonObject& root = jsonBuffer.parseObject(nodeConfiguration);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* nethash = data["nethash"];
-    ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", nethash);
+  const char* nethash = data["nethash"];
+  ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", nethash);
 
-    const char* token = data["token"];
-    ASSERT_STREQ("DARK", token);
+  const char* token = data["token"];
+  ASSERT_STREQ("DARK", token);
 
-    const char* symbol = data["symbol"];
-    ASSERT_STREQ(u8"DѦ", symbol);
+  const char* symbol = data["symbol"];
+  ASSERT_STREQ(u8"DѦ", symbol);
 
-    const char* explorer = data["explorer"];
-    ASSERT_STREQ("https://dexplorer.ark.io", explorer);
+  const char* explorer = data["explorer"];
+  ASSERT_STREQ("https://dexplorer.ark.io", explorer);
 
-    int version = data["version"];
-    ASSERT_EQ(30, version);
+  int version = data["version"];
+  ASSERT_EQ(30, version);
 
+  JsonObject& ports = data["ports"];
 
-    JsonObject& ports = data["ports"];
+  int core_p2p = ports["@arkecosystem/core-p2p"];
+  ASSERT_EQ(4000, core_p2p);
 
-    int core_p2p = ports["@arkecosystem/core-p2p"];
-    ASSERT_EQ(4000, core_p2p);
-
-    int core_api = ports["@arkecosystem/core-api"];
-    ASSERT_EQ(4003, core_api);
+  int core_api = ports["@arkecosystem/core-api"];
+  ASSERT_EQ(4003, core_api);
 }
 
 /* test_node_status
@@ -202,14 +198,13 @@ TEST(api, test_node_configuration)
         }
     }
  */
-TEST(api, test_node_status)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+TEST(api, test_node_status) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "data": {
             "synced": false,
             "now": 3034451,
@@ -217,25 +212,23 @@ TEST(api, test_node_status)
         }
     })";
 
-    EXPECT_CALL(connection.api.node, status())
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.node, status()).Times(1).WillOnce(Return(response));
 
-    const auto nodeStatus = connection.api.node.status();
+  const auto nodeStatus = connection.api.node.status();
 
-    DynamicJsonBuffer jsonBuffer(nodeStatus.size());
-    JsonObject& root = jsonBuffer.parseObject(nodeStatus);
+  DynamicJsonBuffer jsonBuffer(nodeStatus.size());
+  JsonObject& root = jsonBuffer.parseObject(nodeStatus);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    bool synced = data["synced"];
-    ASSERT_FALSE(synced);
+  bool synced = data["synced"];
+  ASSERT_FALSE(synced);
 
-    int now = data["now"];
-    ASSERT_EQ(3034451, now);
+  int now = data["now"];
+  ASSERT_EQ(3034451, now);
 
-    int blocksCount = data["blocksCount"];
-    ASSERT_EQ(36, blocksCount);
+  int blocksCount = data["blocksCount"];
+  ASSERT_EQ(36, blocksCount);
 }
 
 /* test_node_status
@@ -250,14 +243,13 @@ TEST(api, test_node_status)
     }
     }
  */
-TEST(api, test_node_syncing)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+TEST(api, test_node_syncing) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "data": {
             "syncing": true,
             "blocks": 36,
@@ -266,26 +258,24 @@ TEST(api, test_node_syncing)
         }
     })";
 
-    EXPECT_CALL(connection.api.node, syncing())
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.node, syncing()).Times(1).WillOnce(Return(response));
 
-    const auto nodeSyncing = connection.api.node.syncing();
+  const auto nodeSyncing = connection.api.node.syncing();
 
-    DynamicJsonBuffer jsonBuffer(nodeSyncing.size());
-    JsonObject& root = jsonBuffer.parseObject(nodeSyncing);
+  DynamicJsonBuffer jsonBuffer(nodeSyncing.size());
+  JsonObject& root = jsonBuffer.parseObject(nodeSyncing);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    bool syncing = data["syncing"];
-    ASSERT_TRUE(syncing);
+  bool syncing = data["syncing"];
+  ASSERT_TRUE(syncing);
 
-    int blocks = data["blocks"];
-    ASSERT_EQ(36, blocks);
+  int blocks = data["blocks"];
+  ASSERT_EQ(36, blocks);
 
-    uint64_t height = data["height"];
-    ASSERT_TRUE(3034451ull == height);
+  uint64_t height = data["height"];
+  ASSERT_TRUE(3034451ull == height);
 
-    const char* id = data["id"];
-    ASSERT_STREQ("5444078994968869529", id);
+  const char* id = data["id"];
+  ASSERT_STREQ("5444078994968869529", id);
 }

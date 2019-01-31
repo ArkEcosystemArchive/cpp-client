@@ -10,8 +10,8 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "api/api.h"
 #include "api/abstract.h"
+#include "api/api.h"
 #include "host/host.h"
 #include "http/http.h"
 
@@ -21,25 +21,21 @@ namespace Client {
  * Ark::Client::Connection<TAPI>
  **/
 template <typename TAPI>
-class Connection
-{
-  public:
-    TAPI api;
-    Host host;
+class Connection {
+ public:
+  TAPI api;
+  Host host;
 
-    Connection() = default;
-    Connection(const TAPI& other) : api(other) {}
+  Connection() = default;
+  Connection(const TAPI& other) : api(other) {}
 
-    Connection(
-        const char *const newIP,
-        int newPort
-    ) {
-      this->host.set(newIP, newPort);
-      this->api.setHost(newIP, newPort);
-    };
+  Connection(const char* const newIP, int newPort) {
+    this->host.set(newIP, newPort);
+    this->api.setHost(newIP, newPort);
+  };
 };
 /**/
-}
-}
+}  // namespace Client
+}  // namespace Ark
 
 #endif

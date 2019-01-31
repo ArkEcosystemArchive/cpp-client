@@ -25,9 +25,8 @@ please see the [Cpp Crypto](https://github.com/ArkEcosystem/cpp-crypto) reposito
 ### Connection
 
 Before making a request, you should create a `Connection`.  
-A `Connection` expects a `host`, which is an url on which the API can be reached,  
-and a network `version`, which specifies whether we are using v1 or v2.  
-An example `Connection` that connects to a v2 API of a node, would be created as follows:
+A `Connection` expects a `host`, which is an url on which the API can be reached.  
+An example `Connection`, that interfaces with the API of an Ark Node, would be created as follows:
 
 ```cpp
 // Create a connection

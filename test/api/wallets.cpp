@@ -1,15 +1,15 @@
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "mocks/mock_api.h"
 
 #include "arkClient.h"
 #include "utils/json.h"
 
-using testing::Return;
 using testing::_;
+using testing::Return;
 
-/* test_two_vote_identifier
+/* test_vote_identifier
  * https://dexplorer.ark.io:8443/api/v2/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu
  * Expected Response:
     {
@@ -22,14 +22,13 @@ using testing::_;
     }
     }
  */
-TEST(api, test_wallet)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallet) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "data": {
             "address": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
             "publicKey": "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
@@ -38,28 +37,26 @@ TEST(api, test_wallet)
         }
     })";
 
-    EXPECT_CALL(connection.api.wallets, get(_))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, get(_)).Times(1).WillOnce(Return(response));
 
-    const auto wallet = connection.api.wallets.get("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN");
+  const auto wallet = connection.api.wallets.get("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN");
 
-    DynamicJsonBuffer jsonBuffer(wallet.size());
-    JsonObject& root = jsonBuffer.parseObject(wallet);
+  DynamicJsonBuffer jsonBuffer(wallet.size());
+  JsonObject& root = jsonBuffer.parseObject(wallet);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* address = data["address"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
+  const char* address = data["address"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-    const char* publicKey = data["publicKey"];
-    ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const char* publicKey = data["publicKey"];
+  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
 
-    uint64_t balance = data["balance"];
-    ASSERT_TRUE(balance == 12534670000000);
+  uint64_t balance = data["balance"];
+  ASSERT_TRUE(balance == 12534670000000);
 
-    bool isDelegate = data["isDelegate"];
-    ASSERT_TRUE(isDelegate);
+  bool isDelegate = data["isDelegate"];
+  ASSERT_TRUE(isDelegate);
 }
 
 /* test_wallets
@@ -87,14 +84,13 @@ TEST(api, test_wallet)
     ]
     }
  */
-TEST(api, test_wallets)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 421,
@@ -115,40 +111,37 @@ TEST(api, test_wallets)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, all(_, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, all(_, _)).Times(1).WillOnce(Return(response));
 
-    const auto wallets = connection.api.wallets.all(5, 1);
+  const auto wallets = connection.api.wallets.all(5, 1);
 
-    DynamicJsonBuffer jsonBuffer(wallets.size());
-    JsonObject& root = jsonBuffer.parseObject(wallets);
+  DynamicJsonBuffer jsonBuffer(wallets.size());
+  JsonObject& root = jsonBuffer.parseObject(wallets);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
+  JsonObject& dataZero = root["data"][0];
 
-    JsonObject& dataZero = root["data"][0];
+  const char* address = dataZero["address"];
+  ASSERT_STREQ("D59NTfV92ca9QevUydvMiFMFdubbCaAVCV", address);
 
-    const char* address = dataZero["address"];
-    ASSERT_STREQ("D59NTfV92ca9QevUydvMiFMFdubbCaAVCV", address);
+  const char* publicKey = dataZero["publicKey"];
+  ASSERT_STREQ("037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a", publicKey);
 
-    const char* publicKey = dataZero["publicKey"];
-    ASSERT_STREQ("037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a", publicKey);
+  uint64_t balance = dataZero["balance"];
+  ASSERT_TRUE(balance >= 0);
 
-    uint64_t balance = dataZero["balance"];
-    ASSERT_TRUE(balance >= 0);
-
-    bool isDelegate = dataZero["isDelegate"];
-    ASSERT_FALSE(isDelegate);
+  bool isDelegate = dataZero["isDelegate"];
+  ASSERT_FALSE(isDelegate);
 }
 
 /* test_wallets_search
@@ -176,14 +169,13 @@ TEST(api, test_wallets)
     ]
     }
  */
-TEST(api, test_wallets_search)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets_search) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 2,
@@ -219,72 +211,72 @@ TEST(api, test_wallets_search)
         ]
     })";
 
-    const std::map<std::string, std::string> body_parameters = {
-     {"username", "baldninja"},
-     {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
-     {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
-    };
+  const std::map<std::string, std::string> body_parameters = {
+      {"username", "baldninja"},
+      {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
+      {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}};
 
-    EXPECT_CALL(connection.api.wallets, search(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
-   
-    const auto walletsSearch = connection.api.wallets.search(body_parameters, 5, 1);
+  EXPECT_CALL(connection.api.wallets, search(_, _, _)).Times(1).WillOnce(Return(response));
 
-    DynamicJsonBuffer jsonBuffer(walletsSearch.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsSearch);
+  const auto walletsSearch = connection.api.wallets.search(body_parameters, 5, 1);
 
-    JsonObject& meta = root["meta"];
+  DynamicJsonBuffer jsonBuffer(walletsSearch.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsSearch);
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  JsonObject& meta = root["meta"];
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
-    JsonObject& dataZero = root["data"][0];;
+  JsonObject& dataZero = root["data"][0];
+  ;
 
-    const char* id = dataZero["id"];
-    ASSERT_STREQ("08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e", id);
+  const char* id = dataZero["id"];
+  ASSERT_STREQ("08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e", id);
 
-    const char* blockId = dataZero["blockId"];
-    ASSERT_STREQ("14847399772737279404", blockId);
+  const char* blockId = dataZero["blockId"];
+  ASSERT_STREQ("14847399772737279404", blockId);
 
-    int type = dataZero["type"];
-    ASSERT_EQ(3, type);
+  int type = dataZero["type"];
+  ASSERT_EQ(3, type);
 
-    uint64_t amount = dataZero["amount"];
-    ASSERT_TRUE(0ull == amount);
+  uint64_t amount = dataZero["amount"];
+  ASSERT_TRUE(0ull == amount);
 
-    uint64_t fee = dataZero["fee"];
-    ASSERT_TRUE(100000000ull == fee);
+  uint64_t fee = dataZero["fee"];
+  ASSERT_TRUE(100000000ull == fee);
 
-    const char* sender = dataZero["sender"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
+  const char* sender = dataZero["sender"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
 
-    const char* recipient = dataZero["recipient"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
+  const char* recipient = dataZero["recipient"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
 
-    const char* signature = dataZero["signature"];
-    ASSERT_STREQ("304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e", signature);
+  const char* signature = dataZero["signature"];
+  ASSERT_STREQ(
+      "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d"
+      "9aed7ab980f374eb0c9d53e25f8e",
+      signature);
 
-    int confirmations = dataZero["confirmations"];
-    ASSERT_EQ(1636029, confirmations);
+  int confirmations = dataZero["confirmations"];
+  ASSERT_EQ(1636029, confirmations);
 
-    JsonObject& timestamp = dataZero["timestamp"];
+  JsonObject& timestamp = dataZero["timestamp"];
 
-    int epoch = timestamp["epoch"];
-    ASSERT_EQ(17094358, epoch);
+  int epoch = timestamp["epoch"];
+  ASSERT_EQ(17094358, epoch);
 
-    int timestampUnix = timestamp["unix"];
-    ASSERT_EQ(1507195558, timestampUnix);
+  int timestampUnix = timestamp["unix"];
+  ASSERT_EQ(1507195558, timestampUnix);
 
-    const char* human = timestamp["human"];
-    ASSERT_STREQ("2017-10-05T09:25:58Z", human);
+  const char* human = timestamp["human"];
+  ASSERT_STREQ("2017-10-05T09:25:58Z", human);
 }
 
 /* test_wallets_top_limit_page
@@ -312,14 +304,13 @@ TEST(api, test_wallets_search)
     ]
     }
  */
-TEST(api, test_wallets_top)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets_top) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 1,
@@ -346,54 +337,51 @@ TEST(api, test_wallets_top)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, top(_, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, top(_, _)).Times(1).WillOnce(Return(response));
 
-    const auto walletsTop = connection.api.wallets.top(5, 1);
+  const auto walletsTop = connection.api.wallets.top(5, 1);
 
-    DynamicJsonBuffer jsonBuffer(walletsTop.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsTop);
+  DynamicJsonBuffer jsonBuffer(walletsTop.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsTop);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
+  JsonObject& dataZero = root["data"][0];
 
-    JsonObject& dataZero = root["data"][0];
+  const char* address = dataZero["address"];
+  ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", address);
 
-    const char* address = dataZero["address"];
-    ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", address);
+  const char* publicKey = dataZero["publicKey"];
+  ASSERT_STREQ("024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231", publicKey);
 
-    const char* publicKey = dataZero["publicKey"];
-    ASSERT_STREQ("024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231", publicKey);
+  uint64_t balance = dataZero["balance"];
+  ASSERT_TRUE(balance == 11499593462120632ull);
 
-    uint64_t balance = dataZero["balance"];
-    ASSERT_TRUE(balance == 11499593462120632ull);
+  bool isDelegate = dataZero["isDelegate"];
+  ASSERT_FALSE(isDelegate);
 
-    bool isDelegate = dataZero["isDelegate"];
-    ASSERT_FALSE(isDelegate);
+  JsonObject& dataOne = root["data"][1];
 
-    JsonObject& dataOne = root["data"][1];
+  address = dataOne["address"];
+  ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", address);
 
-    address = dataOne["address"];
-    ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", address);
+  publicKey = dataOne["publicKey"];
+  ASSERT_STREQ("0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd", publicKey);
 
-    publicKey = dataOne["publicKey"];
-    ASSERT_STREQ("0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd", publicKey);
+  balance = dataOne["balance"];
+  ASSERT_TRUE(balance == 554107676293547ull);
 
-    balance = dataOne["balance"];
-    ASSERT_TRUE(balance == 554107676293547ull);
-
-    isDelegate = dataOne["isDelegate"];
-    ASSERT_FALSE(isDelegate);
+  isDelegate = dataOne["isDelegate"];
+  ASSERT_FALSE(isDelegate);
 }
 
 /* test_wallets_transactions
@@ -430,14 +418,13 @@ TEST(api, test_wallets_top)
     ]
   }
  */
-TEST(api, test_wallets_transactions)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets_transactions) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 127430,
@@ -468,19 +455,17 @@ TEST(api, test_wallets_transactions)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactions(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, transactions(_, _, _)).Times(1).WillOnce(Return(response));
 
-    const auto walletsTransactions = connection.api.wallets.transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1);
+  const auto walletsTransactions = connection.api.wallets.transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1);
 
-    DynamicJsonBuffer jsonBuffer(walletsTransactions.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsTransactions);
+  DynamicJsonBuffer jsonBuffer(walletsTransactions.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsTransactions);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_EQ(2, count);
+  int count = meta["count"];
+  ASSERT_EQ(2, count);
 }
 
 /* test_wallets_transactions_received
@@ -502,14 +487,13 @@ TEST(api, test_wallets_transactions)
     ]
     }
  */
-TEST(api, test_wallets_transactions_received)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets_transactions_received) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 4,
@@ -541,25 +525,24 @@ TEST(api, test_wallets_transactions_received)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _)).Times(1).WillOnce(Return(response));
 
-    const auto walletsTransactionsReceived = connection.api.wallets.transactionsReceived("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
+  const auto walletsTransactionsReceived =
+      connection.api.wallets.transactionsReceived("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
 
-    DynamicJsonBuffer jsonBuffer(walletsTransactionsReceived.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsTransactionsReceived);
+  DynamicJsonBuffer jsonBuffer(walletsTransactionsReceived.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsTransactionsReceived);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 }
 
 /* test_wallets_transactions_sent
@@ -581,14 +564,13 @@ TEST(api, test_wallets_transactions_received)
     ]
     }
  */
-TEST(api, test_wallets_transactions_sent)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
- 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+TEST(api, test_wallets_transactions_sent) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    const std::string response = R"({
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
+
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 2,
@@ -624,25 +606,24 @@ TEST(api, test_wallets_transactions_sent)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _)).Times(1).WillOnce(Return(response));
 
-    const auto walletsTransactionsSent = connection.api.wallets.transactionsSent("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
+  const auto walletsTransactionsSent =
+      connection.api.wallets.transactionsSent("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
 
-    DynamicJsonBuffer jsonBuffer(walletsTransactionsSent.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsTransactionsSent);
+  DynamicJsonBuffer jsonBuffer(walletsTransactionsSent.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsTransactionsSent);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 }
 
 /* test_wallets_votes
@@ -684,14 +665,13 @@ TEST(api, test_wallets_transactions_sent)
     ]
     }
  */
-TEST(api, test_wallets_votes)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_wallets_votes) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "meta": {
             "count": 2,
             "pageCount": 2,
@@ -727,22 +707,20 @@ TEST(api, test_wallets_votes)
         ]
     })";
 
-    EXPECT_CALL(connection.api.wallets, votes(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.wallets, votes(_, _, _)).Times(1).WillOnce(Return(response));
 
-    const auto walletsVotes = connection.api.wallets.votes("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 1, 1);
+  const auto walletsVotes = connection.api.wallets.votes("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 1, 1);
 
-    DynamicJsonBuffer jsonBuffer(walletsVotes.size());
-    JsonObject& root = jsonBuffer.parseObject(walletsVotes);
+  DynamicJsonBuffer jsonBuffer(walletsVotes.size());
+  JsonObject& root = jsonBuffer.parseObject(walletsVotes);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_GT(count, 0);
+  int count = meta["count"];
+  ASSERT_GT(count, 0);
 
-    JsonObject& data = root["data"][0];
+  JsonObject& data = root["data"][0];
 
-    const char* sender = data["sender"];
-    ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
+  const char* sender = data["sender"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
 }

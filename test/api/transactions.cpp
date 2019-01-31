@@ -1,14 +1,13 @@
-
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "mocks/mock_api.h"
 
 #include "arkClient.h"
 #include "utils/json.h"
 
-using testing::Return;
 using testing::_;
+using testing::Return;
 
 /* test_two_transactions_transaction
  * https://dexplorer.ark.io:8443/api/v2/transactions/b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850
@@ -37,14 +36,13 @@ using testing::_;
     }
     }
  */
-TEST(api, test_transaction)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transaction) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
         "data": {
             "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
             "blockId": "4271682877946294396",
@@ -63,55 +61,56 @@ TEST(api, test_transaction)
         }
     })";
 
-    EXPECT_CALL(connection.api.transactions, get(_))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, get(_)).Times(1).WillOnce(Return(response));
 
-    const auto transaction = connection.api.transactions.get("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
+  const auto transaction =
+      connection.api.transactions.get("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
 
-    DynamicJsonBuffer jsonBuffer(transaction.size());
-    JsonObject& root = jsonBuffer.parseObject(transaction);
+  DynamicJsonBuffer jsonBuffer(transaction.size());
+  JsonObject& root = jsonBuffer.parseObject(transaction);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* id = data["id"];
-    ASSERT_STREQ("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa", id);
+  const char* id = data["id"];
+  ASSERT_STREQ("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa", id);
 
-    const char* blockId = data["blockId"];
-    ASSERT_STREQ("4271682877946294396", blockId);
+  const char* blockId = data["blockId"];
+  ASSERT_STREQ("4271682877946294396", blockId);
 
-    int type = data["type"];
-    ASSERT_EQ(0, type);
+  int type = data["type"];
+  ASSERT_EQ(0, type);
 
-    uint64_t amount = data["amount"];
-    ASSERT_TRUE(amount == 32106400000);
+  uint64_t amount = data["amount"];
+  ASSERT_TRUE(amount == 32106400000);
 
-    uint64_t fee = data["fee"];
-    ASSERT_TRUE(fee == 10000000);
+  uint64_t fee = data["fee"];
+  ASSERT_TRUE(fee == 10000000);
 
-    const char* sender = data["sender"];
-    ASSERT_STREQ("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", sender);
+  const char* sender = data["sender"];
+  ASSERT_STREQ("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", sender);
 
-    const char* recipient = data["recipient"];
-    ASSERT_STREQ("DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP", recipient);
+  const char* recipient = data["recipient"];
+  ASSERT_STREQ("DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP", recipient);
 
-    const char* signature = data["signature"];
-    ASSERT_STREQ("3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e", signature);
+  const char* signature = data["signature"];
+  ASSERT_STREQ(
+      "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e3"
+      "9e490b0a2581dd772ebc8079696e",
+      signature);
 
-    int confirmations = data["confirmations"];
-    ASSERT_EQ(confirmations, 1928);
+  int confirmations = data["confirmations"];
+  ASSERT_EQ(confirmations, 1928);
 
+  JsonObject& timestamp = data["timestamp"];
 
-    JsonObject& timestamp = data["timestamp"];
+  int epoch = timestamp["epoch"];
+  ASSERT_EQ(32794053, epoch);
 
-    int epoch = timestamp["epoch"];
-    ASSERT_EQ(32794053, epoch);
+  int timestampUnix = timestamp["unix"];
+  ASSERT_EQ(1522895253, timestampUnix);
 
-    int timestampUnix = timestamp["unix"];
-    ASSERT_EQ(1522895253, timestampUnix);
-
-    const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-04-05T02:27:33Z", human);
+  const char* human = timestamp["human"];
+  ASSERT_STREQ("2018-04-05T02:27:33Z", human);
 }
 
 /* test_transactions_transaction_types
@@ -131,14 +130,13 @@ TEST(api, test_transaction)
         }
     }
  */
-TEST(api, test_transaction_types)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transaction_types) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
 			  "data": {
 			    "Transfer": 0,
 			    "SecondSignature": 1,
@@ -152,47 +150,46 @@ TEST(api, test_transaction_types)
 			  }
 			})";
 
-    EXPECT_CALL(connection.api.transactions, types())
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, types()).Times(1).WillOnce(Return(response));
 
-    const auto types = connection.api.transactions.types();
+  const auto types = connection.api.transactions.types();
 
-    DynamicJsonBuffer jsonBuffer(types.size());
-    JsonObject& root = jsonBuffer.parseObject(types);
+  DynamicJsonBuffer jsonBuffer(types.size());
+  JsonObject& root = jsonBuffer.parseObject(types);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    int Transfer = data["Transfer"];
-    ASSERT_EQ(0, Transfer);
+  int Transfer = data["Transfer"];
+  ASSERT_EQ(0, Transfer);
 
-    int SecondSignature = data["SecondSignature"];
-    ASSERT_EQ(1, SecondSignature);
+  int SecondSignature = data["SecondSignature"];
+  ASSERT_EQ(1, SecondSignature);
 
-    int DelegateRegistration = data["DelegateRegistration"];
-    ASSERT_EQ(2, DelegateRegistration);
+  int DelegateRegistration = data["DelegateRegistration"];
+  ASSERT_EQ(2, DelegateRegistration);
 
-    int Vote = data["Vote"];
-    ASSERT_EQ(3, Vote);
+  int Vote = data["Vote"];
+  ASSERT_EQ(3, Vote);
 
-    int MultiSignature = data["MultiSignature"];
-    ASSERT_EQ(4, MultiSignature);
+  int MultiSignature = data["MultiSignature"];
+  ASSERT_EQ(4, MultiSignature);
 
-    int Ipfs = data["Ipfs"];
-    ASSERT_EQ(5, Ipfs);
+  int Ipfs = data["Ipfs"];
+  ASSERT_EQ(5, Ipfs);
 
-    int TimelockTransfer = data["TimelockTransfer"];
-    ASSERT_EQ(6, TimelockTransfer);
+  int TimelockTransfer = data["TimelockTransfer"];
+  ASSERT_EQ(6, TimelockTransfer);
 
-    int MultiPayment = data["MultiPayment"];
-    ASSERT_EQ(7, MultiPayment);
+  int MultiPayment = data["MultiPayment"];
+  ASSERT_EQ(7, MultiPayment);
 
-    int DelegateResignation = data["DelegateResignation"];
-    ASSERT_EQ(8, DelegateResignation);
+  int DelegateResignation = data["DelegateResignation"];
+  ASSERT_EQ(8, DelegateResignation);
 }
 
 /* test_transactions_transaction_unconfirmed
- * https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48
+ *
+ https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48
  * Expected Response (if unconfirmed tx is not found):
     {
     "meta": {
@@ -201,23 +198,25 @@ TEST(api, test_transaction_types)
         "totalCount": int,
         "next": "string",
         "previous": "string",
-        "self": "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
-        "first": "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
+        "self":
+ "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
+        "first":
+ "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
         "last": null
     },
     "data": [
         
+
     ]
     }
  */
-TEST(api, test_transaction_unconfirmed)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transaction_unconfirmed) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
 			  "data": {
 			    "id": "dummy",
 			    "blockId": "dummy",
@@ -237,57 +236,55 @@ TEST(api, test_transaction_unconfirmed)
 			  }
 			})";
 
-    EXPECT_CALL(connection.api.transactions, getUnconfirmed(_))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, getUnconfirmed(_)).Times(1).WillOnce(Return(response));
 
-    const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
+  const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
 
-    DynamicJsonBuffer jsonBuffer(transactionUnconfirmed.size());
-    JsonObject& root = jsonBuffer.parseObject(transactionUnconfirmed);
+  DynamicJsonBuffer jsonBuffer(transactionUnconfirmed.size());
+  JsonObject& root = jsonBuffer.parseObject(transactionUnconfirmed);
 
-    JsonObject& data = root["data"];
+  JsonObject& data = root["data"];
 
-    const char* id = data["id"];
-    ASSERT_STREQ("dummy", id);
+  const char* id = data["id"];
+  ASSERT_STREQ("dummy", id);
 
-    const char* blockId = data["blockId"];
-    ASSERT_STREQ("dummy", blockId);
+  const char* blockId = data["blockId"];
+  ASSERT_STREQ("dummy", blockId);
 
-    int type = data["type"];
-    ASSERT_EQ(0, type);
+  int type = data["type"];
+  ASSERT_EQ(0, type);
 
-    uint64_t amount = data["amount"];
-    ASSERT_TRUE(10000000ull == amount);
+  uint64_t amount = data["amount"];
+  ASSERT_TRUE(10000000ull == amount);
 
-    uint64_t fee = data["fee"];
-    ASSERT_TRUE(10000000ull == fee);
+  uint64_t fee = data["fee"];
+  ASSERT_TRUE(10000000ull == fee);
 
-    const char* sender = data["sender"];
-    ASSERT_STREQ("dummy", sender);
+  const char* sender = data["sender"];
+  ASSERT_STREQ("dummy", sender);
 
-    const char* recipient = data["recipient"];
-    ASSERT_STREQ("dummy", recipient);
+  const char* recipient = data["recipient"];
+  ASSERT_STREQ("dummy", recipient);
 
-    const char* signature = data["signature"];
-    ASSERT_STREQ("dummy", signature);
+  const char* signature = data["signature"];
+  ASSERT_STREQ("dummy", signature);
 
-    const char* vendorField = data["vendorField"];
-    ASSERT_STREQ("dummy", vendorField);
+  const char* vendorField = data["vendorField"];
+  ASSERT_STREQ("dummy", vendorField);
 
-    int confirmations = data["confirmations"];
-    ASSERT_EQ(10, confirmations);
+  int confirmations = data["confirmations"];
+  ASSERT_EQ(10, confirmations);
 
-    JsonObject& timestamp = data["timestamp"];
+  JsonObject& timestamp = data["timestamp"];
 
-    uint64_t epoch = timestamp["epoch"];
-    ASSERT_TRUE(40505460ull == epoch);
+  uint64_t epoch = timestamp["epoch"];
+  ASSERT_TRUE(40505460ull == epoch);
 
-    uint64_t unix_timestamp = timestamp["unix"];
-    ASSERT_TRUE(1530606660ull == unix_timestamp);
+  uint64_t unix_timestamp = timestamp["unix"];
+  ASSERT_TRUE(1530606660ull == unix_timestamp);
 
-    const char* human = timestamp["human"];
-    ASSERT_STREQ("2018-07-03T08:31:00Z", human);
+  const char* human = timestamp["human"];
+  ASSERT_STREQ("2018-07-03T08:31:00Z", human);
 }
 
 /* test_transactions_transactions
@@ -326,14 +323,13 @@ TEST(api, test_transaction_unconfirmed)
     }
  */
 
-TEST(api, test_transactions)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transactions) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
       "meta": {
           "count": 2,
           "pageCount": 127430,
@@ -364,34 +360,31 @@ TEST(api, test_transactions)
       ]
   })";
 
-    EXPECT_CALL(connection.api.transactions, all(_, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, all(_, _)).Times(1).WillOnce(Return(response));
 
-    const auto transactions = connection.api.transactions.all(2, 1);
+  const auto transactions = connection.api.transactions.all(2, 1);
 
-    DynamicJsonBuffer jsonBuffer(transactions.size());
-    JsonObject& root = jsonBuffer.parseObject(transactions);
+  DynamicJsonBuffer jsonBuffer(transactions.size());
+  JsonObject& root = jsonBuffer.parseObject(transactions);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_NE(0, count);
+  int count = meta["count"];
+  ASSERT_NE(0, count);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_NE(0, pageCount);
+  int pageCount = meta["pageCount"];
+  ASSERT_NE(0, pageCount);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_NE(0, totalCount);
+  int totalCount = meta["totalCount"];
+  ASSERT_NE(0, totalCount);
 
+  JsonObject& dataZero = root["data"][0];
 
-    JsonObject& dataZero = root["data"][0];
+  int type = dataZero["type"];
+  ASSERT_EQ(0, type);
 
-    int type = dataZero["type"];
-    ASSERT_EQ(0, type);
-
-    uint64_t fee = dataZero["fee"];
-    ASSERT_TRUE(fee >= 0);
+  uint64_t fee = dataZero["fee"];
+  ASSERT_TRUE(fee >= 0);
 }
 
 /* test_transactions_transactions_unconfirmed
@@ -410,17 +403,17 @@ TEST(api, test_transactions)
     },
     "data": [
         
+
     ]
     }
  */
-TEST(api, test_transactions_unconfirmed)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transactions_unconfirmed) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
       "meta": {
 	      "count": 1,
 	      "pageCount": 1,
@@ -452,29 +445,27 @@ TEST(api, test_transactions_unconfirmed)
       ]
       })";
 
-    EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _)).Times(1).WillOnce(Return(response));
 
-    const auto transactionsUnconfirmed = connection.api.transactions.allUnconfirmed(5, 1);
+  const auto transactionsUnconfirmed = connection.api.transactions.allUnconfirmed(5, 1);
 
-    DynamicJsonBuffer jsonBuffer(transactionsUnconfirmed.size());
-    JsonObject& root = jsonBuffer.parseObject(transactionsUnconfirmed);
+  DynamicJsonBuffer jsonBuffer(transactionsUnconfirmed.size());
+  JsonObject& root = jsonBuffer.parseObject(transactionsUnconfirmed);
 
-    JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-    int count = meta["count"];
-    ASSERT_TRUE(count >= 0);
+  int count = meta["count"];
+  ASSERT_TRUE(count >= 0);
 
-    int pageCount = meta["pageCount"];
-    ASSERT_TRUE(pageCount >= 0);
+  int pageCount = meta["pageCount"];
+  ASSERT_TRUE(pageCount >= 0);
 
-    int totalCount = meta["totalCount"];
-    ASSERT_TRUE(totalCount >= 0);
+  int totalCount = meta["totalCount"];
+  ASSERT_TRUE(totalCount >= 0);
 }
 
 /* test_transactions_transactions_search
- * 
+ *
  * Expected Response:
  {
  "meta":{
@@ -507,14 +498,13 @@ TEST(api, test_transactions_unconfirmed)
   ]
 }
  */
-TEST(api, test_transactions_search)
-{
-    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_transactions_search) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
+  auto apiVersion = connection.api.version();
+  ASSERT_EQ(2, apiVersion);
 
-    const std::string response = R"({
+  const std::string response = R"({
 			  "meta": {
 			    "count": 1,
 			    "pageCount": 1,
@@ -546,46 +536,106 @@ TEST(api, test_transactions_search)
 			  ]
 			})";
 
-    EXPECT_CALL(connection.api.transactions, search(_, _, _))
-      .Times(1)
-      .WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, search(_, _, _)).Times(1).WillOnce(Return(response));
 
-  const std::map<std::string, std::string> body = {
-    {"id", "dummy"}
-  };
+  const std::map<std::string, std::string> body = {{"id", "dummy"}};
   const auto transactions = connection.api.transactions.search(body, 5, 1);
 
-	DynamicJsonBuffer jsonBuffer(transactions.size());
-	JsonObject& root = jsonBuffer.parseObject(transactions);
+  DynamicJsonBuffer jsonBuffer(transactions.size());
+  JsonObject& root = jsonBuffer.parseObject(transactions);
 
-	JsonObject& meta = root["meta"];
+  JsonObject& meta = root["meta"];
 
-	int count = meta["count"];
-	ASSERT_TRUE(count >= 0);
+  int count = meta["count"];
+  ASSERT_TRUE(count >= 0);
 
-	int pageCount = meta["pageCount"];
-	ASSERT_TRUE(pageCount >= 0);
+  int pageCount = meta["pageCount"];
+  ASSERT_TRUE(pageCount >= 0);
 
-	int totalCount = meta["totalCount"];
-	ASSERT_TRUE(totalCount >= 0);
+  int totalCount = meta["totalCount"];
+  ASSERT_TRUE(totalCount >= 0);
 
-	JsonObject& data = root["data"][0];
+  JsonObject& data = root["data"][0];
 
-	const char* id = data["id"];
-	ASSERT_STREQ("dummy", id);
+  const char* id = data["id"];
+  ASSERT_STREQ("dummy", id);
 
   const char* blockId = data["blockId"];
   ASSERT_STREQ("dummy", blockId);
 
-	int type = data["type"];
-	ASSERT_EQ(0, type);
+  int type = data["type"];
+  ASSERT_EQ(0, type);
 
-	const char* sender = data["sender"];
-	ASSERT_STREQ("dummy", sender);
+  const char* sender = data["sender"];
+  ASSERT_STREQ("dummy", sender);
 
-	const char* recipient = data["recipient"];
-	ASSERT_STREQ("dummy", recipient);
+  const char* recipient = data["recipient"];
+  ASSERT_STREQ("dummy", recipient);
 
-	const char* signature = data["signature"];
-	ASSERT_STREQ("dummy", signature);
+  const char* signature = data["signature"];
+  ASSERT_STREQ("dummy", signature);
+}
+
+/* test_transactions_transactions_send
+ *
+ * Expected Response:
+ * {
+ *  "data": {
+ *      "accept": [
+ *          "dummy"
+ *      ],
+ *      "broadcast": [
+ *          "dummy"
+ *      ],
+ *      "excess": [],
+ *      "invalid": []
+ *  },
+ *  "errors": null
+ * }
+ */
+TEST(api, test_transactions_send) {  // NOLINT
+    Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+
+    auto apiVersion = connection.api.version();
+    ASSERT_EQ(2, apiVersion);
+
+    const std::string response = R"({
+        "data": {
+            "accept": [
+                "dummy"
+            ],
+            "broadcast": [
+                "dummy"
+            ],
+            "excess": [],
+            "invalid": []
+            },
+            "errors": null
+        })";
+
+    EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
+
+    std::string jsonTransaction = "{\"transactions\":[{\"type\":0,\"amount\":1,\"fee\":10000000,\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\",\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\",\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\",\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\",\"timestamp\":58351951,\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}]}";
+    
+    const auto transaction = connection.api.transactions.send(jsonTransaction);
+
+    DynamicJsonBuffer jsonBuffer(transaction.size());
+    JsonObject& root = jsonBuffer.parseObject(transaction);
+
+    JsonObject& data = root["data"];
+
+    std::string accept = data["accept"];
+    ASSERT_TRUE(accept.length() != 0);
+
+    std::string broadcast = data["broadcast"];
+    ASSERT_TRUE(broadcast.length() != 0);
+
+    std::string excess = data["excess"];
+    ASSERT_TRUE(excess.length() == 2);
+
+    std::string invalid = data["invalid"];
+    ASSERT_TRUE(invalid.length() == 2);
+
+    std::string errors = data["errors"];
+    ASSERT_TRUE(errors.length() == 0 );
 }
