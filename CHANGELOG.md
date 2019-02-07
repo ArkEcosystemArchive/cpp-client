@@ -11,13 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Added an API `send()` method for `Transactions` ([#64](https://github.com/ArkEcosystem/cpp-client/pull/64))
-- Added Arduino Sketch Paths to Library Config ([#67](https://github.com/ArkEcosystem/cpp-client/pull/67))
+- Added an API `send()` method for the `Transactions` class ([#64](https://github.com/ArkEcosystem/cpp-client/pull/64))
+- Added Arduino Sketch Paths to `library.json` ([#67](https://github.com/ArkEcosystem/cpp-client/pull/67))
 
 ### Fixed
 
-- Fixed unterminated comment in `Node` Tests ([#63](https://github.com/ArkEcosystem/cpp-client/pull/63))
-- Renamed `Helpers` class to avoid naming collision with other packages ([#65](https://github.com/ArkEcosystem/cpp-client/pull/65))
+- Fixed unterminated comment which resulted in skipped `Node` tests ([#63](https://github.com/ArkEcosystem/cpp-client/pull/63))
+- Renamed `Helpers` class to avoid naming collision with Cpp-Crypto `Helpers` ([#65](https://github.com/ArkEcosystem/cpp-client/pull/65))
 
 ## Version 1.0.0 - 2019-01-19
 
