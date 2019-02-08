@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/ArkEcosystem/Cpp-Client.git"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [
     {
       "name": "Ark Ecosystem",
@@ -62,8 +62,9 @@
     ]
   },
   "examples": [
-    "[Ee]xamples/platformio_example/*.ino",
-    "[Ee]xamples/platformio_example/*.cpp",
-    "[Ee]xamples/platformio_example/*.c"
+    "[Ee]xamples/arduino/*/*.ino",
+    "[Ee]xamples/platformio_example/*/*.ino",
+    "[Ee]xamples/platformio_example/*/*.cpp",
+    "[Ee]xamples/platformio_example/*/*.c"
   ]
 }
