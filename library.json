@@ -47,23 +47,9 @@
       "platforms": "espressif32"
     }
   ],
-  "export": {
-    "include": [
-      "src/*"
-    ],
-    "exclude": [
-      "test/*",
-      "examples/*"
-    ]
-  },
   "build": {
     "flags": [
       "-I src/include/cpp-client"
     ]
-  },
-  "examples": [
-    "[Ee]xamples/*/*/*.ino",
-    "[Ee]xamples/*/*/*.cpp",
-    "[Ee]xamples/*/*/*.c"
-  ]
+  }
 }
