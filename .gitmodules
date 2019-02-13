@@ -4,6 +4,4 @@
 [submodule "test/lib/googletest"]
 	path = test/lib/googletest
 	url = https://github.com/google/googletest.git
-[submodule "examples/cmake_example/lib/cpp-client"]
-	path = examples/cmake_example/lib/cpp-client
-	url = https://github.com/ArkEcosystem/cpp-client.git
+
