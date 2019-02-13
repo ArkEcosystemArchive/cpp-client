@@ -16,37 +16,22 @@
     }
   ],
   "frameworks": "arduino",
-  "platforms": [
-    "espressif8266",
-    "espressif32"
-  ],
-  "dependencies": [
-    {
-      "name": "ESP8266HTTPClient",
-      "frameworks": "arduino",
-      "platforms": "espressif8266"
-    },
-    {
-      "name": "ESP8266WiFi",
-      "frameworks": "arduino",
-      "platforms": "espressif8266"
-    },
-    {
-      "name": "HTTPClient",
-      "frameworks": "arduino",
-      "platforms": "espressif32"
-    },
-    {
-      "name": "WiFi",
-      "frameworks": "arduino",
-      "platforms": "espressif32"
-    },
-    {
-      "name": "WiFiClientSecure",
-      "frameworks": "arduino",
-      "platforms": "espressif32"
-    }
-  ],
+  "platforms": "*",
+  "export": {
+    "include": [
+      "src/*",
+      "examples/*",
+      "*.md",
+      "*.json",
+      "*.properties",
+      "LICENSE",
+      "*.ini",
+      "keywords.txt"
+    ],
+    "exclude": [
+      "*/*.txt"
+    ]
+  },
   "build": {
     "flags": [
       "-I src/include/cpp-client"
