@@ -19,6 +19,13 @@
 # (i.e. recreates the directory tree and moves headers back to 'include'.)
 # #########
 
+# Flags
+# You can skip the interface by passing '--auto'; eg 'bash ARDUINO_IDE.sh -auto'
+AUTO='0'
+if [ "$1" == "--auto" ]; then
+  AUTO='1'
+fi
+
 # Directories
 EXTRAS_DIR=`dirname "$0"`
 INCLUDE_DIR=${EXTRAS_DIR}/../src/include/cpp-client
@@ -52,24 +59,26 @@ SRC_HTTP_DIR=${SRC_DIR}/http
 INCLUDE_HOST_DIR=${INCLUDE_DIR}/host
 SRC_HOST_DIR=${SRC_DIR}/host
 
+if [[ $AUTO == '0' ]]; then
+
 # Interface
 echo -e "\n\n👋  Welcome Aboard  🚢\n\n"
 sleep 1
 
 if [[ -d ${INCLUDE_DIR} ]]; then
   echo -e "🤖  This script extends compatibility to the Arduino IDE  🤖\n"
-  sleep 2
+  sleep 1
   echo -e "💪  All header files will be moved to their 'src' folders  💪\n"
-  sleep 2
+  sleep 1
 else
   echo -e "🤖  Looks like this library was already converted to support the Arduino IDE  🤖\n"
-  sleep 2
+  sleep 1
   echo -e "💪  All header files will be moved back to the 'include' folder  💪\n"
-  sleep 2
+  sleep 1
 fi
 
 echo -e "\n🛑  These changes are permanent, any unsaved changes will be lost  🛑\n"
-sleep 4
+sleep 2
 
 # Prompts for continuation
 read -p "⚠️  Are you sure you want to continue? (Y/n):" -n 1 -r
@@ -81,12 +90,13 @@ else
   echo -e "\n\n👌 Let's go!\n";
 fi
 
+fi  # /if [[ ${AUTO} ]]; then
+
 if [[ -d ${INCLUDE_DIR} ]]; then
   # This will run if headers are in the 'include' directory tree.
   echo -e "****************************************\n"
   echo -e "Moving 'arkClient.h' to 'src' directory.\n"
   mv ${INCLUDE_DIR}/arkClient.h ${SRC_DIR}
-  sleep 1
 
   echo -e "Moving API headers.\n"
   mv ${INCLUDE_API_DIR}/abstract.h  ${SRC_API_DIR}
@@ -101,30 +111,23 @@ if [[ -d ${INCLUDE_DIR} ]]; then
   mv ${INCLUDE_TRANSACTIONS_DIR}/transactions.h ${SRC_TRANSACTIONS_DIR}
   mv ${INCLUDE_VOTES_DIR}/votes.h               ${SRC_VOTES_DIR}
   mv ${INCLUDE_WALLETS_DIR}/wallets.h           ${SRC_WALLETS_DIR}
-  sleep 1
 
   echo "Creating 'connection' folder 🗂"
   mkdir ${SRC_CONNECTION_DIR}
-  sleep 1
+
   echo -e "Moving 'connection.h' to 'src/connection'.\n"
   mv ${INCLUDE_CONNECTION_DIR}/connection.h ${SRC_CONNECTION_DIR}
-  sleep 1
 
   echo -e "Moving 'host.h'\n"
   mv ${INCLUDE_HOST_DIR}/host.h ${SRC_HOST_DIR}
-  sleep 1
 
   echo -e "Moving 'http.h'\n"
   mv ${INCLUDE_HTTP_DIR}/http.h ${SRC_HTTP_DIR}
-  sleep 1
 
   echo -e "Removing old directories 🗑\n"
   rm -rf ${INCLUDE_DIR}
-  sleep 1
 
   echo -e "****************************************\n"
-  sleep 1
-
   echo -e "\nAll Done!\n👏👏👏👏👏\n"
   echo -e "\nYou can now use Cpp-Client with the Arduino IDE 👍\n\n"
   exit 0
@@ -132,14 +135,11 @@ if [[ -d ${INCLUDE_DIR} ]]; then
 else
   # This will run if headers are already in the 'src' directory tree.
   echo -e "****************************************\n"
-
   echo -e "Creating the 'include' folder 🗂\n"
   mkdir ${INCLUDE_DIR}
-  sleep 1
 
   echo -e "Moving 'arkClient.h' back to the 'include' directory.\n"
   mv ${SRC_DIR}/arkClient.h ${INCLUDE_DIR}
-  sleep 1
 
   echo -e "Recreating API directories 🗂\n"
   mkdir ${INCLUDE_API_DIR}
@@ -150,7 +150,6 @@ else
   mkdir ${INCLUDE_TRANSACTIONS_DIR}
   mkdir ${INCLUDE_VOTES_DIR}
   mkdir ${INCLUDE_WALLETS_DIR}
-  sleep 1
 
   echo -e "Moving API headers back to the 'include' tree.\n"
   mv ${SRC_API_DIR}/abstract.h  ${INCLUDE_API_DIR}
@@ -165,36 +164,29 @@ else
   mv ${SRC_TRANSACTIONS_DIR}/transactions.h ${INCLUDE_TRANSACTIONS_DIR}
   mv ${SRC_VOTES_DIR}/votes.h               ${INCLUDE_VOTES_DIR}
   mv ${SRC_WALLETS_DIR}/wallets.h           ${INCLUDE_WALLETS_DIR}
-  sleep 1
 
   echo -e "Recreating the 'connection' folder 🗂"
   mkdir ${INCLUDE_CONNECTION_DIR}
-  sleep 1
+
   echo -e "Moving 'connection.h' to 'include/cpp-client/connection'.\n"
   mv ${SRC_CONNECTION_DIR}/connection.h ${INCLUDE_CONNECTION_DIR}
-  sleep 1
 
   echo -e "Recreating the 'host' folder 🗂"
   mkdir ${INCLUDE_HOST_DIR}
-  sleep 1
+
   echo -e "Moving 'host.h'\n"
   mv ${SRC_HOST_DIR}/host.h ${INCLUDE_HOST_DIR}
-  sleep 1
 
   echo -e "Recreating the 'http' folder 🗂"
   mkdir ${INCLUDE_HTTP_DIR}
-  sleep 1
+
   echo -e "Moving 'http.h'\n"
   mv ${SRC_HTTP_DIR}/http.h ${INCLUDE_HTTP_DIR}
-  sleep 1
 
   echo -e "Removing old directories 🗑\n"
   rm -rf ${SRC_CONNECTION_DIR}
-  sleep 1
 
   echo -e "****************************************\n"
-  sleep 1
-
   echo -e "\nAll Done!\n👏👏👏👏👏\n"
   echo -e "\nArduino IDE compatibility has been reverted 👍\n\n"
   exit 0
