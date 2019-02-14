@@ -10,6 +10,8 @@
 #ifndef MOCK_API_H
 #define MOCK_API_H
 
+#include "gmock/gmock.h"
+
 #include "arkClient.h"
 #include "host/host.h"
 #include "http/http.h"
