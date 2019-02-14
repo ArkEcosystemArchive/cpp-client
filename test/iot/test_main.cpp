@@ -11,10 +11,13 @@ void setup() {
 	delay(100);
   testing::InitGoogleMock();
 	delay(1000);
+
+  RUN_ALL_TESTS();
 }
 
 void loop() {
-  RUN_ALL_TESTS();
+  // do nothing
+  delay(1000);
 }
 
 #endif
