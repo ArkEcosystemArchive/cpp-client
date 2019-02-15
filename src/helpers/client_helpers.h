@@ -13,27 +13,12 @@
 #include <cstring>
 #include <string>
 
-/**/
-/**/
-
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
 #define USE_IOT
 
-// Including missing implementations of std::to_string
-#include "lib/stl/details/to_string.h"
-
-/**/
-
 #include <Arduino.h>
 #include <pgmspace.h>
-
-/**/
-// undef the C macros to allow the C++ STL to take over
-// This is to have compatibility with various board implementations of the STL
-#undef min
-#undef max
-/**/
 
 #endif
 
