@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/ArkEcosystem/Cpp-Client.git"
   },
-  "version": "1.1.0",
+  "version": "1.2.0-arduino",
   "authors": [
     {
       "name": "Ark Ecosystem",
@@ -27,14 +27,6 @@
       "LICENSE",
       "*.ini",
       "keywords.txt"
-    ],
-    "exclude": [
-      "*/*.txt"
-    ]
-  },
-  "build": {
-    "flags": [
-      "-I src/include/cpp-client"
     ]
   }
 }

@@ -21,7 +21,7 @@
 #define USE_IOT
 
 // Including missing implementations of std::to_string
-#include "lib/stl/details/to_string.h"
+#include "stl/details/to_string.h"
 
 /**/
 
