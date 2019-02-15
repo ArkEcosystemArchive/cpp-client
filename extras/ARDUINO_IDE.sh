@@ -28,6 +28,7 @@ fi
 
 # Directories
 EXTRAS_DIR=`dirname "$0"`
+PROJECT_ROOT=${EXTRAS_DIR}/../
 INCLUDE_DIR=${EXTRAS_DIR}/../src/include/cpp-client
 SRC_DIR=${EXTRAS_DIR}/../src
 
@@ -124,6 +125,9 @@ if [[ -d ${INCLUDE_DIR} ]]; then
   echo -e "Moving 'http.h'\n"
   mv ${INCLUDE_HTTP_DIR}/http.h ${SRC_HTTP_DIR}
 
+  echo -e "Moving Docs to the './extras' directory.\n"
+  mv ${PROJECT_ROOT}/docs ${EXTRAS_DIR}
+
   echo -e "Removing old directories 🗑\n"
   rm -rf ${INCLUDE_DIR}
 
@@ -182,6 +186,9 @@ else
 
   echo -e "Moving 'http.h'\n"
   mv ${SRC_HTTP_DIR}/http.h ${INCLUDE_HTTP_DIR}
+
+  echo -e "Moving Docs back to the project root directory.\n"
+  mv ${EXTRAS_DIR}/docs  ${PROJECT_ROOT}
 
   echo -e "Removing old directories 🗑\n"
   rm -rf ${SRC_CONNECTION_DIR}
