@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - `./appveyor.yml`.
   - `./CMakeSettings.json`.
   - submodule from `cmake_example`.
-- moved `./src/stl` to `./src/lib/stl`.
+- removed `./src/stl` library.
 - moved `./docs` to `./extras` in arduino builds.
 - automated `ARDUINO_IDE.sh` script.
 - updated `ARDUINO_IDE.sh` script to reflect `lib/` changes.
