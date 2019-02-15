@@ -1,0 +1,35 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Ark KEYWORD1
+Client  KEYWORD1
+API KEYWORD1
+
+Api KEYWORD1
+
+Blocks  KEYWORD1
+Delegates   KEYWORD1
+Node    KEYWORD1
+Peers   KEYWORD1
+Transactions    KEYWORD1
+Votes   KEYWORD1
+Wallets KEYWORD1
+
+Paths   KEYWORD1
+
+Connection  KEYWORD1
+
+Host    KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+######################################
+# Constants (LITERAL1)
+#######################################
