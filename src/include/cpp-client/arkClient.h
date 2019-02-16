@@ -10,6 +10,7 @@
 #ifndef ARKCLIENT_H
 #define ARKCLIENT_H
 
+#include "helpers/client_helpers.h"
 #include "connection/connection.h"
 
 #endif
