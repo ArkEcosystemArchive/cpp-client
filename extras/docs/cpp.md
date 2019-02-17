@@ -4,17 +4,10 @@ title: "Cpp"
 
 # Cpp
 
-::: warning
-This package is still under development. This page will get more content as it evolves more. In the meantime you can view its source on [Github](https://github.com/ArkEcosystem/cpp-client/).
-:::
-
 [[toc]]
 
 ## Platforms
 * [Arduino](#Arduino)  
-* [Linux >= 16.04](#OS)  
-* [macOS >= 10.10](#OS)  
-* [Windows >= 7](#OS)  
 
 ## Usage
 
