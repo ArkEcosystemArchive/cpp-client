@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+- updated tests to reflect new API response for empty Transactions objects.
+
 ## [1.2.0] - 2019-02-16
 ## [1.2.0-arduino] - 2019-02-16
 
