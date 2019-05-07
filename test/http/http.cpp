@@ -59,7 +59,7 @@ TEST(api, test_http_post_json) { // NOLINT
 
     // Test JSON object for the "message" key.
     // The correct response will include the following
-    ASSERT_STREQ("child \"transactions\" fails because [\"transactions\" must contain at least 1 items]", obj["message"]);
+    ASSERT_STREQ("should NOT have fewer than 1 items", obj["message"]);
 }
 
 // This tests the use of "http://" in single-line HTTP requests.
