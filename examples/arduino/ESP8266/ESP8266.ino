@@ -84,7 +84,7 @@ void checkAPI() {
    * Here you can call a list of 'All' 'Blocks' on the network.
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
    *  
-   * This is equivalant to calling '167.114.29.49:4003/api/v2/blocks?limit=2&page=1'
+   * This is equivalent to calling '167.114.29.49:4003/api/v2/blocks?limit=2&page=1'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this
@@ -172,7 +172,7 @@ void checkAPI() {
    * The following method can be used to search for a speficit Delegate.
    * In this case, 'boldninja'.
    * 
-   * This is equivalant to calling '167.114.29.49:4003/api/v2/delegates/boldninja'
+   * This is equivalent to calling '167.114.29.49:4003/api/v2/delegates/boldninja'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
@@ -219,7 +219,7 @@ void checkAPI() {
   /**
    * The following method can be used to get the Status of a Node.
    * 
-   * This is equivalant to calling '167.114.29.49:4003/api/v2/node/status'
+   * This is equivalent to calling '167.114.29.49:4003/api/v2/node/status'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
@@ -244,7 +244,7 @@ void checkAPI() {
    * 
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
    * 
-   * This is equivalant to calling 'http://167.114.29.49:4003/api/v2/peers?limit=2&page=1'
+   * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/peers?limit=2&page=1'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
@@ -294,7 +294,7 @@ void checkAPI() {
   /**
    * The following method can be used to get a list of 'Transaction' 'Types'.
    * 
-   * This is equivalant to calling 'http://167.114.29.49:4003/api/v2/transactions/types'
+   * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/transactions/types'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
@@ -324,7 +324,7 @@ void checkAPI() {
    * This method can be used to get a list of 'Vote' Transactions.
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
    * 
-   * This is equivalant to calling 'http://167.114.29.49:4003/api/v2/votes?limit=2&page=1'
+   * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/votes?limit=2&page=1'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
@@ -399,7 +399,7 @@ void checkAPI() {
    * This method can be used to get a list of 'Top' 'Wallets' (Wallets with the most ARK).
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
    * 
-   * This is equivalant to calling '167.114.29.49:4003/api/v2/wallets/top?limit=2&page=1'
+   * This is equivalent to calling '167.114.29.49:4003/api/v2/wallets/top?limit=2&page=1'
    * 
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
