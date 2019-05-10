@@ -317,31 +317,33 @@ TEST(api, test_wallets_top) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-    "meta": {
-      "count": 2,
-      "pageCount": 1,
-      "totalCount": 2,
-      "next": "\/api\/v2\/wallets\/top?limit=5&page=1",
-      "previous": null,
-      "self": "\/api\/v2\/wallets\/top?limit=5&page=1",
-      "first": "\/api\/v2\/wallets\/top?limit=5&page=1",
-      "last": "\/api\/v2\/wallets\/top?limit=5&page=1"
+  "meta": {
+    "count": 2,
+    "pageCount": 97849,
+    "totalCount": 195698,
+    "next": "\/api\/v2\/wallets\/top?limit=2&page=2",
+    "previous": null,
+    "self": "\/api\/v2\/wallets\/top?limit=2&page=1",
+    "first": "\/api\/v2\/wallets\/top?limit=2&page=1",
+    "last": "\/api\/v2\/wallets\/top?limit=2&page=97849"
+  },
+  "data": [
+    {
+      "address": "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
+      "publicKey": "03d3fdad9c5b25bf8880e6b519eb3611a5c0b31adebc8455f0e096175b28321aff",
+      "balance": 10105417471949050,
+      "isDelegate": false
     },
-    "data": [
-      {
-        "address": "DGihocTkwDygiFvmg6aG8jThYTic47GzU9",
-        "publicKey": "024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231",
-        "balance": 1.1499593462121e+16,
-        "isDelegate": false
-      },
-      {
-        "address": "DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK",
-        "publicKey": "0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd",
-        "balance": 5.5410767629355e+14,
-        "isDelegate": false
-      }
-    ]
-  })";
+    {
+      "address": "DEyaFhDuaoQyKbFH4gJtYZvKkB6umyrEUj",
+      "publicKey": "033c59dcdc36944cc28f68c1e4b47ac370fe326e53f9adf5f07764d3e8b74b1838",
+      "username": "whalessio",
+      "secondPublicKey": "03820f214bd49a09c636fa366b4b3c1a0dbd2953d14aac7e68a596e0636e662dfb",
+      "balance": 2000035929999638,
+      "isDelegate": true
+    }
+  ]
+})";
 
   EXPECT_CALL(
       connection.api.wallets,
@@ -351,7 +353,7 @@ TEST(api, test_wallets_top) {  // NOLINT
 
   const auto walletsTop = connection.api.wallets.top(2, 1);
 
-  DynamicJsonDocument doc(1124);
+  DynamicJsonDocument doc(1292);
   DeserializationError error = deserializeJson(doc, walletsTop);
   if (error) { exit(0); }
 
@@ -369,41 +371,34 @@ TEST(api, test_wallets_top) {  // NOLINT
   JsonObject dataZero = doc["data"][0];
 
   const auto address = dataZero["address"];
-  ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", address);
+  ASSERT_STREQ("D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax", address);
 
   const auto publicKey = dataZero["publicKey"];
   ASSERT_STREQ(
-      "024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231",
+      "03d3fdad9c5b25bf8880e6b519eb3611a5c0b31adebc8455f0e096175b28321aff",
       publicKey);
 
-  unsigned long long balance = dataZero["balance"].as<unsigned long long>();
-#if defined(ESP8266) || defined(ESP32)
-  ASSERT_EQ(balance, 11499590251446272ull);
-#else
-  ASSERT_EQ(balance, 11499593462121000ull);
-#endif
+  unsigned long long balance = dataZero["balance"];
+  ASSERT_EQ(balance, 10105417471949050ull);
+
   bool isDelegate = dataZero["isDelegate"];
   ASSERT_FALSE(isDelegate);
 
   JsonObject dataOne = doc["data"][1];
 
   const auto addressOne = dataOne["address"];
-  ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", addressOne);
+  ASSERT_STREQ("DEyaFhDuaoQyKbFH4gJtYZvKkB6umyrEUj", addressOne);
 
   const auto publicKeyOne = dataOne["publicKey"];
   ASSERT_STREQ(
-      "0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd",
+      "033c59dcdc36944cc28f68c1e4b47ac370fe326e53f9adf5f07764d3e8b74b1838",
       publicKeyOne);
 
-  unsigned long long balanceOne = dataOne["balance"].as<unsigned long long>();
-#if defined(ESP8266) || defined(ESP32)
-  ASSERT_EQ(balanceOne, 554107588837376ull);
-#else
-  ASSERT_EQ(balanceOne, 554107676293550ull);
-#endif
+  unsigned long long balanceOne = dataOne["balance"];
+  ASSERT_EQ(balanceOne, 2000035929999638ull);
 
-  const auto isDelegateOne = dataOne["isDelegate"];
-  ASSERT_FALSE(isDelegateOne);
+  const bool isDelegateOne = dataOne["isDelegate"];
+  ASSERT_TRUE(isDelegateOne);
 }
 
 /* test_wallets_transactions
