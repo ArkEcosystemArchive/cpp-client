@@ -68,17 +68,21 @@ TEST(api, test_vote) {  // NOLINT
 
   EXPECT_CALL(connection.api.votes, get(_)).Times(1).WillOnce(Return(response));
 
-  const auto vote = connection.api.votes.get("beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6");
+  const auto vote = connection.api.votes.get(
+      "beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6");
 
-  DynamicJsonBuffer jsonBuffer(vote.size());
-  JsonObject& root = jsonBuffer.parseObject(vote);
+  DynamicJsonDocument doc(1044);
+  DeserializationError error = deserializeJson(doc, vote);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* id = data["id"];
-  ASSERT_STREQ("beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6", id);
+  const auto id = data["id"];
+  ASSERT_STREQ(
+      "beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6",
+      id);
 
-  const char* blockId = data["blockId"];
+  const auto blockId = data["blockId"];
   ASSERT_STREQ("13661015019049808045", blockId);
 
   int type = data["type"];
@@ -90,22 +94,21 @@ TEST(api, test_vote) {  // NOLINT
   uint64_t fee = data["fee"];
   ASSERT_TRUE(fee == 100000000);
 
-  const char* sender = data["sender"];
+  const auto sender = data["sender"];
   ASSERT_STREQ("DAp7JjULVgqzd4jLofkUyLRovHRPUTQwiZ", sender);
 
-  const char* recipient = data["recipient"];
+  const auto recipient = data["recipient"];
   ASSERT_STREQ("DAp7JjULVgqzd4jLofkUyLRovHRPUTQwiZ", recipient);
 
-  const char* signature = data["signature"];
+  const auto signature = data["signature"];
   ASSERT_STREQ(
-      "3045022100e9a743c5aa0df427f49af61d35fe617182479f7e8d368ce23b7ec43ab6d269c80220193aafd4ccb3eedbd76ded7ea99f316290"
-      "13dc3af60540029fe98b274d42d284",
+      "3045022100e9a743c5aa0df427f49af61d35fe617182479f7e8d368ce23b7ec43ab6d269c80220193aafd4ccb3eedbd76ded7ea99f31629013dc3af60540029fe98b274d42d284",
       signature);
 
   int confirmations = data["confirmations"];
   ASSERT_EQ(48189, confirmations);
 
-  JsonObject& timestamp = data["timestamp"];
+  JsonObject timestamp = data["timestamp"];
 
   int epoch = timestamp["epoch"];
   ASSERT_EQ(32338609, epoch);
@@ -113,7 +116,7 @@ TEST(api, test_vote) {  // NOLINT
   int timestampUnix = timestamp["unix"];
   ASSERT_EQ(1522439809, timestampUnix);
 
-  const char* human = timestamp["human"];
+  const auto human = timestamp["human"];
   ASSERT_STREQ("2018-03-30T19:56:49Z", human);
 }
 
@@ -202,10 +205,11 @@ TEST(api, test_votes) {  // NOLINT
 
   const auto votes = connection.api.votes.all(5, 1);
 
-  DynamicJsonBuffer jsonBuffer(votes.size());
-  JsonObject& root = jsonBuffer.parseObject(votes);
+  DynamicJsonDocument doc(1492);
+  DeserializationError error = deserializeJson(doc, votes);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -216,7 +220,7 @@ TEST(api, test_votes) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
   int type = dataZero["type"];
   ASSERT_EQ(3, type);

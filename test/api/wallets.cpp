@@ -41,16 +41,19 @@ TEST(api, test_wallet) {  // NOLINT
 
   const auto wallet = connection.api.wallets.get("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN");
 
-  DynamicJsonBuffer jsonBuffer(wallet.size());
-  JsonObject& root = jsonBuffer.parseObject(wallet);
+  DynamicJsonDocument doc(300);
+  DeserializationError error = deserializeJson(doc, wallet);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* address = data["address"];
+  const auto address = data["address"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-  const char* publicKey = data["publicKey"];
-  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const auto publicKey = data["publicKey"];
+  ASSERT_STREQ(
+      "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
+      publicKey);
 
   uint64_t balance = data["balance"];
   ASSERT_TRUE(balance == 12534670000000);
@@ -115,10 +118,11 @@ TEST(api, test_wallets) {  // NOLINT
 
   const auto wallets = connection.api.wallets.all(5, 1);
 
-  DynamicJsonBuffer jsonBuffer(wallets.size());
-  JsonObject& root = jsonBuffer.parseObject(wallets);
+  DynamicJsonDocument doc(764);
+  DeserializationError error = deserializeJson(doc, wallets);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -129,13 +133,15 @@ TEST(api, test_wallets) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* address = dataZero["address"];
+  const auto address = dataZero["address"];
   ASSERT_STREQ("D59NTfV92ca9QevUydvMiFMFdubbCaAVCV", address);
 
-  const char* publicKey = dataZero["publicKey"];
-  ASSERT_STREQ("037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a", publicKey);
+  const auto publicKey = dataZero["publicKey"];
+  ASSERT_STREQ(
+      "037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a",
+      publicKey);
 
   uint64_t balance = dataZero["balance"];
   ASSERT_TRUE(balance >= 0);
@@ -211,19 +217,19 @@ TEST(api, test_wallets_search) {  // NOLINT
         ]
     })";
 
-  const std::map<std::string, std::string> body_parameters = {
-      {"username", "baldninja"},
-      {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
-      {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}};
-
   EXPECT_CALL(connection.api.wallets, search(_, _, _)).Times(1).WillOnce(Return(response));
 
+  const std::map<std::string, std::string> body_parameters = {
+    { "username", "baldninja" },
+    { "address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T" },
+    { "publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d" }};
   const auto walletsSearch = connection.api.wallets.search(body_parameters, 5, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsSearch.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsSearch);
+  DynamicJsonDocument doc(1524);
+  DeserializationError error = deserializeJson(doc, walletsSearch);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -234,13 +240,14 @@ TEST(api, test_wallets_search) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
-  ;
+  JsonObject dataZero = doc["data"][0];
 
-  const char* id = dataZero["id"];
-  ASSERT_STREQ("08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e", id);
+  const auto id = dataZero["id"];
+  ASSERT_STREQ(
+      "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+      id);
 
-  const char* blockId = dataZero["blockId"];
+  const auto blockId = dataZero["blockId"];
   ASSERT_STREQ("14847399772737279404", blockId);
 
   int type = dataZero["type"];
@@ -252,22 +259,21 @@ TEST(api, test_wallets_search) {  // NOLINT
   uint64_t fee = dataZero["fee"];
   ASSERT_TRUE(100000000ull == fee);
 
-  const char* sender = dataZero["sender"];
+  const auto sender = dataZero["sender"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
 
-  const char* recipient = dataZero["recipient"];
+  const auto recipient = dataZero["recipient"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
 
-  const char* signature = dataZero["signature"];
+  const auto signature = dataZero["signature"];
   ASSERT_STREQ(
-      "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d"
-      "9aed7ab980f374eb0c9d53e25f8e",
+      "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
       signature);
 
   int confirmations = dataZero["confirmations"];
   ASSERT_EQ(1636029, confirmations);
 
-  JsonObject& timestamp = dataZero["timestamp"];
+  JsonObject timestamp = dataZero["timestamp"];
 
   int epoch = timestamp["epoch"];
   ASSERT_EQ(17094358, epoch);
@@ -275,7 +281,7 @@ TEST(api, test_wallets_search) {  // NOLINT
   int timestampUnix = timestamp["unix"];
   ASSERT_EQ(1507195558, timestampUnix);
 
-  const char* human = timestamp["human"];
+  const auto human = timestamp["human"];
   ASSERT_STREQ("2017-10-05T09:25:58Z", human);
 }
 
@@ -311,40 +317,45 @@ TEST(api, test_wallets_top) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 1,
-            "totalCount": 2,
-            "next": "/api/v2/wallets/top?limit=5&page=1",
-            "previous": null,
-            "self": "/api/v2/wallets/top?limit=5&page=1",
-            "first": "/api/v2/wallets/top?limit=5&page=1",
-            "last": "/api/v2/wallets/top?limit=5&page=1"
-        },
-        "data": [
-            {
-                "address": "DGihocTkwDygiFvmg6aG8jThYTic47GzU9",
-                "publicKey": "024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231",
-                "balance": 11499593462120632,
-                "isDelegate": false
-            },
-            {
-                "address": "DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK",
-                "publicKey": "0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd",
-                "balance": 554107676293547,
-                "isDelegate": false
-            },
-        ]
-    })";
+    "meta": {
+      "count": 2,
+      "pageCount": 1,
+      "totalCount": 2,
+      "next": "\/api\/v2\/wallets\/top?limit=5&page=1",
+      "previous": null,
+      "self": "\/api\/v2\/wallets\/top?limit=5&page=1",
+      "first": "\/api\/v2\/wallets\/top?limit=5&page=1",
+      "last": "\/api\/v2\/wallets\/top?limit=5&page=1"
+    },
+    "data": [
+      {
+        "address": "DGihocTkwDygiFvmg6aG8jThYTic47GzU9",
+        "publicKey": "024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231",
+        "balance": 1.1499593462121e+16,
+        "isDelegate": false
+      },
+      {
+        "address": "DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK",
+        "publicKey": "0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd",
+        "balance": 5.5410767629355e+14,
+        "isDelegate": false
+      }
+    ]
+  })";
 
-  EXPECT_CALL(connection.api.wallets, top(_, _)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(
+      connection.api.wallets,
+      top(_, _))
+        .Times(1)
+        .WillOnce(Return(response));
 
-  const auto walletsTop = connection.api.wallets.top(5, 1);
+  const auto walletsTop = connection.api.wallets.top(2, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsTop.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsTop);
+  DynamicJsonDocument doc(1124);
+  DeserializationError error = deserializeJson(doc, walletsTop);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -355,33 +366,44 @@ TEST(api, test_wallets_top) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* address = dataZero["address"];
+  const auto address = dataZero["address"];
   ASSERT_STREQ("DGihocTkwDygiFvmg6aG8jThYTic47GzU9", address);
 
-  const char* publicKey = dataZero["publicKey"];
-  ASSERT_STREQ("024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231", publicKey);
+  const auto publicKey = dataZero["publicKey"];
+  ASSERT_STREQ(
+      "024c8247388a02ecd1de2a3e3fd5b7c61ecc2797fa3776599d558333ef1802d231",
+      publicKey);
 
-  uint64_t balance = dataZero["balance"];
-  ASSERT_TRUE(balance == 11499593462120632ull);
-
+  unsigned long long balance = dataZero["balance"].as<unsigned long long>();
+#if defined(ESP8266) || defined(ESP32)
+  ASSERT_EQ(balance, 11499590251446272ull);
+#else
+  ASSERT_EQ(balance, 11499593462121000ull);
+#endif
   bool isDelegate = dataZero["isDelegate"];
   ASSERT_FALSE(isDelegate);
 
-  JsonObject& dataOne = root["data"][1];
+  JsonObject dataOne = doc["data"][1];
 
-  address = dataOne["address"];
-  ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", address);
+  const auto addressOne = dataOne["address"];
+  ASSERT_STREQ("DRac35wghMcmUSe5jDMLBDLWkVVjyKZFxK", addressOne);
 
-  publicKey = dataOne["publicKey"];
-  ASSERT_STREQ("0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd", publicKey);
+  const auto publicKeyOne = dataOne["publicKey"];
+  ASSERT_STREQ(
+      "0374e9a97611540a9ce4812b0980e62d3c5141ea964c2cab051f14a78284570dcd",
+      publicKeyOne);
 
-  balance = dataOne["balance"];
-  ASSERT_TRUE(balance == 554107676293547ull);
+  unsigned long long balanceOne = dataOne["balance"].as<unsigned long long>();
+#if defined(ESP8266) || defined(ESP32)
+  ASSERT_EQ(balanceOne, 554107588837376ull);
+#else
+  ASSERT_EQ(balanceOne, 554107676293550ull);
+#endif
 
-  isDelegate = dataOne["isDelegate"];
-  ASSERT_FALSE(isDelegate);
+  const auto isDelegateOne = dataOne["isDelegate"];
+  ASSERT_FALSE(isDelegateOne);
 }
 
 /* test_wallets_transactions
@@ -457,12 +479,15 @@ TEST(api, test_wallets_transactions) {  // NOLINT
 
   EXPECT_CALL(connection.api.wallets, transactions(_, _, _)).Times(1).WillOnce(Return(response));
 
-  const auto walletsTransactions = connection.api.wallets.transactions("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", 2, 1);
+  const auto walletsTransactions = connection.api.wallets.transactions(
+      "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+      2, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsTransactions.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsTransactions);
+  DynamicJsonDocument doc(1420);
+  DeserializationError error = deserializeJson(doc, walletsTransactions);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_EQ(2, count);
@@ -527,13 +552,15 @@ TEST(api, test_wallets_transactions_received) {  // NOLINT
 
   EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _)).Times(1).WillOnce(Return(response));
 
-  const auto walletsTransactionsReceived =
-      connection.api.wallets.transactionsReceived("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
+  const auto walletsTransactionsReceived = connection.api.wallets.transactionsReceived(
+      "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+      2, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsTransactionsReceived.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsTransactionsReceived);
+  DynamicJsonDocument doc(1532);
+  DeserializationError error = deserializeJson(doc, walletsTransactionsReceived);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -608,13 +635,15 @@ TEST(api, test_wallets_transactions_sent) {  // NOLINT
 
   EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _)).Times(1).WillOnce(Return(response));
 
-  const auto walletsTransactionsSent =
-      connection.api.wallets.transactionsSent("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 2, 1);
+  const auto walletsTransactionsSent = connection.api.wallets.transactionsSent(
+      "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+      2, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsTransactionsSent.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsTransactionsSent);
+  DynamicJsonDocument doc(1612);
+  DeserializationError error = deserializeJson(doc, walletsTransactionsSent);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -624,6 +653,27 @@ TEST(api, test_wallets_transactions_sent) {  // NOLINT
 
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
+
+  JsonObject dataZero = doc["data"][0];
+
+  const auto id = dataZero["id"];
+  ASSERT_STREQ(
+    "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+    id);
+
+  const auto blockId = dataZero["blockId"];
+  ASSERT_STREQ("14847399772737279404", blockId);
+
+  const auto sender = dataZero["sender"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
+
+  const auto recipient = dataZero["recipient"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
+
+  const auto signature = dataZero["signature"];
+  ASSERT_STREQ(
+      "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
+      signature);
 }
 
 /* test_wallets_votes
@@ -711,16 +761,33 @@ TEST(api, test_wallets_votes) {  // NOLINT
 
   const auto walletsVotes = connection.api.wallets.votes("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", 1, 1);
 
-  DynamicJsonBuffer jsonBuffer(walletsVotes.size());
-  JsonObject& root = jsonBuffer.parseObject(walletsVotes);
+  DynamicJsonDocument doc(1612);
+  DeserializationError error = deserializeJson(doc, walletsVotes);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_GT(count, 0);
 
-  JsonObject& data = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* sender = data["sender"];
+  const auto id = dataZero["id"];
+  ASSERT_STREQ(
+    "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+    id);
+
+  const auto blockId = dataZero["blockId"];
+  ASSERT_STREQ("14847399772737279404", blockId);
+
+  const auto sender = dataZero["sender"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
+
+  const auto recipient = dataZero["recipient"];
+  ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", recipient);
+
+  const auto signature = dataZero["signature"];
+  ASSERT_STREQ(
+      "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
+      signature);
 }

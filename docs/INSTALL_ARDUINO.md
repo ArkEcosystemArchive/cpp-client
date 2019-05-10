@@ -15,7 +15,7 @@ Download and install the Arduino IDE (>=1.8.5) from the following link:
 
 Using the Arduino IDE's built in Library Manager,  
 install the following Libraries  
-- ArduinoJson v5.13.2
+- ArduinoJson v6.10.1
 - AUnit
 
 #

@@ -73,19 +73,22 @@ TEST(api, test_delegate) {  // NOLINT
 
   const auto delegateResponse = connection.api.delegates.get("boldninja");
 
-  DynamicJsonBuffer jsonBuffer(delegateResponse.size());
-  JsonObject& root = jsonBuffer.parseObject(delegateResponse);
+  DynamicJsonDocument doc(876);
+  DeserializationError error = deserializeJson(doc, delegateResponse);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* username = data["username"];
+  const auto username = data["username"];
   ASSERT_STREQ("boldninja", username);
 
-  const char* address = data["address"];
+  const auto address = data["address"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-  const char* publicKey = data["publicKey"];
-  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const auto publicKey = data["publicKey"];
+  ASSERT_STREQ(
+      "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
+      publicKey);
 
   uint64_t votes = data["votes"];
   ASSERT_EQ(0, votes);
@@ -93,7 +96,7 @@ TEST(api, test_delegate) {  // NOLINT
   int rank = data["rank"];
   ASSERT_EQ(29, rank);
 
-  JsonObject& blocks = data["blocks"];
+  JsonObject blocks = data["blocks"];
 
   int produced = blocks["produced"];
   ASSERT_EQ(0, produced);
@@ -101,12 +104,12 @@ TEST(api, test_delegate) {  // NOLINT
   int missed = blocks["missed"];
   ASSERT_EQ(0, missed);
 
-  JsonObject& last = blocks["last"];
+  JsonObject last = blocks["last"];
 
-  const char* last_id = last["id"];
+  const auto last_id = last["id"];
   ASSERT_STREQ("10652480998435361357", last_id);
 
-  JsonObject& timestamp = last["timestamp"];
+  JsonObject timestamp = last["timestamp"];
 
   uint64_t epoch = timestamp["epoch"];
   ASSERT_TRUE(32816112ull == epoch);
@@ -114,10 +117,10 @@ TEST(api, test_delegate) {  // NOLINT
   uint64_t unix_timestamp = timestamp["unix"];
   ASSERT_TRUE(1522917312ull == unix_timestamp);
 
-  const char* human = timestamp["human"];
+  const auto human = timestamp["human"];
   ASSERT_STREQ("2018-04-05T08:35:12Z", human);
 
-  JsonObject& production = data["production"];
+  JsonObject production = data["production"];
 
   double approval = production["approval"];
   ASSERT_EQ(0.10, approval);
@@ -228,12 +231,13 @@ TEST(api, test_delegate_blocks) {  // NOLINT
 
   EXPECT_CALL(connection.api.delegates, blocks(_, _, _)).Times(1).WillOnce(Return(expected_response));
 
-  const auto delegateBlocksResponse = connection.api.delegates.blocks("boldninja", 3, 1);
+  const auto delegateBlocksResponse = connection.api.delegates.blocks("boldninja", 2, 1);
 
-  DynamicJsonBuffer jsonBuffer(delegateBlocksResponse.size());
-  JsonObject& root = jsonBuffer.parseObject(delegateBlocksResponse);
+  DynamicJsonDocument doc(1788);
+  DeserializationError error = deserializeJson(doc, delegateBlocksResponse);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_EQ(2, count);
@@ -244,26 +248,32 @@ TEST(api, test_delegate_blocks) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_EQ(59838, totalCount);
 
-  const char* id = root["data"][0]["id"];
+  JsonObject dataZero = doc["data"][0];
+
+  const auto id = dataZero["id"];
   ASSERT_STREQ("10652480998435361357", id);
 
-  int version = root["data"][0]["version"];
+  int version = dataZero["version"];
   ASSERT_EQ(0, version);
 
-  uint64_t height = root["data"][0]["height"];
+  uint64_t height = dataZero["height"];
   ASSERT_TRUE(3035318ull == height);
 
-  const char* previous = root["data"][0]["previous"];
+  const auto previous = dataZero["previous"];
   ASSERT_STREQ("12548322724277171379", previous);
 
-  const char* username = root["data"][0]["generator"]["username"];
+  JsonObject generatorZero = dataZero["generator"];
+
+  const auto username = generatorZero["username"];
   ASSERT_STREQ("boldninja", username);
 
-  const char* address = root["data"][0]["generator"]["address"];
+  const auto address = generatorZero["address"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", address);
 
-  const char* publicKey = root["data"][0]["generator"]["publicKey"];
-  ASSERT_STREQ("022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d", publicKey);
+  const auto publicKey = generatorZero["publicKey"];
+  ASSERT_STREQ(
+      "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
+      publicKey);
 }
 
 /* test_delegates_delegate_voters
@@ -322,10 +332,11 @@ TEST(api, test_delegate_voters) {  // NOLINT
 
   const auto delegateVotersResponse = connection.api.delegates.voters("boldninja", 5, 1);
 
-  DynamicJsonBuffer jsonBuffer(delegateVotersResponse.size());
-  JsonObject& root = jsonBuffer.parseObject(delegateVotersResponse);
+  DynamicJsonDocument doc(836);
+  DeserializationError error = deserializeJson(doc, delegateVotersResponse);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -336,13 +347,15 @@ TEST(api, test_delegate_voters) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* address = dataZero["address"];
+  const auto address = dataZero["address"];
   ASSERT_STREQ("D5mbS6mpP5UheuciNscpDLgC127kYjRtkK", address);
 
-  const char* publicKey = dataZero["publicKey"];
-  ASSERT_STREQ("03f7e0b1ab14985990416f72ed0b206c20b9efa35156e4528c8ff749fa0eea5d5a", publicKey);
+  const auto publicKey = dataZero["publicKey"];
+  ASSERT_STREQ(
+      "03f7e0b1ab14985990416f72ed0b206c20b9efa35156e4528c8ff749fa0eea5d5a",
+      publicKey);
 
   bool isDelegate = dataZero["isDelegate"];
   ASSERT_FALSE(isDelegate);
@@ -437,10 +450,11 @@ TEST(api, test_delegates) {  // NOLINT
 
   const auto delegates = connection.api.delegates.all(5, 1);
 
-  DynamicJsonBuffer jsonBuffer(delegates.size());
-  JsonObject& root = jsonBuffer.parseObject(delegates);
+  DynamicJsonDocument doc(1340);
+  DeserializationError error = deserializeJson(doc, delegates);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -451,16 +465,18 @@ TEST(api, test_delegates) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* username = dataZero["username"];
+  const auto username = dataZero["username"];
   ASSERT_STREQ("dark_jmc", username);
 
-  const char* address = dataZero["address"];
+  const auto address = dataZero["address"];
   ASSERT_STREQ("D5PXQVeJmchVrZFHL7cALZK8mWWzjCaVfz", address);
 
-  const char* publicKey = dataZero["publicKey"];
-  ASSERT_STREQ("02a9a0ac34a94f9d27fd9b4b56eb3c565a9a3f61e660f269775fb456f7f3301586", publicKey);
+  const auto publicKey = dataZero["publicKey"];
+  ASSERT_STREQ(
+      "02a9a0ac34a94f9d27fd9b4b56eb3c565a9a3f61e660f269775fb456f7f3301586",
+      publicKey);
 
   uint64_t votes = dataZero["votes"];
   ASSERT_TRUE(0ull == votes);

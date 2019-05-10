@@ -106,7 +106,7 @@ Download and install the Arduino IDE (>=1.8.5) from the following link:
 
 Using the Arduino IDE's built in Library Manager,  
 install the following Libraries:  
-```ArduinoJson v5.13.2```  
+```ArduinoJson v6.10.1```  
 ```AUnit```
 
 #### Arduino Example using the Adafruit Feather ESP8266
@@ -161,9 +161,9 @@ or
 
     python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
 
-Install ArduinoJson@5.13.2 AUnit (2778)
+Install ArduinoJson@6.10.1 AUnit (2778)
 
-    platformio lib -g install 64@5.13.2 2778
+    platformio lib -g install 64@6.10.1 2778
 
 #### Provide your WiFi info for your board to access the internet   
 

@@ -45,24 +45,25 @@ TEST(api, test_peer) {  // NOLINT
 
   const auto peer = connection.api.peers.get("167.114.29.49");
 
-  DynamicJsonBuffer jsonBuffer(peer.size());
-  JsonObject& root = jsonBuffer.parseObject(peer);
+  DynamicJsonDocument doc(292);
+  DeserializationError error = deserializeJson(doc, peer);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* ip = data["ip"];
+  const auto ip = data["ip"];
   ASSERT_STREQ("167.114.29.55", ip);
 
   int port = data["port"];
   ASSERT_EQ(4002, port);
 
-  const char* version = data["version"];
+  const auto version = data["version"];
   ASSERT_STREQ("1.1.1", version);
 
   int status = data["status"];
   ASSERT_EQ(200, status);
 
-  const char* os = data["os"];
+  const auto os = data["os"];
   ASSERT_STREQ("linux", os);
 
   int latency = data["latency"];
@@ -128,10 +129,11 @@ TEST(api, test_peers) {  // NOLINT
 
   const auto peers = connection.api.peers.all(5, 1);
 
-  DynamicJsonBuffer jsonBuffer(peers.size());
-  JsonObject& root = jsonBuffer.parseObject(peers);
+  DynamicJsonDocument doc(724);
+  DeserializationError error = deserializeJson(doc, peers);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -142,21 +144,21 @@ TEST(api, test_peers) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
-  const char* ip = dataZero["ip"];
+  const auto ip = dataZero["ip"];
   ASSERT_STREQ("167.114.29.53", ip);
 
   int port = dataZero["port"];
   ASSERT_EQ(4002, port);
 
-  const char* version = dataZero["version"];
+  const auto version = dataZero["version"];
   ASSERT_STREQ("1.1.1", version);
 
   int status = dataZero["status"];
   ASSERT_EQ(200, status);
 
-  const char* os = dataZero["os"];
+  const auto os = dataZero["os"];
   ASSERT_STREQ("linux", os);
 
   int latency = dataZero["latency"];

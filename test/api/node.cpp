@@ -158,27 +158,30 @@ TEST(api, test_node_configuration) {  // NOLINT
 
   const auto nodeConfiguration = connection.api.node.configuration();
 
-  DynamicJsonBuffer jsonBuffer(nodeConfiguration.size());
-  JsonObject& root = jsonBuffer.parseObject(nodeConfiguration);
+  DynamicJsonDocument doc(1556);
+  DeserializationError error = deserializeJson(doc, nodeConfiguration);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* nethash = data["nethash"];
-  ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", nethash);
+  const auto nethash = data["nethash"];
+  ASSERT_STREQ(
+      "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",
+      nethash);
 
-  const char* token = data["token"];
+  const auto token = data["token"];
   ASSERT_STREQ("DARK", token);
 
-  const char* symbol = data["symbol"];
+  const auto symbol = data["symbol"];
   ASSERT_STREQ(u8"DѦ", symbol);
 
-  const char* explorer = data["explorer"];
+  const auto explorer = data["explorer"];
   ASSERT_STREQ("https://dexplorer.ark.io", explorer);
 
   int version = data["version"];
   ASSERT_EQ(30, version);
 
-  JsonObject& ports = data["ports"];
+  JsonObject ports = data["ports"];
 
   int core_p2p = ports["@arkecosystem/core-p2p"];
   ASSERT_EQ(4000, core_p2p);
@@ -216,10 +219,11 @@ TEST(api, test_node_status) {  // NOLINT
 
   const auto nodeStatus = connection.api.node.status();
 
-  DynamicJsonBuffer jsonBuffer(nodeStatus.size());
-  JsonObject& root = jsonBuffer.parseObject(nodeStatus);
+  DynamicJsonDocument doc(156);
+  DeserializationError error = deserializeJson(doc, nodeStatus);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
   bool synced = data["synced"];
   ASSERT_FALSE(synced);
@@ -262,10 +266,11 @@ TEST(api, test_node_syncing) {  // NOLINT
 
   const auto nodeSyncing = connection.api.node.syncing();
 
-  DynamicJsonBuffer jsonBuffer(nodeSyncing.size());
-  JsonObject& root = jsonBuffer.parseObject(nodeSyncing);
+  DynamicJsonDocument doc(212);
+  DeserializationError error = deserializeJson(doc, nodeSyncing);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
   bool syncing = data["syncing"];
   ASSERT_TRUE(syncing);
@@ -276,6 +281,6 @@ TEST(api, test_node_syncing) {  // NOLINT
   uint64_t height = data["height"];
   ASSERT_TRUE(3034451ull == height);
 
-  const char* id = data["id"];
+  const auto id = data["id"];
   ASSERT_STREQ("5444078994968869529", id);
 }
