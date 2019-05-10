@@ -12,12 +12,13 @@ TEST(api, test_http_get) { // NOLINT
     const auto response = http->get("167.114.29.55:4003/api/node/status");
 
     // Create a JSON object of the result
-    DynamicJsonBuffer jsonBuffer(response.length());
-    JsonObject& obj = jsonBuffer.parseObject(response.c_str());
+  DynamicJsonDocument doc(156);
+  DeserializationError error = deserializeJson(doc, response);
+  if (error) { exit(0); }
 
-    // Test JSON object for the "data" key.
-    // The correct response will include this key.
-    ASSERT_TRUE(obj.containsKey("data"));
+  // Test JSON object for the "data" key.
+  // The correct response will include this key.
+  ASSERT_TRUE(doc.containsKey("data"));
 }
 
 // Tests POSTing of HTTP body.
@@ -32,13 +33,14 @@ TEST(api, test_http_post_body) { // NOLINT
     // Post the 'request' and 'body' for a response using HTTP
     const auto response = http->post(request, body);
 
-    // Create a JSON object of the result
-    DynamicJsonBuffer jsonBuffer(response.length());
-    JsonObject& obj = jsonBuffer.parseObject(response.c_str());
+  // Create a JSON object of the result
+  DynamicJsonDocument doc(956);
+  DeserializationError error = deserializeJson(doc, response);
+  if (error) { exit(0); }
 
-    // Test JSON object for the "meta" key.
-    // The correct response will include this key
-    ASSERT_TRUE(obj.containsKey("meta"));
+  // Test JSON object for the "meta" key.
+  // The correct response will include this key
+  ASSERT_TRUE(doc.containsKey("meta"));
 }
 
 // Tests POSTing of JSON.
@@ -53,13 +55,14 @@ TEST(api, test_http_post_json) { // NOLINT
     // Post the 'request' and 'txJson' for a response using HTTP
     const auto response = http->post(request, txJson);
 
-    // Create a JSON object of the result
-    DynamicJsonBuffer jsonBuffer(response.length());
-    JsonObject& obj = jsonBuffer.parseObject(response.c_str());
+  // Create a JSON object of the result
+  DynamicJsonDocument doc(180);
+  DeserializationError error = deserializeJson(doc, response);
+  if (error) { exit(0); }
 
-    // Test JSON object for the "message" key.
-    // The correct response will include the following
-    ASSERT_EQ(422, obj["statusCode"]);
+  // Test JSON object for the "message" key.
+  // The correct response will include the following
+  ASSERT_EQ(422, doc["statusCode"]);
 }
 
 // This tests the use of "http://" in single-line HTTP requests.
@@ -74,22 +77,23 @@ TEST(api, test_http_request_strings) { // NOLINT
     // Create the HTTP object
     const auto http = Ark::Client::makeHTTP();
 
-    for (int i = 0; i < 3; ++i) {
-        // Get the response using HTTP
-        const auto response = http->get(requests[i]);
+  for (int i = 0; i < 3; ++i) {
+    // Get the response using HTTP
+    const auto response = http->get(requests[i]);
 
-        // Create a JSON object of the result
-        DynamicJsonBuffer jsonBuffer(response.length());
-        JsonObject& obj = jsonBuffer.parseObject(response.c_str());
+    // Create a JSON object of the result
+    DynamicJsonDocument doc(156);
+    DeserializationError error = deserializeJson(doc, response);
 
-        // Test JSON object for the "data" key.
-        // HTTPS is NOT supported and should fail to parse.
-        if (std::string(requests[i]).find("https://") == 0) { 
-            ASSERT_FALSE(obj.containsKey("data"));
-        } else {
-            ASSERT_TRUE(obj.containsKey("data"));
-        };
-    }
+    // Test JSON object for the "data" key.
+    // HTTPS is NOT supported and should fail to parse.
+    if (std::string(requests[i]).find("https://") != 0) {
+      if (error) { exit(0); }
+      ASSERT_TRUE(doc.containsKey("data"));
+    } else {
+      ASSERT_FALSE(doc.containsKey("data"));
+    };
+  };
 }
 
 TEST(api, test_http_version) { // NOLINT

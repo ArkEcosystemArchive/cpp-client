@@ -63,18 +63,21 @@ TEST(api, test_transaction) {  // NOLINT
 
   EXPECT_CALL(connection.api.transactions, get(_)).Times(1).WillOnce(Return(response));
 
-  const auto transaction =
-      connection.api.transactions.get("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
+  const auto transaction = connection.api.transactions.get(
+      "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
 
-  DynamicJsonBuffer jsonBuffer(transaction.size());
-  JsonObject& root = jsonBuffer.parseObject(transaction);
+  DynamicJsonDocument doc(868);
+  DeserializationError error = deserializeJson(doc, transaction);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* id = data["id"];
-  ASSERT_STREQ("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa", id);
+  const auto id = data["id"];
+  ASSERT_STREQ(
+      "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+      id);
 
-  const char* blockId = data["blockId"];
+  const auto blockId = data["blockId"];
   ASSERT_STREQ("4271682877946294396", blockId);
 
   int type = data["type"];
@@ -86,22 +89,21 @@ TEST(api, test_transaction) {  // NOLINT
   uint64_t fee = data["fee"];
   ASSERT_TRUE(fee == 10000000);
 
-  const char* sender = data["sender"];
+  const auto sender = data["sender"];
   ASSERT_STREQ("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", sender);
 
-  const char* recipient = data["recipient"];
+  const auto recipient = data["recipient"];
   ASSERT_STREQ("DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP", recipient);
 
-  const char* signature = data["signature"];
+  const auto signature = data["signature"];
   ASSERT_STREQ(
-      "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e3"
-      "9e490b0a2581dd772ebc8079696e",
+      "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
       signature);
 
   int confirmations = data["confirmations"];
   ASSERT_EQ(confirmations, 1928);
 
-  JsonObject& timestamp = data["timestamp"];
+  JsonObject timestamp = data["timestamp"];
 
   int epoch = timestamp["epoch"];
   ASSERT_EQ(32794053, epoch);
@@ -109,7 +111,7 @@ TEST(api, test_transaction) {  // NOLINT
   int timestampUnix = timestamp["unix"];
   ASSERT_EQ(1522895253, timestampUnix);
 
-  const char* human = timestamp["human"];
+  const auto human = timestamp["human"];
   ASSERT_STREQ("2018-04-05T02:27:33Z", human);
 }
 
@@ -154,10 +156,11 @@ TEST(api, test_transaction_types) {  // NOLINT
 
   const auto types = connection.api.transactions.types();
 
-  DynamicJsonBuffer jsonBuffer(types.size());
-  JsonObject& root = jsonBuffer.parseObject(types);
+  DynamicJsonDocument doc(444);
+  DeserializationError error = deserializeJson(doc, types);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
   int Transfer = data["Transfer"];
   ASSERT_EQ(0, Transfer);
@@ -240,15 +243,16 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
 
   const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
 
-  DynamicJsonBuffer jsonBuffer(transactionUnconfirmed.size());
-  JsonObject& root = jsonBuffer.parseObject(transactionUnconfirmed);
+  DynamicJsonDocument doc(652);
+  DeserializationError error = deserializeJson(doc, transactionUnconfirmed);
+  if (error) { exit(0); }
 
-  JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-  const char* id = data["id"];
+  const auto id = data["id"];
   ASSERT_STREQ("dummy", id);
 
-  const char* blockId = data["blockId"];
+  const auto blockId = data["blockId"];
   ASSERT_STREQ("dummy", blockId);
 
   int type = data["type"];
@@ -260,22 +264,22 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
   uint64_t fee = data["fee"];
   ASSERT_TRUE(10000000ull == fee);
 
-  const char* sender = data["sender"];
+  const auto sender = data["sender"];
   ASSERT_STREQ("dummy", sender);
 
-  const char* recipient = data["recipient"];
+  const auto recipient = data["recipient"];
   ASSERT_STREQ("dummy", recipient);
 
-  const char* signature = data["signature"];
+  const auto signature = data["signature"];
   ASSERT_STREQ("dummy", signature);
 
-  const char* vendorField = data["vendorField"];
+  const auto vendorField = data["vendorField"];
   ASSERT_STREQ("dummy", vendorField);
 
   int confirmations = data["confirmations"];
   ASSERT_EQ(10, confirmations);
 
-  JsonObject& timestamp = data["timestamp"];
+  JsonObject timestamp = data["timestamp"];
 
   uint64_t epoch = timestamp["epoch"];
   ASSERT_TRUE(40505460ull == epoch);
@@ -283,7 +287,7 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
   uint64_t unix_timestamp = timestamp["unix"];
   ASSERT_TRUE(1530606660ull == unix_timestamp);
 
-  const char* human = timestamp["human"];
+  const auto human = timestamp["human"];
   ASSERT_STREQ("2018-07-03T08:31:00Z", human);
 }
 
@@ -364,10 +368,11 @@ TEST(api, test_transactions) {  // NOLINT
 
   const auto transactions = connection.api.transactions.all(2, 1);
 
-  DynamicJsonBuffer jsonBuffer(transactions.size());
-  JsonObject& root = jsonBuffer.parseObject(transactions);
+  DynamicJsonDocument doc(1348);
+  DeserializationError error = deserializeJson(doc, transactions);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_NE(0, count);
@@ -378,7 +383,7 @@ TEST(api, test_transactions) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_NE(0, totalCount);
 
-  JsonObject& dataZero = root["data"][0];
+  JsonObject dataZero = doc["data"][0];
 
   int type = dataZero["type"];
   ASSERT_EQ(0, type);
@@ -449,10 +454,11 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
 
   const auto transactionsUnconfirmed = connection.api.transactions.allUnconfirmed(5, 1);
 
-  DynamicJsonBuffer jsonBuffer(transactionsUnconfirmed.size());
-  JsonObject& root = jsonBuffer.parseObject(transactionsUnconfirmed);
+  DynamicJsonDocument doc(1164);
+  DeserializationError error = deserializeJson(doc, transactionsUnconfirmed);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_TRUE(count >= 0);
@@ -538,13 +544,15 @@ TEST(api, test_transactions_search) {  // NOLINT
 
   EXPECT_CALL(connection.api.transactions, search(_, _, _)).Times(1).WillOnce(Return(response));
 
-  const std::map<std::string, std::string> body = {{"id", "dummy"}};
+  const std::map<std::string, std::string> body = {
+    { "id", "dummy" }};
   const auto transactions = connection.api.transactions.search(body, 5, 1);
 
-  DynamicJsonBuffer jsonBuffer(transactions.size());
-  JsonObject& root = jsonBuffer.parseObject(transactions);
+  DynamicJsonDocument doc(1148);
+  DeserializationError error = deserializeJson(doc, transactions);
+  if (error) { exit(0); }
 
-  JsonObject& meta = root["meta"];
+  JsonObject meta = doc["meta"];
 
   int count = meta["count"];
   ASSERT_TRUE(count >= 0);
@@ -555,24 +563,24 @@ TEST(api, test_transactions_search) {  // NOLINT
   int totalCount = meta["totalCount"];
   ASSERT_TRUE(totalCount >= 0);
 
-  JsonObject& data = root["data"][0];
+  JsonObject data = doc["data"][0];
 
-  const char* id = data["id"];
+  const auto id = data["id"];
   ASSERT_STREQ("dummy", id);
 
-  const char* blockId = data["blockId"];
+  const auto blockId = data["blockId"];
   ASSERT_STREQ("dummy", blockId);
 
   int type = data["type"];
   ASSERT_EQ(0, type);
 
-  const char* sender = data["sender"];
+  const auto sender = data["sender"];
   ASSERT_STREQ("dummy", sender);
 
-  const char* recipient = data["recipient"];
+  const auto recipient = data["recipient"];
   ASSERT_STREQ("dummy", recipient);
 
-  const char* signature = data["signature"];
+  const auto signature = data["signature"];
   ASSERT_STREQ("dummy", signature);
 }
 
@@ -615,27 +623,28 @@ TEST(api, test_transactions_send) {  // NOLINT
 
     EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
 
-    std::string jsonTransaction = "{\"transactions\":[{\"type\":0,\"amount\":1,\"fee\":10000000,\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\",\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\",\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\",\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\",\"timestamp\":58351951,\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}]}";
-    
-    const auto transaction = connection.api.transactions.send(jsonTransaction);
+  std::string jsonTransaction = "{\"transactions\":[{\"type\":0,\"amount\":1,\"fee\":10000000,\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\",\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\",\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\",\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\",\"timestamp\":58351951,\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}]}";
+  
+  const auto transaction = connection.api.transactions.send(jsonTransaction);
 
-    DynamicJsonBuffer jsonBuffer(transaction.size());
-    JsonObject& root = jsonBuffer.parseObject(transaction);
+  DynamicJsonDocument doc(324);
+  DeserializationError error = deserializeJson(doc, transaction);
+  if (error) { exit(0); }
 
-    JsonObject& data = root["data"];
+  JsonObject data = doc["data"];
 
-    std::string accept = data["accept"];
-    ASSERT_TRUE(accept.length() != 0);
+  std::string accept = data["accept"];
+  ASSERT_NE(accept.length(), 0);
 
-    std::string broadcast = data["broadcast"];
-    ASSERT_TRUE(broadcast.length() != 0);
+  std::string broadcast = data["broadcast"];
+  ASSERT_NE(broadcast.length(), 0);
 
-    std::string excess = data["excess"];
-    ASSERT_TRUE(excess.length() == 2);
+  std::string excess = data["excess"];
+  ASSERT_EQ(excess.length(), 2);
 
-    std::string invalid = data["invalid"];
-    ASSERT_TRUE(invalid.length() == 2);
+  std::string invalid = data["invalid"];
+  ASSERT_EQ(invalid.length(), 2);
 
-    std::string errors = data["errors"];
-    ASSERT_TRUE(errors.length() == 0 );
+  std::string errors = data["errors"];
+  ASSERT_EQ(errors.length(), 4);
 }
