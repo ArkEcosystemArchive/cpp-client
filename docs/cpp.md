@@ -203,7 +203,7 @@ using
 
     brew install cmake
 
-> note: all other dependencies will be automatically installed via CMake and Hunter Package Manager.
+> note: all other dependencies will be automatically installed via git submodule and CMake.
 
 ### make and build
     cd cpp-client/  
