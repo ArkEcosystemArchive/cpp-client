@@ -7,6 +7,10 @@ set(PLATFORM_SRC
 	http/os/http.cpp
 )
 
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
 set(HOST_SRC
 	host/host.cpp
 )
@@ -38,6 +42,7 @@ set(cpp_client_build_include_dirs
 )
 
 include_directories(${cpp_client_build_include_dirs})
+include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/lib/)
 
 
