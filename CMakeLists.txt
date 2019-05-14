@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.2)
+cmake_minimum_required(VERSION 3.14.3)
 
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchain.cmake")
 
@@ -55,7 +55,6 @@ if(ENABLE_CLANG_TIDY)
 
 endif()
 
-add_subdirectory(src/lib/curl)
 add_subdirectory(src)
 add_subdirectory(test)
 

@@ -33,11 +33,30 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get remove cmake cmake-data
             sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test 
-            sudo apt-add-repository -y ppa:george-edison55/cmake-3.x
             sudo apt-get update
-            sudo apt-get -y install g++-7 lcov cmake
+            sudo apt-get -y install g++-7 lcov
+      - run:
+          name: Install OpenSSL
+          command:
+            wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz
+            tar xr OpenSSL_1_1_1.tar.gz
+            cd OpenSSL_1_1_1
+            ./config
+            make
+            sudo make install
+      - run:
+          name: Install CMake
+          command:
+            sudo apt-get remove cmake cmake-data
+            wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz
+            tar xf cmake-3.14.3.tar.gz
+            cd cmake-3.14.3
+            ./configure
+            make
+            sudo make install
+            export PATH=/usr/local/bin:$PATH
+            export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
       - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./.circleci/*.sh
@@ -57,11 +76,30 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get remove cmake cmake-data
             sudo apt-add-repository -y "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
-            sudo apt-add-repository -y ppa:george-edison55/cmake-3.x
             sudo apt-get update
-            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake
+            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov
+      - run:
+          name: Install OpenSSL
+          command:
+            wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz
+            tar xr OpenSSL_1_1_1.tar.gz
+            cd OpenSSL_1_1_1
+            ./config
+            make
+            sudo make install
+      - run:
+          name: Install CMake
+          command:
+            sudo apt-get remove cmake cmake-data
+            wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz
+            tar xf cmake-3.14.3.tar.gz
+            cd cmake-3.14.3
+            ./configure
+            make
+            sudo make install
+            export PATH=/usr/local/bin:$PATH
+            export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
       - run:
           name: Make scripts executable 
           command: sudo chmod -R +x ./.circleci/*.sh

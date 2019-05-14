@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.2.2)
+cmake_minimum_required(VERSION 3.14.3)
 
 project(Ark-Cpp-Client-lib)
 
@@ -43,14 +43,23 @@ include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/lib/)
 include_directories(${PROJECT_SOURCE_DIR}/lib/curl)
 include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
-include_directories(${PROJECT_SOURCE_DIR}/lib/curl/lib)
 
+if (UNIX AND NOT APPLE)
+  add_definitions(
+    -DOPENSSL_ROOT_DIR=/usr/local/ssl
+    -DOPENSSL_LIBRARIES=/usr/local/ssl/lib
+  )
+  set(HTTP_ONLY ON)
+  set(CMAKE_USE_LIBSSH2 OFF)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
+	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
+else()
+	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
+endif()
 
-target_include_directories( ${PROJECT_NAME} PUBLIC
+target_include_directories(${PROJECT_NAME} PUBLIC
 	${cpp_client_build_include_dirs}
 )
-
-target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
 
 if (MSVC)
 	target_link_libraries(${PROJECT_NAME} PUBLIC crypt32)
