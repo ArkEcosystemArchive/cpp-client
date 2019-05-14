@@ -3,11 +3,6 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-lib)
 
-
-include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
-include_directories(${PROJECT_SOURCE_DIR}/lib/curl/lib)
-find_package(CURL CONFIG REQUIRED)
-
 set(PLATFORM_SRC
 	http/os/http.cpp
 )
@@ -50,7 +45,7 @@ target_include_directories( ${PROJECT_NAME} PUBLIC
 	${cpp_client_build_include_dirs}
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC curl)
+target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
 
 if (MSVC)
 	target_link_libraries(${PROJECT_NAME} PUBLIC crypt32)
