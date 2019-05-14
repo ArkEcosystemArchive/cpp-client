@@ -35,7 +35,7 @@ jobs:
           command: |
             sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test 
             sudo apt-get update
-            sudo apt-get -y install g++-7 lcov
+            sudo apt-get -y install g++-7 lcov tar make
       - run:
           name: Install OpenSSL
           command:
@@ -78,7 +78,7 @@ jobs:
           command: |
             sudo apt-add-repository -y "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main"
             sudo apt-get update
-            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov
+            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov tar make
       - run:
           name: Install OpenSSL
           command:
