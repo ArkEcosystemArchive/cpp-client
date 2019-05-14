@@ -39,6 +39,7 @@ set(cpp_client_build_include_dirs
 
 include_directories(${cpp_client_build_include_dirs})
 include_directories(${PROJECT_SOURCE_DIR}/lib/)
+include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
 
 target_include_directories( ${PROJECT_NAME} PUBLIC
 	${cpp_client_build_include_dirs}
