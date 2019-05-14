@@ -3,13 +3,20 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-lib)
 
+if(WIN32)
+    add_definitions("-DCURL_STATICLIB")
+endif()
+set(CURL_LIBRARY "-lcurl") 
+find_package(CURL REQUIRED) 
+include_directories(${CURL_INCLUDE_DIR})
+
+if(LIBCURL_ENABLE)
+    target_link_libraries(app ${CURL_LIBRARIES})
+endif()
+
 set(PLATFORM_SRC
 	http/os/http.cpp
 )
-
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 set(HOST_SRC
 	host/host.cpp
@@ -43,6 +50,7 @@ set(cpp_client_build_include_dirs
 
 include_directories(${cpp_client_build_include_dirs})
 include_directories(${PROJECT_SOURCE_DIR})
+
 include_directories(${PROJECT_SOURCE_DIR}/lib/)
 
 
