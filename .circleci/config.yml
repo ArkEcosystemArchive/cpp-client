@@ -40,8 +40,9 @@ jobs:
           name: Install OpenSSL
           command: |
             wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz
+            ls
             tar -xf OpenSSL_1_1_1.tar.gz
-            cd OpenSSL_1_1_1
+            cd openssl-OpenSSL_1_1_1
             ./config
             make
             sudo make install
@@ -84,7 +85,7 @@ jobs:
           command: |
             wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz
             tar -xf OpenSSL_1_1_1.tar.gz
-            cd OpenSSL_1_1_1
+            cd openssl-OpenSSL_1_1_1
             ./config
             make
             sudo make install
