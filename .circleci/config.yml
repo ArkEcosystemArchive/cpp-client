@@ -40,7 +40,6 @@ jobs:
           name: Install OpenSSL
           command: |
             wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz
-            ls
             tar -xf OpenSSL_1_1_1.tar.gz
             cd openssl-OpenSSL_1_1_1
             ./config
@@ -50,7 +49,7 @@ jobs:
           name: Install CMake
           command: |
             sudo apt-get remove cmake cmake-data
-            wget 'https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz
+            wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz
             tar -xf cmake-3.14.3.tar.gz
             cd cmake-3.14.3
             ./configure
