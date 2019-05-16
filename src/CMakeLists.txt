@@ -1,10 +1,6 @@
-
 cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-lib)
-
-hunter_add_package(CURL)
-find_package(CURL CONFIG REQUIRED)
 
 set(PLATFORM_SRC
 	http/os/http.cpp
@@ -36,17 +32,35 @@ add_library(Ark-Cpp-Client-lib STATIC
 )
 
 set(cpp_client_build_include_dirs
-    ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/include/cpp-client
+  ${PROJECT_SOURCE_DIR}
+  ${PROJECT_SOURCE_DIR}/include/cpp-client
 )
 
 include_directories(${cpp_client_build_include_dirs})
+include_directories(${PROJECT_SOURCE_DIR})
 
-target_include_directories( ${PROJECT_NAME}
-    PUBLIC ${cpp_client_build_include_dirs}
+# ------------------------------------------------------------------------------
+# curl
+# ------------------------------------------------------------------------------
+
+set(BUILD_TESTING OFF)
+set(HTTP_ONLY ON)
+set(CMAKE_USE_LIBSSH2 OFF)
+
+include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
+
+if (UNIX AND NOT APPLE)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
+	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
+else()
+	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
+endif()
+
+# ------------------------------------------------------------------------------
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+	${cpp_client_build_include_dirs}
 )
-
-target_link_libraries(${PROJECT_NAME} PUBLIC CURL::libcurl)
 
 if (MSVC)
 	target_link_libraries(${PROJECT_NAME} PUBLIC crypt32)

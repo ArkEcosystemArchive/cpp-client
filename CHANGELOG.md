@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
-- update ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples. 
-- use "statusCode" '422' to test API Post response for empty Transactions objects.
+- dropped Hunter Package Manager in favor of git submodules in OS builds.
+- updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples. 
+- changed to "statusCode" '422' to test API Post response for empty Transactions objects.
 
 ## [1.2.0] - 2019-02-16
 ## [1.2.0-arduino] - 2019-02-16
