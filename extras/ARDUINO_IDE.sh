@@ -27,7 +27,7 @@ if [ "$1" == "--auto" ]; then
 fi
 
 # Directories
-EXTRAS_DIR=`dirname "$0"`
+EXTRAS_DIR=$(dirname $0)
 PROJECT_ROOT=${EXTRAS_DIR}/../
 INCLUDE_DIR=${EXTRAS_DIR}/../src/include/cpp-client
 SRC_DIR=${EXTRAS_DIR}/../src

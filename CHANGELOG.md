@@ -7,27 +7,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
-- dropped Hunter Package Manager in favor of git submodules in OS builds.
-- updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples. 
-- changed to "statusCode" '422' to test API Post response for empty Transactions objects.
+### Changed
+
+- improved formatting and maintainability ([#92])
+- dropped Hunter Package Manager in favor of git submodules in OS builds. ([#90])
+- updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples. ([#87])
+
+### Fixed
+
+- fixed typos in Arduino examples ([#86])
+- changed to "statusCode" '422' to test API Post response for empty Transactions objects. ([#85])
 
 ## [1.2.0] - 2019-02-16
 ## [1.2.0-arduino] - 2019-02-16
 
 ### Added
-- Arduino CircleCI config
+
+- Arduino CircleCI config ([#73])
 
 ### Changed
-- updated `keywords.txt`.
-- updated `./library.json` package export settings.
-- removed unnecessary files:
+
+- updated `keywords.txt`. ([#77])
+- updated `./library.json` package export settings. ([#70])
+- removed unnecessary files: ([#75])
   - `./appveyor.yml`.
   - `./CMakeSettings.json`.
   - submodule from `cmake_example`.
-- removed `./src/stl` library.
-- moved `./docs` to `./extras` in arduino builds.
-- automated `ARDUINO_IDE.sh` script.
-- updated `ARDUINO_IDE.sh` script to reflect `lib/` changes.
+- removed `./src/stl` library. ([#78])
+- moved `./docs` to `./extras` in arduino builds. ([#75])
+- automated `ARDUINO_IDE.sh` script. ([#72])
+- updated `ARDUINO_IDE.sh` script to reflect `lib/` changes. ([#76])
 
 ## [1.1.0] - 2019-02-07
 

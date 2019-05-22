@@ -21,10 +21,10 @@ namespace Client {
 namespace API {
 /**/
 class ITransactions : public API::Base {
- protected:
+protected:
   ITransactions(Host& host, IHTTP& http) : API::Base(host, http) {}
 
- public:
+public:
   virtual ~ITransactions() {}
 
   virtual std::string getUnconfirmed(const char* const identifier) = 0;
@@ -32,14 +32,12 @@ class ITransactions : public API::Base {
   virtual std::string all(int limit = 5, int page = 1) = 0;
   virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
   virtual std::string types() = 0;
-  virtual std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5,
-                             int page = 1) = 0;
+  virtual std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) = 0;
   virtual std::string send(std::string& jsonTransaction) = 0;
-
 };
 /**/
 class Transactions : public ITransactions {
- public:
+public:
   Transactions(Host& host, IHTTP& http) : ITransactions(host, http) {}
 
   std::string getUnconfirmed(const char* const identifier) override;
@@ -47,7 +45,7 @@ class Transactions : public ITransactions {
   std::string all(int limit = 5, int page = 1) override;
   std::string allUnconfirmed(int limit = 2, int page = 1) override;
   std::string types() override;
-  std::string search(const std::map<std::string, std::string>& body_parameters, int limit = 5, int page = 1) override;
+  std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) override;
   std::string send(std::string& jsonTransaction) override;
 };
 /**/

@@ -30,9 +30,11 @@ extern std::string all(Host& newHost, int limit = 5, int page = 1);
 /***/
 extern std::string transactions(Host& newHost, const char* const blockId);
 /***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
+extern std::pair<std::string, std::string> search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    int limit = 5,
+    int page = 1);
 /***/
 };  // namespace Blocks
 
@@ -90,9 +92,11 @@ extern std::string allUnconfirmed(Host& newHost, int limit = 5, int page = 1);
 /***/
 extern std::string types(Host& newHost);
 /***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
+extern std::pair<std::string, std::string> search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    int limit = 5,
+    int page = 1);
 /***/
 extern std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
 /***/
@@ -128,9 +132,11 @@ extern std::string transactionsReceived(Host& newHost, const char* const identif
 /***/
 extern std::string votes(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
 /***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
+extern std::pair<std::string, std::string> search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    int limit = 5,
+    int page = 1);
 /***/
 };  // namespace Wallets
 

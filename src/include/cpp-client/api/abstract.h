@@ -20,7 +20,7 @@ namespace API {
  * Ark::Client::API::Abstract
  **/
 class Abstract {
- protected:
+protected:
   Host host_;
   std::unique_ptr<IHTTP> http_;
   int version_;
@@ -28,7 +28,7 @@ class Abstract {
   Abstract(IHTTP* http, int version) : http_(http), version_(version) {}
   explicit Abstract(int version) : http_(makeHTTP()), version_(version) {}
 
- public:
+public:
   int version() const noexcept { return this->version_; };
 
   void setHost(const char* const newHost, int newPort) { this->host_.set(newHost, newPort); };

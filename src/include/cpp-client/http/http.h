@@ -18,10 +18,10 @@ namespace Ark {
 namespace Client {
 
 class IHTTP {
- protected:
+protected:
   IHTTP() = default;
 
- public:
+public:
   virtual ~IHTTP() {}
 
   virtual int api_version() const /*noexcept*/ = 0;
@@ -38,7 +38,7 @@ class IHTTP {
  * library for different boards/chipsets
  **/
 class AbstractHTTP : public IHTTP {
- protected:
+protected:
   int api_version_;
 
   AbstractHTTP() : api_version_(0){};
@@ -55,7 +55,7 @@ class AbstractHTTP : public IHTTP {
     return *this;
   };
 
- public:
+public:
   virtual ~AbstractHTTP(){};
 
   int api_version() const /*noexcept*/ override { return this->api_version_; }

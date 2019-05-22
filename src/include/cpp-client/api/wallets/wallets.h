@@ -21,10 +21,10 @@ namespace Client {
 namespace API {
 /**/
 class IWallets : public API::Base {
- protected:
+protected:
   IWallets(Host &host, IHTTP &http) : API::Base(host, http) {}
 
- public:
+public:
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(int limit = 5, int page = 1) = 0;
   virtual std::string top(int limit = 5, int page = 1) = 0;
@@ -36,7 +36,7 @@ class IWallets : public API::Base {
 };
 /**/
 class Wallets : public IWallets {
- public:
+public:
   Wallets(Host &host, IHTTP &http) : IWallets(host, http) {}
 
   std::string get(const char *const identifier) override;

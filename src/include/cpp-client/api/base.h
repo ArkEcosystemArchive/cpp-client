@@ -20,7 +20,7 @@ namespace API {
  * Ark::Client::API::Base
  **/
 class Base {
- protected:
+protected:
   Host& host_;
   IHTTP* http_;
 

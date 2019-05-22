@@ -6,7 +6,7 @@
 #include "gmock/gmock.h"
 
 class MockHTTP : public Ark::Client::IHTTP {
- public:
+public:
   MockHTTP() = default;
 
   MOCK_CONST_METHOD0(api_version, int());

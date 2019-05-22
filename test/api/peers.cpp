@@ -10,20 +10,6 @@
 using testing::_;
 using testing::Return;
 
-/* test_peers_peer
- * https://dexplorer.ark.io:8443/api/v2/peers/167.114.29.54
- * Expected Response:
-    {
-    "data": {
-        "ip": "string",
-        "port": int,
-        "version": "string",
-        "status": "string",
-        "os": "string",
-        "latency": int
-    }
-    }
- */
 TEST(api, test_peer) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
@@ -31,15 +17,15 @@ TEST(api, test_peer) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "data": {
-            "ip": "167.114.29.55",
-            "port": 4002,
-            "version": "1.1.1",
-            "status": 200,
-            "os": "linux",
-            "latency": 355
-        }
-    })";
+    "data": {
+      "ip": "167.114.29.55",
+      "port": 4002,
+      "version": "1.1.1",
+      "status": 200,
+      "os": "linux",
+      "latency": 355
+    }
+  })";
 
   EXPECT_CALL(connection.api.peers, get(_)).Times(1).WillOnce(Return(response));
 
@@ -70,32 +56,8 @@ TEST(api, test_peer) {  // NOLINT
   ASSERT_EQ(355, latency);
 }
 
-/* test_peers_peers
- * https://dexplorer.ark.io:8443/api/v2/peers?limit=5&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self": "/api/v2/peers?limit=5&page=1",
-        "first": "/api/v2/peers?limit=5&page=1",
-        "last": "/api/v2/peers?limit=5&page=1"
-    },
-    "data": [
-        {
-        "ip": "string",
-        "port": "string",
-        "version": "string",
-        "status": "string",
-        "os": "string",
-        "latency": int
-        }
-    ]
-    }
- */
+/**/
+
 TEST(api, test_peers) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -103,27 +65,27 @@ TEST(api, test_peers) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 1,
-            "totalCount": 2,
-            "next": null,
-            "previous": null,
-            "self": "/v2/peers?page=1",
-            "first": "/v2/peers?page=1",
-            "last": "/v2/peers?page=1"
-        },
-        "data": [
-            {
-                "ip": "167.114.29.53",
-                "port": 4002,
-                "version": "1.1.1",
-                "status": 200,
-                "os": "linux",
-                "latency": 1390
-            }
-        ]
-    })";
+    "meta": {
+      "count": 2,
+      "pageCount": 1,
+      "totalCount": 2,
+      "next": null,
+      "previous": null,
+      "self": "/v2/peers?page=1",
+      "first": "/v2/peers?page=1",
+      "last": "/v2/peers?page=1"
+    },
+    "data": [
+      {
+        "ip": "167.114.29.53",
+        "port": 4002,
+        "version": "1.1.1",
+        "status": 200,
+        "os": "linux",
+        "latency": 1390
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.peers, all(_, _)).Times(1).WillOnce(Return(response));
 

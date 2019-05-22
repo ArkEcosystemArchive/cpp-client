@@ -9,33 +9,6 @@
 using testing::_;
 using testing::Return;
 
-/* test_two_transactions_transaction
- * https://dexplorer.ark.io:8443/api/v2/transactions/b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850
- * Expected Response:
-    {
-    "data": {
-        "id": "string",
-        "blockId": "string",
-        "type": int,
-        "amount": uint64_t,
-        "fee": uint64_t,
-        "sender": "string",
-        "recipient": "string",
-        "signature": "string",
-        "asset": {
-            "votes": [
-                "string"
-            ]
-        },
-        "confirmations": int,
-        "timestamp": {
-            "epoch": int,
-            "unix": int,
-            "human": "string"
-        }
-    }
-    }
- */
 TEST(api, test_transaction) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -43,23 +16,23 @@ TEST(api, test_transaction) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "data": {
-            "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-            "blockId": "4271682877946294396",
-            "type": 0,
-            "amount": 32106400000,
-            "fee": 10000000,
-            "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
-            "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
-            "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-            "confirmations": 1928,
-            "timestamp": {
-                "epoch": 32794053,
-                "unix": 1522895253,
-                "human": "2018-04-05T02:27:33Z"
-            }
-        }
-    })";
+    "data": {
+      "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+      "blockId": "4271682877946294396",
+      "type": 0,
+      "amount": 32106400000,
+      "fee": 10000000,
+      "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+      "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
+      "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
+      "confirmations": 1928,
+      "timestamp": {
+        "epoch": 32794053,
+        "unix": 1522895253,
+        "human": "2018-04-05T02:27:33Z"
+      }
+    }
+  })";
 
   EXPECT_CALL(connection.api.transactions, get(_)).Times(1).WillOnce(Return(response));
 
@@ -73,9 +46,7 @@ TEST(api, test_transaction) {  // NOLINT
   JsonObject data = doc["data"];
 
   const auto id = data["id"];
-  ASSERT_STREQ(
-      "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-      id);
+  ASSERT_STREQ("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa", id);
 
   const auto blockId = data["blockId"];
   ASSERT_STREQ("4271682877946294396", blockId);
@@ -115,23 +86,8 @@ TEST(api, test_transaction) {  // NOLINT
   ASSERT_STREQ("2018-04-05T02:27:33Z", human);
 }
 
-/* test_transactions_transaction_types
- * https://dexplorer.ark.io:8443/api/v2/transactions/types
- * Expected Response:
-    {
-        "data": {
-            "Transfer": 0,
-            "SecondSignature": 1,
-            "DelegateRegistration": 2,
-            "Vote": 3,
-            "MultiSignature": 4,
-            "Ipfs": 5,
-            "TimelockTransfer": 6,
-            "MultiPayment": 7,
-            "DelegateResignation": 8
-        }
-    }
- */
+/**/
+
 TEST(api, test_transaction_types) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -139,18 +95,18 @@ TEST(api, test_transaction_types) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-			  "data": {
-			    "Transfer": 0,
-			    "SecondSignature": 1,
-			    "DelegateRegistration": 2,
-			    "Vote": 3,
-			    "MultiSignature": 4,
-			    "Ipfs": 5,
-			    "TimelockTransfer": 6,
-			    "MultiPayment": 7,
-			    "DelegateResignation": 8
-			  }
-			})";
+    "data": {
+      "Transfer": 0,
+      "SecondSignature": 1,
+      "DelegateRegistration": 2,
+      "Vote": 3,
+      "MultiSignature": 4,
+      "Ipfs": 5,
+      "TimelockTransfer": 6,
+      "MultiPayment": 7,
+      "DelegateResignation": 8
+    }
+  })";
 
   EXPECT_CALL(connection.api.transactions, types()).Times(1).WillOnce(Return(response));
 
@@ -190,29 +146,8 @@ TEST(api, test_transaction_types) {  // NOLINT
   ASSERT_EQ(8, DelegateResignation);
 }
 
-/* test_transactions_transaction_unconfirmed
- *
- https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48
- * Expected Response (if unconfirmed tx is not found):
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self":
- "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
-        "first":
- "/api/v2/transactions/unconfirmed?id=4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48&page=1&limit=100",
-        "last": null
-    },
-    "data": [
-        
+/**/
 
-    ]
-    }
- */
 TEST(api, test_transaction_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -220,24 +155,24 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-			  "data": {
-			    "id": "dummy",
-			    "blockId": "dummy",
-			    "type": 0,
-			    "amount": 10000000,
-			    "fee": 10000000,
-			    "sender": "dummy",
-			    "recipient": "dummy",
-			    "signature": "dummy",
-			    "vendorField": "dummy",
-			    "confirmations": 10,
-			    "timestamp": {
-			      "epoch": 40505460,
-			      "unix": 1530606660,
-			      "human": "2018-07-03T08:31:00Z"
-			    }
-			  }
-			})";
+    "data": {
+      "id": "dummy",
+      "blockId": "dummy",
+      "type": 0,
+      "amount": 10000000,
+      "fee": 10000000,
+      "sender": "dummy",
+      "recipient": "dummy",
+      "signature": "dummy",
+      "vendorField": "dummy",
+      "confirmations": 10,
+      "timestamp": {
+        "epoch": 40505460,
+        "unix": 1530606660,
+        "human": "2018-07-03T08:31:00Z"
+      }
+    }
+  })";
 
   EXPECT_CALL(connection.api.transactions, getUnconfirmed(_)).Times(1).WillOnce(Return(response));
 
@@ -259,10 +194,10 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
   ASSERT_EQ(0, type);
 
   uint64_t amount = data["amount"];
-  ASSERT_TRUE(10000000ull == amount);
+  ASSERT_TRUE(10000000ULL == amount);
 
   uint64_t fee = data["fee"];
-  ASSERT_TRUE(10000000ull == fee);
+  ASSERT_TRUE(10000000ULL == fee);
 
   const auto sender = data["sender"];
   ASSERT_STREQ("dummy", sender);
@@ -282,50 +217,16 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
   JsonObject timestamp = data["timestamp"];
 
   uint64_t epoch = timestamp["epoch"];
-  ASSERT_TRUE(40505460ull == epoch);
+  ASSERT_TRUE(40505460ULL == epoch);
 
   uint64_t unix_timestamp = timestamp["unix"];
-  ASSERT_TRUE(1530606660ull == unix_timestamp);
+  ASSERT_TRUE(1530606660ULL == unix_timestamp);
 
   const auto human = timestamp["human"];
   ASSERT_STREQ("2018-07-03T08:31:00Z", human);
 }
 
-/* test_transactions_transactions
- * https://dexplorer.ark.io:8443/api/v2/transactions?limit=2&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self": "/api/v2/transactions?limit=2&page=1",
-        "first": "/api/v2/transactions?limit=2&page=1",
-        "last": "/api/v2/transactions?limit=2&page=1"
-    },
-    "data": [
-        {
-        "id": "string",
-        "blockId": "string",
-        "type": ing,
-        "amount": uint64_t,
-        "fee": uint64_t,
-        "sender": "string",
-        "recipient": "string",
-        "signature": "string",
-        "vendorField": "string",
-        "confirmations": int,
-        "timestamp": {
-            "epoch": int,
-            "unix": int,
-            "human": "string"
-        }
-        }
-    ]
-    }
- */
+/**/
 
 TEST(api, test_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
@@ -334,34 +235,34 @@ TEST(api, test_transactions) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-      "meta": {
-          "count": 2,
-          "pageCount": 127430,
-          "totalCount": 254860,
-          "next": "/v2/transactions?page=2",
-          "previous": null,
-          "self": "/v2/transactions?page=1",
-          "first": "/v2/transactions?page=1",
-          "last": "/v2/transactions?page=127430"
-      },
-      "data": [
-          {
-              "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-              "blockId": "4271682877946294396",
-              "type": 0,
-              "amount": 32106400000,
-              "fee": 10000000,
-              "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
-              "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
-              "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-              "confirmations": 1924,
-              "timestamp": {
-                  "epoch": 32794053,
-                  "unix": 1522895253,
-                  "human": "2018-04-05T02:27:33Z"
-              }
-          }
-      ]
+    "meta": {
+      "count": 2,
+      "pageCount": 127430,
+      "totalCount": 254860,
+      "next": "/v2/transactions?page=2",
+      "previous": null,
+      "self": "/v2/transactions?page=1",
+      "first": "/v2/transactions?page=1",
+      "last": "/v2/transactions?page=127430"
+    },
+    "data": [
+      {
+        "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+        "blockId": "4271682877946294396",
+        "type": 0,
+        "amount": 32106400000,
+        "fee": 10000000,
+        "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+        "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
+        "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
+        "confirmations": 1924,
+        "timestamp": {
+          "epoch": 32794053,
+          "unix": 1522895253,
+          "human": "2018-04-05T02:27:33Z"
+        }
+      }
+    ]
   })";
 
   EXPECT_CALL(connection.api.transactions, all(_, _)).Times(1).WillOnce(Return(response));
@@ -392,26 +293,8 @@ TEST(api, test_transactions) {  // NOLINT
   ASSERT_TRUE(fee >= 0);
 }
 
-/* test_transactions_transactions_unconfirmed
- * https://dexplorer.ark.io:8443/api/v2/transactions/unconfirmed?limit=2&page=1
- * Expected Response (if unconfirmed tx is not found):
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self": "/api/v2/transactions/unconfirmed?limit=2&page=1",
-        "first": "/api/v2/transactions/unconfirmed?limit=2&page=1",
-        "last": "string"
-    },
-    "data": [
-        
+/**/
 
-    ]
-    }
- */
 TEST(api, test_transactions_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -419,36 +302,36 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-      "meta": {
-	      "count": 1,
-	      "pageCount": 1,
-	      "totalCount": 1,
-	      "next": null,
-	      "previous": null,
-	      "self": "/api/transactions/unconfirmed?page=1&limit=1",
-	      "first": "/api/transactions/unconfirmed?page=1&limit=1",
-	      "last": "/api/transactions/unconfirmed?page=1&limit=1"
-      },
-      "data": [
-	      {
-		      "id": "dummy",
-		      "blockId": "dummy",
-		      "type": 0,
-		      "amount": 10000000,
-		      "fee": 10000000,
-		      "sender": "dummy",
-		      "recipient": "dummy",
-		      "signature": "dummy",
-		      "vendorField": "dummy",
-		      "confirmations": 10,
-		      "timestamp": {
-			      "epoch": 40505460,
-			      "unix": 1530606660,
-			      "human": "2018-07-03T08:31:00Z"
-		      }
-	      }
-      ]
-      })";
+    "meta": {
+      "count": 1,
+      "pageCount": 1,
+      "totalCount": 1,
+      "next": null,
+      "previous": null,
+      "self": "/api/transactions/unconfirmed?page=1&limit=1",
+      "first": "/api/transactions/unconfirmed?page=1&limit=1",
+      "last": "/api/transactions/unconfirmed?page=1&limit=1"
+    },
+    "data": [
+      {
+        "id": "dummy",
+        "blockId": "dummy",
+        "type": 0,
+        "amount": 10000000,
+        "fee": 10000000,
+        "sender": "dummy",
+        "recipient": "dummy",
+        "signature": "dummy",
+        "vendorField": "dummy",
+        "confirmations": 10,
+        "timestamp": {
+          "epoch": 40505460,
+          "unix": 1530606660,
+          "human": "2018-07-03T08:31:00Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _)).Times(1).WillOnce(Return(response));
 
@@ -470,40 +353,8 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
   ASSERT_TRUE(totalCount >= 0);
 }
 
-/* test_transactions_transactions_search
- *
- * Expected Response:
- {
- "meta":{
-  "count":1,
-  "pageCount":1,
-  "totalCount":1,
-  "next":null,
-  "previous":null,
-  "self":"/api/v2/transactions/search?limit=5&page=1",
-  "first":"/api/v2/transactions/search?limit=5&page=1",
-  "last":"/api/v2/transactions/search?limit=5&page=1"},
-  "data":[
-    {
-    "id":"927ab6da141cc4fa9f1a4b5765ee9ecdf92d47a9cd3aada35aa136ad7d3d3e37",
-    "blockId":"13624088937920625389",
-    "version":1,
-    "type":3,
-    "amount":0,
-    "fee":84219776,
-    "sender":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
-    "recipient":"DMdq8j6uzxErZxESGu7JfkaCFt3qx11fqj",
-    "signature":"3044022073337aefa7727cc1cf39e478ffe65cf5c66c5761b5848418d87307df250a68a5022053d4d5264b329e63cadad84fc6ec479fe5e430eaabd6177db1e9c283027ec2fa",
-    "asset":
-      {
-      "votes":["+0389301207e25addec690be9efa3b2ca2d111b86386da7ff5fcc1c0344954b2acc"]
-      },
-    "confirmations":871,
-    "timestamp":{"epoch":55498801,"unix":1545600001,"human":"2018-12-23T21:20:01.000Z"}
-    }
-  ]
-}
- */
+/**/
+
 TEST(api, test_transactions_search) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -511,41 +362,42 @@ TEST(api, test_transactions_search) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-			  "meta": {
-			    "count": 1,
-			    "pageCount": 1,
-			    "totalCount": 1,
-			    "next": null,
-			    "previous": null,
-			    "self": "/api/transactions/search?page=1&limit=1",
-			    "first": "/api/transactions/search?page=1&limit=1",
-			    "last": "/api/transactions/search?page=1&limit=1"
-			  },
-			  "data": [
-			    {
-			      "id": "dummy",
-			      "blockId": "dummy",
-			      "type": 0,
-			      "amount": 10000000,
-			      "fee": 10000000,
-			      "sender": "dummy",
-			      "recipient": "dummy",
-			      "signature": "dummy",
-			      "vendorField": "dummy",
-			      "confirmations": 10,
-			      "timestamp": {
-			        "epoch": 40505460,
-			        "unix": 1530606660,
-			        "human": "2018-07-03T08:31:00Z"
-			      }
-			    }
-			  ]
-			})";
+    "meta": {
+      "count": 1,
+      "pageCount": 1,
+      "totalCount": 1,
+      "next": null,
+      "previous": null,
+      "self": "/api/transactions/search?page=1&limit=1",
+      "first": "/api/transactions/search?page=1&limit=1",
+      "last": "/api/transactions/search?page=1&limit=1"
+    },
+    "data": [
+      {
+        "id": "dummy",
+        "blockId": "dummy",
+        "type": 0,
+        "amount": 10000000,
+        "fee": 10000000,
+        "sender": "dummy",
+        "recipient": "dummy",
+        "signature": "dummy",
+        "vendorField": "dummy",
+        "confirmations": 10,
+        "timestamp": {
+          "epoch": 40505460,
+          "unix": 1530606660,
+          "human": "2018-07-03T08:31:00Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.transactions, search(_, _, _)).Times(1).WillOnce(Return(response));
 
   const std::map<std::string, std::string> body = {
-    { "id", "dummy" }};
+    { "id", "dummy" }
+  };
   const auto transactions = connection.api.transactions.search(body, 5, 1);
 
   DynamicJsonDocument doc(1148);
@@ -584,23 +436,8 @@ TEST(api, test_transactions_search) {  // NOLINT
   ASSERT_STREQ("dummy", signature);
 }
 
-/* test_transactions_transactions_send
- *
- * Expected Response:
- * {
- *  "data": {
- *      "accept": [
- *          "dummy"
- *      ],
- *      "broadcast": [
- *          "dummy"
- *      ],
- *      "excess": [],
- *      "invalid": []
- *  },
- *  "errors": null
- * }
- */
+/**/
+
 TEST(api, test_transactions_send) {  // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -608,22 +445,36 @@ TEST(api, test_transactions_send) {  // NOLINT
     ASSERT_EQ(2, apiVersion);
 
     const std::string response = R"({
-        "data": {
-            "accept": [
-                "dummy"
-            ],
-            "broadcast": [
-                "dummy"
-            ],
-            "excess": [],
-            "invalid": []
-            },
-            "errors": null
-        })";
+      "data": {
+        "accept": [
+          "dummy"
+        ],
+        "broadcast": [
+          "dummy"
+        ],
+        "excess": [],
+        "invalid": []
+      },
+      "errors": null
+    })";
 
-    EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
 
-  std::string jsonTransaction = "{\"transactions\":[{\"type\":0,\"amount\":1,\"fee\":10000000,\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\",\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\",\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\",\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\",\"timestamp\":58351951,\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\"}]}";
+  std::string jsonTransaction = "{"
+    "\"transactions\":["
+      "{"
+        "\"type\":0,"
+        "\"amount\":1,"
+        "\"fee\":10000000,"
+        "\"id\":\"bc5bb5cd23521c041fca17b5f78d6f3621fc07ab8f6581aff1b6eb86fa4bafe2\","
+        "\"recipientId\":\"DNSrsDUq5injGBdNXPV7v7u1Qy9LZfWEdM\","
+        "\"senderPublicKey\":\"0216fa03d378b6ad01325e186ad2cbb9d18976d5b27d0ca74b4f92bb6bf9a6d4d9\","
+        "\"signature\":\"3044022014204515b82cdd47513377d3e80e6b5f4fd1ab0fb6b4c181e09a7a30428d542502205ba076a332997053e1d31b506777a99f93bcb11294cd678ebe2da313eb02cae2\","
+        "\"timestamp\":58351951,"
+        "\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\""
+      "}"
+    "]"
+  "}";
   
   const auto transaction = connection.api.transactions.send(jsonTransaction);
 
