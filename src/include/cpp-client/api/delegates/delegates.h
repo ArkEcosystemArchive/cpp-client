@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 /**/
 class IDelegates : public API::Base {
- protected:
+protected:
   IDelegates(Host &host, IHTTP &http) : API::Base(host, http) {}
 
- public:
+public:
   virtual ~IDelegates() {}
 
   virtual std::string get(const char *const identifier) = 0;
@@ -31,7 +31,7 @@ class IDelegates : public API::Base {
 };
 /**/
 class Delegates : public IDelegates {
- public:
+public:
   Delegates(Host &host, IHTTP &http) : IDelegates(host, http) {}
 
   std::string get(const char *const identifier) override;

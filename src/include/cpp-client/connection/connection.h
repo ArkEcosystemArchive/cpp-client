@@ -22,7 +22,7 @@ namespace Client {
  **/
 template <typename TAPI>
 class Connection {
- public:
+public:
   TAPI api;
   Host host;
 
@@ -35,7 +35,7 @@ class Connection {
   };
 };
 /**/
-}  // namespace Client
-}  // namespace Ark
+};  // namespace Client
+};  // namespace Ark
 
 #endif

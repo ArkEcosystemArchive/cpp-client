@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 /**/
 class IVotes : public API::Base {
- protected:
+protected:
   IVotes(Host& host, IHTTP& http) : API::Base(host, http) {}
 
- public:
+public:
   virtual ~IVotes() {}
 
   virtual std::string get(const char* const identifier) = 0;
@@ -29,7 +29,7 @@ class IVotes : public API::Base {
 };
 /**/
 class Votes : public IVotes {
- public:
+public:
   Votes(Host& host, IHTTP& http) : IVotes(host, http) {}
 
   std::string get(const char* const identifier) override;

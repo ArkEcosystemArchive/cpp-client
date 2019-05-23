@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 /**/
 class IPeers : public API::Base {
- protected:
+protected:
   IPeers(Host& host, IHTTP& http) : API::Base(host, http) {}
 
- public:
+public:
   virtual ~IPeers() {}
 
   virtual std::string get(const char* const ip) = 0;
@@ -29,7 +29,7 @@ class IPeers : public API::Base {
 };
 /**/
 class Peers : public IPeers {
- public:
+public:
   Peers(Host& host, IHTTP& http) : IPeers(host, http) {}
 
   std::string get(const char* const ip) override;

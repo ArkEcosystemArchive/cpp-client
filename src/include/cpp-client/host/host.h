@@ -20,7 +20,7 @@ namespace Client {
  * Ark::Client::Host
  **/
 class Host {
- protected:
+protected:
   char ip_[17];
   int port_;
 

@@ -49,5 +49,5 @@ std::string Ark::Client::Host::toString() {
 bool Ark::Client::Host::set(const char* const newIP, int newPort) {
   strncpy(this->ip_, newIP, sizeof(this->ip_) / sizeof(this->ip_[0]));
   this->port_ = newPort;
-  return (this->port_ == newPort) && strcmp(this->ip_, newIP);
+  return ((this->port_ == newPort) && (strcmp(this->ip_, newIP) != 0));
 }

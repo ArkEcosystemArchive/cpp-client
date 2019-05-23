@@ -24,7 +24,7 @@ namespace Ark {
 namespace Client {
 /**/
 class Api : public API::Abstract {
- public:
+public:
   API::Blocks blocks;
   API::Delegates delegates;
   API::Node node;

@@ -18,10 +18,10 @@ namespace Client {
 namespace API {
 /**/
 class INode : public API::Base {
- protected:
+protected:
   INode(Host& host, IHTTP& http) : API::Base(host, http) {}
 
- public:
+public:
   virtual ~INode() {}
 
   virtual std::string configuration() = 0;
@@ -30,7 +30,7 @@ class INode : public API::Base {
 };
 /**/
 class Node : public INode {
- public:
+public:
   Node(Host& host, IHTTP& http) : INode(host, http) {}
 
   std::string configuration() override;

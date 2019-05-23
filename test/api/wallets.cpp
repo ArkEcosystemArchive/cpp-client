@@ -9,19 +9,6 @@
 using testing::_;
 using testing::Return;
 
-/* test_vote_identifier
- * https://dexplorer.ark.io:8443/api/v2/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu
- * Expected Response:
-    {
-    "data": {
-        "address": "string",
-        "publicKey": "string",
-        "secondPublicKey": "string",
-        "balance": uint64_t,
-        "isDelegate": bool
-    }
-    }
- */
 TEST(api, test_wallet) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -29,13 +16,13 @@ TEST(api, test_wallet) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "data": {
-            "address": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-            "publicKey": "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
-            "balance": 12534670000000,
-            "isDelegate": true
-        }
-    })";
+    "data": {
+      "address": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+      "publicKey": "022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
+      "balance": 12534670000000,
+      "isDelegate": true
+    }
+  })";
 
   EXPECT_CALL(connection.api.wallets, get(_)).Times(1).WillOnce(Return(response));
 
@@ -62,31 +49,8 @@ TEST(api, test_wallet) {  // NOLINT
   ASSERT_TRUE(isDelegate);
 }
 
-/* test_wallets
- * https://dexplorer.ark.io:8443/api/v2/wallets?limit=5&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "/api/v2/wallets?limit=5&page=2",
-        "previous": "string",
-        "self": "/api/v2/wallets?limit=5&page=1",
-        "first": "/api/v2/wallets?limit=5&page=1",
-        "last": "/api/v2/wallets?limit=5&page=19"
-    },
-    "data": [
-        {
-        "address": "string",
-        "publicKey": "string",
-        "secondPublicKey": "string",
-        "balance": uint64_t,
-        "isDelegate": bool
-        }
-    ]
-    }
- */
+/**/
+
 TEST(api, test_wallets) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -94,25 +58,25 @@ TEST(api, test_wallets) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 421,
-            "totalCount": 841,
-            "next": "/v2/wallets?page=2",
-            "previous": null,
-            "self": "/v2/wallets?page=1",
-            "first": "/v2/wallets?page=1",
-            "last": "/v2/wallets?page=421"
-        },
-        "data": [
-            {
-                "address": "D59NTfV92ca9QevUydvMiFMFdubbCaAVCV",
-                "publicKey": "037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a",
-                "balance": 1023145260990,
-                "isDelegate": false
-            }
-        ]
-    })";
+    "meta": {
+      "count": 2,
+      "pageCount": 421,
+      "totalCount": 841,
+      "next": "/v2/wallets?page=2",
+      "previous": null,
+      "self": "/v2/wallets?page=1",
+      "first": "/v2/wallets?page=1",
+      "last": "/v2/wallets?page=421"
+    },
+    "data": [
+      {
+        "address": "D59NTfV92ca9QevUydvMiFMFdubbCaAVCV",
+        "publicKey": "037d035f08b3bad0d5bb605232c7aa41555693c480044dbeb797270a44c339da5a",
+        "balance": 1023145260990,
+        "isDelegate": false
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, all(_, _)).Times(1).WillOnce(Return(response));
 
@@ -150,31 +114,8 @@ TEST(api, test_wallets) {  // NOLINT
   ASSERT_FALSE(isDelegate);
 }
 
-/* test_wallets_search
- *
- * Expected Response:
-    {
-    "meta": {
-        "count": 1,
-        "pageCount": 1,
-        "totalCount": 1,
-        "next": null,
-        "previous": null,
-        "self": "\/api\/v2\/wallets\/search?limit=5&page=1",
-        "first": "\/api\/v2\/wallets\/search?limit=5&page=1",
-        "last": "\/api\/v2\/wallets\/search?limit=5&page=1"
-    },
-    "data": [
-        {
-        "address": "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T",
-        "publicKey": "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d",
-        "secondPublicKey": null,
-        "balance": 532210000000,
-        "isDelegate": true
-        }
-    ]
-    }
- */
+/**/
+
 TEST(api, test_wallets_search) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -182,40 +123,40 @@ TEST(api, test_wallets_search) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 2,
-            "totalCount": 3,
-            "next": "/v2/wallets/search?page=2",
-            "previous": null,
-            "self": "/v2/wallets/search?page=1",
-            "first": "/v2/wallets/search?page=1",
-            "last": "/v2/wallets/search?page=2"
+    "meta": {
+      "count": 2,
+      "pageCount": 2,
+      "totalCount": 3,
+      "next": "/v2/wallets/search?page=2",
+      "previous": null,
+      "self": "/v2/wallets/search?page=1",
+      "first": "/v2/wallets/search?page=1",
+      "last": "/v2/wallets/search?page=2"
+    },
+    "data": [
+      {
+        "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+        "blockId": "14847399772737279404",
+        "type": 3,
+        "amount": 0,
+        "fee": 100000000,
+        "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
+        "asset": {
+          "votes": [
+            "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
+          ]
         },
-        "data": [
-            {
-                "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
-                "blockId": "14847399772737279404",
-                "type": 3,
-                "amount": 0,
-                "fee": 100000000,
-                "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
-                "asset": {
-                    "votes": [
-                        "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
-                    ]
-                },
-                "confirmations": 1636029,
-                "timestamp": {
-                    "epoch": 17094358,
-                    "unix": 1507195558,
-                    "human": "2017-10-05T09:25:58Z"
-                }
-            }
-        ]
-    })";
+        "confirmations": 1636029,
+        "timestamp": {
+          "epoch": 17094358,
+          "unix": 1507195558,
+          "human": "2017-10-05T09:25:58Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, search(_, _, _)).Times(1).WillOnce(Return(response));
 
@@ -254,10 +195,10 @@ TEST(api, test_wallets_search) {  // NOLINT
   ASSERT_EQ(3, type);
 
   uint64_t amount = dataZero["amount"];
-  ASSERT_TRUE(0ull == amount);
+  ASSERT_TRUE(0ULL == amount);
 
   uint64_t fee = dataZero["fee"];
-  ASSERT_TRUE(100000000ull == fee);
+  ASSERT_TRUE(100000000ULL == fee);
 
   const auto sender = dataZero["sender"];
   ASSERT_STREQ("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN", sender);
@@ -285,31 +226,8 @@ TEST(api, test_wallets_search) {  // NOLINT
   ASSERT_STREQ("2017-10-05T09:25:58Z", human);
 }
 
-/* test_wallets_top_limit_page
- * https://dexplorer.ark.io:8443/api/v2/wallets/top?limit=5&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "/api/v2/wallets/top?limit=5&page=2",
-        "previous": "string",
-        "self": "/api/v2/wallets/top?limit=5&page=1",
-        "first": "/api/v2/wallets/top?limit=5&page=1",
-        "last": "/api/v2/wallets/top?limit=5&page=19"
-    },
-    "data": [
-        {
-        "address": "string",
-        "publicKey": "string",
-        "secondPublicKey": "string",
-        "balance": uint64_t,
-        "isDelegate": bool
-        }
-    ]
-    }
- */
+/**/
+
 TEST(api, test_wallets_top) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -379,7 +297,7 @@ TEST(api, test_wallets_top) {  // NOLINT
       publicKey);
 
   unsigned long long balance = dataZero["balance"];
-  ASSERT_EQ(balance, 10105417471949050ull);
+  ASSERT_EQ(balance, 10105417471949050ULL);
 
   bool isDelegate = dataZero["isDelegate"];
   ASSERT_FALSE(isDelegate);
@@ -395,46 +313,14 @@ TEST(api, test_wallets_top) {  // NOLINT
       publicKeyOne);
 
   unsigned long long balanceOne = dataOne["balance"];
-  ASSERT_EQ(balanceOne, 2000035929999638ull);
+  ASSERT_EQ(balanceOne, 2000035929999638ULL);
 
   const bool isDelegateOne = dataOne["isDelegate"];
   ASSERT_TRUE(isDelegateOne);
 }
 
-/* test_wallets_transactions
- * https://dexplorer.ark.io:8443/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=2&page=1
- * Expected Response:
-  {
-    "meta": {
-      "count": int,
-      "pageCount": int,
-      "totalCount": "string",
-      "next": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=2&page=2",
-      "previous": "string",
-      "self": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=2&page=1",
-      "first": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=2&page=1",
-      "last": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk\transactions?limit=2&page=3"
-    },
-    "data": [
-      {
-        "id": "string",
-        "blockId": "string",
-        "type": int,
-        "amount": uint64_t,
-        "fee": uint64_t,
-        "sender": "string",
-        "recipient": "string",
-        "signature": "string",
-        "confirmations": int,
-        "timestamp": {
-          "epoch": int,
-          "unix": int,
-          "human": "string"
-        }
-      }
-    ]
-  }
- */
+/**/
+
 TEST(api, test_wallets_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -442,35 +328,35 @@ TEST(api, test_wallets_transactions) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 127430,
-            "totalCount": 254860,
-            "next": "/v2/wallets/boldninja/transactions?page=2",
-            "previous": null,
-            "self": "/v2/wallets/boldninja/transactions?page=1",
-            "first": "/v2/wallets/boldninja/transactions?page=1",
-            "last": "/v2/wallets/boldninja/transactions?page=127430"
-        },
-        "data": [
-            {
-                "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-                "blockId": "4271682877946294396",
-                "type": 0,
-                "amount": 32106400000,
-                "fee": 10000000,
-                "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
-                "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
-                "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-                "confirmations": 1683,
-                "timestamp": {
-                    "epoch": 32794053,
-                    "unix": 1522895253,
-                    "human": "2018-04-05T02:27:33Z"
-                }
-            }
-        ]
-    })";
+    "meta": {
+      "count": 2,
+      "pageCount": 127430,
+      "totalCount": 254860,
+      "next": "/v2/wallets/boldninja/transactions?page=2",
+      "previous": null,
+      "self": "/v2/wallets/boldninja/transactions?page=1",
+      "first": "/v2/wallets/boldninja/transactions?page=1",
+      "last": "/v2/wallets/boldninja/transactions?page=127430"
+    },
+    "data": [
+      {
+        "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
+        "blockId": "4271682877946294396",
+        "type": 0,
+        "amount": 32106400000,
+        "fee": 10000000,
+        "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
+        "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
+        "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
+        "confirmations": 1683,
+        "timestamp": {
+          "epoch": 32794053,
+          "unix": 1522895253,
+          "human": "2018-04-05T02:27:33Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, transactions(_, _, _)).Times(1).WillOnce(Return(response));
 
@@ -488,25 +374,8 @@ TEST(api, test_wallets_transactions) {  // NOLINT
   ASSERT_EQ(2, count);
 }
 
-/* test_wallets_transactions_received
- * https://dexplorer.ark.io:8443/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=2&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=2&page=1",
-        "first": "/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=2&page=1",
-        "last": "string"
-    },
-    "data": [
+/**/
 
-    ]
-    }
- */
 TEST(api, test_wallets_transactions_received) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -514,36 +383,36 @@ TEST(api, test_wallets_transactions_received) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 4,
-            "totalCount": 8,
-            "next": "/v2/wallets/boldninja/transactions/received?page=2",
-            "previous": null,
-            "self": "/v2/wallets/boldninja/transactions/received?page=1",
-            "first": "/v2/wallets/boldninja/transactions/received?page=1",
-            "last": "/v2/wallets/boldninja/transactions/received?page=4"
-        },
-        "data": [
-            {
-                "id": "c46a6a83f7a358f269691c16f050beeab669767643634086bc12ad1182d54413",
-                "blockId": "17271524574301696572",
-                "type": 0,
-                "amount": 5000000000,
-                "fee": 10000000,
-                "sender": "DK6Q1Lufhb939H9EshLViYbaaKUkswMiUz",
-                "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "signature": "304402204b81411e507273f2a27e6135510abda5bff00a0d3121977df09363227c8fd2360220503cab4484a7db785d91a7adcfad681811e3d73f2d00b4dab7e4190ecd41cb34",
-                "vendorField": "More monopoly money for EVERYONE!!",
-                "confirmations": 1482069,
-                "timestamp": {
-                    "epoch": 18382414,
-                    "unix": 1508483614,
-                    "human": "2017-10-20T07:13:34Z"
-                }
-            }
-        ]
-    })";
+    "meta": {
+      "count": 2,
+      "pageCount": 4,
+      "totalCount": 8,
+      "next": "/v2/wallets/boldninja/transactions/received?page=2",
+      "previous": null,
+      "self": "/v2/wallets/boldninja/transactions/received?page=1",
+      "first": "/v2/wallets/boldninja/transactions/received?page=1",
+      "last": "/v2/wallets/boldninja/transactions/received?page=4"
+    },
+    "data": [
+      {
+        "id": "c46a6a83f7a358f269691c16f050beeab669767643634086bc12ad1182d54413",
+        "blockId": "17271524574301696572",
+        "type": 0,
+        "amount": 5000000000,
+        "fee": 10000000,
+        "sender": "DK6Q1Lufhb939H9EshLViYbaaKUkswMiUz",
+        "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "signature": "304402204b81411e507273f2a27e6135510abda5bff00a0d3121977df09363227c8fd2360220503cab4484a7db785d91a7adcfad681811e3d73f2d00b4dab7e4190ecd41cb34",
+        "vendorField": "More monopoly money for EVERYONE!!",
+        "confirmations": 1482069,
+        "timestamp": {
+          "epoch": 18382414,
+          "unix": 1508483614,
+          "human": "2017-10-20T07:13:34Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _)).Times(1).WillOnce(Return(response));
 
@@ -567,25 +436,8 @@ TEST(api, test_wallets_transactions_received) {  // NOLINT
   ASSERT_NE(0, totalCount);
 }
 
-/* test_wallets_transactions_sent
- * https://dexplorer.ark.io:8443/api/v2/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=2&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": 0,
-        "pageCount": 0,
-        "totalCount": 0,
-        "next": null,
-        "previous": null,
-        "self": "\/api\/v2\/wallets\/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk\/transactions\/sent?limit=2&page=1",
-        "first": "\/api\/v2\/wallets\/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk\/transactions\/sent?limit=2&page=1",
-        "last": null
-    },
-    "data": [
+/**/
 
-    ]
-    }
- */
 TEST(api, test_wallets_transactions_sent) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -593,40 +445,40 @@ TEST(api, test_wallets_transactions_sent) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 2,
-            "totalCount": 4,
-            "next": "/v2/wallets/boldninja/transactions/sent?page=2",
-            "previous": null,
-            "self": "/v2/wallets/boldninja/transactions/sent?page=1",
-            "first": "/v2/wallets/boldninja/transactions/sent?page=1",
-            "last": "/v2/wallets/boldninja/transactions/sent?page=2"
+    "meta": {
+      "count": 2,
+      "pageCount": 2,
+      "totalCount": 4,
+      "next": "/v2/wallets/boldninja/transactions/sent?page=2",
+      "previous": null,
+      "self": "/v2/wallets/boldninja/transactions/sent?page=1",
+      "first": "/v2/wallets/boldninja/transactions/sent?page=1",
+      "last": "/v2/wallets/boldninja/transactions/sent?page=2"
+    },
+    "data": [
+      {
+        "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+        "blockId": "14847399772737279404",
+        "type": 3,
+        "amount": 0,
+        "fee": 100000000,
+        "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
+        "asset": {
+          "votes": [
+            "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
+          ]
         },
-        "data": [
-            {
-                "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
-                "blockId": "14847399772737279404",
-                "type": 3,
-                "amount": 0,
-                "fee": 100000000,
-                "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
-                "asset": {
-                    "votes": [
-                        "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
-                    ]
-                },
-                "confirmations": 1636232,
-                "timestamp": {
-                    "epoch": 17094358,
-                    "unix": 1507195558,
-                    "human": "2017-10-05T09:25:58Z"
-                }
-            }
-        ]
-    })";
+        "confirmations": 1636232,
+        "timestamp": {
+          "epoch": 17094358,
+          "unix": 1507195558,
+          "human": "2017-10-05T09:25:58Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _)).Times(1).WillOnce(Return(response));
 
@@ -671,45 +523,8 @@ TEST(api, test_wallets_transactions_sent) {  // NOLINT
       signature);
 }
 
-/* test_wallets_votes
- * https://dexplorer.ark.io:8443/api/v2/wallets/DNjuJEDQkhrJ7cA9FZ2iVXt5anYiM8Jtc9/votes?limit=1&page=1
- * Expected Response:
-    {
-    "meta": {
-        "count": int,
-        "pageCount": int,
-        "totalCount": int,
-        "next": "string",
-        "previous": "string",
-        "self": "/api/v2/wallets/DNjuJEDQkhrJ7cA9FZ2iVXt5anYiM8Jtc9/votes?limit=2&page=1",
-        "first": "/api/v2/wallets/DNjuJEDQkhrJ7cA9FZ2iVXt5anYiM8Jtc9/votes?limit=2&page=1",
-        "last": "/api/v2/wallets/DNjuJEDQkhrJ7cA9FZ2iVXt5anYiM8Jtc9/votes?limit=2&page=1"
-    },
-    "data": [
-        {
-        "id": "string",
-        "blockId": "string",
-        "type": int,
-        "amount": uint64_t,
-        "fee": uint64_t,
-        "sender": "string",
-        "recipient": "string",
-        "signature": "string",
-        "asset": {
-            "votes": [
-            "string"
-            ]
-        },
-        "confirmations": int,
-        "timestamp": {
-            "epoch": int,
-            "unix": int,
-            "human": "string"
-        }
-        }
-    ]
-    }
- */
+/**/
+
 TEST(api, test_wallets_votes) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
@@ -717,40 +532,40 @@ TEST(api, test_wallets_votes) {  // NOLINT
   ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
-        "meta": {
-            "count": 2,
-            "pageCount": 2,
-            "totalCount": 3,
-            "next": "/v2/wallets/boldninja/votes?page=2",
-            "previous": null,
-            "self": "/v2/wallets/boldninja/votes?page=1",
-            "first": "/v2/wallets/boldninja/votes?page=1",
-            "last": "/v2/wallets/boldninja/votes?page=2"
+    "meta": {
+      "count": 2,
+      "pageCount": 2,
+      "totalCount": 3,
+      "next": "/v2/wallets/boldninja/votes?page=2",
+      "previous": null,
+      "self": "/v2/wallets/boldninja/votes?page=1",
+      "first": "/v2/wallets/boldninja/votes?page=1",
+      "last": "/v2/wallets/boldninja/votes?page=2"
+    },
+    "data": [
+      {
+        "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
+        "blockId": "14847399772737279404",
+        "type": 3,
+        "amount": 0,
+        "fee": 100000000,
+        "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
+        "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
+        "asset": {
+          "votes": [
+            "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
+          ]
         },
-        "data": [
-            {
-                "id": "08c6b23f9edd97b613f17153fb97a316a4fb83136e9842655dafc8262f363e0e",
-                "blockId": "14847399772737279404",
-                "type": 3,
-                "amount": 0,
-                "fee": 100000000,
-                "sender": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "recipient": "DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN",
-                "signature": "304402207ba0e8aaee93695360081b7ce713f13d62b544038ac440bd46357398af86cae6022059ac74586738be1ef622e0baba992d0e417d9aed7ab980f374eb0c9d53e25f8e",
-                "asset": {
-                    "votes": [
-                        "+0257b7724e97cd832e0c28533a86da5220656f9b5122141daab20e8526decce01f"
-                    ]
-                },
-                "confirmations": 1636029,
-                "timestamp": {
-                    "epoch": 17094358,
-                    "unix": 1507195558,
-                    "human": "2017-10-05T09:25:58Z"
-                }
-            }
-        ]
-    })";
+        "confirmations": 1636029,
+        "timestamp": {
+          "epoch": 17094358,
+          "unix": 1507195558,
+          "human": "2017-10-05T09:25:58Z"
+        }
+      }
+    ]
+  })";
 
   EXPECT_CALL(connection.api.wallets, votes(_, _, _)).Times(1).WillOnce(Return(response));
 
