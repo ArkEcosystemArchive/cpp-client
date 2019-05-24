@@ -24,21 +24,16 @@ protected:
   char ip_[17];
   int port_;
 
-  Host(Host&&) = delete;
-  Host& operator=(Host&&) = delete;
-  Host(const Host& other);
-  Host& operator=(const Host& other) noexcept;
-
  public:
   Host();
   Host(const char* const newIP, int newPort);
 
   bool set(const char* const newIP, int newPort);
 
-  const char* ip() const noexcept;
+  std::string ip() const noexcept;
   int port() const noexcept;
 
-  std::string toString();  // e.g. "167.114.29.49:4003"
+  std::string toString();
 };
 /**/
 };  // namespace Client

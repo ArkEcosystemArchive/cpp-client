@@ -9,7 +9,7 @@ TEST(api, test_connection) {  // NOLINT
   int version = connection.api.version();
   ASSERT_EQ(2, version);
 
-  const char* ip = connection.host.ip();
+  const auto ip = connection.host.ip().c_str();
   ASSERT_STREQ("167.114.29.55", ip);
 
   int port = connection.host.port();
