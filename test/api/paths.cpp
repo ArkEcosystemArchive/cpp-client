@@ -110,10 +110,13 @@ TEST(paths, test_transactions) {  // NOLINT
   const auto types = Ark::Client::API::Paths::Transactions::types(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/types", types.c_str());
 
-  const std::map<std::string, std::string> searchBody = {{"id", "dummy"}};
+  const std::map<std::string, std::string> searchBody = {
+    { "id", "dummy" },
+    { "key", "value" }
+  };
   const auto search = Ark::Client::API::Paths::Transactions::search(testHost, searchBody, 5, 1);
   ASSERT_STREQ("0.0.0.0:4003/api/v2/transactions/search?limit=5&page=1", search.first.c_str());
-  ASSERT_STREQ("id=dummy", search.second.c_str());
+  ASSERT_STREQ("id=dummy&key=value", search.second.c_str());
 
   std::string jsonTransaction = "{"
     "\"id\":\"5ab523d18ac948da82700a71fc0b3c9e764fc0cba91927cb1aa63354564ad23f\","

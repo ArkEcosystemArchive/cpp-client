@@ -47,6 +47,27 @@ TEST(api, test_http_post_body) { // NOLINT
 
 /**/
 
+// Tests invalid POSTing of HTTP body.
+TEST(api, test_http_invalid_post_body) { // NOLINT
+  // Create the HTTP object
+  const auto http = Ark::Client::makeHTTP();
+
+  // Create a malformed Request URL and 'Post' body.
+  const auto request = "/167.114.29.55:4003/api/v2/wallets/search";
+  const auto body = "username=baldninja";
+
+  // Post the 'request' and 'body' for a response using HTTP
+  const auto response = http->post(request, body);
+
+  // Create a JSON object of the result
+  DynamicJsonDocument doc(100);
+  DeserializationError error = deserializeJson(doc, response);
+  // the empty response should cause deserialization to fail
+  ASSERT_TRUE(error);
+}
+
+/**/
+
 // Tests POSTing of JSON.
 TEST(api, test_http_post_json) { // NOLINT
   // Create the HTTP object

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- improved class members and test coverage ([#93])
 - improved formatting and maintainability ([#92])
 - dropped Hunter Package Manager in favor of git submodules in OS builds. ([#90])
 - updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples. ([#87])
