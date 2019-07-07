@@ -24,8 +24,8 @@ protected:
   Host host_;
   std::unique_ptr<IHTTP> http_;
 
-  Abstract(IHTTP* http) : http_(http) {}
-  explicit Abstract() : http_(makeHTTP()) {}
+  Abstract() : http_(makeHTTP()) {}
+  explicit Abstract(IHTTP* http) : http_(http) {}
 
 public:
   void setHost(const char* const newHost, int newPort) { this->host_.set(newHost, newPort); };

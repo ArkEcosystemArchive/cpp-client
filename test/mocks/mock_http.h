@@ -7,8 +7,6 @@
 
 class MockHTTP : public Ark::Client::IHTTP {
 public:
-  MockHTTP() = default;
-
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD2(post, std::string(const char* const, const char* const));
 };

@@ -4,6 +4,8 @@
 
 // Note: These test HTTP against a live node
 
+#include <iostream>
+
 TEST(api, test_http_get) { // NOLINT
   // Create the HTTP object
   const auto http = Ark::Client::makeHTTP();
@@ -12,10 +14,10 @@ TEST(api, test_http_get) { // NOLINT
   const auto response = http->get("167.114.29.55:4003/api/node/status");
 
   // Create a JSON object of the result
-  DynamicJsonDocument doc(156);
+  const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(4) + 50;
+  DynamicJsonDocument doc(capacity);
   DeserializationError error = deserializeJson(doc, response);
-  if (error) { exit(0); }
-
+  ASSERT_FALSE(error);
   // Test JSON object for the "data" key.
   // The correct response will include this key.
   ASSERT_TRUE(doc.containsKey("data"));
@@ -30,15 +32,17 @@ TEST(api, test_http_post_body) { // NOLINT
 
   // Create a Request URL and 'Post' body.
   const auto request = "167.114.29.55:4003/api/v2/wallets/search?limit=1&page=1";
-  const auto body = "username=baldninja";
+  const auto body = "{\"username\":\"baldninja\"}";
 
   // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
 
   // Create a JSON object of the result
-  DynamicJsonDocument doc(956);
+  const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2)
+                          + JSON_OBJECT_SIZE(6) + JSON_OBJECT_SIZE(8) + 470;
+  DynamicJsonDocument doc(capacity);
   DeserializationError error = deserializeJson(doc, response);
-  if (error) { exit(0); }
+  ASSERT_FALSE(error);
 
   // Test JSON object for the "meta" key.
   // The correct response will include this key
@@ -54,16 +58,16 @@ TEST(api, test_http_invalid_post_body) { // NOLINT
 
   // Create a malformed Request URL and 'Post' body.
   const auto request = "/167.114.29.55:4003/api/v2/wallets/search";
-  const auto body = "username=baldninja";
+  const auto body = "{\"username\":\"baldninja\"}";
 
   // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
 
-  // Create a JSON object of the result
-  DynamicJsonDocument doc(100);
-  DeserializationError error = deserializeJson(doc, response);
-  // the empty response should cause deserialization to fail
-  ASSERT_TRUE(error);
+  // The malformed request will result in the following error being logged:
+  // 'curl_easy_perform() failed: URL using bad/illegal format or missing URL'
+  
+  // the response will be empty
+  ASSERT_TRUE(response.empty());
 }
 
 /**/
@@ -81,9 +85,10 @@ TEST(api, test_http_post_json) { // NOLINT
   const auto response = http->post(request, txJson);
 
   // Create a JSON object of the result
-  DynamicJsonDocument doc(180);
+  const size_t capacity = JSON_OBJECT_SIZE(3) + 90;
+  DynamicJsonDocument doc(capacity);
   DeserializationError error = deserializeJson(doc, response);
-  if (error) { exit(0); }
+  ASSERT_FALSE(error);
 
   // Test JSON object for the "message" key.
   // The correct response will include the following
@@ -95,9 +100,9 @@ TEST(api, test_http_post_json) { // NOLINT
 // This tests the use of "http://" in single-line HTTP requests.
 TEST(api, test_http_request_strings) { // NOLINT
   char requests[3][43] = {
-    "167.114.29.55:4003/api/node/status",        // No HTTP
-    "http://167.114.29.55:4003/api/node/status", // HTTP
-    "https://167.114.29.55:4003/api/node/status" // HTTPS
+    "167.114.29.55:4003/api/node/status",         // No HTTP
+    "http://167.114.29.55:4003/api/node/status",  // HTTP
+    "https://dexplorer.ark.io/api/node/status"    // HTTPS
   };
 
   // Create the HTTP object
@@ -108,16 +113,23 @@ TEST(api, test_http_request_strings) { // NOLINT
     const auto response = http->get(i);
 
     // Create a JSON object of the result
-    DynamicJsonDocument doc(156);
+    const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(4) + 50;
+    DynamicJsonDocument doc(capacity);
     DeserializationError error = deserializeJson(doc, response);
 
     // Test JSON object for the "data" key.
-    // HTTPS is NOT supported and should fail to parse.
+#ifdef USE_IOT 
+    // HTTPS is NOT supported on IoT and should fail to parse.
     if (std::string(i).find("https://") != 0) {
-      if (error) { exit(0); }
+      ASSERT_FALSE(error);
       ASSERT_TRUE(doc.containsKey("data"));
     } else {
+      ASSERT_TRUE(error);
       ASSERT_FALSE(doc.containsKey("data"));
     };
+#else // OS Builds
+    ASSERT_FALSE(error);
+    ASSERT_TRUE(doc.containsKey("data"));
+#endif
   };
 }
