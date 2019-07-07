@@ -37,12 +37,10 @@ public:
  **/
 class AbstractHTTP : public IHTTP {
 protected:
+  AbstractHTTP() = default;
   AbstractHTTP(AbstractHTTP&&) = delete;
   AbstractHTTP& operator=(AbstractHTTP&&) = delete;
-
-  AbstractHTTP& operator=(const AbstractHTTP& other) noexcept {
-    return *this;
-  };
+  AbstractHTTP& operator=(const AbstractHTTP& other) = default;
 
 public:
   virtual ~AbstractHTTP(){};
