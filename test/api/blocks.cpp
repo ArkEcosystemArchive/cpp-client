@@ -11,9 +11,6 @@ using testing::Return;
 TEST(api, test_block) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string expected_response = R"({
     "data": {
       "id": "58328125061111756",
@@ -122,9 +119,6 @@ TEST(api, test_block) {  // NOLINT
 TEST(api, test_block_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string expected_response = R"({
     "meta": {
       "count": 1,
@@ -160,7 +154,7 @@ TEST(api, test_block_transactions) {  // NOLINT
   EXPECT_CALL(connection.api.blocks, transactions(_)).Times(1).WillOnce(Return(expected_response));
 
   const auto blockTransactionsResponse = connection.api.blocks.transactions("14126007750611341900");
-  
+
   DynamicJsonDocument doc(1452);
   DeserializationError error = deserializeJson(doc, blockTransactionsResponse);
   if (error) { exit(0); }
@@ -222,9 +216,6 @@ TEST(api, test_block_transactions) {  // NOLINT
 
 TEST(api, test_blocks) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string expected_response = R"({
     "meta": {
@@ -297,9 +288,6 @@ TEST(api, test_blocks) {  // NOLINT
 
 TEST(api, test_blocks_search) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string expected_response = R"({
     "meta": {

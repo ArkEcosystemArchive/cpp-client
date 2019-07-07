@@ -34,7 +34,7 @@ public:
   API::Wallets wallets;
 
   Api()
-      : API::Abstract(2),
+      : API::Abstract(),
         blocks(host_, *http_),
         delegates(host_, *http_),
         node(host_, *http_),
