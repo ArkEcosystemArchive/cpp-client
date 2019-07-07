@@ -112,7 +112,7 @@ public:
   MockWallets wallets;
 
   MockApi()
-      : Abstract(new MockHTTP(), 2),
+      : Abstract(new MockHTTP()),
         blocks(host_, *http_),
         delegates(host_, *http_),
         node(host_, *http_),

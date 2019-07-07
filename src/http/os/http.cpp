@@ -40,7 +40,6 @@ class PlatformHTTP : public AbstractHTTP {
 
         curl_slist *header_list = nullptr;
         header_list = curl_slist_append(header_list, "Content-Type: application/json");
-        header_list = curl_slist_append(header_list, "API-Version: 2");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
         /* skip https verification */
@@ -56,7 +55,7 @@ class PlatformHTTP : public AbstractHTTP {
       return readBuffer;
     }
   /**/
-  
+
   std::string post(const char *const request, const char *body) override {
     // https://curl.haxx.se/libcurl/c/http-post.html
     CURL *curl;
@@ -75,7 +74,7 @@ class PlatformHTTP : public AbstractHTTP {
         ? curl_slist_append(header_list, "Content-Type: application/json")
         : curl_slist_append(header_list, "Content-Type: application/x-www-form-urlencoded");
       curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
-      
+
       /* skip https verification */
       curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);  // Do NOT verify peer
       curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);  // Do NOT verify host
