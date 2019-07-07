@@ -4,6 +4,8 @@
 
 // Note: These test HTTP against a live server
 
+#include <iostream>
+
 TEST(api, test_http_get) { // NOLINT
   // Create the HTTP object
   const auto http = Ark::Client::makeHTTP();

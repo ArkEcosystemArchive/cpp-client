@@ -103,6 +103,10 @@ std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths:
 
 # Arduino
 
+**Arduino IDE:**
+Download and install the Arduino IDE (>=1.8.5) from the following link:
+`https://www.arduino.cc/en/Main/Software`
+
 #### Minimal Arduino Example using the Adafruit Feather ESP8266
 
 ```Arduino
