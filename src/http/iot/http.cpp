@@ -85,7 +85,7 @@ class PlatformHTTP : public AbstractHTTP {
       httpClient.setReuse(true);
       httpClient.setTimeout(3000);
       httpClient.begin(toHttpStr(request).c_str());
-      httpClient.addHeader("Content-Type", "application/json")
+      httpClient.addHeader("Content-Type", "application/json");
       httpClient.POST(body);
       return httpClient.getString().c_str();
     }
