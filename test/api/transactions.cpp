@@ -12,9 +12,6 @@ using testing::Return;
 TEST(api, test_transaction) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
@@ -91,9 +88,6 @@ TEST(api, test_transaction) {  // NOLINT
 TEST(api, test_transaction_types) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "Transfer": 0,
@@ -150,9 +144,6 @@ TEST(api, test_transaction_types) {  // NOLINT
 
 TEST(api, test_transaction_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
     "data": {
@@ -231,9 +222,6 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
 TEST(api, test_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "meta": {
       "count": 2,
@@ -298,9 +286,6 @@ TEST(api, test_transactions) {  // NOLINT
 TEST(api, test_transactions_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "meta": {
       "count": 1,
@@ -357,9 +342,6 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
 
 TEST(api, test_transactions_search) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
     "meta": {
@@ -441,9 +423,6 @@ TEST(api, test_transactions_search) {  // NOLINT
 TEST(api, test_transactions_send) {  // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    auto apiVersion = connection.api.version();
-    ASSERT_EQ(2, apiVersion);
-
     const std::string response = R"({
       "data": {
         "accept": [
@@ -475,7 +454,7 @@ TEST(api, test_transactions_send) {  // NOLINT
       "}"
     "]"
   "}";
-  
+
   const auto transaction = connection.api.transactions.send(jsonTransaction);
 
   DynamicJsonDocument doc(324);
