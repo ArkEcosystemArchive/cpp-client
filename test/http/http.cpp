@@ -121,13 +121,3 @@ TEST(api, test_http_request_strings) { // NOLINT
     };
   };
 }
-
-/**/
-
-TEST(api, test_http_version) { // NOLINT
-  // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
-
-  // The default 'api_version' of an unconfigured 'HTTP' object is '0'.
-  ASSERT_EQ(0, http->api_version());
-}

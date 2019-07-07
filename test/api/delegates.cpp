@@ -11,9 +11,6 @@ using testing::Return;
 TEST(api, test_delegate) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string expected_response = R"({
     "data": {
       "username": "boldninja",
@@ -199,9 +196,6 @@ TEST(api, test_delegate_blocks) {  // NOLINT
 TEST(api, test_delegate_voters) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string expected_response = R"({
     "meta": {
       "count": 2,
@@ -260,9 +254,6 @@ TEST(api, test_delegate_voters) {  // NOLINT
 
 TEST(api, test_delegates) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string expected_response = R"({
     "meta": {

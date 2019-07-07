@@ -12,9 +12,6 @@ using testing::Return;
 TEST(api, test_vote) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "id": "beb8dd43c640f562704090159154b2742afba7eacada9e8edee447e34e7675c6",
@@ -94,9 +91,6 @@ TEST(api, test_vote) {  // NOLINT
 
 TEST(api, test_votes) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
     "meta": {

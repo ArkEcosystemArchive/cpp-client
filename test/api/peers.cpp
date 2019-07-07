@@ -13,9 +13,6 @@ using testing::Return;
 TEST(api, test_peer) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "ip": "167.114.29.55",
@@ -60,9 +57,6 @@ TEST(api, test_peer) {  // NOLINT
 
 TEST(api, test_peers) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
     "meta": {
