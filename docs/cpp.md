@@ -40,6 +40,8 @@ The below example shows how you can perform a request.
 
 ```cpp
 // Perform an API call using the connection to access endpoint
+const auto blockchainResponse = connection.api.blockchain.get();
+
 const auto blockResponse = connection.api.blocks.get("13114381566690093367")
 
 const auto delegateResponse = connection.api.delegates.get("boldninja");
@@ -67,6 +69,9 @@ Below are examples of how to access the Path interface:
 
 ```cpp
 Ark::Client::Host dummyHost("0.0.0.0:4003");
+
+std::string blockchainGetPath = Ark::Client::API::Paths::Blockschain::get(dummyHost);
+// blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
 
 std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, 5 /* limit */, 1 /* page */);
 // blocksAllPath will be the string "0.0.0.0:4003/api/v2/blocks?limit=5&page=1"
@@ -128,6 +133,8 @@ void setup() {
     Serial.println(WiFi.localIP());
 
     Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
+
+    Serial.println(arkClient.blockchain.get().c_str());
 
     auto allBlocks = arkClient.blocks.all();
     Serial.println(allBlocks.c_str());

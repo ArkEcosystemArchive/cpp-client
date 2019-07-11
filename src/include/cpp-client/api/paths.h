@@ -21,6 +21,13 @@ namespace Client {
 namespace API {
 namespace Paths {
 
+namespace Blockchain {
+extern const char* base();
+extern std::string get(Host& newHost);
+};  // namespace Blockchain
+
+/***/
+
 namespace Blocks {
 extern const char* base();
 /***/

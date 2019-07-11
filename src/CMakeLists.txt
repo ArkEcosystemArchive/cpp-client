@@ -15,6 +15,7 @@ set(API_PATHS_SRC
 )
 
 set(API_SRC
+	api/blockchain/blockchain.cpp
 	api/blocks/blocks.cpp
 	api/delegates/delegates.cpp
 	api/node/node.cpp

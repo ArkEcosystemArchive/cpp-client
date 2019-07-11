@@ -17,6 +17,15 @@
 #include "http/http.h"
 #include "mocks/mock_http.h"
 
+class MockBlockchain : public Ark::Client::API::IBlockchain {
+public:
+  MockBlockchain(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlockchain(host, http) {}
+
+  MOCK_METHOD0(get, std::string());
+};
+
+/**/
+
 class MockBlocks : public Ark::Client::API::IBlocks {
 public:
   MockBlocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlocks(host, http) {}
@@ -103,6 +112,7 @@ public:
 
 class MockApi : public Ark::Client::API::Abstract {
 public:
+  MockBlockchain blockchain;
   MockBlocks blocks;
   MockDelegates delegates;
   MockNode node;
@@ -113,6 +123,7 @@ public:
 
   MockApi()
       : Abstract(new MockHTTP()),
+        blockchain(host_, *http_),
         blocks(host_, *http_),
         delegates(host_, *http_),
         node(host_, *http_),

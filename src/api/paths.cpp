@@ -2,6 +2,26 @@
 #include "api/paths.h"
 
 /**
+ * Blockchain
+ **/
+const char* Ark::Client::API::Paths::Blockchain::base() {
+  return "/api/blockchain";
+}
+
+/**/
+std::string Ark::Client::API::Paths::Blockchain::get(
+    Host& newHost) {
+  char url[56] = {};
+  snprintf(url, sizeof(url),
+      "%s%s",
+      newHost.toString().c_str(),
+      Ark::Client::API::Paths::Blockchain::base());
+  return url;
+}
+
+/****/
+
+/**
  * Blocks
  **/
 const char* Ark::Client::API::Paths::Blocks::base() {
