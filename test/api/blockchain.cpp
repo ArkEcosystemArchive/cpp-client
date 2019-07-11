@@ -9,7 +9,7 @@
 using testing::_;
 using testing::Return;
 
-TEST(api, test_vote) {  // NOLINT
+TEST(api, test_blockchain) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
   const std::string expected_response = R"({
