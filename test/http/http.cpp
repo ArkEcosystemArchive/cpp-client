@@ -70,7 +70,6 @@ TEST(api, test_http_post_json) { // NOLINT
   const auto response = http->post(request, txJson);
 
   ASSERT_LT(response.find("422"), response.length());
-
 }
 
 /**/
