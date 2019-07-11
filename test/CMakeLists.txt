@@ -12,7 +12,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
 include_directories(${PROJECT_SOURCE_DIR}/../src)
 include_directories(${PROJECT_SOURCE_DIR}/../test)
-include_directories(${PROJECT_SOURCE_DIR}/lib/ArduinoJson)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set(TEST_CONNECTION_SRC

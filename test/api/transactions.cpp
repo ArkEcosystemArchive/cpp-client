@@ -1,10 +1,10 @@
-#include "gmock/gmock.h"
+
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include <arkClient.h>
 
 #include "mocks/mock_api.h"
-
-#include "arkClient.h"
-#include "utils/json.h"
 
 using testing::_;
 using testing::Return;
@@ -12,75 +12,39 @@ using testing::Return;
 TEST(api, test_transaction) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "data": {
-      "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-      "blockId": "4271682877946294396",
-      "type": 0,
-      "amount": 32106400000,
-      "fee": 10000000,
-      "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
-      "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
-      "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-      "confirmations": 1928,
-      "timestamp": {
-        "epoch": 32794053,
-        "unix": 1522895253,
-        "human": "2018-04-05T02:27:33Z"
-      }
+        "id": "8d41094befe91164c49f429aa7131cb9d3c5ef741495670d6cfee6d224c86974",
+        "blockId": "849e579749dba0a9d5d8667b128a746c1c129c29c8718a4df18cb89802706a5a",
+        "version": 1,
+        "type": 0,
+        "amount": "482750000",
+        "fee": "450000",
+        "sender": "DJpFwW39QnQvQRQJF2MCfAoKvsX4DJ28jq",
+        "senderPublicKey": "027716e659220085e41389efc7cf6a05f7f7c659cf3db9126caabce6cda9156582",
+        "recipient": "DEFfff5D258XAc7aSjfn9acs4BbXwSXjrr",
+        "signature": "3045022100f0e545e9dc9a5f36017cc64f6b5ca9e4b8cead1e11c05b3736ac271208e64d2d02204c28eee85033a67e56c028628aa3e3e90a94268493b54b09915e186cd13ba4c4",
+        "signSignature": "304402204484acf8bca39a58af944be54e370dd24eed5b1665012a952d46828a40da0d40022047c0ea4b8c5120316269dd6daf6262de689fbe3df525efcd44c3e9410a395a4c",
+        "vendorField": "reserve",
+        "confirmations": 3222,
+        "timestamp": {
+            "epoch": 72702109,
+            "unix": 1562803309,
+            "human": "2019-07-11T00:01:49.000Z"
+        }
     }
   })";
 
-  EXPECT_CALL(connection.api.transactions, get(_)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, get(_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
   const auto transaction = connection.api.transactions.get(
-      "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa");
+      "8d41094befe91164c49f429aa7131cb9d3c5ef741495670d6cfee6d224c86974");
 
-  DynamicJsonDocument doc(868);
-  DeserializationError error = deserializeJson(doc, transaction);
-  if (error) { exit(0); }
-
-  JsonObject data = doc["data"];
-
-  const auto id = data["id"];
-  ASSERT_STREQ("5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa", id);
-
-  const auto blockId = data["blockId"];
-  ASSERT_STREQ("4271682877946294396", blockId);
-
-  int type = data["type"];
-  ASSERT_EQ(0, type);
-
-  uint64_t amount = data["amount"];
-  ASSERT_TRUE(amount == 32106400000);
-
-  uint64_t fee = data["fee"];
-  ASSERT_TRUE(fee == 10000000);
-
-  const auto sender = data["sender"];
-  ASSERT_STREQ("DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh", sender);
-
-  const auto recipient = data["recipient"];
-  ASSERT_STREQ("DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP", recipient);
-
-  const auto signature = data["signature"];
-  ASSERT_STREQ(
-      "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-      signature);
-
-  int confirmations = data["confirmations"];
-  ASSERT_EQ(confirmations, 1928);
-
-  JsonObject timestamp = data["timestamp"];
-
-  int epoch = timestamp["epoch"];
-  ASSERT_EQ(32794053, epoch);
-
-  int timestampUnix = timestamp["unix"];
-  ASSERT_EQ(1522895253, timestampUnix);
-
-  const auto human = timestamp["human"];
-  ASSERT_STREQ("2018-04-05T02:27:33Z", human);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                transaction.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -88,56 +52,29 @@ TEST(api, test_transaction) {  // NOLINT
 TEST(api, test_transaction_types) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "data": {
-      "Transfer": 0,
-      "SecondSignature": 1,
-      "DelegateRegistration": 2,
-      "Vote": 3,
-      "MultiSignature": 4,
-      "Ipfs": 5,
-      "TimelockTransfer": 6,
-      "MultiPayment": 7,
-      "DelegateResignation": 8
+        "Transfer": 0,
+        "SecondSignature": 1,
+        "DelegateRegistration": 2,
+        "Vote": 3,
+        "MultiSignature": 4,
+        "Ipfs": 5,
+        "TimelockTransfer": 6,
+        "MultiPayment": 7,
+        "DelegateResignation": 8
     }
   })";
 
-  EXPECT_CALL(connection.api.transactions, types()).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, types())
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
   const auto types = connection.api.transactions.types();
 
-  DynamicJsonDocument doc(444);
-  DeserializationError error = deserializeJson(doc, types);
-  if (error) { exit(0); }
-
-  JsonObject data = doc["data"];
-
-  int Transfer = data["Transfer"];
-  ASSERT_EQ(0, Transfer);
-
-  int SecondSignature = data["SecondSignature"];
-  ASSERT_EQ(1, SecondSignature);
-
-  int DelegateRegistration = data["DelegateRegistration"];
-  ASSERT_EQ(2, DelegateRegistration);
-
-  int Vote = data["Vote"];
-  ASSERT_EQ(3, Vote);
-
-  int MultiSignature = data["MultiSignature"];
-  ASSERT_EQ(4, MultiSignature);
-
-  int Ipfs = data["Ipfs"];
-  ASSERT_EQ(5, Ipfs);
-
-  int TimelockTransfer = data["TimelockTransfer"];
-  ASSERT_EQ(6, TimelockTransfer);
-
-  int MultiPayment = data["MultiPayment"];
-  ASSERT_EQ(7, MultiPayment);
-
-  int DelegateResignation = data["DelegateResignation"];
-  ASSERT_EQ(8, DelegateResignation);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                types.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -145,76 +82,36 @@ TEST(api, test_transaction_types) {  // NOLINT
 TEST(api, test_transaction_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "data": {
-      "id": "dummy",
-      "blockId": "dummy",
-      "type": 0,
-      "amount": 10000000,
-      "fee": 10000000,
-      "sender": "dummy",
-      "recipient": "dummy",
-      "signature": "dummy",
-      "vendorField": "dummy",
-      "confirmations": 10,
-      "timestamp": {
-        "epoch": 40505460,
-        "unix": 1530606660,
-        "human": "2018-07-03T08:31:00Z"
-      }
+        "id": "5685946299c426f68c6a6f007059e8f5f015538575b5ef05584963b5837b4c5d",
+        "version": 1,
+        "type": 0,
+        "amount": 100000000,
+        "fee": 673078,
+        "sender": "DTQgqpnRkkJ2jKNB8DTNjAhhcwZx1JZrgx",
+        "senderPublicKey": "033e6e27afd6336946b21a3f4fc1a03205a9a561fbd982ce38e6dfd771c983e70c",
+        "recipient": "DFSByMjuFNQy1MkRyyBPxEr6fqsu2w5ava",
+        "signature": "3045022100e47f4f1b33cc9376138d87529c24e37afd37a36c87f0b53a1700d1d24c6d629e022009bf60d8a99e9048b07bc9bedaef7c41b28154a0dff147ae10891b5f45bb4954",
+        "vendorField": "🐭",
+        "confirmations": 0,
+        "timestamp": {
+            "epoch": 70597829,
+            "unix": 1560699029,
+            "human": "2019-06-16T15:30:29.000Z"
+        }
     }
   })";
 
-  EXPECT_CALL(connection.api.transactions, getUnconfirmed(_)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, getUnconfirmed(_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const auto transactionUnconfirmed = connection.api.transactions.getUnconfirmed("dummy");
+  const auto unconfirmed = connection.api.transactions.getUnconfirmed("dummy");
 
-  DynamicJsonDocument doc(652);
-  DeserializationError error = deserializeJson(doc, transactionUnconfirmed);
-  if (error) { exit(0); }
-
-  JsonObject data = doc["data"];
-
-  const auto id = data["id"];
-  ASSERT_STREQ("dummy", id);
-
-  const auto blockId = data["blockId"];
-  ASSERT_STREQ("dummy", blockId);
-
-  int type = data["type"];
-  ASSERT_EQ(0, type);
-
-  uint64_t amount = data["amount"];
-  ASSERT_TRUE(10000000ULL == amount);
-
-  uint64_t fee = data["fee"];
-  ASSERT_TRUE(10000000ULL == fee);
-
-  const auto sender = data["sender"];
-  ASSERT_STREQ("dummy", sender);
-
-  const auto recipient = data["recipient"];
-  ASSERT_STREQ("dummy", recipient);
-
-  const auto signature = data["signature"];
-  ASSERT_STREQ("dummy", signature);
-
-  const auto vendorField = data["vendorField"];
-  ASSERT_STREQ("dummy", vendorField);
-
-  int confirmations = data["confirmations"];
-  ASSERT_EQ(10, confirmations);
-
-  JsonObject timestamp = data["timestamp"];
-
-  uint64_t epoch = timestamp["epoch"];
-  ASSERT_TRUE(40505460ULL == epoch);
-
-  uint64_t unix_timestamp = timestamp["unix"];
-  ASSERT_TRUE(1530606660ULL == unix_timestamp);
-
-  const auto human = timestamp["human"];
-  ASSERT_STREQ("2018-07-03T08:31:00Z", human);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                unconfirmed.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -222,63 +119,50 @@ TEST(api, test_transaction_unconfirmed) {  // NOLINT
 TEST(api, test_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "meta": {
-      "count": 2,
-      "pageCount": 127430,
-      "totalCount": 254860,
-      "next": "/v2/transactions?page=2",
-      "previous": null,
-      "self": "/v2/transactions?page=1",
-      "first": "/v2/transactions?page=1",
-      "last": "/v2/transactions?page=127430"
+        "totalCountIsEstimate": false,
+        "count": 1,
+        "pageCount": 778588,
+        "totalCount": 778588,
+        "next": "/api/transactions?limit=1&page=2&transform=true",
+        "previous": null,
+        "self": "/api/transactions?limit=1&page=1&transform=true",
+        "first": "/api/transactions?limit=1&page=1&transform=true",
+        "last": "/api/transactions?limit=1&page=778588&transform=true"
     },
     "data": [
-      {
-        "id": "5c6ce775447a5acd22050d72e2615392494953bb1fb6287e9ffb3c33eaeb79aa",
-        "blockId": "4271682877946294396",
-        "type": 0,
-        "amount": 32106400000,
-        "fee": 10000000,
-        "sender": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
-        "recipient": "DQnQNoJuNCvpjYhxL7fsnGepHBqrumgsyP",
-        "signature": "3044022047c39f6f45a46a87f91ca867f9551dbebf0035adcfcbdc1370222c7a1517fc0002206fb5ecc10460e0352a8b626a508e2fcc76e39e490b0a2581dd772ebc8079696e",
-        "confirmations": 1924,
-        "timestamp": {
-          "epoch": 32794053,
-          "unix": 1522895253,
-          "human": "2018-04-05T02:27:33Z"
+        {
+            "id": "ba022647988fd878c9962267c994f6f314f8483eb793da498c3732bec8486fcc",
+            "blockId": "71f15e65f23554e5a57067cb18333d082641074c2a1a190df44a273eb04693d3",
+            "version": 1,
+            "type": 0,
+            "amount": "1980000",
+            "fee": "500000",
+            "sender": "DUTnUVuUFrW3SuWQMbR5ibYkcJ16KhfNKM",
+            "senderPublicKey": "02747353898e59c4f784542f357d5dd938a2872adb53abb94924091fddfdd83dc3",
+            "recipient": "DQdpw8RPwZKri4HsHxgMVyuLi5memjxo97",
+            "signature": "304402206c053265fa0d99418bc5ecbdba3d097e7828a790a1ab3ff53d26b977b48fb98a022015ba5c9b6c5b73e583f50603b6cf5b645e4169633368fa4ee63a6917e047a5da",
+            "vendorField": "generaliroh - this is just leafy water",
+            "confirmations": 82,
+            "timestamp": {
+                "epoch": 72727769,
+                "unix": 1562828969,
+                "human": "2019-07-11T07:09:29.000Z"
+            }
         }
-      }
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, all(_, _)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, all(_, _))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const auto transactions = connection.api.transactions.all(2, 1);
+  const auto transactions = connection.api.transactions.all(1, 1);
 
-  DynamicJsonDocument doc(1348);
-  DeserializationError error = deserializeJson(doc, transactions);
-  if (error) { exit(0); }
-
-  JsonObject meta = doc["meta"];
-
-  int count = meta["count"];
-  ASSERT_NE(0, count);
-
-  int pageCount = meta["pageCount"];
-  ASSERT_NE(0, pageCount);
-
-  int totalCount = meta["totalCount"];
-  ASSERT_NE(0, totalCount);
-
-  JsonObject dataZero = doc["data"][0];
-
-  int type = dataZero["type"];
-  ASSERT_EQ(0, type);
-
-  uint64_t fee = dataZero["fee"];
-  ASSERT_TRUE(fee >= 0);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                transactions.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -286,56 +170,48 @@ TEST(api, test_transactions) {  // NOLINT
 TEST(api, test_transactions_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "meta": {
-      "count": 1,
-      "pageCount": 1,
-      "totalCount": 1,
-      "next": null,
-      "previous": null,
-      "self": "/api/transactions/unconfirmed?page=1&limit=1",
-      "first": "/api/transactions/unconfirmed?page=1&limit=1",
-      "last": "/api/transactions/unconfirmed?page=1&limit=1"
+        "count": 1,
+        "pageCount": 1,
+        "totalCount": 1,
+        "next": null,
+        "previous": null,
+        "self": "/api/transactions/unconfirmed?transform=true&page=1&limit=100",
+        "first": "/api/transactions/unconfirmed?transform=true&page=1&limit=100",
+        "last": "/api/transactions/unconfirmed?transform=true&page=1&limit=100"
     },
     "data": [
-      {
-        "id": "dummy",
-        "blockId": "dummy",
-        "type": 0,
-        "amount": 10000000,
-        "fee": 10000000,
-        "sender": "dummy",
-        "recipient": "dummy",
-        "signature": "dummy",
-        "vendorField": "dummy",
-        "confirmations": 10,
-        "timestamp": {
-          "epoch": 40505460,
-          "unix": 1530606660,
-          "human": "2018-07-03T08:31:00Z"
+        {
+            "id": "5685946299c426f68c6a6f007059e8f5f015538575b5ef05584963b5837b4c5d",
+            "version": 1,
+            "type": 0,
+            "amount": 100000000,
+            "fee": 673078,
+            "sender": "DTQgqpnRkkJ2jKNB8DTNjAhhcwZx1JZrgx",
+            "senderPublicKey": "033e6e27afd6336946b21a3f4fc1a03205a9a561fbd982ce38e6dfd771c983e70c",
+            "recipient": "DFSByMjuFNQy1MkRyyBPxEr6fqsu2w5ava",
+            "signature": "3045022100e47f4f1b33cc9376138d87529c24e37afd37a36c87f0b53a1700d1d24c6d629e022009bf60d8a99e9048b07bc9bedaef7c41b28154a0dff147ae10891b5f45bb4954",
+            "vendorField": "🐭",
+            "confirmations": 0,
+            "timestamp": {
+                "epoch": 70597829,
+                "unix": 1560699029,
+                "human": "2019-06-16T15:30:29.000Z"
+            }
         }
-      }
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const auto transactionsUnconfirmed = connection.api.transactions.allUnconfirmed(5, 1);
+  const auto unconfirmed = connection.api.transactions.allUnconfirmed(1, 1);
 
-  DynamicJsonDocument doc(1164);
-  DeserializationError error = deserializeJson(doc, transactionsUnconfirmed);
-  if (error) { exit(0); }
-
-  JsonObject meta = doc["meta"];
-
-  int count = meta["count"];
-  ASSERT_TRUE(count >= 0);
-
-  int pageCount = meta["pageCount"];
-  ASSERT_TRUE(pageCount >= 0);
-
-  int totalCount = meta["totalCount"];
-  ASSERT_TRUE(totalCount >= 0);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                unconfirmed.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -343,79 +219,54 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
 TEST(api, test_transactions_search) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "meta": {
-      "count": 1,
-      "pageCount": 1,
-      "totalCount": 1,
-      "next": null,
-      "previous": null,
-      "self": "/api/transactions/search?page=1&limit=1",
-      "first": "/api/transactions/search?page=1&limit=1",
-      "last": "/api/transactions/search?page=1&limit=1"
+        "totalCountIsEstimate": false,
+        "count": 1,
+        "pageCount": 762344,
+        "totalCount": 762344,
+        "next": "/api/transactions/search?limit=1&page=2&transform=true",
+        "previous": null,
+        "self": "/api/transactions/search?limit=1&page=1&transform=true",
+        "first": "/api/transactions/search?limit=1&page=1&transform=true",
+        "last": "/api/transactions/search?limit=1&page=762344&transform=true"
     },
     "data": [
-      {
-        "id": "dummy",
-        "blockId": "dummy",
-        "type": 0,
-        "amount": 10000000,
-        "fee": 10000000,
-        "sender": "dummy",
-        "recipient": "dummy",
-        "signature": "dummy",
-        "vendorField": "dummy",
-        "confirmations": 10,
-        "timestamp": {
-          "epoch": 40505460,
-          "unix": 1530606660,
-          "human": "2018-07-03T08:31:00Z"
+        {
+            "id": "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4",
+            "blockId": "37c2f608910d0624ba114ba9855b3762b2095cd9c2866e1a6ead6c887ff5b07c",
+            "version": 1,
+            "type": 0,
+            "amount": "1980000",
+            "fee": "500000",
+            "sender": "DUTnUVuUFrW3SuWQMbR5ibYkcJ16KhfNKM",
+            "senderPublicKey": "02747353898e59c4f784542f357d5dd938a2872adb53abb94924091fddfdd83dc3",
+            "recipient": "DFrnspWhQsJVQswy6qkWWgpyGm4Kj1FA8s",
+            "signature": "30440220015f53fff9d86e0ca38f18066ec64b078b6391d420f27d452f2e530ca50571320220162e95d725c154bee54767ab5e9e10824ad9e77a97b47901381b820b33635b25",
+            "vendorField": "generaliroh - uncle",
+            "confirmations": 10,
+            "timestamp": {
+                "epoch": 72728617,
+                "unix": 1562829817,
+                "human": "2019-07-11T07:23:37.000Z"
+            }
         }
-      }
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, search(_, _, _)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.transactions, search(_, _, _))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const std::map<std::string, std::string> body = {
-    { "id", "dummy" }
-  };
-  const auto transactions = connection.api.transactions.search(body, 5, 1);
+std::map<std::string, std::string> body{{
+  "id", "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4"
+}};
 
-  DynamicJsonDocument doc(1148);
-  DeserializationError error = deserializeJson(doc, transactions);
-  if (error) { exit(0); }
+  const auto transactions = connection.api.transactions.search(body, 1, 1);
 
-  JsonObject meta = doc["meta"];
-
-  int count = meta["count"];
-  ASSERT_TRUE(count >= 0);
-
-  int pageCount = meta["pageCount"];
-  ASSERT_TRUE(pageCount >= 0);
-
-  int totalCount = meta["totalCount"];
-  ASSERT_TRUE(totalCount >= 0);
-
-  JsonObject data = doc["data"][0];
-
-  const auto id = data["id"];
-  ASSERT_STREQ("dummy", id);
-
-  const auto blockId = data["blockId"];
-  ASSERT_STREQ("dummy", blockId);
-
-  int type = data["type"];
-  ASSERT_EQ(0, type);
-
-  const auto sender = data["sender"];
-  ASSERT_STREQ("dummy", sender);
-
-  const auto recipient = data["recipient"];
-  ASSERT_STREQ("dummy", recipient);
-
-  const auto signature = data["signature"];
-  ASSERT_STREQ("dummy", signature);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                transactions.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
@@ -423,7 +274,7 @@ TEST(api, test_transactions_search) {  // NOLINT
 TEST(api, test_transactions_send) {  // NOLINT
     Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
 
-    const std::string response = R"({
+    const std::string expected_response = R"({
       "data": {
         "accept": [
           "dummy"
@@ -436,8 +287,6 @@ TEST(api, test_transactions_send) {  // NOLINT
       },
       "errors": null
     })";
-
-  EXPECT_CALL(connection.api.transactions, send(_)).Times(1).WillOnce(Return(response));
 
   std::string jsonTransaction = "{"
     "\"transactions\":["
@@ -455,26 +304,13 @@ TEST(api, test_transactions_send) {  // NOLINT
     "]"
   "}";
 
+  EXPECT_CALL(connection.api.transactions, send(_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
   const auto transaction = connection.api.transactions.send(jsonTransaction);
 
-  DynamicJsonDocument doc(324);
-  DeserializationError error = deserializeJson(doc, transaction);
-  if (error) { exit(0); }
-
-  JsonObject data = doc["data"];
-
-  std::string accept = data["accept"];
-  ASSERT_NE(accept.length(), 0);
-
-  std::string broadcast = data["broadcast"];
-  ASSERT_NE(broadcast.length(), 0);
-
-  std::string excess = data["excess"];
-  ASSERT_EQ(excess.length(), 2);
-
-  std::string invalid = data["invalid"];
-  ASSERT_EQ(invalid.length(), 2);
-
-  std::string errors = data["errors"];
-  ASSERT_EQ(errors.length(), 4);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                transaction.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }

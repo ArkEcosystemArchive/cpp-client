@@ -1,9 +1,6 @@
 [submodule "test/lib/googletest"]
 	path = test/lib/googletest
 	url = https://github.com/google/googletest.git
-[submodule "test/lib/ArduinoJson"]
-	path = test/lib/ArduinoJson
-	url = https://github.com/bblanchon/ArduinoJson
 [submodule "src/lib/curl"]
 	path = src/lib/curl
 	url = https://github.com/curl/curl
