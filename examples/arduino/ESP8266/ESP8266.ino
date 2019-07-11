@@ -69,6 +69,22 @@ Ark::Client::Connection<Ark::Client::Api> connection(peer, port);
 /****************************************/
 
 void checkAPI() {
+  // With this API endpoint, you can find ARK Blockchain info.
+  // This is equivalent to calling 'https://dexplorer.ark.io/api//blockchain'
+  //
+  // {
+  //     "data": {
+  //         "block": {
+  //             "height": 2922163,
+  //             "id": "84125ec94ba3f3a2d6fd6643d50c98ed2f3c8fa62d8c939355974f404e9b3906"
+  //         },
+  //         "supply": "13082272800000000"
+  //     }
+  // }
+  const auto blockchainResponse = connection.api.blockchain.get();
+  Serial.print("\nBlockchain Response: ");
+  Serial.println(blockchainResponse.c_str()); 
+
   /********************/
 
   /**

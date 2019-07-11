@@ -35,6 +35,7 @@ SRC_DIR=${EXTRAS_DIR}/../src
 INCLUDE_API_DIR=${INCLUDE_DIR}/api
 SRC_API_DIR=${SRC_DIR}/api
 
+INCLUDE_BLOCKCHAIN_DIR=${INCLUDE_DIR}/api/blockchain
 INCLUDE_BLOCKS_DIR=${INCLUDE_DIR}/api/blocks
 INCLUDE_DELEGATES_DIR=${INCLUDE_DIR}/api/delegates
 INCLUDE_NODE_DIR=${INCLUDE_DIR}/api/node
@@ -43,6 +44,7 @@ INCLUDE_TRANSACTIONS_DIR=${INCLUDE_DIR}/api/transactions
 INCLUDE_VOTES_DIR=${INCLUDE_DIR}/api/votes
 INCLUDE_WALLETS_DIR=${INCLUDE_DIR}/api/wallets
 
+SRC_BLOCKCHAIN_DIR=${SRC_DIR}/api/blockchain
 SRC_BLOCKS_DIR=${SRC_DIR}/api/blocks
 SRC_DELEGATES_DIR=${SRC_DIR}/api/delegates
 SRC_NODE_DIR=${SRC_DIR}/api/node
@@ -105,6 +107,7 @@ if [[ -d ${INCLUDE_DIR} ]]; then
   mv ${INCLUDE_API_DIR}/base.h      ${SRC_API_DIR}
   mv ${INCLUDE_API_DIR}/paths.h     ${SRC_API_DIR}
 
+  mv ${INCLUDE_BLOCKCHAIN_DIR}/blockchain.hpp   ${SRC_BLOCKCHAIN_DIR}
   mv ${INCLUDE_BLOCKS_DIR}/blocks.h             ${SRC_BLOCKS_DIR}
   mv ${INCLUDE_DELEGATES_DIR}/delegates.h       ${SRC_DELEGATES_DIR}
   mv ${INCLUDE_NODE_DIR}/node.h                 ${SRC_NODE_DIR}
@@ -147,6 +150,7 @@ else
 
   echo -e "Recreating API directories 🗂\n"
   mkdir ${INCLUDE_API_DIR}
+  mkdir ${INCLUDE_BLOCKCHAIN_DIR}
   mkdir ${INCLUDE_BLOCKS_DIR}
   mkdir ${INCLUDE_DELEGATES_DIR}
   mkdir ${INCLUDE_NODE_DIR}
@@ -161,6 +165,7 @@ else
   mv ${SRC_API_DIR}/base.h      ${INCLUDE_API_DIR}
   mv ${SRC_API_DIR}/paths.h     ${INCLUDE_API_DIR}
 
+  mv ${SRC_BLOCKCHAIN_DIR}/blockchain.hpp   ${INCLUDE_BLOCKCHAIN_DIR}
   mv ${SRC_BLOCKS_DIR}/blocks.h             ${INCLUDE_BLOCKS_DIR}
   mv ${SRC_DELEGATES_DIR}/delegates.h       ${INCLUDE_DELEGATES_DIR}
   mv ${SRC_NODE_DIR}/node.h                 ${INCLUDE_NODE_DIR}
