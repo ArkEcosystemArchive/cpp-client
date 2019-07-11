@@ -1,10 +1,9 @@
+
 #include "gtest/gtest.h"
 
 #include "http/http.h"
 
 // Note: These test HTTP against a live server
-
-#include <iostream>
 
 TEST(api, test_http_get) { // NOLINT
   // Create the HTTP object

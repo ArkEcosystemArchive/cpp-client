@@ -40,6 +40,7 @@ void setup() {
     Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
     Serial.println(arkClient.blockchain.get().c_str());
+    Serial.println();
 
     Serial.println(arkClient.blocks.all().c_str());
     Serial.println();
