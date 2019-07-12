@@ -6,11 +6,11 @@ int main(int argc, char* argv[]) {
   // Create a connection
   Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
-  // Check the API Version
-  const auto apiVersion = connection.api.version();
-  std::cout << "API Version: " << apiVersion << "\n\n";
-
   // Perform an API call using the connection to access endpoint
+  const auto blockchainResponse = connection.api.blockchain.get();
+  std::cout << "Response for blockchain:\n";
+  std::cout << blockchainResponse << "\n\n";
+
   const auto blockResponse = connection.api.blocks.get("13114381566690093367");
   std::cout << "Response for block '13114381566690093367':\n";
   std::cout << blockResponse << "\n\n";

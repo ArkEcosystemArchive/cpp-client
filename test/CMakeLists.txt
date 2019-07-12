@@ -32,6 +32,7 @@ set(TEST_API_PATHS_SRC
 )
 
 set(TEST_API_SRC
+	${PROJECT_SOURCE_DIR}/api/blockchain.cpp
 	${PROJECT_SOURCE_DIR}/api/blocks.cpp
 	${PROJECT_SOURCE_DIR}/api/delegates.cpp
 	${PROJECT_SOURCE_DIR}/api/node.cpp

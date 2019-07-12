@@ -11,21 +11,22 @@ This package is still under development. This page will get more content as it e
 [[toc]]
 
 ## Platforms
-* [Arduino](#Arduino)  
-* [Linux >= 16.04](#OS)  
-* [macOS >= 10.10](#OS)  
-* [Windows >= 7](#OS)  
+
+- [Arduino](#Arduino)
+- [Linux >= 16.04](#OS)
+- [macOS >= 10.10](#OS)
+- [Windows >= 7](#OS)
 
 ## Usage
 
-The Cpp Client is meant to be used for creating request to an API endpoint.  
-For cryptography related functionality, such as generating addresses or creating transactions,  
+The Cpp Client is meant to be used for creating request to an API endpoint.
+For cryptography related functionality, such as generating addresses or creating transactions,
 please see the [Cpp Crypto](https://github.com/ArkEcosystem/cpp-crypto) repository.
 
 ### Connection
 
-Before making a request, you should create a `Connection`.  
-A `Connection` expects a `host`, which is an url on which the API can be reached.  
+Before making a request, you should create a `Connection`.
+A `Connection` expects a `host`, which is an url on which the API can be reached.
 An example `Connection`, that interfaces with the API of an Ark Node, would be created as follows:
 
 ```cpp
@@ -38,10 +39,9 @@ Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 The below example shows how you can perform a request.
 
 ```cpp
-// Check the API Version
-auto apiVersion = connection.api.version();
-
 // Perform an API call using the connection to access endpoint
+const auto blockchainResponse = connection.api.blockchain.get();
+
 const auto blockResponse = connection.api.blocks.get("13114381566690093367")
 
 const auto delegateResponse = connection.api.delegates.get("boldninja");
@@ -56,18 +56,22 @@ const auto vote = connection.api.votes.get("d202acbfa947acac53ada2ac8a0eb662c9f7
 
 const auto walletsSearch = connection.api.wallets.search({"username", "baldninja"});
 ```
-> *note: All API response are of the type `std::string`
 
-# 
+> \*note: All API response are of the type `std::string`
+
+#
 
 ### Getting an API Path
 
-There are instances when a client may use a gateway or bridge to do http get/post;  
-for this we have provided an interface for obtaining a properly formatted API Path for a given API Endpoint.  
+There are instances when a client may use a gateway or bridge to do http get/post;
+for this we have provided an interface for obtaining a properly formatted API Path for a given API Endpoint.
 Below are examples of how to access the Path interface:
 
 ```cpp
 Ark::Client::Host dummyHost("0.0.0.0:4003");
+
+std::string blockchainGetPath = Ark::Client::API::Paths::Blockschain::get(dummyHost);
+// blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
 
 std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, 5 /* limit */, 1 /* page */);
 // blocksAllPath will be the string "0.0.0.0:4003/api/v2/blocks?limit=5&page=1"
@@ -100,14 +104,15 @@ std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths:
 ```
 
 # Arduino
-**Arduino IDE:**  
-Download and install the Arduino IDE (>=1.8.5) from the following link:  
-```https://www.arduino.cc/en/Main/Software```
 
-Using the Arduino IDE's built in Library Manager,  
-install the following Libraries:  
-```ArduinoJson v6.10.1```  
-```AUnit```
+**Arduino IDE:**
+Download and install the Arduino IDE (>=1.8.5) from the following link:
+`https://www.arduino.cc/en/Main/Software`
+
+Using the Arduino IDE's built in Library Manager,
+install the following Libraries:
+`ArduinoJson v6.10.1`
+`AUnit`
 
 #### Arduino Example using the Adafruit Feather ESP8266
 
@@ -129,15 +134,17 @@ void setup() {
 
     Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
+    Serial.println(arkClient.blockchain.get().c_str());
+
     auto allBlocks = arkClient.blocks.all();
     Serial.println(allBlocks.c_str());
 
     auto allDelegates = arkClient.delegates.all();
     Serial.println(allDelegates.c_str());
-  
+
     auto delegatesCount = arkClient.delegates.count();
     Serial.println(delegatesCount.c_str());
-  
+
     auto allPeers = arkClient.peers.all();
     Serial.println(allPeers.c_str());
 
@@ -148,15 +155,17 @@ void setup() {
 void loop() {}
 ```
 
-**PlatformIO IDE:**  
+**PlatformIO IDE:**
 
-#### Python:  
-Use an installer package from the following link or use your preferred method to install Python:  
-```https://www.python.org/downloads/```  
+#### Python:
+
+Use an installer package from the following link or use your preferred method to install Python:
+`https://www.python.org/downloads/`
 
 Install PlatformIO:
 
     pip install -U platformio
+
 or
 
     python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
@@ -165,12 +174,14 @@ Install ArduinoJson@6.10.1 AUnit (2778)
 
     platformio lib -g install 64@6.10.1 2778
 
-#### Provide your WiFi info for your board to access the internet   
+#### Provide your WiFi info for your board to access the internet
 
-Open the following file in your preferred code editor:  
-> "*.../cpp-client/test/IoT/test_main.cpp*"  
+Open the following file in your preferred code editor:
 
-lines 19 & 20:  
+> "_.../cpp-client/test/IoT/test_main.cpp_"
+
+lines 19 & 20:
+
 ```
 char ssid[] = "your_ssid";     //  your network SSID (name)
 const char password[] = "your_password";  // your network password
@@ -178,36 +189,39 @@ const char password[] = "your_password";  // your network password
 
 #### running the tests on an Arduino board
 
-    cd Cpp-Client 
+    cd Cpp-Client
     cd test
 
-#### execute the following command to upload test to your board  
+#### execute the following command to upload test to your board
 
->| board | command |
->|:-- |:-- |
->| ESP8266 | ```pio run -e esp8266 -t upload``` |
->| ESP32 | ```pio run -e esp32 -t upload``` |
+> | board   | command                        |
+> | :------ | :----------------------------- |
+> | ESP8266 | `pio run -e esp8266 -t upload` |
+> | ESP32   | `pio run -e esp32 -t upload`   |
 
 #
 
 # OS
+
 ## Linux, macOS and Windows
 
-**CMake:**  
+**CMake:**
 
-Use an installer package from the following link, Homebrew, or use your preferred method:  
-```https://www.cmake.org/download/```
+Use an installer package from the following link, Homebrew, or use your preferred method:
+`https://www.cmake.org/download/`
 
 using
-**Homebrew:**  
+**Homebrew:**
 
     brew install cmake
 
 > note: all other dependencies will be automatically installed via git submodule and CMake.
 
 ### make and build
-    cd cpp-client/  
+
+    cd cpp-client/
     cmake . && cmake --build .
 
 ### run tests
+
     ./bin/Ark-Cpp-Client-tests

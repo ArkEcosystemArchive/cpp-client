@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  **/
- 
+
 /**
  * ESP32 Cpp-Client Usage Example Sketch
  *
@@ -46,11 +46,11 @@ const char* password = "yourWiFiPassword";
 
 /****************************************/
 
-/** 
+/**
  *  This is the IP address of an Ark Node
  *  Specifically, this is a Devnet V2 Node IP
  *  You can find more peers here: https://github.com/ArkEcosystem/peers
- *  
+ *
  *  The Public API port for the V2 Ark network is '4003'
  */
 const char* peer = "167.114.29.55";
@@ -69,26 +69,33 @@ Ark::Client::Connection<Ark::Client::Api> connection(peer, port);
 /****************************************/
 
 void checkAPI() {
-  /**
-   * This is how you can check the Version of the API
-   * In this example, it should return '2' as an 'int' for V2 of Arks' API. 
-   */
-  auto apiVersion = connection.api.version();
-    Serial.print("\nAPI Version: ");
-    Serial.println(apiVersion);
-  /**/
+  // With this API endpoint, you can find ARK Blockchain info.
+  // This is equivalent to calling 'https://dexplorer.ark.io/api//blockchain'
+  //
+  // {
+  //     "data": {
+  //         "block": {
+  //             "height": 2922163,
+  //             "id": "84125ec94ba3f3a2d6fd6643d50c98ed2f3c8fa62d8c939355974f404e9b3906"
+  //         },
+  //         "supply": "13082272800000000"
+  //     }
+  // }
+  const auto blockchainResponse = connection.api.blockchain.get();
+  Serial.print("\nBlockchain Response: ");
+  Serial.println(blockchainResponse.c_str()); 
 
   /********************/
 
   /**
    * Here you can call a list of 'All' 'Blocks' on the network.
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
-   *  
+   *
    * This is equivalent to calling '167.114.29.49:4003/api/v2/blocks?limit=2&page=1'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this
-   * 
+   *
    * {
    *  "meta": {
    *    "count": 2,
@@ -159,7 +166,7 @@ void checkAPI() {
    *    }
    *  ]
    * }
-   * 
+   *
    */
   const auto blocksResponse = connection.api.blocks.all(2, 1);
     Serial.print("\nBlocks Response: ");
@@ -171,12 +178,12 @@ void checkAPI() {
   /**
    * The following method can be used to search for a speficit Delegate.
    * In this case, 'boldninja'.
-   * 
+   *
    * This is equivalent to calling '167.114.29.49:4003/api/v2/delegates/boldninja'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
-   * 
+   *
    * {
    *  "data": {
    *    "username": "boldninja",
@@ -218,12 +225,12 @@ void checkAPI() {
 
   /**
    * The following method can be used to get the Status of a Node.
-   * 
+   *
    * This is equivalent to calling '167.114.29.49:4003/api/v2/node/status'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
-   * 
+   *
    * {
    *  "data": {
    *    "synced": true,
@@ -241,11 +248,11 @@ void checkAPI() {
 
   /**
    * The following method can be used to get a list of 'All' 'Peers' on the network.
-   * 
+   *
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
-   * 
+   *
    * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/peers?limit=2&page=1'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
    *
@@ -293,9 +300,9 @@ void checkAPI() {
 
   /**
    * The following method can be used to get a list of 'Transaction' 'Types'.
-   * 
+   *
    * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/transactions/types'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
    *
@@ -323,9 +330,9 @@ void checkAPI() {
   /**
    * This method can be used to get a list of 'Vote' Transactions.
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
-   * 
+   *
    * This is equivalent to calling 'http://167.114.29.49:4003/api/v2/votes?limit=2&page=1'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
    *
@@ -398,9 +405,9 @@ void checkAPI() {
   /**
    * This method can be used to get a list of 'Top' 'Wallets' (Wallets with the most ARK).
    * The '2' and '1' refer to the pagination (e.g. response limit and how many pages)
-   * 
+   *
    * This is equivalent to calling '167.114.29.49:4003/api/v2/wallets/top?limit=2&page=1'
-   * 
+   *
    * The response should be a json-formatted object
    * The "pretty print" version would look something like this:
    *

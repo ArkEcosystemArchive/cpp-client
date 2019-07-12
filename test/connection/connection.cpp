@@ -6,8 +6,6 @@
 
 TEST(api, test_connection) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-  int version = connection.api.version();
-  ASSERT_EQ(2, version);
 
   const auto ip = connection.host.ip().c_str();
   ASSERT_STREQ("167.114.29.55", ip);

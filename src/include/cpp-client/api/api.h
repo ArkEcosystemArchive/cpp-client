@@ -12,6 +12,7 @@
 
 #include "api/abstract.h"
 #include "api/api.h"
+#include "api/blockchain/blockchain.hpp"
 #include "api/blocks/blocks.h"
 #include "api/delegates/delegates.h"
 #include "api/node/node.h"
@@ -25,6 +26,7 @@ namespace Client {
 /**/
 class Api : public API::Abstract {
 public:
+  API::Blockchain blockchain;
   API::Blocks blocks;
   API::Delegates delegates;
   API::Node node;
@@ -34,7 +36,8 @@ public:
   API::Wallets wallets;
 
   Api()
-      : API::Abstract(2),
+      : API::Abstract(),
+        blockchain(host_, *http_),
         blocks(host_, *http_),
         delegates(host_, *http_),
         node(host_, *http_),

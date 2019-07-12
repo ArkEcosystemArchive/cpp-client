@@ -14,9 +14,6 @@ using testing::Return;
 TEST(api, test_node_configuration) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "nethash": "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",
@@ -103,9 +100,6 @@ TEST(api, test_node_configuration) {  // NOLINT
 TEST(api, test_node_status) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
 
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
-
   const std::string response = R"({
     "data": {
       "synced": false,
@@ -138,9 +132,6 @@ TEST(api, test_node_status) {  // NOLINT
 
 TEST(api, test_node_syncing) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
-
-  auto apiVersion = connection.api.version();
-  ASSERT_EQ(2, apiVersion);
 
   const std::string response = R"({
     "data": {

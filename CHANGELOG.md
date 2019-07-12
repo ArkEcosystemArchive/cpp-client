@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- added Blockchain API endpoint ([#104])
+
 ### Changed
 
 - improved class members and test coverage ([#93])

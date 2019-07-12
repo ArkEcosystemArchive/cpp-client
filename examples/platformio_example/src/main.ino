@@ -12,13 +12,12 @@ void setup() {
 void loop() {
   // Create a connection
   Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
-  
-  // Check the API Version
-  const auto apiVersion = connection.api.version();
-  Serial.print("API Version: "); Serial.println(apiVersion);
-  Serial.println();
 
   // Perform an API call using the connection to access endpoint
+  const auto blockchainResponse = connection.api.blockchain.get();
+  Serial.print("\nResponse for blockchain:");
+  Serial.println(blockchainResponse.c_str());
+
   const auto blockResponse = connection.api.blocks.get("13114381566690093367");
   Serial.println("Response for block '13114381566690093367':");
   Serial.println(blockResponse.c_str());
