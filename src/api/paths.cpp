@@ -25,7 +25,7 @@ std::string Ark::Client::API::Paths::Blockchain::get(
  * Blocks
  **/
 const char* Ark::Client::API::Paths::Blocks::base() {
-  return "/api/v2/blocks";
+  return "/api/blocks";
 }
 
 /**/
@@ -105,7 +105,7 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
  * Delegates
  **/
 const char* Ark::Client::API::Paths::Delegates::base() {
-  return "/api/v2/delegates";
+  return "/api/delegates";
 }
 
 /**/
@@ -181,7 +181,7 @@ std::string Ark::Client::API::Paths::Delegates::voters(
  * Node
  **/
 const char* Ark::Client::API::Paths::Node::base() {
-  return "/api/v2/node";
+  return "/api/node";
 }
 
 /**/
@@ -226,7 +226,7 @@ std::string Ark::Client::API::Paths::Node::syncing(Host& newHost) {
  * Peers
  **/
 const char* Ark::Client::API::Paths::Peers::base() {
-  return "/api/v2/peers";
+  return "/api/peers";
 }
 
 /**/
@@ -266,7 +266,7 @@ std::string Ark::Client::API::Paths::Peers::all(
  * Transactions
  **/
 const char* Ark::Client::API::Paths::Transactions::base() {
-  return "/api/v2/transactions";
+  return "/api/transactions";
 }
 
 /**/
@@ -389,7 +389,7 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::send(
  * Votes
  **/
 const char* Ark::Client::API::Paths::Votes::base() {
-  return "/api/v2/votes";
+  return "/api/votes";
 }
 
 /**/
@@ -429,7 +429,7 @@ std::string Ark::Client::API::Paths::Votes::all(
  * Wallets
  **/
 const char* Ark::Client::API::Paths::Wallets::base() {
-  return "/api/v2/wallets";
+  return "/api/wallets";
 }
 
 /**/

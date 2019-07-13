@@ -1,8 +1,8 @@
-#include "arkClient.h"
+#include <arkClient.h>
 
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {  // NOLINT
   // Create a connection
   Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
@@ -15,8 +15,8 @@ int main(int argc, char* argv[]) {
   std::cout << "Response for block '13114381566690093367':\n";
   std::cout << blockResponse << "\n\n";
 
-  const auto delegateResponse = connection.api.delegates.get("boldninja");
-  std::cout << "Response for delegate 'boldninja':\n";
+  const auto delegateResponse = connection.api.delegates.get("genesis_1");
+  std::cout << "Response for delegate 'genesis_1':\n";
   std::cout << delegateResponse << "\n\n";
 
   const auto nodeConfiguration = connection.api.node.configuration();
@@ -27,17 +27,19 @@ int main(int argc, char* argv[]) {
   std::cout << "Response for peer '167.114.29.49':\n";
   std::cout << peer << "\n\n";
 
-  const auto transaction =
-      connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
-  std::cout << "Response for transaction 'b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850':\n";
+  const auto transaction =connection.api.transactions.get(
+      "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4");
+  std::cout << "Response for transaction 'ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4':\n";
   std::cout << transaction << "\n\n";
 
-  const auto vote = connection.api.votes.get("d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
-  std::cout << "Response for votes 'd202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2':\n";
+  const auto vote = connection.api.votes.get(
+      "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
+  std::cout << "Response for votes 'a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67':\n";
   std::cout << vote << "\n\n";
 
-  const auto walletsSearch = connection.api.wallets.search({"username", "baldninja"});
-  std::cout << "Response for wallet search 'username=baldninja':\n";
+  const auto walletsSearch = connection.api.wallets.search(
+      {"username", "genesis_1"});
+  std::cout << "Response for wallet search 'username=genesis_1':\n";
   std::cout << walletsSearch << std::endl;
 
   return 0;
