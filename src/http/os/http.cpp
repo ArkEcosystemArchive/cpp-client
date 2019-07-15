@@ -70,9 +70,7 @@ class PlatformHTTP : public AbstractHTTP {
 
       /* set the header content-type */
       curl_slist *header_list = nullptr;
-      header_list = (body[0] == '{')
-        ? curl_slist_append(header_list, "Content-Type: application/json")
-        : curl_slist_append(header_list, "Content-Type: application/x-www-form-urlencoded");
+      header_list = curl_slist_append(header_list, "Content-Type: application/json");
       curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
       /* skip https verification */
