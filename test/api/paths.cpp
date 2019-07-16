@@ -11,6 +11,16 @@ using namespace Ark::Client::API;
 
 /**/
 
+TEST(paths, test_blockchain) {  // NOLINT
+  const auto base = Paths::Blockchain::base();
+  ASSERT_STREQ("/api/blockchain", base);
+
+  const auto get = Paths::Blockchain::get(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/blockchain", get.c_str());
+}
+
+/**/
+
 TEST(paths, test_blocks) {  // NOLINT
   const auto base = Paths::Blocks::base();
   ASSERT_STREQ("/api/blocks", base);
