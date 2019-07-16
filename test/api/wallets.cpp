@@ -39,7 +39,6 @@ TEST(api, test_wallet) {  // NOLINT
 
 TEST(api, test_wallets) {  // NOLINT
   Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
-
   const std::string expected_response = R"({
     "meta": {
         "count": 1,
