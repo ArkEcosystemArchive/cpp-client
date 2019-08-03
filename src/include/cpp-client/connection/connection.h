@@ -17,25 +17,23 @@
 
 namespace Ark {
 namespace Client {
-/**
- * Ark::Client::Connection<TAPI>
- **/
+
 template <typename TAPI>
 class Connection {
-public:
+ public:
   TAPI api;
   Host host;
 
   Connection() = default;
-  Connection(const TAPI& other) : api(other) {}
+  explicit Connection(const TAPI& other) : api(other) {}
 
-  Connection(const char* const newIP, int newPort) {
+  Connection(const char* newIP, int newPort) {
     this->host.set(newIP, newPort);
     this->api.setHost(newIP, newPort);
   };
 };
-/**/
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace Client
+}  // namespace Ark
 
 #endif

@@ -13,4 +13,6 @@
 #include "helpers/client_helpers.h"
 #include "connection/connection.h"
 
+using namespace Ark::Client;
+
 #endif

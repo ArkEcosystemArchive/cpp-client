@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #!/usr/bin/env bash
 
 bash ./extras/ARDUINO_IDE.sh --auto

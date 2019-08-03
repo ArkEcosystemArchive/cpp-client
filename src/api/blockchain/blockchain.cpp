@@ -11,12 +11,12 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
+namespace api {
 
-std::string API::Blockchain::get() {
-  return http_->get(Paths::Blockchain::get(this->host_).c_str());
+std::string Blockchain::get() {
+  return http_->get(paths::Blockchain::get(this->host_).c_str());
 }
 
-}  // namespace API
-}  // namespaceClient
-}  // namespaceArk
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark

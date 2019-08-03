@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # run PlatformIO builds
 platformio run
 

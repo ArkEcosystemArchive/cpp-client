@@ -10,33 +10,34 @@
 #ifndef HOST_H
 #define HOST_H
 
-#include <cstdio>
-#include <cstring>
 #include <string>
 
 namespace Ark {
 namespace Client {
-/***
- * Ark::Client::Host
- **/
+
+namespace {
+constexpr const size_t IP_MAX_STRING_LEN = 17U;
+constexpr const size_t PORT_MAX_STRING_LEN = 5U;
+}  // namespace
+
 class Host {
-protected:
-  char ip_[17];
-  int port_;
-
  public:
-  Host();
-  Host(const char* const newIP, int newPort);
+  Host() = default;
+  Host(const char* ip, int port);
 
-  bool set(const char* const newIP, int newPort);
+  bool set(const char* ip, int port);
 
   std::string ip() const noexcept;
   int port() const noexcept;
 
   std::string toString();
+
+ protected:
+  std::string ip_;
+  int port_ = -1;
 };
-/**/
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace Client
+}  // namespace Ark
 
 #endif

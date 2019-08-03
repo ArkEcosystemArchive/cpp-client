@@ -15,31 +15,33 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
-/**/
-class INode : public API::Base {
-protected:
-  INode(Host& host, IHTTP& http) : API::Base(host, http) {}
+namespace api {
 
-public:
+class INode : public Base {
+ public:
   virtual ~INode() {}
 
   virtual std::string configuration() = 0;
   virtual std::string status() = 0;
   virtual std::string syncing() = 0;
+
+ protected:
+  INode(Host& host, IHTTP& http) : Base(host, http) {}
 };
+
 /**/
+
 class Node : public INode {
-public:
+ public:
   Node(Host& host, IHTTP& http) : INode(host, http) {}
 
   std::string configuration() override;
   std::string status() override;
   std::string syncing() override;
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

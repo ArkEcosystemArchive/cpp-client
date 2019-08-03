@@ -1,3 +1,12 @@
+/**
+ * This file is part of Ark Cpp Client.
+ *
+ * (c) Ark Ecosystem <info@ark.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ **/
+
 #include "http/http.h"
 #include "helpers/client_helpers.h"
 
@@ -10,16 +19,13 @@
 
 namespace Ark {
 namespace Client {
-namespace {
+namespace {  // NOLINT
 
 class PlatformHTTP : public AbstractHTTP {
  public:
   PlatformHTTP() = default;
 
-  /**/
-
-  static size_t WriteCallback(void *contents, size_t size, size_t nmemb,
-                              void *userp) {
+  static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     // https://curl.haxx.se/libcurl/c/CURLOPT_WRITEFUNCTION.html
     ((std::string *)userp)->append((char *)contents, size * nmemb);
     return size * nmemb;
@@ -27,36 +33,35 @@ class PlatformHTTP : public AbstractHTTP {
 
   /**/
 
-    std::string get(
-        const char *const request
-    ) override {
-      CURL *curl;
-      CURLcode res;
-      std::string readBuffer;
+  std::string get(const char* request) override {
+    CURL *curl;
+    CURLcode res;
+    std::string readBuffer;
 
-      curl = curl_easy_init();
-      if (curl != nullptr) {
-        curl_easy_setopt(curl, CURLOPT_URL, request);
+    curl = curl_easy_init();
+    if (curl != nullptr) {
+      curl_easy_setopt(curl, CURLOPT_URL, request);
 
-        curl_slist *header_list = nullptr;
-        header_list = curl_slist_append(header_list, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
+      curl_slist *header_list = nullptr;
+      header_list = curl_slist_append(header_list, "Content-Type: application/json");
+      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
 
-        /* skip https verification */
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+      /* skip https verification */
+      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-        res = curl_easy_perform(curl);
-        curl_slist_free_all(header_list);
-        curl_easy_cleanup(curl);
-      }
-      return readBuffer;
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+      curl_easy_perform(curl);
+      curl_slist_free_all(header_list);
+      curl_easy_cleanup(curl);
     }
+    return readBuffer;
+  }
+
   /**/
 
-  std::string post(const char *const request, const char *body) override {
+  std::string post(const char* request, const char *body) override {
     // https://curl.haxx.se/libcurl/c/http-post.html
     CURL *curl;
     CURLcode res;
@@ -65,8 +70,8 @@ class PlatformHTTP : public AbstractHTTP {
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
     if (curl != nullptr) {
-      curl_easy_setopt(curl, CURLOPT_URL, request);      // Set the URL that is about to receive our POST
-      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);  // Now specify the POST json data ex: "username=baldninja"
+      curl_easy_setopt(curl, CURLOPT_URL, request);
+      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
 
       /* set the header content-type */
       curl_slist *header_list = nullptr;
@@ -79,17 +84,18 @@ class PlatformHTTP : public AbstractHTTP {
 
       curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
       curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-      res = curl_easy_perform(curl);  // Perform the request, res will get the return code
-      if (res != CURLE_OK) {          // Check for errors
+      res = curl_easy_perform(curl);
+      if (res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-      }
-      curl_easy_cleanup(curl); /* always cleanup */
-    }
+      };
+      /* always cleanup */
+      curl_easy_cleanup(curl);
+    };
     curl_global_cleanup();
     return readBuffer;
   };
 };
-/**/
+
 }  // namespace
 
 /**
@@ -98,7 +104,7 @@ class PlatformHTTP : public AbstractHTTP {
 std::unique_ptr<IHTTP> makeHTTP() {
   return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
-/**/
+
 }  // namespace Client
 }  // namespace Ark
 
