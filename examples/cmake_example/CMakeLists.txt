@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 
-# clone submodules
-execute_process(
-	COMMAND git submodule update --init --recursive
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# clone submodules - Uncomment when used outside of the Ark cpp-crypto source tree
+#execute_process(
+#	COMMAND git submodule update --init --recursive
+#	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+#)
 
-add_subdirectory(lib/cpp-client)
+add_subdirectory(lib/cpp-client/src)
 
 project(Cpp-Client-Example)
 
