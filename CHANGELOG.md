@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 -   added Blockchain API endpoint ([#104])
 
 ### Changed
+-   moved dependencies out of source ([#113])
 -   improved API query usage to accept strings ([#114])
 -   improved class members and test coverage ([#93])
 -   improved formatting and maintainability ([#92])
@@ -67,5 +68,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#92]: https://github.com/ArkEcosystem/cpp-client/pull/92
 [#93]: https://github.com/ArkEcosystem/cpp-client/pull/93
 [#104]: https://github.com/ArkEcosystem/cpp-client/pull/104
+[#113]: https://github.com/ArkEcosystem/cpp-client/pull/113
 [#114]: https://github.com/ArkEcosystem/cpp-client/pull/114
-[unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...develop
+[Unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...develop
