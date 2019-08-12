@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- moved dependencies out of source ([#113])
 - improved class members and test coverage ([#93])
 - improved formatting and maintainability ([#92])
 - dropped Hunter Package Manager in favor of git submodules in OS builds. ([#90])
@@ -59,9 +60,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial Release
 
-[unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.1.0...develop
-[1.1.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.0.0...1.1.0
+[1.1.0]: https://github.com/ArkEcosystem/cpp-client/compare/master...1.1.0
 [#64]: https://github.com/ArkEcosystem/cpp-client/pull/64
 [#67]: https://github.com/ArkEcosystem/cpp-client/pull/67
 [#63]: https://github.com/ArkEcosystem/cpp-client/pull/63
 [#65]: https://github.com/ArkEcosystem/cpp-client/pull/65
+[#113]: https://github.com/ArkEcosystem/cpp-client/pull/113
+[Unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...develop

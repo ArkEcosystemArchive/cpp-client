@@ -1,15 +1,14 @@
 
-
 # OS Builds
 
 ### dependencies
 
-**CMake:**  
-Use an installer package from the following link:  
+**CMake:**
+Use an installer package from the following link:
 ```https://www.cmake.org/download/```
 
 or using
-**Homebrew:**  
+**Homebrew:**
 `brew install cmake`
 
 > note: all other dependencies will be automatically installed via CMake and Hunter Package Manager.
@@ -17,9 +16,10 @@ or using
 #
 
 ### make and build
-**`cd` into `.../cpp-client/`**  
-then run the following command combo:  
-`cmake . && cmake --build .`
+**`cd` into `cpp-client/`**
+then run the following commands:
+`mkdir build && cd build`
+`cmake .. && cmake --build .`
 
 ### run tests
-`./bin/Ark-Cpp-Client-tests`
+`./test/Ark-Cpp-Client-tests`

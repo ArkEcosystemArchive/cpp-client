@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-tests)
 
-add_subdirectory(lib/googletest)
+add_subdirectory(../extern/googletest ../build)
 
 include(CTest)
 enable_testing()
@@ -63,4 +63,3 @@ if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
 endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
-
