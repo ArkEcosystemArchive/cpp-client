@@ -53,7 +53,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../extern/curl/include)
 if (UNIX AND NOT APPLE)
 	add_subdirectory(
 		${CMAKE_CURRENT_SOURCE_DIR}/../extern/curl
-		"${CMAKE_CURRENT_BINARY_DIR}/curl"
+		"${CMAKE_CURRENT_SOURCE_DIR}/../build/extern/curl"
 	)
 
 	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
