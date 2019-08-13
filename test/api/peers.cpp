@@ -67,11 +67,11 @@ TEST(api, test_peers) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.peers, all(_, _))
+  EXPECT_CALL(connection.api.peers, all(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto peers = connection.api.peers.all(1, 1);
+  const auto peers = connection.api.peers.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 peers.c_str()) == 0;

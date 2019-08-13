@@ -10,10 +10,8 @@ std::string Ark::Client::API::Votes::get(
 
 /**/
 
-std::string Ark::Client::API::Votes::all(
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+std::string Ark::Client::API::Votes::all(const char* const query) {
   return http_->get(Ark::Client::API::Paths::Votes::all(
       this->host_,
-      limit, page).c_str());
+      query).c_str());
 }

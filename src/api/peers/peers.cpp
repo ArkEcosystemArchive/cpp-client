@@ -9,11 +9,8 @@ std::string Ark::Client::API::Peers::get(
 
 /**/
 
-std::string Ark::Client::API::Peers::all(
-    int limit /* = 5 */,
-    int page /* = 1 */
-) {
+std::string Ark::Client::API::Peers::all(const char* const query) {
   return http_->get(Ark::Client::API::Paths::Peers::all(
       this->host_,
-      limit, page).c_str());
+      query).c_str());
 }

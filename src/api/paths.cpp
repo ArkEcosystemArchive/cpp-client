@@ -46,15 +46,14 @@ std::string Ark::Client::API::Paths::Blocks::get(
 
 std::string Ark::Client::API::Paths::Blocks::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Blocks::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -78,15 +77,14 @@ std::string Ark::Client::API::Paths::Blocks::transactions(
 std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char uri[96] = {};
   snprintf(
       uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
+      "%s%s/search%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Blocks::base(),
-      limit, page);
+      query);
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {
@@ -127,15 +125,14 @@ std::string Ark::Client::API::Paths::Delegates::get(
 
 std::string Ark::Client::API::Paths::Delegates::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char uri[128] = {};
   snprintf(
       uri, sizeof(uri),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Delegates::base(),
-      limit, page);
+      query);
   return uri;
 }
 
@@ -144,16 +141,15 @@ std::string Ark::Client::API::Paths::Delegates::all(
 std::string Ark::Client::API::Paths::Delegates::blocks(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-      int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/blocks?limit=%d&page=%d",
+      "%s%s/%s/blocks%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Delegates::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -162,16 +158,15 @@ std::string Ark::Client::API::Paths::Delegates::blocks(
 std::string Ark::Client::API::Paths::Delegates::voters(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/voters?limit=%d&page=%d",
+      "%s%s/%s/voters%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Delegates::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -248,15 +243,14 @@ std::string Ark::Client::API::Paths::Peers::get(
 
 std::string Ark::Client::API::Paths::Peers::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Peers::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -288,15 +282,14 @@ std::string Ark::Client::API::Paths::Transactions::getUnconfirmed(
 
 std::string Ark::Client::API::Paths::Transactions::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -319,15 +312,14 @@ std::string Ark::Client::API::Paths::Transactions::get(
 
 std::string Ark::Client::API::Paths::Transactions::allUnconfirmed(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/unconfirmed?limit=%d&page=%d",
+      "%s%s/unconfirmed%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -348,15 +340,14 @@ std::string Ark::Client::API::Paths::Transactions::types(Host& newHost) {
 std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char uri[96] = {};
   snprintf(
       uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
+      "%s%s/search%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+      query);
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {
@@ -411,15 +402,14 @@ std::string Ark::Client::API::Paths::Votes::get(
 
 std::string Ark::Client::API::Paths::Votes::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Votes::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -451,15 +441,14 @@ std::string Ark::Client::API::Paths::Wallets::get(
 
 std::string Ark::Client::API::Paths::Wallets::all(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
+      "%s%s%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -467,15 +456,14 @@ std::string Ark::Client::API::Paths::Wallets::all(
 
 std::string Ark::Client::API::Paths::Wallets::top(
     Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/top?limit=%d&page=%d",
+      "%s%s/top%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+      query);
   return url;
 }
 
@@ -484,16 +472,15 @@ std::string Ark::Client::API::Paths::Wallets::top(
 std::string Ark::Client::API::Paths::Wallets::transactions(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/transactions?limit=%d&page=%d",
+      "%s%s/%s/transactions%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -502,16 +489,15 @@ std::string Ark::Client::API::Paths::Wallets::transactions(
 std::string Ark::Client::API::Paths::Wallets::transactionsSent(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/transactions/sent?limit=%d&page=%d",
+      "%s%s/%s/transactions/sent%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -520,16 +506,15 @@ std::string Ark::Client::API::Paths::Wallets::transactionsSent(
 std::string Ark::Client::API::Paths::Wallets::transactionsReceived(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/transactions/received?limit=%d&page=%d",
+      "%s%s/%s/transactions/received%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -538,16 +523,15 @@ std::string Ark::Client::API::Paths::Wallets::transactionsReceived(
 std::string Ark::Client::API::Paths::Wallets::votes(
     Host& newHost,
     const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char url[128] = {};
   snprintf(
       url, sizeof(url),
-      "%s%s/%s/votes?limit=%d&page=%d",
+      "%s%s/%s/votes%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
       identifier,
-      limit, page);
+      query);
   return url;
 }
 
@@ -556,15 +540,14 @@ std::string Ark::Client::API::Paths::Wallets::votes(
 std::pair<std::string, std::string> Ark::Client::API::Paths::Wallets::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   char uri[96] = {};
   snprintf(
       uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
+      "%s%s/search%s",
       newHost.toString().c_str(),
       Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+      query);
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {

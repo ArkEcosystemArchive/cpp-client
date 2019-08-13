@@ -60,11 +60,11 @@ TEST(api, test_wallets) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, all(_, _))
+  EXPECT_CALL(connection.api.wallets, all(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto wallets = connection.api.wallets.all(1, 1);
+  const auto wallets = connection.api.wallets.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 wallets.c_str()) == 0;
@@ -99,7 +99,7 @@ TEST(api, test_wallets_search) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, search(_, _, _))
+  EXPECT_CALL(connection.api.wallets, search(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
@@ -107,7 +107,7 @@ TEST(api, test_wallets_search) {  // NOLINT
     { "username", "genesis_1" }
   };
 
-  const auto wallets = connection.api.wallets.search(body, 1, 1);
+  const auto wallets = connection.api.wallets.search(body, "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 wallets.c_str()) == 0;
@@ -140,11 +140,11 @@ TEST(api, test_wallets_top) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, top(_, _))
+  EXPECT_CALL(connection.api.wallets, top(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto wallets = connection.api.wallets.top(1, 1);
+  const auto wallets = connection.api.wallets.top("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 wallets.c_str()) == 0;
@@ -190,12 +190,12 @@ TEST(api, test_wallets_transactions) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, transactions(_, _, _))
+  EXPECT_CALL(connection.api.wallets, transactions(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
   const auto transactions = connection.api.wallets.transactions(
-      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", 1, 1);
+      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 transactions.c_str()) == 0;
@@ -246,12 +246,12 @@ TEST(api, test_wallets_transactions_received) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _, _))
+  EXPECT_CALL(connection.api.wallets, transactionsReceived(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
   const auto received = connection.api.wallets.transactionsReceived(
-      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", 1, 1);
+      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 received.c_str()) == 0;
@@ -302,12 +302,12 @@ TEST(api, test_wallets_transactions_sent) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, transactionsSent(_, _, _))
+  EXPECT_CALL(connection.api.wallets, transactionsSent(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
   const auto sent = connection.api.wallets.transactionsSent(
-      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", 1, 1);
+      "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 sent.c_str()) == 0;
@@ -358,12 +358,12 @@ TEST(api, test_wallets_votes) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.wallets, votes(_, _, _))
+  EXPECT_CALL(connection.api.wallets, votes(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
 const auto votes = connection.api.wallets.votes(
-    "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", 1, 1);
+    "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 votes.c_str()) == 0;

@@ -28,8 +28,8 @@ TEST(paths, test_blocks) {  // NOLINT
   const auto get = Paths::Blocks::get(testHost, "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756", get.c_str());
 
-  const auto all = Paths::Blocks::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/blocks?limit=5&page=1", all.c_str());
+  const auto all = Paths::Blocks::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks?limit=1&page=5", all.c_str());
 
   const auto transactions = Paths::Blocks::transactions(testHost,
                                                         "58328125061111756");
@@ -41,8 +41,8 @@ TEST(paths, test_blocks) {  // NOLINT
     { "previousBlock", "6440284271011893973" },
     { "version", "0" }
   };
-  const auto search = Paths::Blocks::search(testHost, searchBody, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/blocks/search?limit=5&page=1",
+  const auto search = Paths::Blocks::search(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
       "id=8337447655053578871&previousBlock=6440284271011893973&version=0",
@@ -58,15 +58,15 @@ TEST(paths, test_delegates) {  // NOLINT
   const auto get = Paths::Delegates::get(testHost, "boldninja");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja", get.c_str());
 
-  const auto all = Paths::Delegates::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/delegates?limit=5&page=1", all.c_str());
+  const auto all = Paths::Delegates::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/delegates?limit=1&page=5", all.c_str());
 
-  const auto blocks = Paths::Delegates::blocks(testHost, "boldninja", 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/blocks?limit=5&page=1",
+  const auto blocks = Paths::Delegates::blocks(testHost, "boldninja", "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/blocks?limit=1&page=5",
                blocks.c_str());
 
-  const auto voters = Paths::Delegates::voters(testHost, "boldninja", 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/voters?limit=5&page=1",
+  const auto voters = Paths::Delegates::voters(testHost, "boldninja", "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/voters?limit=1&page=5",
                voters.c_str());
 }
 
@@ -95,8 +95,8 @@ TEST(paths, test_peers) {  // NOLINT
   const auto get = Paths::Peers::get(testHost, "0.0.0.0");
   ASSERT_STREQ("0.0.0.0:4003/api/peers/0.0.0.0", get.c_str());
 
-  const auto all = Paths::Peers::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/peers?limit=5&page=1", all.c_str());
+  const auto all = Paths::Peers::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/peers?limit=1&page=5", all.c_str());
 }
 
 /**/
@@ -112,8 +112,8 @@ TEST(paths, test_transactions) {  // NOLINT
       "0.0.0.0:4003/api/transactions/unconfirmed/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48",
       getUnconfirmed.c_str());
 
-  const auto all = Paths::Transactions::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/transactions?limit=5&page=1", all.c_str());
+  const auto all = Paths::Transactions::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/transactions?limit=1&page=5", all.c_str());
 
   const auto get = Paths::Transactions::get(
       testHost,
@@ -123,8 +123,8 @@ TEST(paths, test_transactions) {  // NOLINT
       get.c_str());
 
   const auto allUnconfirmed = Paths::Transactions::allUnconfirmed(
-      testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/transactions/unconfirmed?limit=5&page=1",
+      testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/transactions/unconfirmed?limit=1&page=5",
                allUnconfirmed.c_str());
 
   const auto types = Paths::Transactions::types(testHost);
@@ -134,8 +134,8 @@ TEST(paths, test_transactions) {  // NOLINT
     { "id", "dummy" },
     { "key", "value" }
   };
-  const auto search = Paths::Transactions::search(testHost, searchBody, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/transactions/search?limit=5&page=1",
+  const auto search = Paths::Transactions::search(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/transactions/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ("id=dummy&key=value", search.second.c_str());
 
@@ -168,8 +168,8 @@ TEST(paths, test_votes) {  // NOLINT
       "0.0.0.0:4003/api/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2",
       get.c_str());
 
-  const auto all = Paths::Votes::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/votes?limit=5&page=1", all.c_str());
+  const auto all = Paths::Votes::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/votes?limit=1&page=5", all.c_str());
 }
 
 /**/
@@ -183,34 +183,34 @@ TEST(paths, test_wallets) {  // NOLINT
   ASSERT_STREQ("0.0.0.0:4003/api/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu",
                get.c_str());
 
-  const auto all = Paths::Wallets::all(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/wallets?limit=5&page=1", all.c_str());
+  const auto all = Paths::Wallets::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/wallets?limit=1&page=5", all.c_str());
 
-  const auto top = Paths::Wallets::top(testHost, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/wallets/top?limit=5&page=1", top.c_str());
+  const auto top = Paths::Wallets::top(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/wallets/top?limit=1&page=5", top.c_str());
 
   const auto transactions = Paths::Wallets::transactions(
-      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
-      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=5&page=1",
+      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=1&page=5",
       transactions.c_str());
 
   const auto sent = Paths::Wallets::transactionsSent(
-      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
-      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=5&page=1",
+      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=1&page=5",
       sent.c_str());
 
   const auto received = Paths::Wallets::transactionsReceived(
-      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
-      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=5&page=1",
+      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=1&page=5",
       received.c_str());
 
   const auto votes = Paths::Wallets::votes(
-      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", 5, 1);
+      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
-      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/votes?limit=5&page=1",
+      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/votes?limit=1&page=5",
       votes.c_str());
 
   const std::map<std::string, std::string> searchBody = {
@@ -218,8 +218,8 @@ TEST(paths, test_wallets) {  // NOLINT
     { "address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T" },
     { "publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d" }
   };
-  const auto search = Paths::Wallets::search(testHost, searchBody, 5, 1);
-  ASSERT_STREQ("0.0.0.0:4003/api/wallets/search?limit=5&page=1",
+  const auto search = Paths::Wallets::search(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/wallets/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
       "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja",

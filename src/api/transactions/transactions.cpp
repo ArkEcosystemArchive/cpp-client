@@ -10,12 +10,10 @@ std::string Ark::Client::API::Transactions::getUnconfirmed(
 
 /**/
 
-std::string Ark::Client::API::Transactions::all(
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+std::string Ark::Client::API::Transactions::all(const char* const query) {
   return http_->get(Ark::Client::API::Paths::Transactions::all(
       this->host_,
-      limit, page).c_str());
+      query).c_str());
 }
 
 /**/
@@ -29,12 +27,10 @@ std::string Ark::Client::API::Transactions::get(
 
 /**/
 
-std::string Ark::Client::API::Transactions::allUnconfirmed(
-    int limit /* = 5 */,
-    int page /* =1 */) {
+std::string Ark::Client::API::Transactions::allUnconfirmed(const char* const query) {
   return http_->get(Ark::Client::API::Paths::Transactions::allUnconfirmed(
       this->host_,
-      limit, page).c_str());
+      query).c_str());
 }
 
 /**/
@@ -48,12 +44,11 @@ std::string Ark::Client::API::Transactions::types() {
 
 std::string Ark::Client::API::Transactions::search(
     const std::map<std::string, std::string> &bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   const auto searchPathPair = Ark::Client::API::Paths::Transactions::search(
       this->host_,
       bodyParameters,
-      limit, page);
+      query);
   return http_->post(searchPathPair.first.c_str(), searchPathPair.second.c_str());
 }
 
