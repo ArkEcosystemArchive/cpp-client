@@ -6,10 +6,7 @@ cmake --build .
 
 # build examples
 cd ../examples/cmake_example
-mkdir build
-cd build
-cmake ..
-cmake --build .
+./build.sh
 
 # run Gtest
 # cd ../../
