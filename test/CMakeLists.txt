@@ -4,7 +4,8 @@ project(Ark-Cpp-Client-tests)
 
 add_subdirectory(
 	${CMAKE_CURRENT_SOURCE_DIR}/../extern/googletest
-	"${CMAKE_CURRENT_BINARY_DIR}/gtest"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../build/extern/gtest"
+	EXCLUDE_FROM_ALL
 )
 
 include(CTest)
