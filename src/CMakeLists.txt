@@ -56,7 +56,6 @@ add_subdirectory(
 )
 
 if (UNIX AND NOT APPLE)
-add_subdirectory(
 	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
 else()
 	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
