@@ -51,7 +51,7 @@ set(CMAKE_USE_LIBSSH2 OFF)
 include_directories(${PROJECT_SOURCE_DIR}/../extern/curl/include)
 
 if (UNIX AND NOT APPLE)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/../extern/curl)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/../extern/curl ../build/extern/curl)
 	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
 else()
 	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
