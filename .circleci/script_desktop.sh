@@ -9,5 +9,5 @@ cd ../examples/cmake_example
 ./build.sh
 
 # run Gtest
-# cd ../../
+cd ../../../build
 ./test/Ark-Cpp-Client-tests
