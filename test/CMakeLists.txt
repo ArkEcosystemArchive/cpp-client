@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-tests)
 
-add_subdirectory(../extern/googletest ../build)
+add_subdirectory(../extern/googletest ../build/googletest)
 
 include(CTest)
 enable_testing()
