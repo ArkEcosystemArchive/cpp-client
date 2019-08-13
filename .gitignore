@@ -1,7 +1,6 @@
 
 /.history
 /.vs
-/.vscode
 /bin
 /lib
 /_Base
@@ -82,3 +81,4 @@
 /examples/cmake_example/ALL_BUILD.vcxproj
 /examples/cmake_example/Win32
 /examples/cmake_example/Debug
+compile_commands.json
