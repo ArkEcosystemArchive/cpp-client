@@ -2,10 +2,14 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-tests)
 
-add_subdirectory(../extern/googletest ../build/extern/googletest)
-
+set(BUILD_GMOCK OFF FORCE)
 include(CTest)
 enable_testing()
+
+add_subdirectory(
+	${CMAKE_CURRENT_SOURCE_DIR}/../extern/googletest
+	"${CMAKE_CURRENT_SOURCE_DIR}/../build/extern/gtest"
+)
 
 set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
