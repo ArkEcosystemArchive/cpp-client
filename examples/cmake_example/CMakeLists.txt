@@ -6,8 +6,6 @@ cmake_minimum_required(VERSION 3.2)
 #	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 #)
 
-add_subdirectory(lib/cpp-client/src)
-
 project(Cpp-Client-Example)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -24,6 +22,8 @@ if (MSVC)
  #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 	#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
+
+add_subdirectory(lib/cpp-client/src)
 
 set(SOURCE_FILES main.cpp)
 
