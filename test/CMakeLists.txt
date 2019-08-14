@@ -2,14 +2,31 @@ cmake_minimum_required(VERSION 3.2.2)
 
 project(Ark-Cpp-Client-tests)
 
+
+# ------------------------------------------------------------------------------
+# Google Test (GTest/GMock)
+# ------------------------------------------------------------------------------
+
+enable_testing()
+
 add_subdirectory(
-	${CMAKE_CURRENT_SOURCE_DIR}/../extern/googletest
-	"${CMAKE_CURRENT_SOURCE_DIR}/../build/extern/gtest"
-	EXCLUDE_FROM_ALL
+	${PROJECT_SOURCE_DIR}/../extern/googletest
+	"${PROJECT_SOURCE_DIR}/../extern/googletest"
 )
 
-include(CTest)
-enable_testing()
+mark_as_advanced(BUILD_GMOCK BUILD_GTEST
+	BUILD_SHARED_LIBS
+	gmock_build_tests gtest_build_tests
+	gtest_disable_pthreads gtest_force_shared_crt gtest_hide_internal_symbols
+)
+
+set_target_properties(gtest PROPERTIES FOLDER ../extern)
+set_target_properties(gtest_main PROPERTIES FOLDER ../extern)
+set_target_properties(gmock PROPERTIES FOLDER ../extern)
+set_target_properties(gmock_main PROPERTIES FOLDER ../extern)
+set(GMOCK_LIBS gtest gmock gtest_main)
+
+# ------------------------------------------------------------------------------
 
 set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
@@ -55,7 +72,7 @@ add_executable(Ark-Cpp-Client-tests
 	${TEST_API_SRC}
 )
 
-target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib gtest gmock gmock_main)
+target_link_libraries(Ark-Cpp-Client-tests Ark-Cpp-Client-lib ${GMOCK_LIBS})
 
 add_test(NAME test COMMAND Ark-Cpp-Client-tests)
 
