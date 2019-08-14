@@ -1,7 +1,6 @@
 
 /.history
 /.vs
-/.vscode
 /bin
 build
 /lib
@@ -60,3 +59,4 @@ build
 /examples/cmake_example/ALL_BUILD.vcxproj.filters
 /examples/cmake_example/ALL_BUILD.vcxproj
 /examples/cmake_example/Win32
+compile_commands.json

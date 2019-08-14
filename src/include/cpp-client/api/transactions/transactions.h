@@ -29,10 +29,10 @@ public:
 
   virtual std::string getUnconfirmed(const char* const identifier) = 0;
   virtual std::string get(const char* const identifier) = 0;
-  virtual std::string all(int limit = 5, int page = 1) = 0;
-  virtual std::string allUnconfirmed(int limit = 2, int page = 1) = 0;
+  virtual std::string all(const char* const query) = 0;
+  virtual std::string allUnconfirmed(const char* const query) = 0;
   virtual std::string types() = 0;
-  virtual std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) = 0;
+  virtual std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) = 0;
   virtual std::string send(std::string& jsonTransaction) = 0;
 };
 /**/
@@ -42,10 +42,10 @@ public:
 
   std::string getUnconfirmed(const char* const identifier) override;
   std::string get(const char* const identifier) override;
-  std::string all(int limit = 5, int page = 1) override;
-  std::string allUnconfirmed(int limit = 2, int page = 1) override;
+  std::string all(const char* const query) override;
+  std::string allUnconfirmed(const char* const query) override;
   std::string types() override;
-  std::string search(const std::map<std::string, std::string>& bodyParameters, int limit = 5, int page = 1) override;
+  std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) override;
   std::string send(std::string& jsonTransaction) override;
 };
 /**/

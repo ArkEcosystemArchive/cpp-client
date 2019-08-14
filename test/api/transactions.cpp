@@ -154,11 +154,11 @@ TEST(api, test_transactions) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, all(_, _))
+  EXPECT_CALL(connection.api.transactions, all(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto transactions = connection.api.transactions.all(1, 1);
+  const auto transactions = connection.api.transactions.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 transactions.c_str()) == 0;
@@ -203,11 +203,11 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, allUnconfirmed(_, _))
+  EXPECT_CALL(connection.api.transactions, allUnconfirmed(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto unconfirmed = connection.api.transactions.allUnconfirmed(1, 1);
+  const auto unconfirmed = connection.api.transactions.allUnconfirmed("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 unconfirmed.c_str()) == 0;
@@ -254,7 +254,7 @@ TEST(api, test_transactions_search) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.transactions, search(_, _, _))
+  EXPECT_CALL(connection.api.transactions, search(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
@@ -262,7 +262,7 @@ std::map<std::string, std::string> body{{
   "id", "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4"
 }};
 
-  const auto transactions = connection.api.transactions.search(body, 1, 1);
+  const auto transactions = connection.api.transactions.search(body,"?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 transactions.c_str()) == 0;

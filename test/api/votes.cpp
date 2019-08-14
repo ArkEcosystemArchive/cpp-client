@@ -94,11 +94,11 @@ TEST(api, test_votes) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.votes, all(_, _))
+  EXPECT_CALL(connection.api.votes, all(_))
         .Times(1)
         .WillOnce(Return(expected_response));
 
-  const auto votes = connection.api.votes.all(1, 1);
+  const auto votes = connection.api.votes.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 votes.c_str()) == 0;

@@ -152,11 +152,11 @@ TEST(api, test_blocks) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.blocks, all(1, 1))
+  EXPECT_CALL(connection.api.blocks, all("?limit=1&page=1"))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto blocks = connection.api.blocks.all(1, 1);
+  const auto blocks = connection.api.blocks.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 blocks.c_str()) == 0;
@@ -213,14 +213,14 @@ TEST(api, test_blocks_search) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.blocks, search(_, _, _))
+  EXPECT_CALL(connection.api.blocks, search(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
   const std::map<std::string, std::string> body = {
     { "version", "0" }
   };
-  const auto blocks = connection.api.blocks.search(body, 5, 1);
+  const auto blocks = connection.api.blocks.search(body, "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 blocks.c_str()) == 0;

@@ -139,7 +139,7 @@ void checkAPI() {
   //         }
   //     ]
   //   }
-  const auto blocksResponse = connection.api.blocks.all(1, 1);
+  const auto blocksResponse = connection.api.blocks.all("?limit=1&page=1");
   Serial.print("\nBlocks Response: ");
   // The response is a 'std::string'; to 'Print' on Arduino, we need the c_string type.
   Serial.println(blocksResponse.c_str());
@@ -209,7 +209,7 @@ void checkAPI() {
 
   // The following method can be used to get a list of 'All' 'Peers' on the network.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/peers?limit=2&page=1'
+  // This is equivalent to calling 'https://dexplorer.ark.io/api/peers?limit=1&page=1'
   //
   // {
   //     "meta": {
@@ -233,7 +233,7 @@ void checkAPI() {
   //         }
   //     ]
   // }
-  const auto allPeers = connection.api.peers.all(1, 1);
+  const auto allPeers = connection.api.peers.all("?limit=1&page=1");
   Serial.print("\nAll Peers: ");
   Serial.println(allPeers.c_str());
 
@@ -264,7 +264,7 @@ void checkAPI() {
 
   // This method can be used to get a list of 'Vote' Transactions.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/votes?limit=2&page=1'
+  // This is equivalent to calling 'https://dexplorer.ark.io/api/votes?limit=1&page=1'
   //
   // {
   //     "meta": {
@@ -304,7 +304,7 @@ void checkAPI() {
   //         }
   //     ]
   // }
-  const auto allVotes = connection.api.votes.all(1, 1);
+  const auto allVotes = connection.api.votes.all("?limit=1&page=1");
   Serial.print("\nAll Votes: ");
   Serial.println(allVotes.c_str());
 
@@ -312,7 +312,7 @@ void checkAPI() {
 
   // This method can be used to get a list of 'Top' 'Wallets' (Wallets with the most ARK).
   // 
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/wallets/top?limit=2&page=1'
+  // This is equivalent to calling 'https://dexplorer.ark.io/api/wallets/top?limit=1&page=1'
   //
   // The response should be a json-formatted object
   // The "pretty print" version would look something like this:
@@ -337,7 +337,7 @@ void checkAPI() {
   //         }
   //     ]
   // }
-  const auto topWallets = connection.api.wallets.top(1, 1);
+  const auto topWallets = connection.api.wallets.top("?limit=1&page=1");
   Serial.print("\nTop Wallets: ");
   Serial.println(topWallets.c_str());
 };

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- improved API query usage to accept strings ([#114])
 - improved class members and test coverage ([#93])
 - improved formatting and maintainability ([#92])
 - dropped Hunter Package Manager in favor of git submodules in OS builds. ([#90])
@@ -65,3 +66,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#67]: https://github.com/ArkEcosystem/cpp-client/pull/67
 [#63]: https://github.com/ArkEcosystem/cpp-client/pull/63
 [#65]: https://github.com/ArkEcosystem/cpp-client/pull/65
+[#114]: https://github.com/ArkEcosystem/cpp-client/pull/114
