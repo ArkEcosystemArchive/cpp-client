@@ -10,34 +10,30 @@ std::string Ark::Client::API::Delegates::get(
 
 /**/
 
-std::string Ark::Client::API::Delegates::all(
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+std::string Ark::Client::API::Delegates::all(const char* const query) {
   return http_->get(Ark::Client::API::Paths::Delegates::all(
       this->host_,
-      limit, page).c_str());
+      query).c_str());
 }
 
 /**/
 
 std::string Ark::Client::API::Delegates::blocks(
     const char *const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   return http_->get(Ark::Client::API::Paths::Delegates::blocks(
       this->host_,
       identifier,
-      limit, page).c_str());
+      query).c_str());
 }
 
 /**/
 
 std::string Ark::Client::API::Delegates::voters(
     const char *const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
+    const char* const query) {
   return http_->get(Ark::Client::API::Paths::Delegates::voters(
       this->host_,
       identifier,
-      limit, page).c_str());
+      query).c_str());
 }

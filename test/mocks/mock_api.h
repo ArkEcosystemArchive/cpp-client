@@ -31,9 +31,9 @@ public:
   MockBlocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlocks(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(transactions, std::string(const char* const));
-  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
+  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/
@@ -43,9 +43,9 @@ public:
   MockDelegates(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IDelegates(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
-  MOCK_METHOD3(blocks, std::string(const char* const, int, int));
-  MOCK_METHOD3(voters, std::string(const char* const, int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
+  MOCK_METHOD2(blocks, std::string(const char* const, const char* const));
+  MOCK_METHOD2(voters, std::string(const char* const, const char* const));
 };
 
 /**/
@@ -66,7 +66,7 @@ public:
   MockPeers(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IPeers(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
 };
 
 class MockTransactions : public Ark::Client::API::ITransactions {
@@ -75,10 +75,10 @@ public:
 
   MOCK_METHOD1(getUnconfirmed, std::string(const char* const));
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
-  MOCK_METHOD2(allUnconfirmed, std::string(int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
+  MOCK_METHOD1(allUnconfirmed, std::string(const char* const));
   MOCK_METHOD0(types, std::string());
-  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
+  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD1(send, std::string(std::string&));
 };
 
@@ -89,7 +89,7 @@ public:
   MockVotes(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IVotes(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
 };
 
 /**/
@@ -99,13 +99,13 @@ public:
   MockWallets(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IWallets(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD2(all, std::string(int, int));
-  MOCK_METHOD2(top, std::string(int, int));
-  MOCK_METHOD3(transactions, std::string(const char* const, int, int));
-  MOCK_METHOD3(transactionsReceived, std::string(const char* const, int, int));
-  MOCK_METHOD3(transactionsSent, std::string(const char* const, int, int));
-  MOCK_METHOD3(votes, std::string(const char* const, int, int));
-  MOCK_METHOD3(search, std::string(const std::map<std::string, std::string>&, int, int));
+  MOCK_METHOD1(all, std::string(const char* const));
+  MOCK_METHOD1(top, std::string(const char* const));
+  MOCK_METHOD2(transactions, std::string(const char* const, const char* const));
+  MOCK_METHOD2(transactionsReceived, std::string(const char* const, const char* const));
+  MOCK_METHOD2(transactionsSent, std::string(const char* const, const char* const));
+  MOCK_METHOD2(votes, std::string(const char* const, const char* const));
+  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/

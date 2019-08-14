@@ -103,11 +103,11 @@ TEST(api, test_delegate_blocks) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.delegates, blocks(_, _, _))
+  EXPECT_CALL(connection.api.delegates, blocks(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto blocks = connection.api.delegates.blocks("munich", 1, 1);
+  const auto blocks = connection.api.delegates.blocks("munich", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 blocks.c_str()) == 0;
@@ -142,11 +142,11 @@ TEST(api, test_delegate_voters) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.delegates, voters(_, _, _))
+  EXPECT_CALL(connection.api.delegates, voters(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto voters = connection.api.delegates.voters("munich", 1, 1);
+  const auto voters = connection.api.delegates.voters("munich", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 voters.c_str()) == 0;
@@ -200,11 +200,11 @@ TEST(api, test_delegates) {  // NOLINT
     ]
   })";
 
-  EXPECT_CALL(connection.api.delegates, all(1, 1))
+  EXPECT_CALL(connection.api.delegates, all(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto delegates = connection.api.delegates.all(1, 1);
+  const auto delegates = connection.api.delegates.all("?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 delegates.c_str()) == 0;

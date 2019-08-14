@@ -73,8 +73,8 @@ Ark::Client::Host dummyHost("0.0.0.0:4003");
 std::string blockchainGetPath = Ark::Client::API::Paths::Blockschain::get(dummyHost);
 // blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
 
-std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, 5 /* limit */, 1 /* page */);
-// blocksAllPath will be the string "0.0.0.0:4003/api/blocks?limit=5&page=1"
+std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?page=1&limit=5");
+// blocksAllPath will be the string "0.0.0.0:4003/api/blocks?page=1&limit=5"
 
 std::string delegatesGetPath = Ark::Client::API::Paths::Delegates::get(dummyHost, "genesis_1");
 // delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
@@ -82,8 +82,8 @@ std::string delegatesGetPath = Ark::Client::API::Paths::Delegates::get(dummyHost
 std::string nodeConfigurationPath = Ark::Client::API::Paths::Node::configuration(dummyHost);
 // nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
 
-std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, 5 /* limit */, 1 /* page */);
-// peersAllPath will be the string "0.0.0.0:4003/api/peers?limit=5&page=1"
+std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, "?page=1&limit=5");
+// peersAllPath will be the string "0.0.0.0:4003/api/peers?page=1&limit=5"
 
 std::string transactionsTypesPath = Ark::Client::API::Paths::Transactions::types(dummyHost);
 // transactionsTypesPath will be the string "0.0.0.0:4003/api/transactions/types"
@@ -96,8 +96,8 @@ const std::map<std::string, std::string> searchBody = {
     {"username", "genesis_1"}
 };
 
-std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, 5, 1);
-// walletsSearchPath.first will be the string "0.0.0.0:4003/api/wallets/search?limit=5&page=1"
+std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, "?page=1&limit=5");
+// walletsSearchPath.first will be the string "0.0.0.0:4003/api/wallets/search?page=1&limit=5"
 // walletsSearchPath.second will be the string "username=genesis_1"
 ```
 

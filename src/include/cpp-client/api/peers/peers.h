@@ -25,7 +25,7 @@ public:
   virtual ~IPeers() {}
 
   virtual std::string get(const char* const ip) = 0;
-  virtual std::string all(int limit = 5, int page = 1) = 0;
+  virtual std::string all(const char* const query) = 0;
 };
 /**/
 class Peers : public IPeers {
@@ -33,7 +33,7 @@ public:
   Peers(Host& host, IHTTP& http) : IPeers(host, http) {}
 
   std::string get(const char* const ip) override;
-  std::string all(int limit = 5, int page = 1) override;
+  std::string all(const char* const query) override;
 };
 /**/
 };  // namespace API
