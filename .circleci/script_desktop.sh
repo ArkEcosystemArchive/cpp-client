@@ -1,13 +1,13 @@
 # run desktop builds
-cmake . -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTING=OFF
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTING=OFF
 cmake --build .
 
-# disable build examples until breaking changes are committed so the example can pull them in
 # build examples
-#cd ./examples/cmake_example
-#cmake .
-#cmake --build .
+cd ../examples/cmake_example
+./build.sh
 
 # run Gtest
-# cd ../../
+cd ../../build
 ./test/Ark-Cpp-Client-tests
