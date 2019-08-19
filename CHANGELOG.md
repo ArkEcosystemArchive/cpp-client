@@ -46,7 +46,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] - 2019-01-19
 -   Initial Release
 
+## 1.0.0 - 2019-01-19
+
+- Initial Release
+
 [1.0.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.0.0...master
+[1.1.0]: https://github.com/ArkEcosystem/cpp-client/compare/master...1.1.0
+[#64]: https://github.com/ArkEcosystem/cpp-client/pull/64
+[#67]: https://github.com/ArkEcosystem/cpp-client/pull/67
 [#63]: https://github.com/ArkEcosystem/cpp-client/pull/63
 [#64]: https://github.com/ArkEcosystem/cpp-client/pull/64
 [#65]: https://github.com/ArkEcosystem/cpp-client/pull/65
