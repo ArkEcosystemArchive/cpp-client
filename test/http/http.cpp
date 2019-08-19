@@ -1,13 +1,21 @@
 
 #include "gtest/gtest.h"
 
+#include <array>
+#include <string>
+
 #include "http/http.h"
 
 // Note: These test HTTP against a live server
 
+namespace {
+using namespace Ark::Client;
+constexpr const size_t HTTPS_MAX_ELEMENTS = 3U;
+}  // namespace
+
 TEST(api, test_http_get) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a request
   const auto request = "postman-echo.com/get?foo=bar";
@@ -23,7 +31,7 @@ TEST(api, test_http_get) { // NOLINT
 // Tests POSTing of HTTP body.
 TEST(api, test_http_post_body) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a Request URL and 'Post' body.
   const auto request = "postman-echo.com/post";
@@ -40,11 +48,11 @@ TEST(api, test_http_post_body) { // NOLINT
 // Tests invalid POSTing of HTTP body.
 TEST(api, test_http_invalid_post_body) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a malformed Request URL and 'Post' body.
   const auto request = "/167.114.29.55:4003/api/wallets/search";
-  const auto body = "{\"username\":\"baldninja\"}";
+  const auto body = R"({"username":"baldninja"})";
 
   // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
@@ -61,11 +69,11 @@ TEST(api, test_http_invalid_post_body) { // NOLINT
 // Tests POSTing of JSON.
 TEST(api, test_http_post_json) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a Request URL and an empty Transaction JSON.
   const auto request = "167.114.29.55:4003/api/transactions";
-  const auto txJson = "{\"transactions\":[]}";
+  const auto txJson = R"({"transactions":[]})";
 
   // Post the 'request' and 'txJson' for a response using HTTP
   const auto response = http->post(request, txJson);
@@ -77,18 +85,18 @@ TEST(api, test_http_post_json) { // NOLINT
 
 // This tests the use of "http://" in single-line HTTP requests.
 TEST(api, test_http_request_strings) { // NOLINT
-  char requests[3][43] = {
+  std::array<std::string, HTTPS_MAX_ELEMENTS> requests = {
     "postman-echo.com/get",         // No HTTP prefix
     "http://postman-echo.com/get",  // HTTP
     "https://postman-echo.com/get"  // HTTPS
   };
 
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   for (auto& i: requests) {
     // Get the response using HTTP
-    const auto response = http->get(i);
+    const auto response = http->get(i.c_str());
 #ifdef USE_IOT 
     // HTTPS is NOT supported on IoT and should fail to parse.
     response.find("https://") < response.length())

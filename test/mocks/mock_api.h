@@ -17,7 +17,7 @@
 #include "http/http.h"
 #include "mocks/mock_http.h"
 
-class MockBlockchain : public Ark::Client::API::IBlockchain {
+class MockBlockchain : public Ark::Client::api::IBlockchain {  // NOLINT
 public:
   MockBlockchain(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlockchain(host, http) {}
 
@@ -26,7 +26,7 @@ public:
 
 /**/
 
-class MockBlocks : public Ark::Client::API::IBlocks {
+class MockBlocks : public Ark::Client::api::IBlocks {  // NOLINT
 public:
   MockBlocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlocks(host, http) {}
 
@@ -38,7 +38,7 @@ public:
 
 /**/
 
-class MockDelegates : public Ark::Client::API::IDelegates {
+class MockDelegates : public Ark::Client::api::IDelegates {  // NOLINT
 public:
   MockDelegates(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IDelegates(host, http) {}
 
@@ -50,7 +50,7 @@ public:
 
 /**/
 
-class MockNode : public Ark::Client::API::INode {
+class MockNode : public Ark::Client::api::INode {  // NOLINT
 public:
   MockNode(Ark::Client::Host& host, Ark::Client::IHTTP& http) : INode(host, http) {}
 
@@ -61,7 +61,7 @@ public:
 
 /**/
 
-class MockPeers : public Ark::Client::API::IPeers {
+class MockPeers : public Ark::Client::api::IPeers {  // NOLINT
 public:
   MockPeers(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IPeers(host, http) {}
 
@@ -69,7 +69,7 @@ public:
   MOCK_METHOD1(all, std::string(const char* const));
 };
 
-class MockTransactions : public Ark::Client::API::ITransactions {
+class MockTransactions : public Ark::Client::api::ITransactions {  // NOLINT
 public:
   MockTransactions(Ark::Client::Host& host, Ark::Client::IHTTP& http) : ITransactions(host, http) {}
 
@@ -84,7 +84,7 @@ public:
 
 /**/
 
-class MockVotes : public Ark::Client::API::IVotes {
+class MockVotes : public Ark::Client::api::IVotes {  // NOLINT
 public:
   MockVotes(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IVotes(host, http) {}
 
@@ -94,7 +94,7 @@ public:
 
 /**/
 
-class MockWallets : public Ark::Client::API::IWallets {
+class MockWallets : public Ark::Client::api::IWallets {  // NOLINT
 public:
   MockWallets(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IWallets(host, http) {}
 
@@ -110,7 +110,7 @@ public:
 
 /**/
 
-class MockApi : public Ark::Client::API::Abstract {
+class MockApi : public Ark::Client::api::Abstract {
 public:
   MockBlockchain blockchain;
   MockBlocks blocks;
@@ -121,16 +121,15 @@ public:
   MockVotes votes;
   MockWallets wallets;
 
-  MockApi()
-      : Abstract(new MockHTTP()),
-        blockchain(host_, *http_),
-        blocks(host_, *http_),
-        delegates(host_, *http_),
-        node(host_, *http_),
-        peers(host_, *http_),
-        transactions(host_, *http_),
-        votes(host_, *http_),
-        wallets(host_, *http_) {}
+  MockApi() : Abstract(new MockHTTP()),
+              blockchain(host_, *http_),
+              blocks(host_, *http_),
+              delegates(host_, *http_),
+              node(host_, *http_),
+              peers(host_, *http_),
+              transactions(host_, *http_),
+              votes(host_, *http_),
+              wallets(host_, *http_) {}
 };
 
 #endif

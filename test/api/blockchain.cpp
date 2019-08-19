@@ -6,19 +6,25 @@
 
 #include "mocks/mock_api.h"
 
-using testing::_;
 using testing::Return;
 
+namespace {
+using namespace Ark::Client;
+using namespace Ark::Client::api;
+constexpr const char* tIp = "167.114.29.55";
+constexpr const int tPort = 4003;
+}  // namespace
+
 TEST(api, test_blockchain) {  // NOLINT
-  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
 
   const std::string expected_response = R"({
     "data": {
-        "block": {
-            "height": 2922163,
-            "id": "84125ec94ba3f3a2d6fd6643d50c98ed2f3c8fa62d8c939355974f404e9b3906"
-        },
-        "supply": "13082272800000000"
+      "block": {
+        "height": 2922163,
+        "id": "84125ec94ba3f3a2d6fd6643d50c98ed2f3c8fa62d8c939355974f404e9b3906"
+      },
+      "supply": "13082272800000000"
     }
   })";
 

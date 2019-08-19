@@ -23,31 +23,30 @@
 
 namespace Ark {
 namespace Client {
-/**/
-class Api : public API::Abstract {
-public:
-  API::Blockchain blockchain;
-  API::Blocks blocks;
-  API::Delegates delegates;
-  API::Node node;
-  API::Peers peers;
-  API::Transactions transactions;
-  API::Votes votes;
-  API::Wallets wallets;
 
-  Api()
-      : API::Abstract(),
-        blockchain(host_, *http_),
-        blocks(host_, *http_),
-        delegates(host_, *http_),
-        node(host_, *http_),
-        peers(host_, *http_),
-        transactions(host_, *http_),
-        votes(host_, *http_),
-        wallets(host_, *http_) {}
+class Api : public api::Abstract {
+ public:
+  api::Blockchain blockchain;
+  api::Blocks blocks;
+  api::Delegates delegates;
+  api::Node node;
+  api::Peers peers;
+  api::Transactions transactions;
+  api::Votes votes;
+  api::Wallets wallets;
+
+  Api() : Abstract(),
+          blockchain(host_, *http_),
+          blocks(host_, *http_),
+          delegates(host_, *http_),
+          node(host_, *http_),
+          peers(host_, *http_),
+          transactions(host_, *http_),
+          votes(host_, *http_),
+          wallets(host_, *http_) {}
 };
-/**/
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace Client
+}  // namespace Ark
 
 #endif

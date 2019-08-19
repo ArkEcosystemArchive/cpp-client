@@ -5,33 +5,38 @@
 #include "arkClient.h"
 
 namespace {
-Ark::Client::Host testHost("0.0.0.0", 4003);
-using namespace Ark::Client::API;
-}
+using namespace Ark::Client;
+using namespace Ark::Client::api;
+constexpr const char* tIp = "0.0.0.0";
+constexpr const int tPort = 4003;
+constexpr const int tLimit = 5;
+constexpr const int tPage = 1;
+Host testHost(tIp, tPort);
+}  // namespace
 
 /**/
 
-TEST(paths, test_blockchain) {  // NOLINT
-  const auto base = Paths::Blockchain::base();
+TEST(paths, test_blockchain) {
+  const auto base = paths::Blockchain::base();
   ASSERT_STREQ("/api/blockchain", base);
 
-  const auto get = Paths::Blockchain::get(testHost);
+  const auto get = paths::Blockchain::get(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/blockchain", get.c_str());
 }
 
 /**/
 
-TEST(paths, test_blocks) {  // NOLINT
-  const auto base = Paths::Blocks::base();
+TEST(paths, test_blocks) {
+  const auto base = paths::Blocks::base();
   ASSERT_STREQ("/api/blocks", base);
 
-  const auto get = Paths::Blocks::get(testHost, "58328125061111756");
+  const auto get = paths::Blocks::get(testHost, "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756", get.c_str());
 
-  const auto all = Paths::Blocks::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Blocks::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks?limit=1&page=5", all.c_str());
 
-  const auto transactions = Paths::Blocks::transactions(testHost,
+  const auto transactions = paths::Blocks::transactions(testHost,
                                                         "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756/transactions",
                transactions.c_str());
@@ -41,7 +46,7 @@ TEST(paths, test_blocks) {  // NOLINT
     { "previousBlock", "6440284271011893973" },
     { "version", "0" }
   };
-  const auto search = Paths::Blocks::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Blocks::search(testHost, searchBody, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
@@ -51,90 +56,90 @@ TEST(paths, test_blocks) {  // NOLINT
 
 /**/
 
-TEST(paths, test_delegates) {  // NOLINT
-  const auto base = Paths::Delegates::base();
+TEST(paths, test_delegates) {
+  const auto base = paths::Delegates::base();
   ASSERT_STREQ("/api/delegates", base);
 
-  const auto get = Paths::Delegates::get(testHost, "boldninja");
+  const auto get = paths::Delegates::get(testHost, "boldninja");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja", get.c_str());
 
-  const auto all = Paths::Delegates::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Delegates::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates?limit=1&page=5", all.c_str());
 
-  const auto blocks = Paths::Delegates::blocks(testHost, "boldninja", "?limit=1&page=5");
+  const auto blocks = paths::Delegates::blocks(testHost, "boldninja", "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/blocks?limit=1&page=5",
                blocks.c_str());
 
-  const auto voters = Paths::Delegates::voters(testHost, "boldninja", "?limit=1&page=5");
+  const auto voters = paths::Delegates::voters(testHost, "boldninja", "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/voters?limit=1&page=5",
                voters.c_str());
 }
 
 /**/
 
-TEST(paths, test_node) {  // NOLINT
-  const auto base = Paths::Node::base();
+TEST(paths, test_node) {
+  const auto base = paths::Node::base();
   ASSERT_STREQ("/api/node", base);
 
-  const auto configuration = Paths::Node::configuration(testHost);
+  const auto configuration = paths::Node::configuration(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/configuration", configuration.c_str());
 
-  const auto status = Paths::Node::status(testHost);
+  const auto status = paths::Node::status(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/status", status.c_str());
 
-  const auto syncing = Paths::Node::syncing(testHost);
+  const auto syncing = paths::Node::syncing(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/syncing", syncing.c_str());
 }
 
 /**/
 
-TEST(paths, test_peers) {  // NOLINT
-  const auto base = Paths::Peers::base();
+TEST(paths, test_peers) {
+  const auto base = paths::Peers::base();
   ASSERT_STREQ("/api/peers", base);
 
-  const auto get = Paths::Peers::get(testHost, "0.0.0.0");
+  const auto get = paths::Peers::get(testHost, "0.0.0.0");
   ASSERT_STREQ("0.0.0.0:4003/api/peers/0.0.0.0", get.c_str());
 
-  const auto all = Paths::Peers::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Peers::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/peers?limit=1&page=5", all.c_str());
 }
 
 /**/
 
 TEST(paths, test_transactions) {  // NOLINT
-  const auto base = Paths::Transactions::base();
+  const auto base = paths::Transactions::base();
   ASSERT_STREQ("/api/transactions", base);
 
-  const auto getUnconfirmed = Paths::Transactions::getUnconfirmed(
+  const auto getUnconfirmed = paths::Transactions::getUnconfirmed(
       testHost,
       "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/transactions/unconfirmed/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48",
       getUnconfirmed.c_str());
 
-  const auto all = Paths::Transactions::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Transactions::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/transactions?limit=1&page=5", all.c_str());
 
-  const auto get = Paths::Transactions::get(
+  const auto get = paths::Transactions::get(
       testHost,
       "4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/transactions/4bbc5433e5a4e439369f1f57825e92d07cf9cb8e07aada69c122a2125e4b9d48",
       get.c_str());
 
-  const auto allUnconfirmed = Paths::Transactions::allUnconfirmed(
+  const auto allUnconfirmed = paths::Transactions::allUnconfirmed(
       testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/unconfirmed?limit=1&page=5",
                allUnconfirmed.c_str());
 
-  const auto types = Paths::Transactions::types(testHost);
+  const auto types = paths::Transactions::types(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/types", types.c_str());
 
   const std::map<std::string, std::string> searchBody = {
     { "id", "dummy" },
     { "key", "value" }
   };
-  const auto search = Paths::Transactions::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Transactions::search(testHost, searchBody, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ("id=dummy&key=value", search.second.c_str());
@@ -150,7 +155,7 @@ TEST(paths, test_transactions) {  // NOLINT
     "\"recipientId\":\"DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA\","
     "\"vendorField\":\"7ad0eeb302ee7d9b4e58cf52daa9ece7922ad92d14f0407e3881597bf3c9c1c6\""
   "}";
-  const auto send = Paths::Transactions::send(testHost, jsonTransaction);
+  const auto send = paths::Transactions::send(testHost, jsonTransaction);
   ASSERT_STREQ("0.0.0.0:4003/api/transactions", send.first.c_str());
   ASSERT_STREQ(jsonTransaction.c_str(), send.second.c_str());
 }
@@ -158,56 +163,56 @@ TEST(paths, test_transactions) {  // NOLINT
 /**/
 
 TEST(paths, test_votes) {  // NOLINT
-  const auto base = Paths::Votes::base();
+  const auto base = paths::Votes::base();
   ASSERT_STREQ("/api/votes", base);
 
-  const auto get = Paths::Votes::get(
+  const auto get = paths::Votes::get(
       testHost,
       "d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2",
       get.c_str());
 
-  const auto all = Paths::Votes::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Votes::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/votes?limit=1&page=5", all.c_str());
 }
 
 /**/
 
 TEST(paths, test_wallets) {  // NOLINT
-  const auto base = Paths::Wallets::base();
+  const auto base = paths::Wallets::base();
   ASSERT_STREQ("/api/wallets", base);
 
-  const auto get = Paths::Wallets::get(testHost,
+  const auto get = paths::Wallets::get(testHost,
                                        "DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu");
   ASSERT_STREQ("0.0.0.0:4003/api/wallets/DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu",
                get.c_str());
 
-  const auto all = Paths::Wallets::all(testHost, "?limit=1&page=5");
+  const auto all = paths::Wallets::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/wallets?limit=1&page=5", all.c_str());
 
-  const auto top = Paths::Wallets::top(testHost, "?limit=1&page=5");
+  const auto top = paths::Wallets::top(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/wallets/top?limit=1&page=5", top.c_str());
 
-  const auto transactions = Paths::Wallets::transactions(
+  const auto transactions = paths::Wallets::transactions(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions?limit=1&page=5",
       transactions.c_str());
 
-  const auto sent = Paths::Wallets::transactionsSent(
+  const auto sent = paths::Wallets::transactionsSent(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/sent?limit=1&page=5",
       sent.c_str());
 
-  const auto received = Paths::Wallets::transactionsReceived(
+  const auto received = paths::Wallets::transactionsReceived(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/transactions/received?limit=1&page=5",
       received.c_str());
 
-  const auto votes = Paths::Wallets::votes(
+  const auto votes = paths::Wallets::votes(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/votes?limit=1&page=5",
@@ -218,7 +223,7 @@ TEST(paths, test_wallets) {  // NOLINT
     { "address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T" },
     { "publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d" }
   };
-  const auto search = Paths::Wallets::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Wallets::search(testHost, searchBody, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/wallets/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(

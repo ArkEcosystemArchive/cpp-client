@@ -70,25 +70,25 @@ Below are examples of how to access the Path interface:
 ```cpp
 Ark::Client::Host dummyHost("0.0.0.0:4003");
 
-std::string blockchainGetPath = Ark::Client::API::Paths::Blockschain::get(dummyHost);
+std::string blockchainGetPath = Ark::Client::api::paths::Blockschain::get(dummyHost);
 // blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
 
 std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?page=1&limit=5");
 // blocksAllPath will be the string "0.0.0.0:4003/api/blocks?page=1&limit=5"
 
-std::string delegatesGetPath = Ark::Client::API::Paths::Delegates::get(dummyHost, "genesis_1");
+std::string delegatesGetPath = Ark::Client::api::paths::Delegates::get(dummyHost, "genesis_1");
 // delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
 
-std::string nodeConfigurationPath = Ark::Client::API::Paths::Node::configuration(dummyHost);
+std::string nodeConfigurationPath = Ark::Client::api::paths::Node::configuration(dummyHost);
 // nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
 
 std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, "?page=1&limit=5");
 // peersAllPath will be the string "0.0.0.0:4003/api/peers?page=1&limit=5"
 
-std::string transactionsTypesPath = Ark::Client::API::Paths::Transactions::types(dummyHost);
+std::string transactionsTypesPath = Ark::Client::api::paths::Transactions::types(dummyHost);
 // transactionsTypesPath will be the string "0.0.0.0:4003/api/transactions/types"
 
-std::string votesGetPath = Ark::Client::API::Paths::Votes::get(dummyHost, "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
+std::string votesGetPath = Ark::Client::api::paths::Votes::get(dummyHost, "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
 // votesGetPath will be the string "0.0.0.0:4003/api/votes/a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67"
 
 // the following is an example of formatting a path and body parameters for an http post

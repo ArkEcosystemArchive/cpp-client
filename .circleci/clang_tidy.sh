@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # run clang tidy
 cmake -DENABLE_CLANG_TIDY=ON .
 make tidy > output.txt

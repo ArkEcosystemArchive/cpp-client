@@ -18,13 +18,12 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
-/**/
-class IWallets : public API::Base {
-protected:
-  IWallets(Host &host, IHTTP &http) : API::Base(host, http) {}
+namespace api {  // NOLINT
 
-public:
+class IWallets : public Base {
+ public:
+  virtual ~IWallets() {}
+
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(const char* const query) = 0;
   virtual std::string top(const char* const query) = 0;
@@ -33,10 +32,15 @@ public:
   virtual std::string transactionsSent(const char *const identifier, const char* const query) = 0;
   virtual std::string votes(const char *const identifier, const char* const query) = 0;
   virtual std::string search(const std::map<std::string, std::string> &bodyParameters, const char* const query) = 0;
+
+ protected:
+  IWallets(Host &host, IHTTP &http) : Base(host, http) {}
 };
+
 /**/
+
 class Wallets : public IWallets {
-public:
+ public:
   Wallets(Host &host, IHTTP &http) : IWallets(host, http) {}
 
   std::string get(const char *const identifier) override;
@@ -48,9 +52,9 @@ public:
   std::string votes(const char *const identifier, const char* const query) override;
   std::string search(const std::map<std::string, std::string> &bodyParameters, const char* const query) override;
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

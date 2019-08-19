@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # run desktop builds
 mkdir build
 cd build

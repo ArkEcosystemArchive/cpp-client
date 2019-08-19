@@ -10,30 +10,32 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 
-#include "api/base.h"
-#include "api/paths.h"
-
 #include <map>
 #include <string>
 
+#include "api/base.h"
+#include "api/paths.h"
+
 namespace Ark {
 namespace Client {
-namespace API {
-/**/
-class IBlocks : public API::Base {
-protected:
-  IBlocks(Host& host, IHTTP& http) : API::Base(host, http) {}
+namespace api {  // NOLINT
 
-public:
+class IBlocks : public Base {
+ public:
   virtual ~IBlocks() {}
   virtual std::string get(const char* const blockId) = 0;
   virtual std::string all(const char* const query) = 0;
   virtual std::string transactions(const char* const blockId) = 0;
   virtual std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) = 0;
+
+ protected:
+  IBlocks(Host& host, IHTTP& http) : Base(host, http) {}
 };
+
 /**/
-class Blocks : public IBlocks {
-public:
+
+class Blocks : public IBlocks { 
+ public:
   Blocks(Host& host, IHTTP& http) : IBlocks(host, http) {}
 
   std::string get(const char* const blockId) override;
@@ -41,9 +43,9 @@ public:
   std::string transactions(const char* const blockId) override;
   std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) override;
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

@@ -17,26 +17,29 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
-/**/
-class IBlockchain : public API::Base {
-protected:
-  IBlockchain(Host& host, IHTTP& http) : API::Base(host, http) {}
+namespace api {
 
-public:
+class IBlockchain : public api::Base {
+ public:
   virtual ~IBlockchain() {}
+
   virtual std::string get() = 0;
+
+protected:
+  IBlockchain(Host& host, IHTTP& http) : api::Base(host, http) {}
 };
+
 /**/
+
 class Blockchain : public IBlockchain {
-public:
+ public:
   Blockchain(Host& host, IHTTP& http) : IBlockchain(host, http) {}
 
   std::string get() override;
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

@@ -1,50 +1,49 @@
+/**
+ * This file is part of Ark Cpp Client.
+ *
+ * (c) Ark Ecosystem <info@ark.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ **/
+
 #include "host/host.h"
 
-#include <cstring>
+#include <cstdio>
 #include <string>
 
-Ark::Client::Host::Host() : ip_(), port_(-1) {}
+namespace Ark {
+namespace Client {
+
+Host::Host(const char* ip, int port) : ip_(ip), port_(port) {}
 
 /**/
 
-Ark::Client::Host::Host(
-    const char* const newIP,
-    int newPort) : port_(newPort) {
-  strncpy(this->ip_, newIP, sizeof(this->ip_));
+bool Host::set(const char* ip, int port) {
+  this->ip_.reserve(IP_MAX_STRING_LEN);
+  this->ip_ += ip;
+  this->port_ = port;
+  return this->port_ == port && this->ip_ == ip;
 }
 
 /**/
 
-bool Ark::Client::Host::set(
-    const char* const newIP,
-    int newPort) {
-  strncpy(this->ip_, newIP, sizeof(this->ip_));
-  this->port_ = newPort;
-  return
-    ((this->port_ == newPort)
-    && (strcmp(this->ip_, newIP) != 0));
+std::string Host::ip() const noexcept { return this->ip_; };
+
+/**/
+
+int Host::port() const noexcept { return this->port_; };
+
+/**/
+
+std::string Host::toString() {
+  std::string out;
+  out.reserve(IP_MAX_STRING_LEN + PORT_MAX_STRING_LEN);
+  out += (this->ip_);
+  out += ":";
+  snprintf(&out[out.length()], PORT_MAX_STRING_LEN, "%d", this->port_);
+  return out;
 }
 
-/**/
-
-std::string Ark::Client::Host::ip() const noexcept {
-  return this->ip_;
-};
-
-/**/
-
-int Ark::Client::Host::port() const noexcept {
-  return this->port_;
-};
-
-/**/
-
-std::string Ark::Client::Host::toString() {
-  char temp[36] = {};
-  snprintf(
-      temp,
-      sizeof(this->ip_) + sizeof(this->port_),
-      "%s:%d",
-      this->ip_, this->port_);
-  return temp;
-}
+}  // namespace Client
+}  // namespace Ark
