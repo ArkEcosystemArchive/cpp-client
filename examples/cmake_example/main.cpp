@@ -37,8 +37,10 @@ int main(int argc, char* argv[]) {  // NOLINT
   std::cout << "Response for votes 'a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67':\n";
   std::cout << vote << "\n\n";
 
-  const auto walletsSearch = connection.api.wallets.search(
-      {"username", "genesis_1"});
+  const std::map<std::string, std::string> body_parameters = {
+    {"username", "genesis_1"}
+  };
+  const auto walletsSearch = connection.api.wallets.search(body_parameters);
   std::cout << "Response for wallet search 'username=genesis_1':\n";
   std::cout << walletsSearch << std::endl;
 
