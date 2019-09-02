@@ -55,6 +55,7 @@ struct Delegates {
 struct Node {
   static const char* base();
   static std::string configuration(Host& newHost);
+  static std::string crypto(Host& newHost);
   static std::string status(Host& newHost);
   static std::string syncing(Host& newHost);
 };
