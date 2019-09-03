@@ -186,6 +186,17 @@ std::string Node::configuration(Host& newHost) {
 
 /**/
 
+std::string Node::crypto(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/configuration/crypto";
+  return url;
+}
+
+/**/
+
 std::string Node::status(Host& newHost) {
   std::string url;
   url.reserve(URL_MAX_LEN);

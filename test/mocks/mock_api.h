@@ -55,6 +55,7 @@ public:
   MockNode(Ark::Client::Host& host, Ark::Client::IHTTP& http) : INode(host, http) {}
 
   MOCK_METHOD0(configuration, std::string());
+  MOCK_METHOD0(crypto, std::string());
   MOCK_METHOD0(status, std::string());
   MOCK_METHOD0(syncing, std::string());
 };
