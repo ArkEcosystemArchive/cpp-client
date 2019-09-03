@@ -19,6 +19,12 @@ std::string Node::configuration() {
 
 /**/
 
+std::string Node::crypto() {
+  return http_->get(paths::Node::crypto(this->host_).c_str());
+}
+
+/**/
+
 std::string Node::status() {
   return http_->get(paths::Node::status(this->host_).c_str());
 }

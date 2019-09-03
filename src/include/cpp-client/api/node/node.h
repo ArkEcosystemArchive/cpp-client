@@ -22,6 +22,7 @@ class INode : public Base {
   virtual ~INode() {}
 
   virtual std::string configuration() = 0;
+  virtual std::string crypto() = 0;
   virtual std::string status() = 0;
   virtual std::string syncing() = 0;
 
@@ -36,6 +37,7 @@ class Node : public INode {
   Node(Host& host, IHTTP& http) : INode(host, http) {}
 
   std::string configuration() override;
+  std::string crypto() override;
   std::string status() override;
   std::string syncing() override;
 };

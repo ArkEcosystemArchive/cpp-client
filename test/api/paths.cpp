@@ -84,6 +84,9 @@ TEST(paths, test_node) {
   const auto configuration = paths::Node::configuration(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/configuration", configuration.c_str());
 
+  const auto crypto = paths::Node::crypto(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/node/configuration/crypto", crypto.c_str());
+
   const auto status = paths::Node::status(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/status", status.c_str());
 
