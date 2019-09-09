@@ -138,6 +138,9 @@ TEST(paths, test_transactions) {  // NOLINT
   const auto types = paths::Transactions::types(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/types", types.c_str());
 
+  const auto fees = paths::Transactions::fees(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/transactions/fees", fees.c_str());
+
   const std::map<std::string, std::string> searchBody = {
     { "id", "dummy" },
     { "key", "value" }

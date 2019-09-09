@@ -316,6 +316,17 @@ std::string Transactions::types(Host& newHost) {
 
 /**/
 
+std::string Transactions::fees(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/fees";
+  return url;
+}
+
+/**/
+
 std::pair<std::string, std::string> Transactions::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,

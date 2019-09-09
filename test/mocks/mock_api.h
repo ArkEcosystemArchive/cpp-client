@@ -79,6 +79,7 @@ public:
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(allUnconfirmed, std::string(const char* const));
   MOCK_METHOD0(types, std::string());
+  MOCK_METHOD0(fees, std::string());
   MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD1(send, std::string(std::string&));
 };

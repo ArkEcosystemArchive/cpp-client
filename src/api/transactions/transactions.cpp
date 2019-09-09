@@ -43,6 +43,13 @@ std::string Transactions::types() {
   return http_->get(paths::Transactions::types(this->host_).c_str());
 }
 
+
+/**/
+
+std::string Transactions::fees() {
+  return http_->get(paths::Transactions::fees(this->host_).c_str());
+}
+
 /**/
 
 std::string Transactions::search(
