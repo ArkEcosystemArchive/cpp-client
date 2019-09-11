@@ -70,6 +70,13 @@ struct Peers {
 
 /***/
 
+struct Rounds {
+  static const char* base();
+  static std::string delegates(Host& newHost, const char* const roundId);
+};
+
+/***/
+
 struct Transactions {
   static const char* base();
   static std::string getUnconfirmed(Host& newHost, const char* const identifier);

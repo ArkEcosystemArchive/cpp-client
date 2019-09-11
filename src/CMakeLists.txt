@@ -20,6 +20,7 @@ set(API_SRC
 	api/delegates/delegates.cpp
 	api/node/node.cpp
 	api/peers/peers.cpp
+	api/rounds/rounds.cpp
 	api/transactions/transactions.cpp
 	api/votes/votes.cpp
 	api/wallets/wallets.cpp

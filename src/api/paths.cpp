@@ -250,6 +250,26 @@ std::string Peers::all(Host& newHost, const char* const query) {
 /****/
 
 /**
+ * Rounds
+ **/
+const char* Rounds::base() { return "/api/rounds"; }
+
+/**/
+
+std::string Rounds::delegates(Host& newHost, const char* roundId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Rounds::base();
+  url += "/";
+  url += roundId;
+  url += "/delegates";
+  return url;
+}
+
+/****/
+
+/**
  * Transactions
  **/
 const char* Transactions::base() { return "/api/transactions"; }
