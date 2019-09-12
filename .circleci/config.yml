@@ -85,7 +85,7 @@ jobs:
       - run: COMPILER=clang++
       - run:
           name: Install dependencies
-          command: brew install cmake lcov
+          command: brew install cmake lcov openssl
       - run:
           name: Make scripts executable
           command: sudo chmod -R +x ./.circleci/*.sh
@@ -99,7 +99,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: brew install cmake lcov
+          command: brew install cmake lcov openssl
       - run:
           name: Make scripts executable
           command: sudo chmod -R +x ./.circleci/*.sh
