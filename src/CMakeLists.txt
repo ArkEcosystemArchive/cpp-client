@@ -51,13 +51,16 @@ set(CURL_STATICLIB true)
 set(CURL_STATIC_CRT ON)
 set(BUILD_CURL_EXE false)
 
+if (APPLE)
+  set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl/lib")
+  set(OPENSSL_INCLUDE_DIR "/usr/local/opt/openssl/include")
+endif()
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
 
 include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
 
 if (APPLE)
-  set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl/lib")
-  set(OPENSSL_INCLUDE_DIR "/usr/local/opt/openssl/include")
   target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
 else()
 	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
