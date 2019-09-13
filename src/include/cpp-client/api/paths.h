@@ -84,6 +84,7 @@ struct Transactions {
   static std::string get(Host& newHost, const char* const identifier);
   static std::string allUnconfirmed(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string types(Host& newHost);
+  static std::string fees(Host& newHost);
   static std::pair<std::string, std::string> search(Host& newHost,
                                                     const std::map<std::string, std::string>& bodyParameters,
                                                     const char* const query = DEFAULT_QUERY);

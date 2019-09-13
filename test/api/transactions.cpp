@@ -88,6 +88,36 @@ TEST(api, test_transaction_types) {  // NOLINT
 
 /**/
 
+TEST(api, test_transaction_fees) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
+    "data": {
+      "transfer": 10000000,
+      "secondSignature": 500000000,
+      "delegateRegistration": 2500000000,
+      "vote": 100000000,
+      "multiSignature": 500000000,
+      "ipfs": 0,
+      "timelockTransfer": 0,
+      "multiPayment": 0,
+      "delegateResignation": 2500000000
+    }
+  })";
+
+  EXPECT_CALL(connection.api.transactions, fees())
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+  const auto fees = connection.api.transactions.fees();
+
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                fees.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
+}
+
+/**/
+
 TEST(api, test_transaction_unconfirmed) {  // NOLINT
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
 
