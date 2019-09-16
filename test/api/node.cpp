@@ -203,6 +203,58 @@ TEST(api, test_node_crypto) {  // NOLINT
 
 /**/
 
+TEST(api, test_node_fees) {
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
+    "meta": {
+      "days": 7
+    },
+    "data": [
+      {
+        "type": 0,
+        "avg": "2159269",
+        "min": "30000",
+        "max": "17493405",
+        "sum": "70675045972"
+      },
+      {
+        "type": 1,
+        "avg": "275000000",
+        "min": "50000000",
+        "max": "500000000",
+        "sum": "550000000"
+      },
+      {
+        "type": 2,
+        "avg": "1200000000",
+        "min": "1200000000",
+        "max": "1200000000",
+        "sum": "2400000000"
+      },
+      {
+        "type": 3,
+        "avg": "26815214",
+        "min": "700000",
+        "max": "186790786",
+        "sum": "7427814405"
+      }
+    ]
+  })";
+
+  EXPECT_CALL(connection.api.node, fees())
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+  const auto fees = connection.api.node.fees();
+
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                fees.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
+}
+
+/**/
+
 TEST(api, test_node_status) {
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
 

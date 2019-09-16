@@ -22,6 +22,7 @@ namespace api {
 namespace paths {  // NOLINT
 
 static const char* DEFAULT_QUERY = "?page=1&limit=5";
+static const char* DEFAULT_DAYS_QUERY = "?days=7";
 
 struct Blockchain {
   static const char* base();
@@ -56,6 +57,7 @@ struct Node {
   static const char* base();
   static std::string configuration(Host& newHost);
   static std::string crypto(Host& newHost);
+  static std::string fees(Host& newHost, const char* const query = DEFAULT_DAYS_QUERY);
   static std::string status(Host& newHost);
   static std::string syncing(Host& newHost);
 };

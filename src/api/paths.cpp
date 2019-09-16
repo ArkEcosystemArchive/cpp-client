@@ -197,6 +197,18 @@ std::string Node::crypto(Host& newHost) {
 
 /**/
 
+std::string Node::fees(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/fees";
+  url += query;
+  return url;
+}
+
+/**/
+
 std::string Node::status(Host& newHost) {
   std::string url;
   url.reserve(URL_MAX_LEN);
@@ -300,7 +312,7 @@ std::string Transactions::all(Host& newHost, const char* const query) {
 
 /**/
 
-std::string Transactions::get(Host& newHost,const char* identifier) {
+std::string Transactions::get(Host& newHost, const char* identifier) {
   std::string url;
   url.reserve(URL_MAX_LEN);
   url += newHost.toString().c_str();
