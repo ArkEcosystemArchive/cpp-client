@@ -242,11 +242,11 @@ TEST(api, test_node_fees) {
     ]
   })";
 
-  EXPECT_CALL(connection.api.node, fees())
+  EXPECT_CALL(connection.api.node, fees(_))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const auto fees = connection.api.node.fees();
+  const auto fees = connection.api.node.fees("?days=7");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 fees.c_str()) == 0;
