@@ -56,6 +56,7 @@ public:
 
   MOCK_METHOD0(configuration, std::string());
   MOCK_METHOD0(crypto, std::string());
+  MOCK_METHOD1(fees, std::string(const char* const));
   MOCK_METHOD0(status, std::string());
   MOCK_METHOD0(syncing, std::string());
 };
