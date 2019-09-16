@@ -6,6 +6,7 @@
 
 #include "mocks/mock_api.h"
 
+using testing::_;
 using testing::Return;
 
 namespace {
