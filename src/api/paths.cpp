@@ -197,6 +197,18 @@ std::string Node::crypto(Host& newHost) {
 
 /**/
 
+std::string Node::fees(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/fees";
+  url += query;
+  return url;
+}
+
+/**/
+
 std::string Node::status(Host& newHost) {
   std::string url;
   url.reserve(URL_MAX_LEN);
@@ -250,6 +262,26 @@ std::string Peers::all(Host& newHost, const char* const query) {
 /****/
 
 /**
+ * Rounds
+ **/
+const char* Rounds::base() { return "/api/rounds"; }
+
+/**/
+
+std::string Rounds::delegates(Host& newHost, const char* roundId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Rounds::base();
+  url += "/";
+  url += roundId;
+  url += "/delegates";
+  return url;
+}
+
+/****/
+
+/**
  * Transactions
  **/
 const char* Transactions::base() { return "/api/transactions"; }
@@ -280,7 +312,7 @@ std::string Transactions::all(Host& newHost, const char* const query) {
 
 /**/
 
-std::string Transactions::get(Host& newHost,const char* identifier) {
+std::string Transactions::get(Host& newHost, const char* identifier) {
   std::string url;
   url.reserve(URL_MAX_LEN);
   url += newHost.toString().c_str();
@@ -311,6 +343,17 @@ std::string Transactions::types(Host& newHost) {
   url += newHost.toString().c_str();
   url += Transactions::base();
   url += "/types";
+  return url;
+}
+
+/**/
+
+std::string Transactions::fees(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/fees";
   return url;
 }
 

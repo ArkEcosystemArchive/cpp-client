@@ -17,6 +17,7 @@
 #include "api/delegates/delegates.h"
 #include "api/node/node.h"
 #include "api/peers/peers.h"
+#include "api/rounds/rounds.h"
 #include "api/transactions/transactions.h"
 #include "api/votes/votes.h"
 #include "api/wallets/wallets.h"
@@ -31,6 +32,7 @@ class Api : public api::Abstract {
   api::Delegates delegates;
   api::Node node;
   api::Peers peers;
+  api::Rounds rounds;
   api::Transactions transactions;
   api::Votes votes;
   api::Wallets wallets;
@@ -41,6 +43,7 @@ class Api : public api::Abstract {
           delegates(host_, *http_),
           node(host_, *http_),
           peers(host_, *http_),
+          rounds(host_, *http_),
           transactions(host_, *http_),
           votes(host_, *http_),
           wallets(host_, *http_) {}

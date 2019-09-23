@@ -25,6 +25,12 @@ std::string Node::crypto() {
 
 /**/
 
+std::string Node::fees(const char* const query) {
+  return http_->get(paths::Node::fees(this->host_, query).c_str());
+}
+
+/**/
+
 std::string Node::status() {
   return http_->get(paths::Node::status(this->host_).c_str());
 }

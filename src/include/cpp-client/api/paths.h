@@ -22,6 +22,7 @@ namespace api {
 namespace paths {  // NOLINT
 
 static const char* DEFAULT_QUERY = "?page=1&limit=5";
+static const char* DEFAULT_DAYS_QUERY = "?days=7";
 
 struct Blockchain {
   static const char* base();
@@ -56,6 +57,7 @@ struct Node {
   static const char* base();
   static std::string configuration(Host& newHost);
   static std::string crypto(Host& newHost);
+  static std::string fees(Host& newHost, const char* const query = DEFAULT_DAYS_QUERY);
   static std::string status(Host& newHost);
   static std::string syncing(Host& newHost);
 };
@@ -70,6 +72,13 @@ struct Peers {
 
 /***/
 
+struct Rounds {
+  static const char* base();
+  static std::string delegates(Host& newHost, const char* const roundId);
+};
+
+/***/
+
 struct Transactions {
   static const char* base();
   static std::string getUnconfirmed(Host& newHost, const char* const identifier);
@@ -77,6 +86,7 @@ struct Transactions {
   static std::string get(Host& newHost, const char* const identifier);
   static std::string allUnconfirmed(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string types(Host& newHost);
+  static std::string fees(Host& newHost);
   static std::pair<std::string, std::string> search(Host& newHost,
                                                     const std::map<std::string, std::string>& bodyParameters,
                                                     const char* const query = DEFAULT_QUERY);

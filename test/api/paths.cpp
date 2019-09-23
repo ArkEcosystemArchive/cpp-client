@@ -109,6 +109,16 @@ TEST(paths, test_peers) {
 
 /**/
 
+TEST(paths, test_rounds) {
+  const auto base = paths::Rounds::base();
+  ASSERT_STREQ("/api/rounds", base);
+
+  const auto delegates = paths::Rounds::delegates(testHost, "12345");
+  ASSERT_STREQ("0.0.0.0:4003/api/rounds/12345/delegates", delegates.c_str());
+}
+
+/**/
+
 TEST(paths, test_transactions) {  // NOLINT
   const auto base = paths::Transactions::base();
   ASSERT_STREQ("/api/transactions", base);
@@ -137,6 +147,9 @@ TEST(paths, test_transactions) {  // NOLINT
 
   const auto types = paths::Transactions::types(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/types", types.c_str());
+
+  const auto fees = paths::Transactions::fees(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/transactions/fees", fees.c_str());
 
   const std::map<std::string, std::string> searchBody = {
     { "id", "dummy" },

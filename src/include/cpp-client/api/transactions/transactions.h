@@ -29,6 +29,7 @@ class ITransactions : public Base {
   virtual std::string all(const char* const query) = 0;
   virtual std::string allUnconfirmed(const char* const query) = 0;
   virtual std::string types() = 0;
+  virtual std::string fees() = 0;
   virtual std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) = 0;
   virtual std::string send(std::string& jsonTransaction) = 0;
 
@@ -47,6 +48,7 @@ class Transactions : public ITransactions {
   std::string all(const char* const query) override;
   std::string allUnconfirmed(const char* const query) override;
   std::string types() override;
+  std::string fees() override;
   std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) override;
   std::string send(std::string& jsonTransaction) override;
 };

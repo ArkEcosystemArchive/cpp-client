@@ -16,7 +16,7 @@ constexpr const char* tIp = "167.114.29.55";
 constexpr const int tPort = 4003;
 }  // namespace
 
-/* */
+/**/
 
 TEST(api, test_block) {  // NOLINT
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
