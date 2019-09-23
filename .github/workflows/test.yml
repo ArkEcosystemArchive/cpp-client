@@ -1,0 +1,84 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    types: [opened]
+
+jobs:
+  arduino-default:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Make scripts executable
+        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Install
+        run: ./.github/workflows/test/install_arduino.sh
+      - name: Build
+        run: ./.github/workflows/test/script_arduino.sh
+
+  linux-default:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Make scripts executable
+        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Install
+        run: ./.github/workflows/test/install_platform_io.sh
+      - name: Build
+        run: ./.github/workflows/test/script_platform_io.sh
+  linux-gcc7:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+            sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+            sudo apt-get update
+            sudo apt-get -y install g++-7 lcov cmake openssl
+      - name: Make scripts executable
+        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Environment variables
+        run: CC=gcc-7 && CXX=g++-7
+      - name: Build
+        run: ./.github/workflows/test/script_desktop.sh
+      - name: Codecov upload
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
+
+  linux-clang-5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake openssl
+      - name: Make scripts executable
+        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Environment variables
+        run: CC=clang-5.0 && CXX=clang++-5.0
+      - name: Build
+        run: ./.github/workflows/test/script_desktop.sh
+      - name: Clang Tidy
+        run: ./.github/workflows/test/clang_tidy.sh
+      - name: Clang Format
+        run: ./.github/workflows/test/clang_format.sh
+
+  macos:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: COMPILER=clang++
+      - name: Install dependencies
+        run: brew install cmake lcov
+      - name: Make scripts executable
+        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Build
+        run: ./.github/workflows/test/script_desktop.sh
