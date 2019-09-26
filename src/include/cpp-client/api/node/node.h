@@ -23,6 +23,7 @@ class INode : public Base {
 
   virtual std::string configuration() = 0;
   virtual std::string crypto() = 0;
+  virtual std::string fees(const char* const query) = 0;
   virtual std::string status() = 0;
   virtual std::string syncing() = 0;
 
@@ -38,6 +39,7 @@ class Node : public INode {
 
   std::string configuration() override;
   std::string crypto() override;
+  std::string fees(const char* const query) override;
   std::string status() override;
   std::string syncing() override;
 };

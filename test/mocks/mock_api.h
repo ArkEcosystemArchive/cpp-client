@@ -56,6 +56,7 @@ public:
 
   MOCK_METHOD0(configuration, std::string());
   MOCK_METHOD0(crypto, std::string());
+  MOCK_METHOD1(fees, std::string(const char* const));
   MOCK_METHOD0(status, std::string());
   MOCK_METHOD0(syncing, std::string());
 };
@@ -70,6 +71,17 @@ public:
   MOCK_METHOD1(all, std::string(const char* const));
 };
 
+/**/
+
+class MockRounds : public Ark::Client::api::IRounds {  // NOLINT
+public:
+  MockRounds(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IRounds(host, http) {}
+
+  MOCK_METHOD1(delegates, std::string(const char* const));
+};
+
+/**/
+
 class MockTransactions : public Ark::Client::api::ITransactions {  // NOLINT
 public:
   MockTransactions(Ark::Client::Host& host, Ark::Client::IHTTP& http) : ITransactions(host, http) {}
@@ -79,6 +91,7 @@ public:
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(allUnconfirmed, std::string(const char* const));
   MOCK_METHOD0(types, std::string());
+  MOCK_METHOD0(fees, std::string());
   MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD1(send, std::string(std::string&));
 };
@@ -118,6 +131,7 @@ public:
   MockDelegates delegates;
   MockNode node;
   MockPeers peers;
+  MockRounds rounds;
   MockTransactions transactions;
   MockVotes votes;
   MockWallets wallets;
@@ -128,6 +142,7 @@ public:
               delegates(host_, *http_),
               node(host_, *http_),
               peers(host_, *http_),
+              rounds(host_, *http_),
               transactions(host_, *http_),
               votes(host_, *http_),
               wallets(host_, *http_) {}

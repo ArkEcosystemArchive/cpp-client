@@ -36,6 +36,7 @@ set(TEST_API_SRC
 	${PROJECT_SOURCE_DIR}/api/delegates.cpp
 	${PROJECT_SOURCE_DIR}/api/node.cpp
 	${PROJECT_SOURCE_DIR}/api/peers.cpp
+	${PROJECT_SOURCE_DIR}/api/rounds.cpp
 	${PROJECT_SOURCE_DIR}/api/transactions.cpp
 	${PROJECT_SOURCE_DIR}/api/votes.cpp
 	${PROJECT_SOURCE_DIR}/api/wallets.cpp
