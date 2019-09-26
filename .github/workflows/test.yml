@@ -5,7 +5,7 @@ on:
     branches:
       - "**"
   pull_request:
-    types: [opened, edited]
+    types: [ready_for_review, synchronize, opened]
 
 jobs:
   arduino-default:
