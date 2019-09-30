@@ -48,14 +48,23 @@ include_directories(${PROJECT_SOURCE_DIR})
 set(BUILD_TESTING OFF)
 set(HTTP_ONLY ON)
 set(CMAKE_USE_LIBSSH2 OFF)
+set(CURL_STATICLIB true)
+set(CURL_STATIC_CRT ON)
+set(BUILD_CURL_EXE false)
+
+if (APPLE)
+  set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl/lib")
+  set(OPENSSL_INCLUDE_DIR "/usr/local/opt/openssl/include")
+endif()
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
 
 include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
 
-if (UNIX AND NOT APPLE)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
-	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
+if (APPLE)
+  target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
 else()
-	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
+	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
 endif()
 
 # ------------------------------------------------------------------------------
