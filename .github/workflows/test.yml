@@ -39,15 +39,16 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: |
-            sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-            sudo apt-get update
-            sudo apt-get -y install g++-7 lcov cmake openssl
+          sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+          sudo apt-get update
+          sudo apt-get -y install g++-7 lcov cmake openssl
       - name: Make scripts executable
         run: sudo chmod -R +x ./.github/workflows/test/*.sh
-      - name: Environment variables
-        run: CC=gcc-7 && CXX=g++-7
       - name: Build
         run: ./.github/workflows/test/script_desktop.sh
+        env:
+          CC: gcc-7
+          CXX: g++-7
       - name: Codecov upload
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
 
@@ -58,18 +59,25 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: |
-            sudo apt-get update
-            sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake openssl
+          sudo apt-get update
+          sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake openssl
       - name: Make scripts executable
         run: sudo chmod -R +x ./.github/workflows/test/*.sh
-      - name: Environment variables
-        run: CC=clang-5.0 && CXX=clang++-5.0
       - name: Build
         run: ./.github/workflows/test/script_desktop.sh
+        env:
+          CC: clang-5.0
+          CXX: clang++-5.0
       - name: Clang Tidy
         run: ./.github/workflows/test/clang_tidy.sh
+        env:
+          CC: clang-5.0
+          CXX: clang++-5.0
       - name: Clang Format
         run: ./.github/workflows/test/clang_format.sh
+        env:
+          CC: clang-5.0
+          CXX: clang++-5.0
 
   macos:
     runs-on: macOS-latest
@@ -83,3 +91,23 @@ jobs:
         run: sudo chmod -R +x ./.github/workflows/test/*.sh
       - name: Build
         run: ./.github/workflows/test/script_desktop.sh
+
+  windows:
+    runs-on: windows-2016
+    strategy:
+      matrix:
+        build: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+      - name: Install
+        run: git submodule update --init --recursive
+      - name: CMake
+        run: cmake -G "Visual Studio 15 2017 Win64" .
+      - name: Build Solution
+        shell: cmd
+        run: msbuild "%GITHUB_WORKSPACE%\Ark-Cpp-Client.sln"
+      - name: Test
+        run: call "%GITHUB_WORKSPACE%\test\Debug\Ark-Cpp-Client-tests"
