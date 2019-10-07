@@ -6,15 +6,12 @@ environment:
   matrix:
   - CONFIGURATION: Debug
   - CONFIGURATION: Release
-  
-install:
-    - git submodule update --init --recursive
 
 before_build:
-    - cmake -G "Visual Studio 15 2017 Win64" .
+    - cmake -D UNIT_TEST=ON -G "Visual Studio 15 2017 Win64" .
 
 build:
-  project: $(APPVEYOR_BUILD_FOLDER)\Ark-Cpp-Client.sln
+  project: $(APPVEYOR_BUILD_FOLDER)\ark_cpp_client.sln
     
 test_script:
-- cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\Ark-Cpp-Client-tests.exe'
+- cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\ark_cpp_client_tests.exe'
