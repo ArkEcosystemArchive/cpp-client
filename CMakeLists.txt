@@ -36,8 +36,8 @@ execute_process(
 
 if(ENABLE_CLANG_TIDY)
 
-  find_program(CLANG_TIDY_BIN clang-tidy-6.0)
-  find_program(RUN_CLANG_TIDY_BIN run-clang-tidy-6.0.py)
+  find_program(CLANG_TIDY_BIN clang-tidy-5.0)
+  find_program(RUN_CLANG_TIDY_BIN run-clang-tidy-5.0.py)
 
   if(CLANG_TIDY_BIN STREQUAL "CLANG_TIDY_BIN-NOTFOUND")
     message(FATAL_ERROR "unable to locate clang-tidy-5.0")
@@ -49,7 +49,6 @@ if(ENABLE_CLANG_TIDY)
 
   list(APPEND RUN_CLANG_TIDY_BIN_ARGS
     -clang-tidy-binary ${CLANG_TIDY_BIN}
-    "\"-header-filter=.*\\b(src|test|examples)\\b\\/(?!lib).*\""     #Only run clang tidy on src, test, examples and skip 3rd party libraries
     -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor,-cppcoreguidelines-*
   )
 
