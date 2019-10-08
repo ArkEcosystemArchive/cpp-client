@@ -1,2 +1,11 @@
-call build.cmd
-.\build\test\Debug\Ark-Cpp-Client-tests
+
+rmdir /S /Q build
+mkdir build
+cd build
+
+cmake -DUNIT_TEST=ON ..
+cmake --build .
+
+cd ..
+
+.\build\test\Debug\ark_cpp_client_tests
