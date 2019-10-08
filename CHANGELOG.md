@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Added
 -   added Blockchain API endpoint ([#104])
 
@@ -15,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 -   improved formatting and maintainability ([#92])
 -   dropped Hunter Package Manager in favor of git submodules in OS builds ([#90])
 -   updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples ([#87])
+-   moved external libraries out of source tree ([#140])
 
 ### Fixed
 -   fixed typos in Arduino examples ([#86])
@@ -68,4 +70,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#93]: https://github.com/ArkEcosystem/cpp-client/pull/93
 [#104]: https://github.com/ArkEcosystem/cpp-client/pull/104
 [#114]: https://github.com/ArkEcosystem/cpp-client/pull/114
+[#140]: https://github.com/ArkEcosystem/cpp-client/pull/140
 [unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...develop

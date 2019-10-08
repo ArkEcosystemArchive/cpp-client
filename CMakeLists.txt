@@ -1,34 +1,33 @@
-cmake_minimum_required(VERSION 3.2.2)
 
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchain.cmake")
+cmake_minimum_required(VERSION 3.2)
 
-project(Ark-Cpp-Client)
+project(ark_cpp_client)
+
+# ------------------------------------------------------------------------------
+# Set the Environment Variables
+# ------------------------------------------------------------------------------
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
+set(EXTERNAL_LIBRARY_DIR ${PROJECT_SOURCE_DIR}/extern)
 
 set(BUILD_SHARED_LIBS OFF)
 
 if (MSVC)
-  add_definitions(
-    -D_CRT_SECURE_NO_WARNINGS
-    -D_SCL_SECURE_NO_WARNINGS
-    -DNOMINMAX
-	)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS
+                    -D_SCL_SECURE_NO_WARNINGS
+                    -DNOMINMAX)
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 else()
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
 endif()
 
-# clone submodules
-execute_process(
-  COMMAND git submodule update --init --recursive
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # Clang Tidy
@@ -36,33 +35,50 @@ execute_process(
 
 if(ENABLE_CLANG_TIDY)
 
-  find_program(CLANG_TIDY_BIN clang-tidy-6.0)
-  find_program(RUN_CLANG_TIDY_BIN run-clang-tidy-6.0.py)
+    find_program(CLANG_TIDY_BIN clang-tidy-6.0)
+    find_program(RUN_CLANG_TIDY_BIN run-clang-tidy-6.0.py)
 
-  if(CLANG_TIDY_BIN STREQUAL "CLANG_TIDY_BIN-NOTFOUND")
-    message(FATAL_ERROR "unable to locate clang-tidy-5.0")
-  endif()
+    if(CLANG_TIDY_BIN STREQUAL "CLANG_TIDY_BIN-NOTFOUND")
+        message(FATAL_ERROR "unable to locate clang-tidy-5.0")
+    endif()
 
-  if(RUN_CLANG_TIDY_BIN STREQUAL "RUN_CLANG_TIDY_BIN-NOTFOUND")
-    message(FATAL_ERROR "unable to locate run-clang-tidy-5.0.py")
-  endif()
+    if(RUN_CLANG_TIDY_BIN STREQUAL "RUN_CLANG_TIDY_BIN-NOTFOUND")
+        message(FATAL_ERROR "unable to locate run-clang-tidy-5.0.py")
+    endif()
 
-  list(APPEND RUN_CLANG_TIDY_BIN_ARGS
-    -clang-tidy-binary ${CLANG_TIDY_BIN}
-    "\"-header-filter=.*\\b(src|test|examples)\\b\\/(?!lib).*\""     #Only run clang tidy on src, test, examples and skip 3rd party libraries
-    -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor,-cppcoreguidelines-*
-  )
+    list(APPEND RUN_CLANG_TIDY_BIN_ARGS
+        -clang-tidy-binary ${CLANG_TIDY_BIN}
+        "\"-header-filter=.*\\b(src|test|examples)\\b\\/(?!lib).*\""     #Only run clang tidy on src, test, examples and skip 3rd party libraries
+        -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor,-cppcoreguidelines-*)
 
-  add_custom_target(
-    tidy
-    COMMAND ${RUN_CLANG_TIDY_BIN} ${RUN_CLANG_TIDY_BIN_ARGS}
-    COMMENT "running clang tidy"
-  )
+    add_custom_target(tidy
+                      COMMAND ${RUN_CLANG_TIDY_BIN} ${RUN_CLANG_TIDY_BIN_ARGS}
+                      COMMENT "running clang tidy")
 
 endif()
 
 # ------------------------------------------------------------------------------
 
-add_subdirectory(src)
-add_subdirectory(test)
+# ------------------------------------------------------------------------------
+# Add the ARK C++ Client Library Subdirectory
+# ------------------------------------------------------------------------------
 
+add_subdirectory(src)
+
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Add the ARK C++ Client Test Subdirectory
+#
+# Disabled by default.
+#
+# Use `cmake -DUNIT_TEST=ON ..` to enable Test building.
+# ------------------------------------------------------------------------------
+
+option(UNIT_TEST "Tests disabled by default" OFF)
+
+if(UNIT_TEST)
+    add_subdirectory(test)
+endif()
+
+# ------------------------------------------------------------------------------
