@@ -12,39 +12,44 @@
 
 #include "api/abstract.h"
 #include "api/api.h"
+#include "api/blockchain/blockchain.hpp"
 #include "api/blocks/blocks.h"
 #include "api/delegates/delegates.h"
 #include "api/node/node.h"
 #include "api/peers/peers.h"
+#include "api/rounds/rounds.h"
 #include "api/transactions/transactions.h"
 #include "api/votes/votes.h"
 #include "api/wallets/wallets.h"
 
 namespace Ark {
 namespace Client {
-/**/
-class Api : public API::Abstract {
- public:
-  API::Blocks blocks;
-  API::Delegates delegates;
-  API::Node node;
-  API::Peers peers;
-  API::Transactions transactions;
-  API::Votes votes;
-  API::Wallets wallets;
 
-  Api()
-      : API::Abstract(2),
-        blocks(host_, *http_),
-        delegates(host_, *http_),
-        node(host_, *http_),
-        peers(host_, *http_),
-        transactions(host_, *http_),
-        votes(host_, *http_),
-        wallets(host_, *http_) {}
+class Api : public api::Abstract {
+ public:
+  api::Blockchain blockchain;
+  api::Blocks blocks;
+  api::Delegates delegates;
+  api::Node node;
+  api::Peers peers;
+  api::Rounds rounds;
+  api::Transactions transactions;
+  api::Votes votes;
+  api::Wallets wallets;
+
+  Api() : Abstract(),
+          blockchain(host_, *http_),
+          blocks(host_, *http_),
+          delegates(host_, *http_),
+          node(host_, *http_),
+          peers(host_, *http_),
+          rounds(host_, *http_),
+          transactions(host_, *http_),
+          votes(host_, *http_),
+          wallets(host_, *http_) {}
 };
-/**/
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace Client
+}  // namespace Ark
 
 #endif

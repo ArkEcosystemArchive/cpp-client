@@ -15,21 +15,20 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
-/**
- * Ark::Client::API::Base
- **/
+namespace api {
+
 class Base {
  protected:
   Host& host_;
   IHTTP* http_;
 
   template <typename HTTPType>
-  explicit Base(Host& host, HTTPType& http) : host_(host), http_(static_cast<IHTTP*>(&http)) {}
+  explicit Base(Host& host, HTTPType& http)
+      : host_(host), http_(static_cast<IHTTP*>(&http)) {}
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

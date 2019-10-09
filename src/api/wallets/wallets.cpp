@@ -1,54 +1,82 @@
+/**
+ * This file is part of Ark Cpp Client.
+ *
+ * (c) Ark Ecosystem <info@ark.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ **/
 
 #include "api/wallets/wallets.h"
 
-std::string Ark::Client::API::Wallets::get(const char *const identifier) {
-  return http_->get(Ark::Client::API::Paths::Wallets::get(this->host_, identifier).c_str());
+namespace Ark {
+namespace Client {
+namespace api {
+
+std::string Wallets::get(const char* identifier) {
+  return http_->get(paths::Wallets::get(this->host_, identifier).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::all(int limit /* = 5 */, int page /* = 1 */) {
-  return http_->get(Ark::Client::API::Paths::Wallets::all(this->host_, limit, page).c_str());
+std::string Wallets::all(const char* const query) {
+  return http_->get(paths::Wallets::all(this->host_, query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::top(int limit /* = 5 */, int page /* = 1 */) {
-  return http_->get(Ark::Client::API::Paths::Wallets::top(this->host_, limit, page).c_str());
+std::string Wallets::top(const char* const query) {
+  return http_->get(paths::Wallets::top(this->host_, query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::transactions(const char *const identifier, int limit /* = 5 */,
-                                                    int page /* = 1 */) {
-  return http_->get(Ark::Client::API::Paths::Wallets::transactions(this->host_, identifier, limit, page).c_str());
+std::string Wallets::transactions(const char *const identifier,
+                                  const char* const query) {
+  return http_->get(paths::Wallets::transactions(this->host_,
+                                                 identifier,
+                                                 query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::transactionsSent(const char *const identifier, int limit /* = 5 */,
-                                                        int page /* = 1 */) {
-  return http_->get(Ark::Client::API::Paths::Wallets::transactionsSent(this->host_, identifier, limit, page).c_str());
+std::string Wallets::transactionsSent(const char *const identifier,
+                                      const char* const query) {
+  return http_->get(paths::Wallets::transactionsSent(this->host_,
+                                                     identifier,
+                                                     query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::transactionsReceived(const char *const identifier, int limit /* = 5 */,
-                                                            int page /* = 1 */) {
-  return http_->get(
-      Ark::Client::API::Paths::Wallets::transactionsReceived(this->host_, identifier, limit, page).c_str());
+std::string Wallets::transactionsReceived(const char *const identifier,
+                                          const char* const query) {
+  return http_->get(paths::Wallets::transactionsReceived(this->host_,
+                                                         identifier,
+                                                         query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::votes(const char *const identifier, int limit /* = 5 */, int page /* = 1 */) {
-  return http_->get(Ark::Client::API::Paths::Wallets::votes(this->host_, identifier, limit, page).c_str());
+std::string Wallets::votes(const char *const identifier,
+                           const char* const query) {
+  return http_->get(paths::Wallets::votes(this->host_,
+                                          identifier,
+                                          query).c_str());
 }
 
-/***/
+/**/
 
-std::string Ark::Client::API::Wallets::search(const std::map<std::string, std::string> &bodyParameters,
-                                              int limit /* = 5 */, int page /* = 1 */) {
-  const auto searchPathPair = Ark::Client::API::Paths::Wallets::search(this->host_, bodyParameters, limit, page);
-  return http_->post(searchPathPair.first.c_str(), searchPathPair.second.c_str());
+std::string Wallets::search(
+    const std::map<std::string, std::string> &bodyParameters,
+    const char* const query) {
+  const auto searchPathPair = paths::Wallets::search(this->host_,
+                                                     bodyParameters,
+                                                     query);
+  return http_->post(searchPathPair.first.c_str(),
+                     searchPathPair.second.c_str());
 }
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
