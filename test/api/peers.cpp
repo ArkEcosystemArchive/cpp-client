@@ -1,122 +1,88 @@
 
-#include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include <arkClient.h>
 
 #include "mocks/mock_api.h"
-
-#include "arkClient.h"
-#include "utils/json.h"
 
 using testing::_;
 using testing::Return;
 
-TEST(api, test_peer) {  // NOLINT
-  Ark::Client::Connection<MockApi> connection("167.114.29.54", 4003);
+namespace {
+using namespace Ark::Client;
+using namespace Ark::Client::api;
+constexpr const char* tIp = "167.114.29.55";
+constexpr const int tPort = 4003;
+}  // namespace
 
-  const std::string response = R"({
+/**/
+
+TEST(api, test_peer) {
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
     "data": {
-      "ip": "167.114.29.55",
+      "ip": "167.114.29.49",
       "port": 4002,
-      "version": "1.1.1",
-      "status": 200,
-      "os": "linux",
-      "latency": 355
+      "ports": {
+        "@arkecosystem/core-exchange-json-rpc": -1,
+        "@arkecosystem/core-webhooks": -1,
+        "@arkecosystem/core-wallet-api": 4040,
+        "@arkecosystem/core-api": 4003
+      },
+      "version": "2.5.0-next.9",
+      "height": 2919091,
+      "latency": 237
     }
   })";
 
-  EXPECT_CALL(connection.api.peers, get(_)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.peers, get(_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
   const auto peer = connection.api.peers.get("167.114.29.49");
 
-  DynamicJsonDocument doc(292);
-  DeserializationError error = deserializeJson(doc, peer);
-  if (error) { exit(0); }
-
-  JsonObject data = doc["data"];
-
-  const auto ip = data["ip"];
-  ASSERT_STREQ("167.114.29.55", ip);
-
-  int port = data["port"];
-  ASSERT_EQ(4002, port);
-
-  const auto version = data["version"];
-  ASSERT_STREQ("1.1.1", version);
-
-  int status = data["status"];
-  ASSERT_EQ(200, status);
-
-  const auto os = data["os"];
-  ASSERT_STREQ("linux", os);
-
-  int latency = data["latency"];
-  ASSERT_EQ(355, latency);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                peer.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }
 
 /**/
 
-TEST(api, test_peers) {  // NOLINT
-  Ark::Client::Connection<MockApi> connection("167.114.29.55", 4003);
+TEST(api, test_peers) {
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
 
-  const std::string response = R"({
+  const std::string expected_response = R"({
     "meta": {
-      "count": 2,
-      "pageCount": 1,
-      "totalCount": 2,
-      "next": null,
+      "count": 1,
+      "pageCount": 219,
+      "totalCount": 219,
+      "next": "/api/peers?limit=1&page=2",
       "previous": null,
-      "self": "/v2/peers?page=1",
-      "first": "/v2/peers?page=1",
-      "last": "/v2/peers?page=1"
+      "self": "/api/peers?limit=1&page=1",
+      "first": "/api/peers?limit=1&page=1",
+      "last": "/api/peers?limit=1&page=219"
     },
     "data": [
       {
-        "ip": "167.114.29.53",
+        "ip": "213.32.9.98",
         "port": 4002,
-        "version": "1.1.1",
-        "status": 200,
-        "os": "linux",
-        "latency": 1390
+        "ports": {},
+        "version": "2.5.0-next.9",
+        "height": 2919099,
+        "latency": 9
       }
     ]
   })";
 
-  EXPECT_CALL(connection.api.peers, all(_, _)).Times(1).WillOnce(Return(response));
+  EXPECT_CALL(connection.api.peers, all(_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const auto peers = connection.api.peers.all(5, 1);
+  const auto peers = connection.api.peers.all("?limit=1&page=1");
 
-  DynamicJsonDocument doc(724);
-  DeserializationError error = deserializeJson(doc, peers);
-  if (error) { exit(0); }
-
-  JsonObject meta = doc["meta"];
-
-  int count = meta["count"];
-  ASSERT_NE(0, count);
-
-  int pageCount = meta["pageCount"];
-  ASSERT_NE(0, pageCount);
-
-  int totalCount = meta["totalCount"];
-  ASSERT_NE(0, totalCount);
-
-  JsonObject dataZero = doc["data"][0];
-
-  const auto ip = dataZero["ip"];
-  ASSERT_STREQ("167.114.29.53", ip);
-
-  int port = dataZero["port"];
-  ASSERT_EQ(4002, port);
-
-  const auto version = dataZero["version"];
-  ASSERT_STREQ("1.1.1", version);
-
-  int status = dataZero["status"];
-  ASSERT_EQ(200, status);
-
-  const auto os = dataZero["os"];
-  ASSERT_STREQ("linux", os);
-
-  int latency = dataZero["latency"];
-  ASSERT_EQ(1390, latency);
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                peers.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
 }

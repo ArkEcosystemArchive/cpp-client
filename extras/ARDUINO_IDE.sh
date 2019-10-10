@@ -35,18 +35,22 @@ SRC_DIR=${EXTRAS_DIR}/../src
 INCLUDE_API_DIR=${INCLUDE_DIR}/api
 SRC_API_DIR=${SRC_DIR}/api
 
+INCLUDE_BLOCKCHAIN_DIR=${INCLUDE_DIR}/api/blockchain
 INCLUDE_BLOCKS_DIR=${INCLUDE_DIR}/api/blocks
 INCLUDE_DELEGATES_DIR=${INCLUDE_DIR}/api/delegates
 INCLUDE_NODE_DIR=${INCLUDE_DIR}/api/node
 INCLUDE_PEERS_DIR=${INCLUDE_DIR}/api/peers
+INCLUDE_ROUNDS_DIR=${INCLUDE_DIR}/api/rounds
 INCLUDE_TRANSACTIONS_DIR=${INCLUDE_DIR}/api/transactions
 INCLUDE_VOTES_DIR=${INCLUDE_DIR}/api/votes
 INCLUDE_WALLETS_DIR=${INCLUDE_DIR}/api/wallets
 
+SRC_BLOCKCHAIN_DIR=${SRC_DIR}/api/blockchain
 SRC_BLOCKS_DIR=${SRC_DIR}/api/blocks
 SRC_DELEGATES_DIR=${SRC_DIR}/api/delegates
 SRC_NODE_DIR=${SRC_DIR}/api/node
 SRC_PEERS_DIR=${SRC_DIR}/api/peers
+SRC_ROUNDS_DIR=${SRC_DIR}/api/rounds
 SRC_TRANSACTIONS_DIR=${SRC_DIR}/api/transactions
 SRC_VOTES_DIR=${SRC_DIR}/api/votes
 SRC_WALLETS_DIR=${SRC_DIR}/api/wallets
@@ -105,10 +109,12 @@ if [[ -d ${INCLUDE_DIR} ]]; then
   mv ${INCLUDE_API_DIR}/base.h      ${SRC_API_DIR}
   mv ${INCLUDE_API_DIR}/paths.h     ${SRC_API_DIR}
 
+  mv ${INCLUDE_BLOCKCHAIN_DIR}/blockchain.hpp   ${SRC_BLOCKCHAIN_DIR}
   mv ${INCLUDE_BLOCKS_DIR}/blocks.h             ${SRC_BLOCKS_DIR}
   mv ${INCLUDE_DELEGATES_DIR}/delegates.h       ${SRC_DELEGATES_DIR}
   mv ${INCLUDE_NODE_DIR}/node.h                 ${SRC_NODE_DIR}
   mv ${INCLUDE_PEERS_DIR}/peers.h               ${SRC_PEERS_DIR}
+  mv ${INCLUDE_ROUNDS_DIR}/rounds.h             ${SRC_ROUNDS_DIR}
   mv ${INCLUDE_TRANSACTIONS_DIR}/transactions.h ${SRC_TRANSACTIONS_DIR}
   mv ${INCLUDE_VOTES_DIR}/votes.h               ${SRC_VOTES_DIR}
   mv ${INCLUDE_WALLETS_DIR}/wallets.h           ${SRC_WALLETS_DIR}
@@ -147,10 +153,12 @@ else
 
   echo -e "Recreating API directories 🗂\n"
   mkdir ${INCLUDE_API_DIR}
+  mkdir ${INCLUDE_BLOCKCHAIN_DIR}
   mkdir ${INCLUDE_BLOCKS_DIR}
   mkdir ${INCLUDE_DELEGATES_DIR}
   mkdir ${INCLUDE_NODE_DIR}
   mkdir ${INCLUDE_PEERS_DIR}
+  mkdir ${INCLUDE_ROUNDS_DIR}
   mkdir ${INCLUDE_TRANSACTIONS_DIR}
   mkdir ${INCLUDE_VOTES_DIR}
   mkdir ${INCLUDE_WALLETS_DIR}
@@ -161,10 +169,12 @@ else
   mv ${SRC_API_DIR}/base.h      ${INCLUDE_API_DIR}
   mv ${SRC_API_DIR}/paths.h     ${INCLUDE_API_DIR}
 
+  mv ${SRC_BLOCKCHAIN_DIR}/blockchain.hpp   ${INCLUDE_BLOCKCHAIN_DIR}
   mv ${SRC_BLOCKS_DIR}/blocks.h             ${INCLUDE_BLOCKS_DIR}
   mv ${SRC_DELEGATES_DIR}/delegates.h       ${INCLUDE_DELEGATES_DIR}
   mv ${SRC_NODE_DIR}/node.h                 ${INCLUDE_NODE_DIR}
   mv ${SRC_PEERS_DIR}/peers.h               ${INCLUDE_PEERS_DIR}
+  mv ${SRC_ROUNDS_DIR}/rounds.h             ${INCLUDE_ROUNDS_DIR}
   mv ${SRC_TRANSACTIONS_DIR}/transactions.h ${INCLUDE_TRANSACTIONS_DIR}
   mv ${SRC_VOTES_DIR}/votes.h               ${INCLUDE_VOTES_DIR}
   mv ${SRC_WALLETS_DIR}/wallets.h           ${INCLUDE_WALLETS_DIR}

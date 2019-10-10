@@ -1,14 +1,7 @@
+
 cmake_minimum_required(VERSION 3.2)
 
-# clone submodules
-execute_process(
-	COMMAND git submodule update --init --recursive
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-
-add_subdirectory(lib/cpp-client)
-
-project(Cpp-Client-Example)
+project(ark_cpp_client_example)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -25,8 +18,9 @@ if (MSVC)
 	#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
 
+add_subdirectory(lib/cpp-client/src)
+
 set(SOURCE_FILES main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} Ark-Cpp-Client-lib)
-
+target_link_libraries(${PROJECT_NAME} ark_cpp_client)

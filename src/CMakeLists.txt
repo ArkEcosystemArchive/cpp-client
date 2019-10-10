@@ -1,67 +1,92 @@
-cmake_minimum_required(VERSION 3.2.2)
 
-project(Ark-Cpp-Client-lib)
+cmake_minimum_required(VERSION 3.2)
 
-set(PLATFORM_SRC
-	http/os/http.cpp
-)
+project(ark_cpp_client C CXX)
 
-set(HOST_SRC
-	host/host.cpp
-)
+# ------------------------------------------------------------------------------
+# External Libraries
+# ------------------------------------------------------------------------------
 
-set(API_PATHS_SRC
-	api/paths.cpp
-)
+include(${CMAKE_SOURCE_DIR}/cmake/External.cmake)
+
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# ARK C++ Cliient Source
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Platform
+
+set(PLATFORM_SRC http/os/http.cpp)
+
+# ------------------------------------------------------------------------------
+# Host
+
+set(HOST_SRC host/host.cpp)
+
+# ------------------------------------------------------------------------------
+# Paths
+
+set(PATHS_SRC api/paths.cpp)
+
+# ------------------------------------------------------------------------------
+# API
 
 set(API_SRC
-	api/blocks/blocks.cpp
-	api/delegates/delegates.cpp
-	api/node/node.cpp
-	api/peers/peers.cpp
-	api/transactions/transactions.cpp
-	api/votes/votes.cpp
-	api/wallets/wallets.cpp
-)
-
-add_library(Ark-Cpp-Client-lib STATIC
-	${PLATFORM_SRC}
-	${HOST_SRC}
-	${API_PATHS_SRC}
-	${API_SRC}
-)
-
-set(cpp_client_build_include_dirs
-  ${PROJECT_SOURCE_DIR}
-  ${PROJECT_SOURCE_DIR}/include/cpp-client
-)
-
-include_directories(${cpp_client_build_include_dirs})
-include_directories(${PROJECT_SOURCE_DIR})
+    api/blockchain/blockchain.cpp
+    api/blocks/blocks.cpp
+    api/delegates/delegates.cpp
+    api/node/node.cpp
+    api/peers/peers.cpp
+    api/rounds/rounds.cpp
+    api/transactions/transactions.cpp
+    api/votes/votes.cpp
+    api/wallets/wallets.cpp)
 
 # ------------------------------------------------------------------------------
-# curl
-# ------------------------------------------------------------------------------
+# ARK C++ Client Library Source
 
-set(BUILD_TESTING OFF)
-set(HTTP_ONLY ON)
-set(CMAKE_USE_LIBSSH2 OFF)
-
-include_directories(${PROJECT_SOURCE_DIR}/lib/curl/include)
-
-if (UNIX AND NOT APPLE)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/lib/curl)
-	target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
-else()
-	target_link_libraries(${PROJECT_NAME} PUBLIC CURL)
-endif()
+set(ARK_SOURCE
+    ${PLATFORM_SRC}
+    ${HOST_SRC}
+    ${PATHS_SRC}
+    ${API_SRC})
 
 # ------------------------------------------------------------------------------
 
-target_include_directories(${PROJECT_NAME} PUBLIC
-	${cpp_client_build_include_dirs}
-)
+# ------------------------------------------------------------------------------
+# Add the Source Files to the Library
+# ------------------------------------------------------------------------------
+
+add_library(${PROJECT_NAME} STATIC ${ARK_SOURCE})
+
+# ------------------------------------------------------------------------------
+
+set(ARK_CPP_CLIENT_INCLUDE_DIRS
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include/cpp-client)
+
+include_directories(${ARK_CPP_CLIENT_INCLUDE_DIRS})
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${ARK_CPP_CLIENT_INCLUDE_DIRS})
+
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Link against CURL
+# ------------------------------------------------------------------------------
+
+target_link_libraries(${PROJECT_NAME} PUBLIC libcurl)
+
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Windows: Link to `crypt32`
+# ------------------------------------------------------------------------------
 
 if (MSVC)
-	target_link_libraries(${PROJECT_NAME} PUBLIC crypt32)
+    target_link_libraries(${PROJECT_NAME} PUBLIC crypt32)
 endif()
+
+# ------------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+
 #include "arkClient.h"
 
 #include <arduino.h>
@@ -14,38 +15,38 @@ void loop() {
   Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 
   // Perform an API call using the connection to access endpoint
+  const auto blockchainResponse = connection.api.blockchain.get();
+  Serial.print("\nResponse for blockchain:");
+  Serial.println(blockchainResponse.c_str());
+
   const auto blockResponse = connection.api.blocks.get("13114381566690093367");
   Serial.println("Response for block '13114381566690093367':");
   Serial.println(blockResponse.c_str());
-  Serial.println();
 
-  const auto delegateResponse = connection.api.delegates.get("boldninja");
-  Serial.println("Response for delegate 'boldninja':");
+  const auto delegateResponse = connection.api.delegates.get("genesis_1");
+  Serial.println("\nResponse for delegate 'genesis_1':");
   Serial.println(delegateResponse.c_str());
-  Serial.println();
 
   const auto nodeConfiguration = connection.api.node.configuration();
-  Serial.println("Response for configuration of node '167.114.29.54:4003':");
+  Serial.println("\nResponse for configuration of node '167.114.29.54:4003':");
   Serial.println(nodeConfiguration.c_str());
-  Serial.println();
 
   const auto peer = connection.api.peers.get("167.114.29.49");
-  Serial.println("Response for peer '167.114.29.49':");
+  Serial.println("\nResponse for peer '167.114.29.49':");
   Serial.println(peer.c_str());
-  Serial.println();
 
-  const auto transaction = connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
-  Serial.println("Response for transaction 'b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850':");
+  const auto transaction = connection.api.transactions.get(
+      "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4");
+  Serial.println("\nResponse for transaction 'ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4':");
   Serial.println(transaction.c_str());
-  Serial.println();
 
-  const auto vote = connection.api.votes.get("d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
-  Serial.println("Response for votes 'd202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2':");
+  const auto vote = connection.api.votes.get(
+      "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
+  Serial.println("\nResponse for votes 'a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67':");
   Serial.println(vote.c_str());
-  Serial.println();
 
-  const auto walletsSearch = connection.api.wallets.search({ "username", "baldninja" });
-  Serial.println("Response for wallet search 'username=baldninja':");
+  const auto walletsSearch = connection.api.wallets.search({ "username", "genesis_1" });
+  Serial.println("\nResponse for wallet search 'username=genesis_1':");
   Serial.println(walletsSearch.c_str());
 
 }

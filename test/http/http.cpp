@@ -1,26 +1,29 @@
+
 #include "gtest/gtest.h"
+
+#include <array>
+#include <string>
+
 #include "http/http.h"
-#include "utils/json.h"
 
-// Note: These test HTTP against a live node
+// Note: These test HTTP against a live server
 
-#include <iostream>
+namespace {
+using namespace Ark::Client;
+constexpr const size_t HTTPS_MAX_ELEMENTS = 3U;
+}  // namespace
 
 TEST(api, test_http_get) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
+
+  // Create a request
+  const auto request = "postman-echo.com/get?foo=bar";
 
   // Get the response using HTTP
-  const auto response = http->get("167.114.29.55:4003/api/node/status");
+  const auto response = http->get(request);
 
-  // Create a JSON object of the result
-  const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(4) + 50;
-  DynamicJsonDocument doc(capacity);
-  DeserializationError error = deserializeJson(doc, response);
-  ASSERT_FALSE(error);
-  // Test JSON object for the "data" key.
-  // The correct response will include this key.
-  ASSERT_TRUE(doc.containsKey("data"));
+  ASSERT_LT(response.find("bar"), response.length());
 }
 
 /**/
@@ -28,25 +31,16 @@ TEST(api, test_http_get) { // NOLINT
 // Tests POSTing of HTTP body.
 TEST(api, test_http_post_body) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a Request URL and 'Post' body.
-  const auto request = "167.114.29.55:4003/api/v2/wallets/search?limit=1&page=1";
-  const auto body = "{\"username\":\"baldninja\"}";
+  const auto request = "postman-echo.com/post";
+  const auto body = "This should be sent back as part of response body.";
 
   // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
 
-  // Create a JSON object of the result
-  const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2)
-                          + JSON_OBJECT_SIZE(6) + JSON_OBJECT_SIZE(8) + 470;
-  DynamicJsonDocument doc(capacity);
-  DeserializationError error = deserializeJson(doc, response);
-  ASSERT_FALSE(error);
-
-  // Test JSON object for the "meta" key.
-  // The correct response will include this key
-  ASSERT_TRUE(doc.containsKey("meta"));
+  ASSERT_LT(response.find(body), response.length());
 }
 
 /**/
@@ -54,11 +48,11 @@ TEST(api, test_http_post_body) { // NOLINT
 // Tests invalid POSTing of HTTP body.
 TEST(api, test_http_invalid_post_body) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a malformed Request URL and 'Post' body.
-  const auto request = "/167.114.29.55:4003/api/v2/wallets/search";
-  const auto body = "{\"username\":\"baldninja\"}";
+  const auto request = "/167.114.29.55:4003/api/wallets/search";
+  const auto body = R"({"username":"baldninja"})";
 
   // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
@@ -75,61 +69,41 @@ TEST(api, test_http_invalid_post_body) { // NOLINT
 // Tests POSTing of JSON.
 TEST(api, test_http_post_json) { // NOLINT
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
   // Create a Request URL and an empty Transaction JSON.
-  const auto request = "167.114.29.55:4003/api/v2/transactions";
-  const auto txJson = "{\"transactions\":[]}";
+  const auto request = "167.114.29.55:4003/api/transactions";
+  const auto txJson = R"({"transactions":[]})";
 
   // Post the 'request' and 'txJson' for a response using HTTP
   const auto response = http->post(request, txJson);
 
-  // Create a JSON object of the result
-  const size_t capacity = JSON_OBJECT_SIZE(3) + 90;
-  DynamicJsonDocument doc(capacity);
-  DeserializationError error = deserializeJson(doc, response);
-  ASSERT_FALSE(error);
-
-  // Test JSON object for the "message" key.
-  // The correct response will include the following
-  ASSERT_EQ(422, doc["statusCode"]);
+  ASSERT_LT(response.find("422"), response.length());
 }
 
 /**/
 
 // This tests the use of "http://" in single-line HTTP requests.
 TEST(api, test_http_request_strings) { // NOLINT
-  char requests[3][43] = {
-    "167.114.29.55:4003/api/node/status",         // No HTTP
-    "http://167.114.29.55:4003/api/node/status",  // HTTP
-    "https://dexplorer.ark.io/api/node/status"    // HTTPS
+  std::array<std::string, HTTPS_MAX_ELEMENTS> requests = {
+    "postman-echo.com/get",         // No HTTP prefix
+    "http://postman-echo.com/get",  // HTTP
+    "https://postman-echo.com/get"  // HTTPS
   };
 
   // Create the HTTP object
-  const auto http = Ark::Client::makeHTTP();
+  const auto http = makeHTTP();
 
-  for (auto i: requests) {
+  for (auto& i: requests) {
     // Get the response using HTTP
-    const auto response = http->get(i);
-
-    // Create a JSON object of the result
-    const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(4) + 50;
-    DynamicJsonDocument doc(capacity);
-    DeserializationError error = deserializeJson(doc, response);
-
-    // Test JSON object for the "data" key.
+    const auto response = http->get(i.c_str());
 #ifdef USE_IOT 
     // HTTPS is NOT supported on IoT and should fail to parse.
-    if (std::string(i).find("https://") != 0) {
-      ASSERT_FALSE(error);
-      ASSERT_TRUE(doc.containsKey("data"));
-    } else {
-      ASSERT_TRUE(error);
-      ASSERT_FALSE(doc.containsKey("data"));
-    };
+    response.find("https://") < response.length())
+        ? ASSERT_TRUE(response.empth())
+        : ASSERT_LT(response.find("args"), response.length());
 #else // OS Builds
-    ASSERT_FALSE(error);
-    ASSERT_TRUE(doc.containsKey("data"));
+    ASSERT_LT(response.find("args"), response.length());
 #endif
   };
 }

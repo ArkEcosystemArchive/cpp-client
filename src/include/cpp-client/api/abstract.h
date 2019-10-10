@@ -15,24 +15,24 @@
 
 namespace Ark {
 namespace Client {
-namespace API {
-/**
- * Ark::Client::API::Abstract
- **/
+namespace api {
+
 class Abstract {
-protected:
+ public:
+  void setHost(const char* newHost, int newPort) {
+    this->host_.set(newHost, newPort);
+  };
+
+ protected:
   Host host_;
   std::unique_ptr<IHTTP> http_;
 
   Abstract() : http_(makeHTTP()) {}
   explicit Abstract(IHTTP* http) : http_(http) {}
-
-public:
-  void setHost(const char* const newHost, int newPort) { this->host_.set(newHost, newPort); };
 };
-/**/
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

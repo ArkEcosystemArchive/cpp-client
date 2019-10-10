@@ -18,8 +18,8 @@ or
 
 
 also install platformio dependencies:  
-> install ArduinoJson@6.10.1 AUnit (2778)  
-```platformio lib -g install 64@6.10.1 2778```
+> install AUnit (2778)
+```platformio lib -g install 2778```
 
 #  
 

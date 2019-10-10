@@ -40,19 +40,21 @@ The below example shows how you can perform a request.
 
 ```cpp
 // Perform an API call using the connection to access endpoint
+const auto blockchainResponse = connection.api.blockchain.get();
+
 const auto blockResponse = connection.api.blocks.get("13114381566690093367")
 
-const auto delegateResponse = connection.api.delegates.get("boldninja");
+const auto delegateResponse = connection.api.delegates.get("genesis_1");
 
 const auto nodeConfiguration = connection.api.node.configuration();
 
 const auto peer = connection.api.peers.get("167.114.29.49");
 
-const auto transaction = connection.api.transactions.get("b324cea5c5a6c15e6ced3ec9c3135a8022eeadb8169f7ba66c80ebc82b0ac850");
+const auto transaction = connection.api.transactions.get("ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4");
 
-const auto vote = connection.api.votes.get("d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
+const auto vote = connection.api.votes.get("a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
 
-const auto walletsSearch = connection.api.wallets.search({"username", "baldninja"});
+const auto walletsSearch = connection.api.wallets.search({"username", "genesis_1"});
 ```
 
 > \*note: All API response are of the type `std::string`
@@ -68,34 +70,35 @@ Below are examples of how to access the Path interface:
 ```cpp
 Ark::Client::Host dummyHost("0.0.0.0:4003");
 
-std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, 5 /* limit */, 1 /* page */);
-// blocksAllPath will be the string "0.0.0.0:4003/api/v2/blocks?limit=5&page=1"
+std::string blockchainGetPath = Ark::Client::api::paths::Blockschain::get(dummyHost);
+// blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
 
-std::string delegatesGetPath = Ark::Client::API::Paths::Delegates::get(dummyHost, "boldninja");
-// delegatesGetPath will be the string "0.0.0.0:4003/api/v2/delegates/boldninja"
+std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?page=1&limit=5");
+// blocksAllPath will be the string "0.0.0.0:4003/api/blocks?page=1&limit=5"
 
-std::string nodeConfigurationPath = Ark::Client::API::Paths::Node::configuration(dummyHost);
-// nodeConfigurationPath will be the string "0.0.0.0:4003/api/v2/node/configuration"
+std::string delegatesGetPath = Ark::Client::api::paths::Delegates::get(dummyHost, "genesis_1");
+// delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
 
-std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, 5 /* limit */, 1 /* page */);
-// peersAllPath will be the string "0.0.0.0:4003/api/v2/peers?limit=5&page=1"
+std::string nodeConfigurationPath = Ark::Client::api::paths::Node::configuration(dummyHost);
+// nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
 
-std::string transactionsTypesPath = Ark::Client::API::Paths::Transactions::types(dummyHost);
-// transactionsTypesPath will be the string "0.0.0.0:4003/api/v2/transactions/types"
+std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, "?page=1&limit=5");
+// peersAllPath will be the string "0.0.0.0:4003/api/peers?page=1&limit=5"
 
-std::string votesGetPath = Ark::Client::API::Paths::Votes::get(dummyHost, "d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2");
-// votesGetPath will be the string "0.0.0.0:4003/api/v2/votes/d202acbfa947acac53ada2ac8a0eb662c9f75421ede3b10a42759352968b4ed2"
+std::string transactionsTypesPath = Ark::Client::api::paths::Transactions::types(dummyHost);
+// transactionsTypesPath will be the string "0.0.0.0:4003/api/transactions/types"
+
+std::string votesGetPath = Ark::Client::api::paths::Votes::get(dummyHost, "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
+// votesGetPath will be the string "0.0.0.0:4003/api/votes/a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67"
 
 // the following is an example of formatting a path and body parameters for an http post
 const std::map<std::string, std::string> searchBody = {
-    {"username", "baldninja"},
-    {"address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T"},
-    {"publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d"}
+    {"username", "genesis_1"}
 };
 
-std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, 5, 1);
-// walletsSearchPath.first will be the string "0.0.0.0:4003/api/v2/wallets/search?limit=5&page=1"
-// walletsSearchPath.second will be the string "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja"
+std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, "?page=1&limit=5");
+// walletsSearchPath.first will be the string "0.0.0.0:4003/api/wallets/search?page=1&limit=5"
+// walletsSearchPath.second will be the string "username=genesis_1"
 ```
 
 # Arduino
@@ -104,16 +107,11 @@ std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths:
 Download and install the Arduino IDE (>=1.8.5) from the following link:
 `https://www.arduino.cc/en/Main/Software`
 
-Using the Arduino IDE's built in Library Manager,
-install the following Libraries:
-`ArduinoJson v6.10.1`
-`AUnit`
-
-#### Arduino Example using the Adafruit Feather ESP8266
+#### Minimal Arduino Example using the Adafruit Feather ESP8266
 
 ```Arduino
-#include <arkClient.h>
 #include <ESP8266WiFi.h>
+#include <arkClient.h>
 
 const char* ssid = "your_network";
 const char* password = "your_password";
@@ -128,6 +126,8 @@ void setup() {
     Serial.println(WiFi.localIP());
 
     Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
+
+    Serial.println(arkClient.blockchain.get().c_str());
 
     auto allBlocks = arkClient.blocks.all();
     Serial.println(allBlocks.c_str());
@@ -146,6 +146,7 @@ void setup() {
 }
 
 void loop() {}
+
 ```
 
 **PlatformIO IDE:**
@@ -163,9 +164,9 @@ or
 
     python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
 
-Install ArduinoJson@6.10.1 AUnit (2778)
+Install AUnit (2778)
 
-    platformio lib -g install 64@6.10.1 2778
+    platformio lib -g install 2778
 
 #### Provide your WiFi info for your board to access the internet
 
@@ -212,9 +213,10 @@ using
 
 ### make and build
 
-    cd cpp-client/
-    cmake . && cmake --build .
+    mkdir build && cd build
+    cmake -DUNIT_TEST ..
+    cmake --build .
 
 ### run tests
 
-    ./bin/Ark-Cpp-Client-tests
+    ./test/ark_cpp_client_tests

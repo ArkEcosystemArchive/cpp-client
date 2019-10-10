@@ -1,72 +1,97 @@
+/**
+ * This file is part of Ark Cpp Client.
+ *
+ * (c) Ark Ecosystem <info@ark.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ **/
 
 #include "api/paths.h"
+
+#include <string>
+
+
+#include <iostream>
+
+namespace Ark {
+namespace Client {
+namespace api {
+namespace paths {
+
+namespace {
+constexpr const uint8_t URL_MAX_LEN = 128U;
+}  //namespace
+
+/**
+ * Blockchain
+ **/
+const char* Blockchain::base() { return "/api/blockchain"; }
+
+/**/
+std::string Blockchain::get(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blockchain::base();
+  return url;
+}
+
+/****/
 
 /**
  * Blocks
  **/
-const char* Ark::Client::API::Paths::Blocks::base() {
-  return "/api/v2/blocks";
-}
+const char* Blocks::base() { return "/api/blocks"; }
 
 /**/
-std::string Ark::Client::API::Paths::Blocks::get(
-    Host& newHost,
-    const char* const blockId) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Blocks::base(),
-      blockId);
+std::string Blocks::get(Host& newHost, const char* blockId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += "/";
+  url += blockId;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Blocks::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Blocks::base(),
-      limit, page);
+std::string Blocks::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Blocks::transactions(
-    Host& newHost,
-    const char* const blockId) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/transactions",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Blocks::base(),
-      blockId);
+std::string Blocks::transactions(Host& newHost, const char* blockId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += "/";
+  url += blockId;
+  url += "/transactions";
   return url;
 }
 
 /**/
 
-std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
+std::pair<std::string, std::string> Blocks::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char uri[96] = {};
-  snprintf(
-      uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Blocks::base(),
-      limit, page);
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += "/search";
+  url += query;
+
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {
@@ -76,7 +101,7 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
       parameterBuffer += '&';
     };
   };
-  return {uri, parameterBuffer.c_str()};
+  return { url, parameterBuffer };
 }
 
 /****/
@@ -84,74 +109,60 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Blocks::search(
 /**
  * Delegates
  **/
-const char* Ark::Client::API::Paths::Delegates::base() {
-  return "/api/v2/delegates";
-}
+const char* Delegates::base() { return "/api/delegates"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Delegates::get(
-    Host& newHost,
-    const char* const identifier) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(), 
-      Ark::Client::API::Paths::Delegates::base(),
-      identifier);
+std::string Delegates::get(Host& newHost, const char* identifier) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Delegates::base();
+  url += "/";
+  url += identifier;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Delegates::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char uri[128] = {};
-  snprintf(
-      uri, sizeof(uri),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Delegates::base(),
-      limit, page);
-  return uri;
-}
-
-/**/
-
-std::string Ark::Client::API::Paths::Delegates::blocks(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-      int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/blocks?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Delegates::base(),
-      identifier,
-      limit, page);
+std::string Delegates::all( Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Delegates::base();
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Delegates::voters(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/voters?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Delegates::base(),
-      identifier,
-      limit, page);
+std::string Delegates::blocks(Host& newHost,
+                              const char* const identifier,
+                              const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Delegates::base();
+  url += "/";
+  url += identifier;
+  url += "/blocks";
+  url += query;
+  return url;
+}
+
+/**/
+
+std::string Delegates::voters(Host& newHost,
+                              const char* const identifier,
+                              const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Delegates::base();
+  url += "/";
+  url += identifier;
+  url += "/voters";
+  url += query;
   return url;
 }
 
@@ -160,43 +171,61 @@ std::string Ark::Client::API::Paths::Delegates::voters(
 /**
  * Node
  **/
-const char* Ark::Client::API::Paths::Node::base() {
-  return "/api/v2/node";
-}
+const char* Node::base() { return "/api/node"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Node::configuration(Host& newHost) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/configuration",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Node::base());
+std::string Node::configuration(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/configuration";
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Node::status(Host& newHost) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/status",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Node::base());
+std::string Node::crypto(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/configuration/crypto";
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Node::syncing(Host& newHost) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/syncing",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Node::base());
+std::string Node::fees(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/fees";
+  url += query;
+  return url;
+}
+
+/**/
+
+std::string Node::status(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/status";
+  return url;
+}
+
+/**/
+
+std::string Node::syncing(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Node::base();
+  url += "/syncing";
   return url;
 }
 
@@ -205,38 +234,48 @@ std::string Ark::Client::API::Paths::Node::syncing(Host& newHost) {
 /**
  * Peers
  **/
-const char* Ark::Client::API::Paths::Peers::base() {
-  return "/api/v2/peers";
-}
+const char* Peers::base() { return "/api/peers"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Peers::get(
-    Host& newHost,
-    const char* const ip) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Peers::base(),
-      ip);
+std::string Peers::get(Host& newHost, const char* ip) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Peers::base();
+  url += "/";
+  url += ip;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Peers::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Peers::base(),
-      limit, page);
+std::string Peers::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Peers::base();
+  url += query;
+  return url;
+}
+
+/****/
+
+/**
+ * Rounds
+ **/
+const char* Rounds::base() { return "/api/rounds"; }
+
+/**/
+
+std::string Rounds::delegates(Host& newHost, const char* roundId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Rounds::base();
+  url += "/";
+  url += roundId;
+  url += "/delegates";
   return url;
 }
 
@@ -245,98 +284,92 @@ std::string Ark::Client::API::Paths::Peers::all(
 /**
  * Transactions
  **/
-const char* Ark::Client::API::Paths::Transactions::base() {
-  return "/api/v2/transactions";
-}
+const char* Transactions::base() { return "/api/transactions"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Transactions::getUnconfirmed(
-    Host& newHost,
-    const char* const identifier) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/unconfirmed/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base(),
-      identifier);
+std::string Transactions::getUnconfirmed(Host& newHost,
+                                         const char* identifier) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/unconfirmed/";
+  url += identifier;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Transactions::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+std::string Transactions::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Transactions::get(
-    Host& newHost,
-    const char* const identifier) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base(),
-      identifier);
+std::string Transactions::get(Host& newHost, const char* identifier) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/";
+  url += identifier;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Transactions::allUnconfirmed(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/unconfirmed?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+std::string Transactions::allUnconfirmed(Host& newHost,
+                                         const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/unconfirmed";
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Transactions::types(Host& newHost) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/types",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base());
+std::string Transactions::types(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/types";
   return url;
 }
 
 /**/
 
-std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::search(
+std::string Transactions::fees(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/fees";
+  return url;
+}
+
+/**/
+
+std::pair<std::string, std::string> Transactions::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char uri[96] = {};
-  snprintf(
-      uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base(),
-      limit, page);
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+  url += "/search";
+  url += query;
+
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {
@@ -346,21 +379,20 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::searc
       parameterBuffer += '&';
     };
   };
-  return {uri, parameterBuffer.c_str()};
+  return { url, parameterBuffer.c_str() };
 }
 
 /**/
 
-std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::send(
+std::pair<std::string, std::string> Transactions::send(
     Host& newHost,
     std::string& jsonTransaction) {
-  char uri[96] = {};
-  snprintf(
-      uri, sizeof(uri),
-      "%s%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Transactions::base());
-  return {uri, jsonTransaction.c_str()};
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Transactions::base();
+
+  return { url.c_str(), jsonTransaction.c_str() };
 }
 
 /****/
@@ -368,38 +400,28 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Transactions::send(
 /**
  * Votes
  **/
-const char* Ark::Client::API::Paths::Votes::base() {
-  return "/api/v2/votes";
-}
+const char* Votes::base() { return "/api/votes"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Votes::get(
-    Host& newHost,
-    const char* const identifier) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Votes::base(),
-      identifier);
+std::string Votes::get(Host& newHost, const char* identifier) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Votes::base();
+  url += "/";
+  url += identifier;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Votes::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Votes::base(),
-      limit, page);
+std::string Votes::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Votes::base();
+  url += query;
   return url;
 }
 
@@ -408,143 +430,120 @@ std::string Ark::Client::API::Paths::Votes::all(
 /**
  * Wallets
  **/
-const char* Ark::Client::API::Paths::Wallets::base() {
-  return "/api/v2/wallets";
-}
+const char* Wallets::base() { return "/api/wallets"; }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::get(
-    Host& newHost,
-    const char* const identifier) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-     identifier);
+std::string Wallets::get(Host& newHost, const char* identifier) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::all(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+std::string Wallets::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::top(
-    Host& newHost,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/top?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+std::string Wallets::top(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/top";
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::transactions(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/transactions?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      identifier,
-      limit, page);
+std::string Wallets::transactions(Host& newHost,
+                                  const char* const identifier,
+                                  const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/transactions";
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::transactionsSent(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/transactions/sent?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      identifier,
-      limit, page);
+std::string Wallets::transactionsSent(Host& newHost,
+                                      const char* const identifier,
+                                      const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/transactions/sent";
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::transactionsReceived(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/transactions/received?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      identifier,
-      limit, page);
+std::string Wallets::transactionsReceived(Host& newHost,
+                                          const char* const identifier,
+                                          const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/transactions/received";
+  url += query;
   return url;
 }
 
 /**/
 
-std::string Ark::Client::API::Paths::Wallets::votes(
-    Host& newHost,
-    const char* const identifier,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char url[128] = {};
-  snprintf(
-      url, sizeof(url),
-      "%s%s/%s/votes?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      identifier,
-      limit, page);
+std::string Wallets::votes(Host& newHost,
+                           const char* const identifier,
+                           const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/votes";
+  url += query;
   return url;
 }
 
 /**/
 
-std::pair<std::string, std::string> Ark::Client::API::Paths::Wallets::search(
+std::pair<std::string, std::string> Wallets::search(
     Host& newHost,
     const std::map<std::string, std::string>& bodyParameters,
-    int limit /* = 5 */,
-    int page /* = 1 */) {
-  char uri[96] = {};
-  snprintf(
-      uri, sizeof(uri),
-      "%s%s/search?limit=%d&page=%d",
-      newHost.toString().c_str(),
-      Ark::Client::API::Paths::Wallets::base(),
-      limit, page);
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/search";
+  url += query;
+
   std::string parameterBuffer;
   auto count = 0UL;
   for (const auto& p : bodyParameters) {
@@ -554,5 +553,10 @@ std::pair<std::string, std::string> Ark::Client::API::Paths::Wallets::search(
       parameterBuffer += '&';
     };
   };
-  return {uri, parameterBuffer.c_str()};
+  return { url.c_str(), parameterBuffer.c_str() };
 }
+
+}  // namespace paths
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark

@@ -17,9 +17,15 @@ or using
 #
 
 ### make and build
-**`cd` into `.../cpp-client/`**  
-then run the following command combo:  
-`cmake . && cmake --build .`
+**For Linux/Mac**
+> `./build.sh`
+
+**For Windows**
+> `./build.cmd`
 
 ### run tests
-`./bin/Ark-Cpp-Client-tests`
+**For Linux/Mac**
+> `./run_tests.sh`
+
+**For Windows**
+> `./run_tests.cmd`
