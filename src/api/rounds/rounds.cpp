@@ -7,20 +7,14 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/votes/votes.h"
+#include "api/rounds/rounds.h"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Votes::get(const char* identifier) {
-  return http_->get(paths::Votes::get(this->host_, identifier).c_str());
-}
-
-/**/
-
-std::string Votes::all(const char* const query) {
-  return http_->get(paths::Votes::all(this->host_, query).c_str());
+std::string Rounds::delegates(const char* roundId) {
+  return http_->get(paths::Rounds::delegates(this->host_, roundId).c_str());
 }
 
 }  // namespace api

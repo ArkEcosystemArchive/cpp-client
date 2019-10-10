@@ -10,133 +10,116 @@
 #ifndef PATHS_H
 #define PATHS_H
 
-#include "host/host.h"
-
 #include <cstdio>
 #include <map>
 #include <string>
 
+#include "host/host.h"
+
 namespace Ark {
 namespace Client {
-namespace API {
-namespace Paths {
+namespace api {
+namespace paths {  // NOLINT
 
-namespace Blocks {
-extern const char* base();
-/***/
-extern std::string get(Host& newHost, const char* const blockId);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string transactions(Host& newHost, const char* const blockId);
-/***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
-/***/
-};  // namespace Blocks
+static const char* DEFAULT_QUERY = "?page=1&limit=5";
+static const char* DEFAULT_DAYS_QUERY = "?days=7";
+
+struct Blockchain {
+  static const char* base();
+  static std::string get(Host& newHost);
+};
 
 /***/
 
-namespace Delegates {
-extern const char* base();
-/***/
-extern std::string get(Host& newHost, const char* const identifier);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string blocks(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-extern std::string voters(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-};  // namespace Delegates
+struct Blocks {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const blockId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string transactions(Host& newHost, const char* const blockId);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+};
 
 /***/
 
-namespace Node {
-extern const char* base();
-/***/
-extern std::string configuration(Host& newHost);
-/***/
-extern std::string status(Host& newHost);
-/***/
-extern std::string syncing(Host& newHost);
-/***/
-};  // namespace Node
+struct Delegates {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const identifier);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string blocks(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+  static std::string voters(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+};
 
 /***/
 
-namespace Peers {
-extern const char* base();
-/***/
-extern std::string get(Host& newHost, const char* const ip);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-};  // namespace Peers
+struct Node {
+  static const char* base();
+  static std::string configuration(Host& newHost);
+  static std::string crypto(Host& newHost);
+  static std::string fees(Host& newHost, const char* const query = DEFAULT_DAYS_QUERY);
+  static std::string status(Host& newHost);
+  static std::string syncing(Host& newHost);
+};
 
 /***/
 
-namespace Transactions {
-extern const char* base();
-/***/
-extern std::string getUnconfirmed(Host& newHost, const char* const identifier);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string get(Host& newHost, const char* const identifier);
-/***/
-extern std::string allUnconfirmed(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string types(Host& newHost);
-/***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
-/***/
-extern std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
-/***/
-};  // namespace Transactions
+struct Peers {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const ip);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+};
 
 /***/
 
-namespace Votes {
-extern const char* base();
-/***/
-extern std::string get(Host& newHost, const char* const identifier);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-};  // namespace Votes
+struct Rounds {
+  static const char* base();
+  static std::string delegates(Host& newHost, const char* const roundId);
+};
 
 /***/
 
-namespace Wallets {
-extern const char* base();
-/***/
-extern std::string get(Host& newHost, const char* const identifier);
-/***/
-extern std::string all(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string top(Host& newHost, int limit = 5, int page = 1);
-/***/
-extern std::string transactions(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-extern std::string transactionsSent(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-extern std::string transactionsReceived(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-extern std::string votes(Host& newHost, const char* const identifier, int limit = 5, int page = 1);
-/***/
-extern std::pair<std::string, std::string> search(Host& newHost,
-                                                  const std::map<std::string, std::string>& bodyParameters,
-                                                  int limit = 5, int page = 1);
-/***/
-};  // namespace Wallets
+struct Transactions {
+  static const char* base();
+  static std::string getUnconfirmed(Host& newHost, const char* const identifier);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string get(Host& newHost, const char* const identifier);
+  static std::string allUnconfirmed(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string types(Host& newHost);
+  static std::string fees(Host& newHost);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
+};
 
-};  // namespace Paths
-};  // namespace API
-};  // namespace Client
-};  // namespace Ark
+/***/
+
+struct Votes {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const identifier);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+};
+
+/***/
+
+struct Wallets {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const identifier);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string top(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string transactions(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+  static std::string transactionsSent(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+  static std::string transactionsReceived(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+  static std::string votes(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+};
+
+}  // namespace paths
+}  // namespace api
+}  // namespace Client
+}  // namespace Ark
 
 #endif

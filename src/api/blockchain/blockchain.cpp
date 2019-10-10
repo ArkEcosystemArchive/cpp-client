@@ -7,20 +7,14 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/votes/votes.h"
+#include "api/blockchain/blockchain.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Votes::get(const char* identifier) {
-  return http_->get(paths::Votes::get(this->host_, identifier).c_str());
-}
-
-/**/
-
-std::string Votes::all(const char* const query) {
-  return http_->get(paths::Votes::all(this->host_, query).c_str());
+std::string Blockchain::get() {
+  return http_->get(paths::Blockchain::get(this->host_).c_str());
 }
 
 }  // namespace api
