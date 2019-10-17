@@ -12,6 +12,6 @@ before_build:
 
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\ark_cpp_client.sln
-    
+
 test_script:
 - cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\ark_cpp_client_tests.exe'
