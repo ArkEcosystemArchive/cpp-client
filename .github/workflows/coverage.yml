@@ -48,14 +48,11 @@ jobs:
           sudo apt-get -y install g++-7 gcc-7 lcov
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
           sudo update-alternatives --config gcc
-      - name: Create Build directory
-        run: mkdir build
       - name: Build
         run: |
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Coverage -DUNIT_TEST=ON ..
+          cmake -DCMAKE_BUILD_TYPE=Coverage -DUNIT_TEST=ON .
           cmake --build .
       - name: Run Coverage Tests
-        run: ./build/test/ark_cpp_client_tests
+        run: ./test/ark_cpp_client_tests
       - name: Upload Coverage Report
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
