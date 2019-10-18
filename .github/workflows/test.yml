@@ -3,8 +3,8 @@ name: Test
 on:
   push:
     branches:
-      - "*"
-      - "*/*"
+      - 'master'
+      - 'develop'
   pull_request:
     types: [ready_for_review, synchronize, opened]
 
@@ -44,16 +44,14 @@ jobs:
         run: |
           sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           sudo apt-get update
-          sudo apt-get -y install g++-7 lcov cmake openssl
+          sudo apt-get -y install g++-7 cmake openssl
       - name: Build
         run: |
           mkdir build && cd build
-          cmake -DCMAKE_BUILD_TYPE=Coverage -DUNIT_TEST=ON ..
+          cmake -DUNIT_TEST=ON ..
           cmake --build .
       - name: Run Tests
         run: ./build/test/ark_cpp_client_tests
-      - name: Codecov upload
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
 
   linux-clang-5:
     runs-on: ubuntu-latest
