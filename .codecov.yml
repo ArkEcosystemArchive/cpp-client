@@ -1,4 +1,9 @@
 ignore:
-  - "test"
-  - "extras"
-  - "src/lib"
+  - "cmake/"
+  - "docs/"
+  - "examples/"
+  - "extern/"
+  - "extras/"
+  - "test/"
+  - "src/api/**/*.cpp"                    # hide mocked api
+  - "src/include/cpp-client/api/**/*.h"   # hide mocked api
