@@ -9,12 +9,12 @@ void setup() {
   Serial.begin(115200);
 
   testing::InitGoogleMock();
-
-  auto __attribute__((unused)) run = RUN_ALL_TESTS();
 }
 
 void loop() {
-  // do nothing
+  // loop the tests.
+  auto __attribute__((unused)) run = RUN_ALL_TESTS();
+  delay(1000);
 }
 
 #endif
