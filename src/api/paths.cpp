@@ -469,6 +469,22 @@ std::string Wallets::top(Host& newHost, const char* const query) {
 
 /**/
 
+std::string Wallets::locks(Host& newHost,
+                                  const char* const identifier,
+                                  const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/locks";
+  url += query;
+  return url;
+}
+
+/**/
+
 std::string Wallets::transactions(Host& newHost,
                                   const char* const identifier,
                                   const char* const query) {

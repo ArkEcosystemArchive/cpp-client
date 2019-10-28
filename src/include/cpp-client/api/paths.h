@@ -108,6 +108,7 @@ struct Wallets {
   static std::string get(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string top(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string locks(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactions(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactionsSent(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactionsReceived(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);

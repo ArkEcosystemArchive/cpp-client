@@ -27,6 +27,7 @@ class IWallets : public Base {
   virtual std::string get(const char *const identifier) = 0;
   virtual std::string all(const char* const query) = 0;
   virtual std::string top(const char* const query) = 0;
+  virtual std::string locks(const char *const identifier, const char* const query) = 0;
   virtual std::string transactions(const char *const identifier, const char* const query) = 0;
   virtual std::string transactionsReceived(const char *const identifier, const char* const query) = 0;
   virtual std::string transactionsSent(const char *const identifier, const char* const query) = 0;

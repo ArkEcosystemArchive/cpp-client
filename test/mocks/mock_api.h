@@ -115,6 +115,7 @@ public:
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(top, std::string(const char* const));
+  MOCK_METHOD2(locks, std::string(const char* const, const char* const));
   MOCK_METHOD2(transactions, std::string(const char* const, const char* const));
   MOCK_METHOD2(transactionsReceived, std::string(const char* const, const char* const));
   MOCK_METHOD2(transactionsSent, std::string(const char* const, const char* const));
