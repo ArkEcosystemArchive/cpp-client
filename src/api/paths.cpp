@@ -143,7 +143,7 @@ std::string Businesses::bridgechains(Host& newHost, const char* businessId, cons
   url += "/";
   url += businessId;
   url += "/bridgechains";
-  url *= query;
+  url += query;
   return url;
 }
 
