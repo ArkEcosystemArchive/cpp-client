@@ -337,7 +337,7 @@ void checkAPI() {
   //         }
   //     ]
   // }
-  const auto topWallets = connection.api.wallets.top("limit=1&page=1");
+  const auto topWallets = connection.api.wallets.top("?limit=1&page=1");
   Serial.print("\nTop Wallets: ");
   Serial.println(topWallets.c_str());
 };
