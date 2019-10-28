@@ -85,7 +85,12 @@ jobs:
       - name: Install Dependencies
         run: brew install cmake
       - name: Build
-        run: ./.github/workflows/test/script_desktop.sh
+        run: |
+          mkdir build && cd build
+          cmake -DUNIT_TEST=ON ..
+          cmake --build .
+      - name: Run Tests
+        run: ./build/test/ark_cpp_client_tests
 
   windows:
     runs-on: windows-2016
