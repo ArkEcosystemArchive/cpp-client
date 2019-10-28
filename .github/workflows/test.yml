@@ -110,4 +110,4 @@ jobs:
         shell: cmd
         run: msbuild "%GITHUB_WORKSPACE%\Ark-Cpp-Client.sln"
       - name: Test
-        run: call "%GITHUB_WORKSPACE%\test\Debug\Ark-Cpp-Client-tests"
+        run: call "%GITHUB_WORKSPACE%\\test\\Debug\\Ark-Cpp-Client-tests"
