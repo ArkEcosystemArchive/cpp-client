@@ -38,6 +38,18 @@ public:
 
 /**/
 
+class MockBusinesses : public Ark::Client::api::IBusinesses {  // NOLINT
+public:
+  MockBusinesses(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBusinesses(host, http) {}
+
+  MOCK_METHOD1(get, std::string(const char* const));
+  MOCK_METHOD1(all, std::string(const char* const));
+  MOCK_METHOD1(bridgechains, std::string(const char* const));
+  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
+};
+
+/**/
+
 class MockDelegates : public Ark::Client::api::IDelegates {  // NOLINT
 public:
   MockDelegates(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IDelegates(host, http) {}
@@ -129,6 +141,7 @@ class MockApi : public Ark::Client::api::Abstract {
 public:
   MockBlockchain blockchain;
   MockBlocks blocks;
+  MockBusinesses businesses;
   MockDelegates delegates;
   MockNode node;
   MockPeers peers;
@@ -140,6 +153,7 @@ public:
   MockApi() : Abstract(new MockHTTP()),
               blockchain(host_, *http_),
               blocks(host_, *http_),
+              businesses(host_, *http_),
               delegates(host_, *http_),
               node(host_, *http_),
               peers(host_, *http_),

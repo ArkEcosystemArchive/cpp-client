@@ -56,6 +56,34 @@ TEST(paths, test_blocks) {
 
 /**/
 
+TEST(paths, test_businesses) {
+  const auto base = paths::Businesses::base();
+  ASSERT_STREQ("/api/businesses", base);
+
+  const auto get = paths::Businesses::get(testHost, "12345");
+  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345", get.c_str());
+
+  const auto all = paths::Businesses::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/businesses?limit=1&page=5", all.c_str());
+
+  const auto bridgechains = paths::Businesses::bridgechains(testHost,
+                                                        "12345");
+  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345/bridgechains",
+               bridgechains.c_str());
+
+  const std::map<std::string, std::string> searchBody = {
+    { "businessId", "12345" }
+  };
+  const auto search = paths::Businesses::search(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/businesses/search?limit=1&page=5",
+               search.first.c_str());
+  ASSERT_STREQ(
+      "businessId=12345",
+      search.second.c_str());
+}
+
+/**/
+
 TEST(paths, test_delegates) {
   const auto base = paths::Delegates::base();
   ASSERT_STREQ("/api/delegates", base);
