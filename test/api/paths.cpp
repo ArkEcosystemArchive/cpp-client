@@ -14,21 +14,21 @@ constexpr const int tPage = 1;
 Host testHost(tIp, tPort);
 }  // namespace
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_blockchain) {
   const auto base = paths::Blockchain::base();
-  ASSERT_STREQ("/api/blockchain", base);
+  ASSERT_STREQ("/api/blockchain", base.c_str());
 
   const auto get = paths::Blockchain::get(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/blockchain", get.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
-TEST(paths, test_blocks) {
+TEST(paths, test_blocks) {  // NOLINT
   const auto base = paths::Blocks::base();
-  ASSERT_STREQ("/api/blocks", base);
+  ASSERT_STREQ("/api/blocks", base.c_str());
 
   const auto get = paths::Blocks::get(testHost, "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756", get.c_str());
@@ -54,7 +54,7 @@ TEST(paths, test_blocks) {
       search.second.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_businesses) {
   const auto base = paths::Businesses::base();
@@ -110,7 +110,7 @@ TEST(paths, test_bridgechains) {
 
 TEST(paths, test_delegates) {
   const auto base = paths::Delegates::base();
-  ASSERT_STREQ("/api/delegates", base);
+  ASSERT_STREQ("/api/delegates", base.c_str());
 
   const auto get = paths::Delegates::get(testHost, "boldninja");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja", get.c_str());
@@ -127,7 +127,7 @@ TEST(paths, test_delegates) {
                voters.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_locks) {
   const auto base = paths::Locks::base();
@@ -159,7 +159,7 @@ TEST(paths, test_locks) {
 
 TEST(paths, test_node) {
   const auto base = paths::Node::base();
-  ASSERT_STREQ("/api/node", base);
+  ASSERT_STREQ("/api/node", base.c_str());
 
   const auto configuration = paths::Node::configuration(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/configuration", configuration.c_str());
@@ -174,11 +174,11 @@ TEST(paths, test_node) {
   ASSERT_STREQ("0.0.0.0:4003/api/node/syncing", syncing.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_peers) {
   const auto base = paths::Peers::base();
-  ASSERT_STREQ("/api/peers", base);
+  ASSERT_STREQ("/api/peers", base.c_str());
 
   const auto get = paths::Peers::get(testHost, "0.0.0.0");
   ASSERT_STREQ("0.0.0.0:4003/api/peers/0.0.0.0", get.c_str());
@@ -187,21 +187,21 @@ TEST(paths, test_peers) {
   ASSERT_STREQ("0.0.0.0:4003/api/peers?limit=1&page=5", all.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_rounds) {
   const auto base = paths::Rounds::base();
-  ASSERT_STREQ("/api/rounds", base);
+  ASSERT_STREQ("/api/rounds", base.c_str());
 
   const auto delegates = paths::Rounds::delegates(testHost, "12345");
   ASSERT_STREQ("0.0.0.0:4003/api/rounds/12345/delegates", delegates.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_transactions) {  // NOLINT
   const auto base = paths::Transactions::base();
-  ASSERT_STREQ("/api/transactions", base);
+  ASSERT_STREQ("/api/transactions", base.c_str());
 
   const auto getUnconfirmed = paths::Transactions::getUnconfirmed(
       testHost,
@@ -256,11 +256,11 @@ TEST(paths, test_transactions) {  // NOLINT
   ASSERT_STREQ(jsonTransaction.c_str(), send.second.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_votes) {  // NOLINT
   const auto base = paths::Votes::base();
-  ASSERT_STREQ("/api/votes", base);
+  ASSERT_STREQ("/api/votes", base.c_str());
 
   const auto get = paths::Votes::get(
       testHost,
@@ -273,11 +273,11 @@ TEST(paths, test_votes) {  // NOLINT
   ASSERT_STREQ("0.0.0.0:4003/api/votes?limit=1&page=5", all.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_wallets) {  // NOLINT
   const auto base = paths::Wallets::base();
-  ASSERT_STREQ("/api/wallets", base);
+  ASSERT_STREQ("/api/wallets", base.c_str());
 
   const auto get = paths::Wallets::get(testHost,
                                        "DKrACQw7ytoU2gjppy3qKeE2dQhZjfXYqu");
@@ -332,3 +332,5 @@ TEST(paths, test_wallets) {  // NOLINT
       "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja",
       search.second.c_str());
 }
+
+////////////////////////////////////////////////////////////////////////////////
