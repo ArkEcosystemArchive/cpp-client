@@ -128,6 +128,39 @@ TEST(paths, test_delegates) {
 
 /**/
 
+TEST(paths, test_locks) {
+  const auto base = paths::Locks::base();
+  ASSERT_STREQ("/api/locks", base);
+
+  const auto get = paths::Locks::get(testHost, "12345");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks/12345", get.c_str());
+
+  const auto all = paths::Locks::all(testHost, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks?limit=1&page=5", all.c_str());
+
+  const std::map<std::string, std::string> searchBody = {
+    { "lockId", "12345" }
+  };
+  const auto search = paths::Locks::search(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks/search?limit=1&page=5",
+               search.first.c_str());
+  ASSERT_STREQ(
+      "LockId=12345",
+      search.second.c_str());
+
+  const std::map<std::string, std::string> unlockedBody = {
+    { "lockId", "12345" }
+  };
+  const auto unlocked = paths::Locks::unlocked(testHost, searchBody, "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=5",
+               unlocked.first.c_str());
+  ASSERT_STREQ(
+      "LockId=12345",
+      unlocked.second.c_str());
+}
+
+/**/
+
 TEST(paths, test_node) {
   const auto base = paths::Node::base();
   ASSERT_STREQ("/api/node", base);

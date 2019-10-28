@@ -17,6 +17,7 @@
 #include "api/businesses/businesses.h"
 #include "api/bridgechains/bridgechains.h"
 #include "api/delegates/delegates.h"
+#include "api/locks/locks.h"
 #include "api/node/node.h"
 #include "api/peers/peers.h"
 #include "api/rounds/rounds.h"
@@ -34,6 +35,7 @@ class Api : public api::Abstract {
   api::Businesses businesses;
   api::Bridgechains bridgechains;
   api::Delegates delegates;
+  api::Locks locks;
   api::Node node;
   api::Peers peers;
   api::Rounds rounds;
@@ -47,6 +49,7 @@ class Api : public api::Abstract {
           businesses(host_, *http_),
           bridgechains(host_, *http_),
           delegates(host_, *http_),
+          locks(host_, *http_),
           node(host_, *http_),
           peers(host_, *http_),
           rounds(host_, *http_),

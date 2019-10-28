@@ -73,6 +73,18 @@ public:
 
 /**/
 
+class MockLocks : public Ark::Client::api::ILocks {  // NOLINT
+public:
+  MockLocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : ILocks(host, http) {}
+
+  MOCK_METHOD1(get, std::string(const char* const));
+  MOCK_METHOD1(all, std::string(const char* const));
+  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
+  MOCK_METHOD2(unlocked, std::string(const std::map<std::string, std::string>&, const char* const));
+};
+
+/**/
+
 class MockNode : public Ark::Client::api::INode {  // NOLINT
 public:
   MockNode(Ark::Client::Host& host, Ark::Client::IHTTP& http) : INode(host, http) {}
@@ -155,6 +167,7 @@ public:
   MockBusinesses businesses;
   MockBridgechains bridgechains;
   MockDelegates delegates;
+  MockLocks locks;
   MockNode node;
   MockPeers peers;
   MockRounds rounds;
@@ -168,6 +181,7 @@ public:
               businesses(host_, *http_),
               bridgechains(host_, *http_),
               delegates(host_, *http_),
+              locks(host_, *http_),
               node(host_, *http_),
               peers(host_, *http_),
               rounds(host_, *http_),

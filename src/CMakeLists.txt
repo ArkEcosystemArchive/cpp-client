@@ -39,6 +39,7 @@ set(API_SRC
     api/businesses/businesses.cpp
     api/bridgechains/bridgechains.cpp
     api/delegates/delegates.cpp
+    api/locks/locks.cpp
     api/node/node.cpp
     api/peers/peers.cpp
     api/rounds/rounds.cpp
