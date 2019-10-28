@@ -35,7 +35,7 @@ class IBridgechains : public Base {
 
 class Bridgechains : public IBridgechains { 
  public:
-  bridgechains(Host& host, IHTTP& http) : IBridgechains(host, http) {}
+  Bridgechains(Host& host, IHTTP& http) : IBridgechains(host, http) {}
 
   std::string get(const char* const bridgechainId) override;
   std::string all(const char* const query) override;
