@@ -47,6 +47,7 @@ class Wallets : public IWallets {
   std::string get(const char *const identifier) override;
   std::string all(const char* const query) override;
   std::string top(const char* const query) override;
+  std::string locks(const char *const identifier, const char* const query) override;
   std::string transactions(const char *const identifier, const char* const query) override;
   std::string transactionsReceived(const char *const identifier, const char* const query) override;
   std::string transactionsSent(const char *const identifier, const char* const query) override;

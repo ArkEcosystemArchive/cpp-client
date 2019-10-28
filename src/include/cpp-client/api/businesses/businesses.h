@@ -25,7 +25,7 @@ class IBusinesses : public Base {
   virtual ~IBusinesses() {}
   virtual std::string get(const char* const businessId) = 0;
   virtual std::string all(const char* const query) = 0;
-  virtual std::string bridgechains(const char* const businessId) = 0;
+  virtual std::string bridgechains(const char* const businessId, const char* const query) = 0;
   virtual std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) = 0;
 
  protected:
@@ -40,7 +40,7 @@ class Businesses : public IBusinesses {
 
   std::string get(const char* const businessId) override;
   std::string all(const char* const query) override;
-  std::string bridgechains(const char* const businessId) override;
+  std::string bridgechains(const char* const businessId, const char* const query) override;
   std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) override;
 };
 

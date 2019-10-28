@@ -47,7 +47,7 @@ struct Businesses {
   static const char* base();
   static std::string get(Host& newHost, const char* const businessId);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
-  static std::string bridgechains(Host& newHost, const char* const businessId);
+  static std::string bridgechains(Host& newHost, const char* const businessId, const char* const query = DEFAULT_QUERY);
   static std::pair<std::string, std::string> search(Host& newHost,
                                                     const std::map<std::string, std::string>& bodyParameters,
                                                     const char* const query = DEFAULT_QUERY);

@@ -67,8 +67,9 @@ TEST(paths, test_businesses) {
   ASSERT_STREQ("0.0.0.0:4003/api/businesses?limit=1&page=5", all.c_str());
 
   const auto bridgechains = paths::Businesses::bridgechains(testHost,
-                                                        "12345");
-  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345/bridgechains",
+                                                            "12345",
+                                                            "?limit=1&page=5");
+  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345/bridgechains?limit=1&page=5",
                bridgechains.c_str());
 
   const std::map<std::string, std::string> searchBody = {
@@ -145,7 +146,7 @@ TEST(paths, test_locks) {
   ASSERT_STREQ("0.0.0.0:4003/api/locks/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
-      "LockId=12345",
+      "lockId=12345",
       search.second.c_str());
 
   const std::map<std::string, std::string> unlockedBody = {
@@ -155,7 +156,7 @@ TEST(paths, test_locks) {
   ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=5",
                unlocked.first.c_str());
   ASSERT_STREQ(
-      "LockId=12345",
+      "lockId=12345",
       unlocked.second.c_str());
 }
 
@@ -298,7 +299,7 @@ TEST(paths, test_wallets) {  // NOLINT
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/locks?limit=1&page=5",
-      transactions.c_str());
+      locks.c_str());
 
   const auto transactions = paths::Wallets::transactions(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");

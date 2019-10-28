@@ -47,14 +47,14 @@ TEST(api, test_business_bridgechains) {  // NOLINT
 
   const std::string expected_response = R"({
     "meta": {
-      "count": 2,
-      "pageCount": 1,
+      "count": 1,
+      "pageCount": 2,
       "totalCount": 2,
-      "next": null,
+      "next": "/api/businesses/12/bridgechains?page=2&limit=1",
       "previous": null,
-      "self": "/api/businesses/12/bridgechains?page=1&limit=100",
-      "first": "/api/businesses/12/bridgechains?page=1&limit=100",
-      "last": "/api/businesses/12/bridgechains?page=1&limit=100"
+      "self": "/api/businesses/12/bridgechains?page=1&limit=1",
+      "first": "/api/businesses/12/bridgechains?page=1&limit=1",
+      "last": "/api/businesses/12/bridgechains?page=1&limit=1"
     },
     "data": [
       {
@@ -66,23 +66,15 @@ TEST(api, test_business_bridgechains) {  // NOLINT
         ],
         "genesisHash": "c6512e5b7697cbedb0e1e5b250a983057c6c98cc48d64c1cfa475ca81f7518a7",
         "bridgechainRepository": "https://github.com/ArkEcosystem/core"
-      },
-      {
-        "bridgechainId": "1",
-        "businessId": 12,
-        "name": "My First Bridgechain",
-        "seedNodes": [
-          "1.2.3.4"
-        ],
-        "genesisHash": "c6512e5b7697cbedb0e1e5b250a983057c6c98cc48d64c1cfa475ca81f7518a7",
-        "bridgechainRepository": "https://github.com/ArkEcosystem/core"
       }
     ]
   })";
 
-  EXPECT_CALL(connection.api.businesses, bridgechains(_)).Times(1).WillOnce(Return(expected_response));
+  EXPECT_CALL(connection.api.businesses, bridgechains(_,_))
+      .Times(1)
+      .WillOnce(Return(expected_response));
 
-  const auto bridgechains = connection.api.businesses.bridgechains("12");
+  const auto bridgechains = connection.api.businesses.bridgechains("12", "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 bridgechains.c_str()) == 0;

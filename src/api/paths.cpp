@@ -135,7 +135,7 @@ std::string Businesses::all(Host& newHost, const char* const query) {
 
 /**/
 
-std::string Businesses::bridgechains(Host& newHost, const char* businessId) {
+std::string Businesses::bridgechains(Host& newHost, const char* businessId, const char* const query) {
   std::string url;
   url.reserve(URL_MAX_LEN);
   url += newHost.toString().c_str();
@@ -143,6 +143,7 @@ std::string Businesses::bridgechains(Host& newHost, const char* businessId) {
   url += "/";
   url += businessId;
   url += "/bridgechains";
+  url *= query;
   return url;
 }
 
@@ -285,6 +286,85 @@ std::string Delegates::voters(Host& newHost,
   url += "/voters";
   url += query;
   return url;
+}
+
+/****/
+
+/**
+ * Locks
+ **/
+const char* Locks::base() { return "/api/locks"; }
+
+/**/
+std::string Locks::get(Host& newHost, const char* lockId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/";
+  url += lockId;
+  return url;
+}
+
+/**/
+
+std::string Locks::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += query;
+  return url;
+}
+
+/**/
+
+std::pair<std::string, std::string> Locks::search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/search";
+  url += query;
+
+  std::string parameterBuffer;
+  auto count = 0UL;
+  for (const auto& p : bodyParameters) {
+    ++count;
+    parameterBuffer += p.first + '=' + p.second;
+    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
+      parameterBuffer += '&';
+    };
+  };
+  return { url, parameterBuffer };
+}
+
+/**/
+
+std::pair<std::string, std::string> Locks::unlocked(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/unlocked";
+  url += query;
+
+  std::string parameterBuffer;
+  auto count = 0UL;
+  for (const auto& p : bodyParameters) {
+    ++count;
+    parameterBuffer += p.first + '=' + p.second;
+    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
+      parameterBuffer += '&';
+    };
+  };
+  return { url, parameterBuffer };
 }
 
 /****/

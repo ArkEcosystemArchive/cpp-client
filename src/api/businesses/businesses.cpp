@@ -25,8 +25,11 @@ std::string Businesses::all(const char* const query) {
 
 /**/
 
-std::string Businesses::bridgechains(const char* businessId) {
-  return http_->get(paths::Businesses::bridgechains(this->host_, businessId).c_str());
+std::string Businesses::bridgechains(const char* businessId,
+                                     const char* const query) {
+  return http_->get(paths::Businesses::bridgechains(this->host_,
+                                                    businessId,
+                                                    query).c_str());
 }
 
 /**/
