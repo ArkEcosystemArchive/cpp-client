@@ -18,7 +18,7 @@ or
 
 
 also install platformio dependencies:  
-> install AUnit (2778)  
+> install AUnit (2778)
 ```platformio lib -g install 2778```
 
 #  

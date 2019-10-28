@@ -3,81 +3,78 @@ name: Test
 on:
   push:
     branches:
-      - "*"
-      - "*/*"
+      - "master"
+      - "develop"
   pull_request:
     types: [ready_for_review, synchronize, opened]
 
 jobs:
-  arduino-default:
+  arduino:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
       - name: Make scripts executable
         run: sudo chmod -R +x ./.github/workflows/test/*.sh
-      - name: Install
+      - name: Install Dependencies
         run: ./.github/workflows/test/install_arduino.sh
-      - name: Build
+      - name: Build Arduino Sketch
         run: ./.github/workflows/test/script_arduino.sh
 
-  linux-default:
+  platformio:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: Make scripts executable
-        run: sudo chmod -R +x ./.github/workflows/test/*.sh
-      - name: Install
-        run: ./.github/workflows/test/install_platform_io.sh
+      - name: Install Dependencies
+        run: |
+          sudo pip install -U platformio
+          platformio update
       - name: Build
-        run: ./.github/workflows/test/script_platform_io.sh
+        run: |
+          platformio run
+          platformio run -d ./test
+
   linux-gcc7:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           sudo apt-get update
-          sudo apt-get -y install g++-7 lcov cmake openssl
-      - name: Make scripts executable
-        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+          sudo apt-get -y install g++-7 cmake openssl
       - name: Build
-        run: ./.github/workflows/test/script_desktop.sh
-        env:
-          CC: gcc-7
-          CXX: g++-7
-      - name: Codecov upload
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          mkdir build && cd build
+          cmake -DUNIT_TEST=ON ..
+          cmake --build .
+      - name: Run Tests
+        run: ./build/test/ark_cpp_client_tests
 
   linux-clang-5:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get -y install clang-5.0 clang-format-5.0 clang-tidy-5.0 lcov cmake openssl
       - name: Make scripts executable
         run: sudo chmod -R +x ./.github/workflows/test/*.sh
       - name: Build
-        run: ./.github/workflows/test/script_desktop.sh
-        env:
-          CC: clang-5.0
-          CXX: clang++-5.0
+        run: |
+          mkdir build && cd build
+          cmake -DUNIT_TEST=ON ..
+          cmake --build .
+      - name: Run Tests
+        run: ./build/test/ark_cpp_client_tests
       - name: Clang Tidy
         run: ./.github/workflows/test/clang_tidy.sh
-        env:
-          CC: clang-5.0
-          CXX: clang++-5.0
       - name: Clang Format
         run: ./.github/workflows/test/clang_format.sh
-        env:
-          CC: clang-5.0
-          CXX: clang++-5.0
 
   macos:
     runs-on: macOS-latest
@@ -85,10 +82,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: COMPILER=clang++
-      - name: Install dependencies
-        run: brew install cmake lcov
-      - name: Make scripts executable
-        run: sudo chmod -R +x ./.github/workflows/test/*.sh
+      - name: Install Dependencies
+        run: brew install cmake
       - name: Build
         run: ./.github/workflows/test/script_desktop.sh
 

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # install PlatformIO
 sudo pip install -U platformio
 

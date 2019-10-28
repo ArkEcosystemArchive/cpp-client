@@ -213,8 +213,10 @@ using
 
 ### make and build
 
-    cd cpp-client/
-    cmake . && cmake --build .
+    mkdir build && cd build
+    cmake -DUNIT_TEST ..
+    cmake --build .
 
 ### run tests
-    ./test/Ark-Cpp-Client-tests
+
+    ./test/ark_cpp_client_tests

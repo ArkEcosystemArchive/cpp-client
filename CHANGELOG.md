@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.0] - 2019-10-09
+
+## [1.3.0-arduino] - 2019-10-09
+
 ### Added
 -   added Blockchain API endpoint ([#104])
 
@@ -15,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 -   improved formatting and maintainability ([#92])
 -   dropped Hunter Package Manager in favor of git submodules in OS builds ([#90])
 -   updated ArduinoJson 5.13.2 >> 6.10.1, usage patterns, and documentation/examples ([#87])
+-   moved external libraries out of source tree ([#140])
 
 ### Fixed
 -   fixed typos in Arduino examples ([#86])
@@ -59,7 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#77]: https://github.com/ArkEcosystem/cpp-client/pull/77
 [#78]: https://github.com/ArkEcosystem/cpp-client/pull/78
 [1.2.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.1.0...1.2.0
-[1.2.0-arduino]: https://github.com/ArkEcosystem/cpp-client/compare/1.1.0...1.2.0-arduino
+[1.2.0-arduino]: https://github.com/ArkEcosystem/cpp-client/compare/1.1.0-arduino...1.2.0-arduino
 [#85]: https://github.com/ArkEcosystem/cpp-client/pull/85
 [#86]: https://github.com/ArkEcosystem/cpp-client/pull/86
 [#87]: https://github.com/ArkEcosystem/cpp-client/pull/87
@@ -68,4 +72,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#93]: https://github.com/ArkEcosystem/cpp-client/pull/93
 [#104]: https://github.com/ArkEcosystem/cpp-client/pull/104
 [#114]: https://github.com/ArkEcosystem/cpp-client/pull/114
-[unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...develop
+[#140]: https://github.com/ArkEcosystem/cpp-client/pull/140
+[1.3.0-arduino]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0-arduino...1.3.0-arduino
+[1.3.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...1.3.0
