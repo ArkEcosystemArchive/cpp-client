@@ -210,6 +210,12 @@ TEST(paths, test_wallets) {  // NOLINT
   const auto top = paths::Wallets::top(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/wallets/top?limit=1&page=5", top.c_str());
 
+  const auto locks = paths::Wallets::locks(
+      testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
+  ASSERT_STREQ(
+      "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/locks?limit=1&page=5",
+      transactions.c_str());
+
   const auto transactions = paths::Wallets::transactions(
       testHost, "DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk", "?limit=1&page=5");
   ASSERT_STREQ(
