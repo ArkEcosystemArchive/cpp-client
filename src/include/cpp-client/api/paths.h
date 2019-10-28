@@ -21,18 +21,22 @@ namespace Client {
 namespace api {
 namespace paths {  // NOLINT
 
+////////////////////////////////////////////////////////////////////////////////
+
 static const char* DEFAULT_QUERY = "?page=1&limit=5";
 static const char* DEFAULT_DAYS_QUERY = "?days=7";
 
+////////////////////////////////////////////////////////////////////////////////
+
 struct Blockchain {
-  static const char* base();
+  static std::string base();
   static std::string get(Host& newHost);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
-struct Blocks {
-  static const char* base();
+struct Blocks {  // NOLINT
+  static std::string base();
   static std::string get(Host& newHost, const char* const blockId);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string transactions(Host& newHost, const char* const blockId);
@@ -41,7 +45,7 @@ struct Blocks {
                                                     const char* const query = DEFAULT_QUERY);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
 struct Businesses {
   static const char* base();
@@ -74,7 +78,7 @@ struct Delegates {
   static std::string voters(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
 struct Locks {
   static const char* base();
@@ -99,25 +103,25 @@ struct Node {
   static std::string syncing(Host& newHost);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
 struct Peers {
-  static const char* base();
+  static std::string base();
   static std::string get(Host& newHost, const char* const ip);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
 struct Rounds {
-  static const char* base();
+  static std::string base();
   static std::string delegates(Host& newHost, const char* const roundId);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
-struct Transactions {
-  static const char* base();
+struct Transactions {  // NOLINT
+  static std::string base();
   static std::string getUnconfirmed(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string get(Host& newHost, const char* const identifier);
@@ -130,18 +134,18 @@ struct Transactions {
   static std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
-struct Votes {
-  static const char* base();
+struct Votes {  // NOLINT
+  static std::string base();
   static std::string get(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
 };
 
-/***/
+////////////////////////////////////////////////////////////////////////////////
 
-struct Wallets {
-  static const char* base();
+struct Wallets {  // NOLINT
+  static std::string base();
   static std::string get(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string top(Host& newHost, const char* const query = DEFAULT_QUERY);
@@ -154,6 +158,8 @@ struct Wallets {
                                                     const std::map<std::string, std::string>& bodyParameters,
                                                     const char* const query = DEFAULT_QUERY);
 };
+
+////////////////////////////////////////////////////////////////////////////////
 
 }  // namespace paths
 }  // namespace api
