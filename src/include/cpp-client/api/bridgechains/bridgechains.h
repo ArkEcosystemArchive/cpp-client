@@ -33,7 +33,7 @@ class IBridgechains : public Base {
 
 /**/
 
-class bridgechains : public IBridgechains { 
+class Bridgechains : public IBridgechains { 
  public:
   bridgechains(Host& host, IHTTP& http) : IBridgechains(host, http) {}
 
