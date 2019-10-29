@@ -37,14 +37,9 @@ std::string Locks::search(
 
 /**/
 
-std::string Locks::unlocked(
-    const std::map<std::string, std::string> &bodyParameters,
-    const char* const query) {
-  const auto searchPathPair = paths::Locks::unlocked(this->host_,
-                                                     bodyParameters,
-                                                     query);
-  return http_->post(searchPathPair.first.c_str(),
-                     searchPathPair.second.c_str());
+std::string Locks::unlocked(std::string& jsonIds, const char* const query) {
+  const auto pathPair = paths::Locks::unlocked(this->host_, jsonIds, query);
+  return http_->post(pathPair.first.c_str(), pathPair.second.c_str());
 }
 
 }  // namespace api

@@ -149,15 +149,10 @@ TEST(paths, test_locks) {
       "lockId=12345",
       search.second.c_str());
 
-  const std::map<std::string, std::string> unlockedBody = {
-    { "lockId", "12345" }
-  };
-  const auto unlocked = paths::Locks::unlocked(testHost, searchBody, "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=5",
-               unlocked.first.c_str());
-  ASSERT_STREQ(
-      "lockId=12345",
-      unlocked.second.c_str());
+  std::string jsonIds = "{\"ids\":\"1916b6da532193a1703e53783b146835a98127445941efadb2d973932e2b8d33\"}";
+  const auto unlocked = paths::Locks::unlocked(testHost, jsonIds, "?limit=1&page=1");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=1", unlocked.first.c_str());
+  ASSERT_STREQ(jsonIds.c_str(), unlocked.second.c_str());
 }
 
 /**/

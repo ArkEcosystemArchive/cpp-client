@@ -346,7 +346,7 @@ std::pair<std::string, std::string> Locks::search(
 
 std::pair<std::string, std::string> Locks::unlocked(
     Host& newHost,
-    const std::map<std::string, std::string>& bodyParameters,
+    std::string& jsonIds,
     const char* const query) {
   std::string url;
   url.reserve(URL_MAX_LEN);
@@ -355,16 +355,7 @@ std::pair<std::string, std::string> Locks::unlocked(
   url += "/unlocked";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer };
+  return { url.c_str(), jsonIds.c_str() };
 }
 
 /****/

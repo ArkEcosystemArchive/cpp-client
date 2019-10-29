@@ -163,12 +163,15 @@ TEST(api, test_locks_unlocked) {  // NOLINT
     "data": []
   })";
 
+  std::string jsonIds = R"({
+    "ids": ["1916b6da532193a1703e53783b146835a98127445941efadb2d973932e2b8d33"]
+  })";
+
   EXPECT_CALL(connection.api.locks, unlocked(_, _))
       .Times(1)
       .WillOnce(Return(expected_response));
 
-  const std::map<std::string, std::string> body = {};
-  const auto locks = connection.api.locks.unlocked(body, "?limit=1&page=1");
+  const auto locks = connection.api.locks.unlocked(jsonIds, "?limit=1&page=1");
 
   auto responseMatches = strcmp(expected_response.c_str(),
                                 locks.c_str()) == 0;
