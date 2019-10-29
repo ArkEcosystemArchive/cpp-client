@@ -26,7 +26,7 @@ TEST(paths, test_blockchain) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(paths, test_blocks) {
+TEST(paths, test_blocks) {  // NOLINT
   const auto base = paths::Blocks::base();
   ASSERT_STREQ("/api/blocks", base.c_str());
 
@@ -110,7 +110,7 @@ TEST(paths, test_bridgechains) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(paths, test_delegates) {
+TEST(paths, test_delegates) {  // NOLINT
   const auto base = paths::Delegates::base();
   ASSERT_STREQ("/api/delegates", base.c_str());
 
