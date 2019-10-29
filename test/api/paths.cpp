@@ -26,7 +26,7 @@ TEST(paths, test_blockchain) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(paths, test_blocks) {  // NOLINT
+TEST(paths, test_blocks) {
   const auto base = paths::Blocks::base();
   ASSERT_STREQ("/api/blocks", base.c_str());
 
@@ -46,7 +46,9 @@ TEST(paths, test_blocks) {  // NOLINT
     { "previousBlock", "6440284271011893973" },
     { "version", "0" }
   };
-  const auto search = paths::Blocks::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Blocks::search(testHost,
+                                            searchBody,
+                                            "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
@@ -58,7 +60,7 @@ TEST(paths, test_blocks) {  // NOLINT
 
 TEST(paths, test_businesses) {
   const auto base = paths::Businesses::base();
-  ASSERT_STREQ("/api/businesses", base);
+  ASSERT_STREQ("/api/businesses", base.c_str());
 
   const auto get = paths::Businesses::get(testHost, "12345");
   ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345", get.c_str());
@@ -75,19 +77,19 @@ TEST(paths, test_businesses) {
   const std::map<std::string, std::string> searchBody = {
     { "businessId", "12345" }
   };
-  const auto search = paths::Businesses::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Businesses::search(testHost,
+                                                searchBody,
+                                                "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/businesses/search?limit=1&page=5",
                search.first.c_str());
-  ASSERT_STREQ(
-      "businessId=12345",
-      search.second.c_str());
+  ASSERT_STREQ("businessId=12345", search.second.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_bridgechains) {
   const auto base = paths::Bridgechains::base();
-  ASSERT_STREQ("/api/bridgechains", base);
+  ASSERT_STREQ("/api/bridgechains", base.c_str());
 
   const auto get = paths::Bridgechains::get(testHost, "12345");
   ASSERT_STREQ("0.0.0.0:4003/api/bridgechains/12345", get.c_str());
@@ -98,15 +100,15 @@ TEST(paths, test_bridgechains) {
   const std::map<std::string, std::string> searchBody = {
     { "bridgechainId", "12345" }
   };
-  const auto search = paths::Bridgechains::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Bridgechains::search(testHost,
+                                                  searchBody,
+                                                  "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/bridgechains/search?limit=1&page=5",
                search.first.c_str());
-  ASSERT_STREQ(
-      "bridgechainId=12345",
-      search.second.c_str());
+  ASSERT_STREQ("bridgechainId=12345", search.second.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_delegates) {
   const auto base = paths::Delegates::base();
@@ -118,11 +120,15 @@ TEST(paths, test_delegates) {
   const auto all = paths::Delegates::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates?limit=1&page=5", all.c_str());
 
-  const auto blocks = paths::Delegates::blocks(testHost, "boldninja", "?limit=1&page=5");
+  const auto blocks = paths::Delegates::blocks(testHost,
+                                               "boldninja",
+                                               "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/blocks?limit=1&page=5",
                blocks.c_str());
 
-  const auto voters = paths::Delegates::voters(testHost, "boldninja", "?limit=1&page=5");
+  const auto voters = paths::Delegates::voters(testHost,
+                                               "boldninja",
+                                               "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/delegates/boldninja/voters?limit=1&page=5",
                voters.c_str());
 }
@@ -131,7 +137,7 @@ TEST(paths, test_delegates) {
 
 TEST(paths, test_locks) {
   const auto base = paths::Locks::base();
-  ASSERT_STREQ("/api/locks", base);
+  ASSERT_STREQ("/api/locks", base.c_str());
 
   const auto get = paths::Locks::get(testHost, "12345");
   ASSERT_STREQ("0.0.0.0:4003/api/locks/12345", get.c_str());
@@ -142,20 +148,27 @@ TEST(paths, test_locks) {
   const std::map<std::string, std::string> searchBody = {
     { "lockId", "12345" }
   };
-  const auto search = paths::Locks::search(testHost, searchBody, "?limit=1&page=5");
+  const auto search = paths::Locks::search(testHost,
+                                           searchBody,
+                                           "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/locks/search?limit=1&page=5",
                search.first.c_str());
   ASSERT_STREQ(
       "lockId=12345",
       search.second.c_str());
 
-  std::string jsonIds = "{\"ids\":\"1916b6da532193a1703e53783b146835a98127445941efadb2d973932e2b8d33\"}";
-  const auto unlocked = paths::Locks::unlocked(testHost, jsonIds, "?limit=1&page=1");
-  ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=1", unlocked.first.c_str());
+  std::string jsonIds = R"({
+      "ids": "1916b6da532193a1703e53783b146835a98127445941efadb2d973932e2b8d33"
+  })";
+  const auto unlocked = paths::Locks::unlocked(testHost,
+                                               jsonIds,
+                                               "?limit=1&page=1");
+  ASSERT_STREQ("0.0.0.0:4003/api/locks/unlocked?limit=1&page=1",
+               unlocked.first.c_str());
   ASSERT_STREQ(jsonIds.c_str(), unlocked.second.c_str());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 TEST(paths, test_node) {
   const auto base = paths::Node::base();

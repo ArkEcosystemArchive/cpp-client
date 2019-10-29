@@ -112,7 +112,7 @@ std::pair<std::string, std::string> Blocks::search(
 /**
  * Businesses
  **/
-const char* Businesses::base() { return "/api/businesses"; }
+std::string Businesses::base() { return "/api/businesses"; }
 
 /**/
 std::string Businesses::get(Host& newHost, const char* businessId) {
@@ -125,7 +125,7 @@ std::string Businesses::get(Host& newHost, const char* businessId) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Businesses::all(Host& newHost, const char* const query) {
   std::string url;
@@ -136,7 +136,7 @@ std::string Businesses::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Businesses::bridgechains(Host& newHost, const char* businessId, const char* const query) {
   std::string url;
@@ -150,7 +150,7 @@ std::string Businesses::bridgechains(Host& newHost, const char* businessId, cons
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Businesses::search(
     Host& newHost,
@@ -175,14 +175,16 @@ std::pair<std::string, std::string> Businesses::search(
   return { url, parameterBuffer };
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Bridgechains
  **/
-const char* Bridgechains::base() { return "/api/bridgechains"; }
+std::string Bridgechains::base() { return "/api/bridgechains"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+
 std::string Bridgechains::get(Host& newHost, const char* bridgechainId) {
   std::string url;
   url.reserve(URL_MAX_LEN);
@@ -193,7 +195,7 @@ std::string Bridgechains::get(Host& newHost, const char* bridgechainId) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Bridgechains::all(Host& newHost, const char* const query) {
   std::string url;
@@ -204,7 +206,7 @@ std::string Bridgechains::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Bridgechains::search(
     Host& newHost,
@@ -229,7 +231,8 @@ std::pair<std::string, std::string> Bridgechains::search(
   return { url, parameterBuffer };
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Delegates
@@ -297,9 +300,10 @@ std::string Delegates::voters(Host& newHost,
 /**
  * Locks
  **/
-const char* Locks::base() { return "/api/locks"; }
+std::string Locks::base() { return "/api/locks"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+
 std::string Locks::get(Host& newHost, const char* lockId) {
   std::string url;
   url.reserve(URL_MAX_LEN);
@@ -310,7 +314,7 @@ std::string Locks::get(Host& newHost, const char* lockId) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Locks::all(Host& newHost, const char* const query) {
   std::string url;
@@ -321,7 +325,7 @@ std::string Locks::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Locks::search(
     Host& newHost,
@@ -346,7 +350,7 @@ std::pair<std::string, std::string> Locks::search(
   return { url, parameterBuffer };
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Locks::unlocked(
     Host& newHost,
@@ -362,7 +366,8 @@ std::pair<std::string, std::string> Locks::unlocked(
   return { url.c_str(), jsonIds.c_str() };
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Node
@@ -684,7 +689,7 @@ std::string Wallets::locks(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::transactions(Host& newHost,
                                   const char* const identifier,
