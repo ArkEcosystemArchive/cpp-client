@@ -43,12 +43,49 @@ struct Blocks {
 
 /***/
 
+struct Businesses {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const businessId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string bridgechains(Host& newHost, const char* const businessId, const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+};
+
+/***/
+
+struct Bridgechains {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const bridgechainId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+};
+
+/***/
+
 struct Delegates {
   static const char* base();
   static std::string get(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string blocks(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string voters(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
+};
+
+/***/
+
+struct Locks {
+  static const char* base();
+  static std::string get(Host& newHost, const char* const lockId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> search(Host& newHost,
+                                                    const std::map<std::string, std::string>& bodyParameters,
+                                                    const char* const query = DEFAULT_QUERY);
+  static std::pair<std::string, std::string> unlocked(Host& newHost,
+                                                      std::string& jsonIds,
+                                                      const char* const query = DEFAULT_QUERY);
 };
 
 /***/
@@ -108,6 +145,7 @@ struct Wallets {
   static std::string get(Host& newHost, const char* const identifier);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string top(Host& newHost, const char* const query = DEFAULT_QUERY);
+  static std::string locks(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactions(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactionsSent(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactionsReceived(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);

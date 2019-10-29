@@ -162,6 +162,53 @@ TEST(api, test_wallets_top) {  // NOLINT
 
 /**/
 
+TEST(api, test_wallets_locks) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
+    "meta": {
+      "count": 1,
+      "pageCount": 1,
+      "totalCount": 1,
+      "next": null,
+      "previous": null,
+      "self": "/api/wallets/03db91f46dcd94311ab51efc9ca352e2628c27ffce63d1a609a14b8473c0db5b5d/locks?page=1&limit=100",
+      "first": "/api/wallets/03db91f46dcd94311ab51efc9ca352e2628c27ffce63d1a609a14b8473c0db5b5d/locks?page=1&limit=100",
+      "last": "/api/wallets/03db91f46dcd94311ab51efc9ca352e2628c27ffce63d1a609a14b8473c0db5b5d/locks?page=1&limit=100"
+    },
+    "data": [
+      {
+        "lockId": "d8c1d95462081fa211a8c56e717a3cdfaa53fd4985fc44473e392ab5458b336c",
+        "amount": "1",
+        "secretHash": "09b9a28393efd02fcd76a21b0f0f55ba2aad8f3640ff8cae86de033a9cfbd78c",
+        "senderPublicKey": "03db91f46dcd94311ab51efc9ca352e2628c27ffce63d1a609a14b8473c0db5b5d",
+        "recipientId": "D6eAmMh6FFynorCSjHS1Qx75rXiN89soa7",
+        "timestamp": {
+          "epoch": 81911280,
+          "unix": 1572012480,
+          "human": "2019-10-25T14:08:00.000Z"
+        },
+        "expirationType": 2,
+        "expirationValue": 6000000,
+        "vendorField": "0.7712082776486138"
+      }
+    ]
+  })";
+
+  EXPECT_CALL(connection.api.wallets, locks(_, _))
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+  const auto locks = connection.api.wallets.locks(
+      "D9SAVjqkxwWQmb82iqAedJPccFjDUnMSi9", "?limit=1&page=1");
+
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                locks.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
+}
+
+/**/
+
 TEST(api, test_wallets_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
 
