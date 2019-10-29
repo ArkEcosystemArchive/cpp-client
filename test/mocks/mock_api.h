@@ -80,7 +80,7 @@ public:
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
-  MOCK_METHOD2(unlocked, std::string(const std::map<std::string, std::string>&, const char* const));
+  MOCK_METHOD2(unlocked, std::string(std::string&, const char* const));
 };
 
 /**/
