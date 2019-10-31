@@ -3,10 +3,14 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include "platform.hpp"
+
 #include <Arduino.h>
 
 void setup() {
   Serial.begin(115200);
+
+  optimize_for_testing();
 
   testing::InitGoogleMock();
 }
