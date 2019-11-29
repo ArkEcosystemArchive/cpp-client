@@ -12,6 +12,7 @@ include(ExternalProject)
 ExternalProject_Add(CURL
   GIT_REPOSITORY    https://github.com/curl/curl
   GIT_TAG           curl-7_66_0
+  GIT_CONFIG        advice.detachedHead=false
   SOURCE_DIR        "${EXTERNAL_LIBRARY_DIR}/curl/src"
   BINARY_DIR        "${EXTERNAL_LIBRARY_DIR}/curl/build"
   CONFIGURE_COMMAND ""
