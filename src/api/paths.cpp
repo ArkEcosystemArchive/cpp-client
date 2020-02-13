@@ -11,22 +11,23 @@
 
 #include <string>
 
-
-#include <iostream>
-
 namespace Ark {
 namespace Client {
 namespace api {
 namespace paths {
 
+////////////////////////////////////////////////////////////////////////////////
+
 namespace {
 constexpr const uint8_t URL_MAX_LEN = 128U;
 }  //namespace
 
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Blockchain
  **/
-const char* Blockchain::base() { return "/api/blockchain"; }
+std::string Blockchain::base() { return "/api/blockchain"; }
 
 /**/
 std::string Blockchain::get(Host& newHost) {
@@ -37,12 +38,13 @@ std::string Blockchain::get(Host& newHost) {
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Blocks
  **/
-const char* Blocks::base() { return "/api/blocks"; }
+std::string Blocks::base() { return "/api/blocks"; }
 
 /**/
 std::string Blocks::get(Host& newHost, const char* blockId) {
@@ -55,7 +57,7 @@ std::string Blocks::get(Host& newHost, const char* blockId) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Blocks::all(Host& newHost, const char* const query) {
   std::string url;
@@ -66,7 +68,7 @@ std::string Blocks::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Blocks::transactions(Host& newHost, const char* blockId) {
   std::string url;
@@ -79,7 +81,7 @@ std::string Blocks::transactions(Host& newHost, const char* blockId) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Blocks::search(
     Host& newHost,
@@ -104,14 +106,140 @@ std::pair<std::string, std::string> Blocks::search(
   return { url, parameterBuffer };
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Businesses
+ **/
+std::string Businesses::base() { return "/api/businesses"; }
+
+/**/
+std::string Businesses::get(Host& newHost, const char* businessId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Businesses::base();
+  url += "/";
+  url += businessId;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Businesses::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Businesses::base();
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Businesses::bridgechains(Host& newHost, const char* businessId, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Businesses::base();
+  url += "/";
+  url += businessId;
+  url += "/bridgechains";
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::pair<std::string, std::string> Businesses::search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Businesses::base();
+  url += "/search";
+  url += query;
+
+  std::string parameterBuffer;
+  auto count = 0UL;
+  for (const auto& p : bodyParameters) {
+    ++count;
+    parameterBuffer += p.first + '=' + p.second;
+    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
+      parameterBuffer += '&';
+    };
+  };
+  return { url, parameterBuffer };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Bridgechains
+ **/
+std::string Bridgechains::base() { return "/api/bridgechains"; }
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Bridgechains::get(Host& newHost, const char* bridgechainId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Bridgechains::base();
+  url += "/";
+  url += bridgechainId;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Bridgechains::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Bridgechains::base();
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::pair<std::string, std::string> Bridgechains::search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Bridgechains::base();
+  url += "/search";
+  url += query;
+
+  std::string parameterBuffer;
+  auto count = 0UL;
+  for (const auto& p : bodyParameters) {
+    ++count;
+    parameterBuffer += p.first + '=' + p.second;
+    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
+      parameterBuffer += '&';
+    };
+  };
+  return { url, parameterBuffer };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Delegates
  **/
-const char* Delegates::base() { return "/api/delegates"; }
+std::string Delegates::base() { return "/api/delegates"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Delegates::get(Host& newHost, const char* identifier) {
   std::string url;
@@ -123,7 +251,7 @@ std::string Delegates::get(Host& newHost, const char* identifier) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Delegates::all( Host& newHost, const char* const query) {
   std::string url;
@@ -134,7 +262,7 @@ std::string Delegates::all( Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Delegates::blocks(Host& newHost,
                               const char* const identifier,
@@ -150,7 +278,7 @@ std::string Delegates::blocks(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Delegates::voters(Host& newHost,
                               const char* const identifier,
@@ -166,14 +294,87 @@ std::string Delegates::voters(Host& newHost,
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Locks
+ **/
+std::string Locks::base() { return "/api/locks"; }
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Locks::get(Host& newHost, const char* lockId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/";
+  url += lockId;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Locks::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::pair<std::string, std::string> Locks::search(
+    Host& newHost,
+    const std::map<std::string, std::string>& bodyParameters,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/search";
+  url += query;
+
+  std::string parameterBuffer;
+  auto count = 0UL;
+  for (const auto& p : bodyParameters) {
+    ++count;
+    parameterBuffer += p.first + '=' + p.second;
+    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
+      parameterBuffer += '&';
+    };
+  };
+  return { url, parameterBuffer };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::pair<std::string, std::string> Locks::unlocked(
+    Host& newHost,
+    std::string& jsonIds,
+    const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Locks::base();
+  url += "/unlocked";
+  url += query;
+
+  return { url.c_str(), jsonIds.c_str() };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Node
  **/
-const char* Node::base() { return "/api/node"; }
+std::string Node::base() { return "/api/node"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Node::configuration(Host& newHost) {
   std::string url;
@@ -184,7 +385,7 @@ std::string Node::configuration(Host& newHost) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Node::crypto(Host& newHost) {
   std::string url;
@@ -195,7 +396,7 @@ std::string Node::crypto(Host& newHost) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Node::fees(Host& newHost, const char* const query) {
   std::string url;
@@ -207,7 +408,7 @@ std::string Node::fees(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Node::status(Host& newHost) {
   std::string url;
@@ -218,7 +419,7 @@ std::string Node::status(Host& newHost) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Node::syncing(Host& newHost) {
   std::string url;
@@ -229,14 +430,15 @@ std::string Node::syncing(Host& newHost) {
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Peers
  **/
-const char* Peers::base() { return "/api/peers"; }
+std::string Peers::base() { return "/api/peers"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Peers::get(Host& newHost, const char* ip) {
   std::string url;
@@ -248,7 +450,7 @@ std::string Peers::get(Host& newHost, const char* ip) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Peers::all(Host& newHost, const char* const query) {
   std::string url;
@@ -259,14 +461,15 @@ std::string Peers::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Rounds
  **/
-const char* Rounds::base() { return "/api/rounds"; }
+std::string Rounds::base() { return "/api/rounds"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Rounds::delegates(Host& newHost, const char* roundId) {
   std::string url;
@@ -279,14 +482,15 @@ std::string Rounds::delegates(Host& newHost, const char* roundId) {
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Transactions
  **/
-const char* Transactions::base() { return "/api/transactions"; }
+std::string Transactions::base() { return "/api/transactions"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::getUnconfirmed(Host& newHost,
                                          const char* identifier) {
@@ -299,7 +503,7 @@ std::string Transactions::getUnconfirmed(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::all(Host& newHost, const char* const query) {
   std::string url;
@@ -310,7 +514,7 @@ std::string Transactions::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::get(Host& newHost, const char* identifier) {
   std::string url;
@@ -322,7 +526,7 @@ std::string Transactions::get(Host& newHost, const char* identifier) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::allUnconfirmed(Host& newHost,
                                          const char* const query) {
@@ -335,7 +539,7 @@ std::string Transactions::allUnconfirmed(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::types(Host& newHost) {
   std::string url;
@@ -346,7 +550,7 @@ std::string Transactions::types(Host& newHost) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Transactions::fees(Host& newHost) {
   std::string url;
@@ -357,7 +561,7 @@ std::string Transactions::fees(Host& newHost) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Transactions::search(
     Host& newHost,
@@ -382,7 +586,7 @@ std::pair<std::string, std::string> Transactions::search(
   return { url, parameterBuffer.c_str() };
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Transactions::send(
     Host& newHost,
@@ -395,14 +599,15 @@ std::pair<std::string, std::string> Transactions::send(
   return { url.c_str(), jsonTransaction.c_str() };
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Votes
  **/
-const char* Votes::base() { return "/api/votes"; }
+std::string Votes::base() { return "/api/votes"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Votes::get(Host& newHost, const char* identifier) {
   std::string url;
@@ -414,7 +619,7 @@ std::string Votes::get(Host& newHost, const char* identifier) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Votes::all(Host& newHost, const char* const query) {
   std::string url;
@@ -425,14 +630,15 @@ std::string Votes::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/****/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Wallets
  **/
-const char* Wallets::base() { return "/api/wallets"; }
+std::string Wallets::base() { return "/api/wallets"; }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::get(Host& newHost, const char* identifier) {
   std::string url;
@@ -444,7 +650,7 @@ std::string Wallets::get(Host& newHost, const char* identifier) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::all(Host& newHost, const char* const query) {
   std::string url;
@@ -455,7 +661,7 @@ std::string Wallets::all(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::top(Host& newHost, const char* const query) {
   std::string url;
@@ -467,7 +673,23 @@ std::string Wallets::top(Host& newHost, const char* const query) {
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Wallets::locks(Host& newHost,
+                                  const char* const identifier,
+                                  const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Wallets::base();
+  url += "/";
+  url += identifier;
+  url += "/locks";
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::transactions(Host& newHost,
                                   const char* const identifier,
@@ -483,7 +705,7 @@ std::string Wallets::transactions(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::transactionsSent(Host& newHost,
                                       const char* const identifier,
@@ -499,7 +721,7 @@ std::string Wallets::transactionsSent(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::transactionsReceived(Host& newHost,
                                           const char* const identifier,
@@ -515,7 +737,7 @@ std::string Wallets::transactionsReceived(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::string Wallets::votes(Host& newHost,
                            const char* const identifier,
@@ -531,7 +753,7 @@ std::string Wallets::votes(Host& newHost,
   return url;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
 
 std::pair<std::string, std::string> Wallets::search(
     Host& newHost,
@@ -555,6 +777,8 @@ std::pair<std::string, std::string> Wallets::search(
   };
   return { url.c_str(), parameterBuffer.c_str() };
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 }  // namespace paths
 }  // namespace api
