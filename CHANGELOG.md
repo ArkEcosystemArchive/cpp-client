@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2020-02-13
+
+## [1.4.0-arduino] - 2020-02-13
+
+### Added
+-   added Core 2.6 endpoints ([#159])
+
+## [1.3.0] - 2019-10-09
+
 ## [1.3.0-arduino] - 2019-10-09
 
 ### Added
@@ -72,3 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#114]: https://github.com/ArkEcosystem/cpp-client/pull/114
 [#140]: https://github.com/ArkEcosystem/cpp-client/pull/140
 [1.3.0-arduino]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0-arduino...1.3.0-arduino
+[1.3.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.2.0...1.3.0
+[#159]: https://github.com/ArkEcosystem/cpp-client/pull/159
+[1.4.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.3.0...1.4.0
+[1.4.0]: https://github.com/ArkEcosystem/cpp-client/compare/1.3.0-arduino...1.4.0-arduino

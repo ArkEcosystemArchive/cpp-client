@@ -31,6 +31,15 @@ std::string Wallets::top(const char* const query) {
 
 /**/
 
+std::string Wallets::locks(const char *const identifier,
+                                  const char* const query) {
+  return http_->get(paths::Wallets::locks(this->host_,
+                                                 identifier,
+                                                 query).c_str());
+}
+
+/**/
+
 std::string Wallets::transactions(const char *const identifier,
                                   const char* const query) {
   return http_->get(paths::Wallets::transactions(this->host_,
