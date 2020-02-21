@@ -7,7 +7,7 @@ project(ark_cpp_client C CXX)
 # External Libraries
 # ------------------------------------------------------------------------------
 
-include(${CMAKE_SOURCE_DIR}/cmake/External.cmake)
+include(${CMAKE_INSTALL_PREFIX}/cmake/External.cmake)
 
 # ------------------------------------------------------------------------------
 
