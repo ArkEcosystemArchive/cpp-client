@@ -16,7 +16,7 @@ if (APPLE)
 endif()
 
 # Set the configuration
-configure_file(${CMAKE_SOURCE_DIR}/cmake/extern/CURL.txt.in
+configure_file(${CMAKE_INSTALL_PREFIX}/cmake/extern/CURL.txt.in
                ${EXTERNAL_LIBRARY_DIR}/curl/CMakeLists.txt)
 
 # Execute Git Clone and run Cmake
