@@ -9,6 +9,7 @@
 
 #include "api/paths.h"
 
+#include <numeric>
 #include <string>
 
 namespace Ark {
@@ -22,6 +23,20 @@ namespace {
 constexpr const uint8_t URL_MAX_LEN = 128U;
 }  //namespace
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+static std::string
+joinQueryBody(const std::map<std::string, std::string>& bodyMap) {
+  return std::accumulate(bodyMap.begin(), bodyMap.end(),
+                         std::string(),
+                         [](const std::string& result,
+                         const std::pair<const std::string, std::string>& p) {
+    return result + (result.empty() ? "" : "&") + p.first + "=" + p.second;
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -94,16 +109,7 @@ std::pair<std::string, std::string> Blocks::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,16 +169,7 @@ std::pair<std::string, std::string> Businesses::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -219,16 +216,7 @@ std::pair<std::string, std::string> Bridgechains::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -338,16 +326,7 @@ std::pair<std::string, std::string> Locks::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -574,16 +553,7 @@ std::pair<std::string, std::string> Transactions::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url, parameterBuffer.c_str() };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -766,16 +736,7 @@ std::pair<std::string, std::string> Wallets::search(
   url += "/search";
   url += query;
 
-  std::string parameterBuffer;
-  auto count = 0UL;
-  for (const auto& p : bodyParameters) {
-    ++count;
-    parameterBuffer += p.first + '=' + p.second;
-    if (bodyParameters.size() > 1 && count < bodyParameters.size()) {
-      parameterBuffer += '&';
-    };
-  };
-  return { url.c_str(), parameterBuffer.c_str() };
+  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
