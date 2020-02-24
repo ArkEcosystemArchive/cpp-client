@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # run clang tidy
 cmake -DENABLE_CLANG_TIDY=ON -DUNIT_TEST=ON .
