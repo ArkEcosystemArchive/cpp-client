@@ -34,10 +34,10 @@ TEST(paths, test_blocks) {
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756", get.c_str());
 
   const auto first = paths::Blocks::first(testHost);
-  ASSERT_STREQ("0.0.0.0:4003/api/blocks/first", get.c_str());
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks/first", first.c_str());
 
   const auto last = paths::Blocks::last(testHost);
-  ASSERT_STREQ("0.0.0.0:4003/api/blocks/last", get.c_str());
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks/last", last.c_str());
 
   const auto all = paths::Blocks::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks?limit=1&page=5", all.c_str());
