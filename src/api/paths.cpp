@@ -59,6 +59,28 @@ std::string Blocks::get(Host& newHost, const char* blockId) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+std::string Blocks::first(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += "/first";
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Blocks::last(Host& newHost) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Blocks::base();
+  url += "/last";
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 std::string Blocks::all(Host& newHost, const char* const query) {
   std::string url;
   url.reserve(URL_MAX_LEN);

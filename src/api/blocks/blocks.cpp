@@ -19,6 +19,18 @@ std::string Blocks::get(const char* blockId) {
 
 /**/
 
+std::string Blocks::first() {
+  return http_->get(paths::Blocks::first(this->host_).c_str());
+}
+
+/**/
+
+std::string Blocks::last() {
+  return http_->get(paths::Blocks::last(this->host_).c_str());
+}
+
+/**/
+
 std::string Blocks::all(const char* const query) {
   return http_->get(paths::Blocks::all(this->host_, query).c_str());
 }
