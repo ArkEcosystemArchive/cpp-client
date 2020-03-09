@@ -38,6 +38,8 @@ struct Blockchain {
 struct Blocks {  // NOLINT
   static std::string base();
   static std::string get(Host& newHost, const char* const blockId);
+  static std::string first(Host& newHost);
+  static std::string last(Host& newHost);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string transactions(Host& newHost, const char* const blockId);
   static std::pair<std::string, std::string> search(Host& newHost,

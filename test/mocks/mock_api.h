@@ -31,6 +31,8 @@ public:
   MockBlocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBlocks(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
+  MOCK_METHOD0(first, std::string());
+  MOCK_METHOD0(last, std::string());
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(transactions, std::string(const char* const));
   MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));

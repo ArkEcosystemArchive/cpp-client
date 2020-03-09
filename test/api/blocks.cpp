@@ -66,6 +66,101 @@ TEST(api, test_block) {  // NOLINT
 
 /**/
 
+TEST(api, test_block_first) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
+    "data": {
+      "id": "13114381566690093367",
+      "version": 0,
+      "height": 1,
+      "previous": "0",
+      "forged": {
+        "reward": "0",
+        "fee": "0",
+        "total": "0",
+        "amount": "12500000000000000"
+      },
+      "payload": {
+        "hash": "2a44f340d76ffc3df204c5f38cd355b7496c9065a1ade2ef92071436bd72e867",
+        "length": 11395
+      },
+      "generator": {
+        "address": "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
+        "publicKey": "03d3fdad9c5b25bf8880e6b519eb3611a5c0b31adebc8455f0e096175b28321aff"
+      },
+      "signature": "3044022035694a9b99a9236655c658eb07fc3b02ce5edcc24b76424a7287c54ed3822b0602203621e92defb360490610f763d85e94c2db2807a4bd7756cc8a6a585463ef7bae",
+      "confirmations": 4346566,
+      "transactions": 52,
+      "timestamp": {
+        "epoch": 0,
+        "unix": 1490101200,
+        "human": "2017-03-21T13:00:00.000Z"
+      }
+    }
+  })";
+
+  EXPECT_CALL(connection.api.blocks, first())
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+  const auto block = connection.api.blocks.first();
+
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                block.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
+}
+
+/**/
+
+TEST(api, test_block_last) {  // NOLINT
+  Ark::Client::Connection<MockApi> connection(tIp, tPort);
+
+  const std::string expected_response = R"({
+    "data": {
+      "id": "5768900e27621b95dc201fc4e6ce16e72a39e0c625a1c659a23e83eac69605e0",
+      "version": 0,
+      "height": 4346647,
+      "previous": "4deae70324c919d3a79f0f065cfa085a475a7245bcd04d4e558d3205658fc706",
+      "forged": {
+        "reward": "200000000",
+        "fee": "10000000",
+        "total": "210000000",
+        "amount": "900000000"
+      },
+      "payload": {
+        "hash": "b48f23356cc70d13b0a0c0ba6811be0144a9fc673cc9f723f036187c3bb67f2d",
+        "length": 32
+      },
+      "generator": {
+        "username": "genesis_40",
+        "address": "D8xN3Nsa3KfC3H68Ek9xnkfdSwzv8Kkh3q",
+        "publicKey": "026a423b3323de175dd82788c7eab57850c6a37ea6a470308ebadd7007baf8ceb3"
+      },
+      "signature": "304402203b6251780c8baead56882aa5aee188f85f8941a1bca272ef6ff3bf9d26cfeed602207634d5268a130937603b774a7282e44065370785dc4b809cf0e98f0e56252bcc",
+      "confirmations": 0,
+      "transactions": 1,
+      "timestamp": {
+        "epoch": 92536208,
+        "unix": 1582637408,
+        "human": "2020-02-25T13:30:08.000Z"
+      }
+    }
+  })";
+
+  EXPECT_CALL(connection.api.blocks, last())
+      .Times(1)
+      .WillOnce(Return(expected_response));
+
+  const auto block = connection.api.blocks.last();
+
+  auto responseMatches = strcmp(expected_response.c_str(),
+                                block.c_str()) == 0;
+  ASSERT_TRUE(responseMatches);
+}
+
+/**/
+
 TEST(api, test_block_transactions) {  // NOLINT
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
 

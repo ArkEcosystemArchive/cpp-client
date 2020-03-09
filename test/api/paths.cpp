@@ -33,6 +33,12 @@ TEST(paths, test_blocks) {
   const auto get = paths::Blocks::get(testHost, "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756", get.c_str());
 
+  const auto first = paths::Blocks::first(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks/first", first.c_str());
+
+  const auto last = paths::Blocks::last(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/blocks/last", last.c_str());
+
   const auto all = paths::Blocks::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks?limit=1&page=5", all.c_str());
 
@@ -179,6 +185,9 @@ TEST(paths, test_node) {
 
   const auto crypto = paths::Node::crypto(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/configuration/crypto", crypto.c_str());
+
+  const auto fees = paths::Node::fees(testHost);
+  ASSERT_STREQ("0.0.0.0:4003/api/node/fees?days=7", fees.c_str());
 
   const auto status = paths::Node::status(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/node/status", status.c_str());
