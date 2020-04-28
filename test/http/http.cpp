@@ -13,7 +13,7 @@ using namespace Ark::Client;
 constexpr const size_t HTTPS_MAX_ELEMENTS = 3U;
 }  // namespace
 
-TEST(api, test_http_get) { // NOLINT
+TEST(api, test_http_get) {  // NOLINT
   // Create the HTTP object
   const auto http = makeHTTP();
 
@@ -28,8 +28,23 @@ TEST(api, test_http_get) { // NOLINT
 
 /**/
 
+TEST(api, test_https_get) {  // NOLINT
+  // Create the HTTP object
+  const auto https = makeHTTP();
+
+  // Create a request
+  const auto request = "https://postman-echo.com/get?foo=bar";
+
+  // Get the response using HTTP
+  const auto response = https->get(request);
+
+  ASSERT_LT(response.find("bar"), response.length());
+}
+
+/**/
+
 // Tests POSTing of HTTP body.
-TEST(api, test_http_post_body) { // NOLINT
+TEST(api, test_http_post_body) {  // NOLINT
   // Create the HTTP object
   const auto http = makeHTTP();
 
@@ -45,8 +60,25 @@ TEST(api, test_http_post_body) { // NOLINT
 
 /**/
 
+// Tests POSTing of HTTP body.
+TEST(api, test_https_post_body) {  // NOLINT
+  // Create the HTTP object
+  const auto https = makeHTTP();
+
+  // Create a Request URL and 'Post' body.
+  const auto request = "https://postman-echo.com/post";
+  const auto body = "This should be sent back as part of response body.";
+
+  // Post the 'request' and 'body' for a response using HTTP
+  const auto response = https->post(request, body);
+
+  ASSERT_LT(response.find(body), response.length());
+}
+
+/**/
+
 // Tests invalid POSTing of HTTP body.
-TEST(api, test_http_invalid_post_body) { // NOLINT
+TEST(api, test_http_invalid_post_body) {  // NOLINT
   // Create the HTTP object
   const auto http = makeHTTP();
 
@@ -59,7 +91,7 @@ TEST(api, test_http_invalid_post_body) { // NOLINT
 
   // The malformed request will result in the following error being logged:
   // 'curl_easy_perform() failed: URL using bad/illegal format or missing URL'
-  
+
   // the response will be empty
   ASSERT_TRUE(response.empty());
 }
@@ -67,7 +99,7 @@ TEST(api, test_http_invalid_post_body) { // NOLINT
 /**/
 
 // Tests POSTing of JSON.
-TEST(api, test_http_post_json) { // NOLINT
+TEST(api, test_http_post_json) {  // NOLINT
   // Create the HTTP object
   const auto http = makeHTTP();
 
@@ -84,26 +116,19 @@ TEST(api, test_http_post_json) { // NOLINT
 /**/
 
 // This tests the use of "http://" in single-line HTTP requests.
-TEST(api, test_http_request_strings) { // NOLINT
+TEST(api, test_http_request_strings) {  // NOLINT
   std::array<std::string, HTTPS_MAX_ELEMENTS> requests = {
-    "postman-echo.com/get",         // No HTTP prefix
-    "http://postman-echo.com/get",  // HTTP
-    "https://postman-echo.com/get"  // HTTPS
+      "postman-echo.com/get",         // No HTTP prefix
+      "http://postman-echo.com/get",  // HTTP
+      "https://postman-echo.com/get"  // HTTPS
   };
 
   // Create the HTTP object
   const auto http = makeHTTP();
 
-  for (auto& i: requests) {
+  for (auto& i : requests) {
     // Get the response using HTTP
     const auto response = http->get(i.c_str());
-#ifdef USE_IOT 
-    // HTTPS is NOT supported on IoT and should fail to parse.
-    response.find("https://") < response.length())
-        ? ASSERT_TRUE(response.empth())
-        : ASSERT_LT(response.find("args"), response.length());
-#else // OS Builds
     ASSERT_LT(response.find("args"), response.length());
-#endif
   };
 }
