@@ -47,14 +47,18 @@ const char* password = "yourWiFiPassword";
 /****************************************/
 
 /** 
- *  This is the IP address of an ARK Node
- *  Specifically, this is a Devnet Node IP
- *  You can find more peers here: https://github.com/ArkEcosystem/peers
- *  
- *  The Public API port for the ARK network is '4003'
+ * This is the IP address of an ARK Node
+ * Specifically, this is a Devnet Node IP
+ * You can find more peers here: https://github.com/ArkEcosystem/peers
+ * 
+ * The API port for ARK Explorer: '8443'
+ * - https://dexplorer.ark.io:8443
+ *
+ * The Public API port for the ARK network via IP Address is '4003'
+ * - 167.114.29.55:4003
  */
-const char* peer = "167.114.29.55";
-int port = 4003;
+const char* peer = "https://dexplorer.ark.io";
+const int port = 8443;
 /**/
 
 /****************************************/

@@ -41,7 +41,8 @@ std::string Host::toString() {
   out.reserve(IP_MAX_STRING_LEN + PORT_MAX_STRING_LEN);
   out += (this->ip_);
   out += ":";
-  snprintf(&out[out.find(":") + 1U], PORT_MAX_STRING_LEN, "%d", this->port_);
+  snprintf(&out[out.find_last_of(":") + 1U], PORT_MAX_STRING_LEN, "%d",
+           this->port_);
   return out;
 }
 
