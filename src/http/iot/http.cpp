@@ -12,9 +12,13 @@
 #include <memory>
 #include <string>
 
-#ifdef ESP8266
+#if defined(ESP8266)
 #include <ESP8266HTTPClient.h>
-#else
+#include <WiFiClientSecureBearSSL.h>
+using namespace BearSSL;
+#endif
+
+#if defined(ESP32)
 #include <HTTPClient.h>
 #endif
 
@@ -25,56 +29,49 @@ namespace Client {
 namespace {
 
 ////////////////////////////////////////////////////////////////////////////////
-
+// Supports ESP8266 & ESP32 Boards
 class PlatformHTTP : public AbstractHTTP {
  public:
   PlatformHTTP() = default;
 
-////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  std::string get(const char* request) override { return this->send(request); }
 
-  std::string get(const char* request) override {
-    HTTPClient httpClient;
-    httpClient.setReuse(false);
-    httpClient.setTimeout(3000);
-
-    httpClient.addHeader("Content-Type", "application/json");
-    httpClient.begin(std::string("http://" + std::string(request)).c_str());
-
-    httpClient.GET();
-
-    return httpClient.getString().c_str();
+  //////////////////////////////////////////////////////////////////////////////
+  std::string post(const char* request, const char* body) override {
+    return this->send(request, body);
   }
 
-////////////////////////////////////////////////////////////////////////////////
+ private:
+  //////////////////////////////////////////////////////////////////////////////
+  inline std::string send(const char* request, const char* body = nullptr) {
+    std::unique_ptr<WiFiClientSecure> client(new WiFiClientSecure);
+#if defined(ESP8266)
+    // skip fingerprint verification on the ESP8266
+    // https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/bearssl-client-secure-class.html#setinsecure
+    client->setInsecure();
+#endif
+    HTTPClient https;
+    https.setReuse(false);
+    https.setTimeout(3000);
 
-  std::string post(const char* request, const char *body) override {
-    HTTPClient httpClient;
-    httpClient.setReuse(true);
-    httpClient.setTimeout(3000);
+    https.addHeader("Content-Type", "application/json");
+    https.begin(*client, request);
+    body ? https.POST(body) : https.GET();
 
-    httpClient.addHeader("Content-Type", "application/json");
-    httpClient.begin(std::string("http://" + std::string(request)).c_str());
+    const std::string ret = https.getString().c_str();
+    https.end();
 
-    httpClient.POST(body);
-    return httpClient.getString().c_str();
+    return ret;
   }
 };
-
-////////////////////////////////////////////////////////////////////////////////
-
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * HTTP object factory
- **/
+// HTTP object factory
 std::unique_ptr<IHTTP> makeHTTP() {
   return std::unique_ptr<IHTTP>(new PlatformHTTP());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 }  // namespace Client
 }  // namespace Ark
