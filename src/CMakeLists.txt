@@ -36,8 +36,6 @@ set(PATHS_SRC api/paths.cpp)
 set(API_SRC
     api/blockchain/blockchain.cpp
     api/blocks/blocks.cpp
-    api/businesses/businesses.cpp
-    api/bridgechains/bridgechains.cpp
     api/delegates/delegates.cpp
     api/locks/locks.cpp
     api/node/node.cpp

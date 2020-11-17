@@ -37,8 +37,6 @@ SRC_API_DIR=${SRC_DIR}/api
 
 INCLUDE_BLOCKCHAIN_DIR=${INCLUDE_DIR}/api/blockchain
 INCLUDE_BLOCKS_DIR=${INCLUDE_DIR}/api/blocks
-INCLUDE_BUSINESSES_DIR=${INCLUDE_DIR}/api/businesses
-INCLUDE_BRIDGECHAINS_DIR=${INCLUDE_DIR}/api/bridgechains
 INCLUDE_DELEGATES_DIR=${INCLUDE_DIR}/api/delegates
 INCLUDE_LOCKS_DIR=${INCLUDE_DIR}/api/locks
 INCLUDE_NODE_DIR=${INCLUDE_DIR}/api/node
@@ -50,8 +48,6 @@ INCLUDE_WALLETS_DIR=${INCLUDE_DIR}/api/wallets
 
 SRC_BLOCKCHAIN_DIR=${SRC_DIR}/api/blockchain
 SRC_BLOCKS_DIR=${SRC_DIR}/api/blocks
-SRC_BUSINESSES_DIR=${SRC_DIR}/api/businesses
-SRC_BRIDGECHAINS_DIR=${SRC_DIR}/api/bridgechains
 SRC_DELEGATES_DIR=${SRC_DIR}/api/delegates
 SRC_LOCKS_DIR=${SRC_DIR}/api/locks
 SRC_NODE_DIR=${SRC_DIR}/api/node
@@ -117,8 +113,6 @@ if [[ -d ${INCLUDE_DIR} ]]; then
 
   mv ${INCLUDE_BLOCKCHAIN_DIR}/blockchain.hpp   ${SRC_BLOCKCHAIN_DIR}
   mv ${INCLUDE_BLOCKS_DIR}/blocks.h             ${SRC_BLOCKS_DIR}
-  mv ${INCLUDE_BUSINESSES_DIR}/businesses.h     ${SRC_BUSINESSES_DIR}
-  mv ${INCLUDE_BRIDGECHAINS_DIR}/bridgechains.h ${SRC_BRIDGECHAINS_DIR}
   mv ${INCLUDE_DELEGATES_DIR}/delegates.h       ${SRC_DELEGATES_DIR}
   mv ${INCLUDE_LOCKS_DIR}/locks.h               ${SRC_LOCKS_DIR}
   mv ${INCLUDE_NODE_DIR}/node.h                 ${SRC_NODE_DIR}
@@ -164,8 +158,6 @@ else
   mkdir ${INCLUDE_API_DIR}
   mkdir ${INCLUDE_BLOCKCHAIN_DIR}
   mkdir ${INCLUDE_BLOCKS_DIR}
-  mkdir ${INCLUDE_BUSINESSES_DIR}
-  mkdir ${INCLUDE_BRIDGECHAINS_DIR}
   mkdir ${INCLUDE_DELEGATES_DIR}
   mkdir ${INCLUDE_LOCKS_DIR}
   mkdir ${INCLUDE_NODE_DIR}
@@ -183,8 +175,6 @@ else
 
   mv ${SRC_BLOCKCHAIN_DIR}/blockchain.hpp   ${INCLUDE_BLOCKCHAIN_DIR}
   mv ${SRC_BLOCKS_DIR}/blocks.h             ${INCLUDE_BLOCKS_DIR}
-  mv ${SRC_BUSINESSES_DIR}/businesses.h     ${INCLUDE_BUSINESSES_DIR}
-  mv ${SRC_BRIDGECHAINS_DIR}/bridgechains.h ${INCLUDE_BRIDGECHAINS_DIR}
   mv ${SRC_DELEGATES_DIR}/delegates.h       ${INCLUDE_DELEGATES_DIR}
   mv ${SRC_LOCKS_DIR}/locks.h               ${INCLUDE_LOCKS_DIR}
   mv ${SRC_NODE_DIR}/node.h                 ${INCLUDE_NODE_DIR}

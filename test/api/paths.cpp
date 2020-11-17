@@ -64,58 +64,6 @@ TEST(paths, test_blocks) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(paths, test_businesses) {
-  const auto base = paths::Businesses::base();
-  ASSERT_STREQ("/api/businesses", base.c_str());
-
-  const auto get = paths::Businesses::get(testHost, "12345");
-  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345", get.c_str());
-
-  const auto all = paths::Businesses::all(testHost, "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/businesses?limit=1&page=5", all.c_str());
-
-  const auto bridgechains = paths::Businesses::bridgechains(testHost,
-                                                            "12345",
-                                                            "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/businesses/12345/bridgechains?limit=1&page=5",
-               bridgechains.c_str());
-
-  const std::map<std::string, std::string> searchBody = {
-    { "businessId", "12345" }
-  };
-  const auto search = paths::Businesses::search(testHost,
-                                                searchBody,
-                                                "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/businesses/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ("businessId=12345", search.second.c_str());
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-TEST(paths, test_bridgechains) {
-  const auto base = paths::Bridgechains::base();
-  ASSERT_STREQ("/api/bridgechains", base.c_str());
-
-  const auto get = paths::Bridgechains::get(testHost, "12345");
-  ASSERT_STREQ("0.0.0.0:4003/api/bridgechains/12345", get.c_str());
-
-  const auto all = paths::Bridgechains::all(testHost, "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/bridgechains?limit=1&page=5", all.c_str());
-
-  const std::map<std::string, std::string> searchBody = {
-    { "bridgechainId", "12345" }
-  };
-  const auto search = paths::Bridgechains::search(testHost,
-                                                  searchBody,
-                                                  "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/bridgechains/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ("bridgechainId=12345", search.second.c_str());
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 TEST(paths, test_delegates) {
   const auto base = paths::Delegates::base();
   ASSERT_STREQ("/api/delegates", base.c_str());
