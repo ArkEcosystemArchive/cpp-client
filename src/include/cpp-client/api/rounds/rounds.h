@@ -10,7 +10,6 @@
 #ifndef ROUNDS_H
 #define ROUNDS_H
 
-#include <map>
 #include <string>
 
 #include "api/base.h"
