@@ -79,6 +79,9 @@ std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?pa
 std::string delegatesGetPath = Ark::Client::api::paths::Delegates::get(dummyHost, "genesis_1");
 // delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
 
+std::string entitiesGetPath = Ark::Client::api::paths::Entities::get(dummyHost, "89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2");
+// entitiesGetPath will be the string "0.0.0.0:4003/api/entities/89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2"
+
 std::string nodeConfigurationPath = Ark::Client::api::paths::Node::configuration(dummyHost);
 // nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
 

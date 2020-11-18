@@ -172,6 +172,37 @@ std::string Delegates::voters(Host& newHost,
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Entities
+ **/
+std::string Entities::base() { return "/api/entities"; }
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Entities::get(Host& newHost, const char* entityId) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Entities::base();
+  url += "/";
+  url += entityId;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string Entities::all(Host& newHost, const char* const query) {
+  std::string url;
+  url.reserve(URL_MAX_LEN);
+  url += newHost.toString().c_str();
+  url += Entities::base();
+  url += query;
+  return url;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+/**
  * Locks
  **/
 std::string Locks::base() { return "/api/locks"; }

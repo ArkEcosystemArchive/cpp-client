@@ -51,6 +51,16 @@ public:
 
 /**/
 
+class MockEntities : public Ark::Client::api::IEntities {  // NOLINT
+public:
+  MockEntities(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IEntities(host, http) {}
+
+  MOCK_METHOD1(get, std::string(const char* const));
+  MOCK_METHOD1(all, std::string(const char* const));
+};
+
+/**/
+
 class MockLocks : public Ark::Client::api::ILocks {  // NOLINT
 public:
   MockLocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : ILocks(host, http) {}
@@ -140,6 +150,7 @@ public:
   MockBlockchain blockchain;
   MockBlocks blocks;
   MockDelegates delegates;
+  MockEntities entities;
   MockLocks locks;
   MockNode node;
   MockPeers peers;
@@ -152,6 +163,7 @@ public:
               blockchain(host_, *http_),
               blocks(host_, *http_),
               delegates(host_, *http_),
+              entities(host_, *http_),
               locks(host_, *http_),
               node(host_, *http_),
               peers(host_, *http_),

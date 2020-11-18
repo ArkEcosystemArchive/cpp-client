@@ -56,6 +56,14 @@ struct Delegates {  // NOLINT
 
 ////////////////////////////////////////////////////////////////////////////////
 
+struct Entities {  // NOLINT
+  static std::string base();
+  static std::string get(Host& newHost, const char* const entityId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
 struct Locks {  // NOLINT
   static std::string base();
   static std::string get(Host& newHost, const char* const lockId);

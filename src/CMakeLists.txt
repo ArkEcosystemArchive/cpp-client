@@ -37,6 +37,7 @@ set(API_SRC
     api/blockchain/blockchain.cpp
     api/blocks/blocks.cpp
     api/delegates/delegates.cpp
+    api/entities/entities.cpp
     api/locks/locks.cpp
     api/node/node.cpp
     api/peers/peers.cpp
