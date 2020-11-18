@@ -75,6 +75,19 @@ TEST(paths, test_delegates) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+TEST(paths, test_entities) {
+  const auto base = paths::Entities::base();
+  ASSERT_STREQ("/api/entities", base.c_str());
+
+  const auto get = paths::Entities::get(testHost, "89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2");
+  ASSERT_STREQ("0.0.0.0:4003/api/entities/89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2", get.c_str());
+
+  const auto all = paths::Entities::all(testHost, "?isResigned&limit=1&page=1");
+  ASSERT_STREQ("0.0.0.0:4003/api/entities?isResigned&limit=1&page=1", all.c_str());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 TEST(paths, test_locks) {
   const auto base = paths::Locks::base();
   ASSERT_STREQ("/api/locks", base.c_str());
