@@ -255,61 +255,6 @@ TEST(api, test_transactions_unconfirmed) {  // NOLINT
 
 /**/
 
-TEST(api, test_transactions_search) {  // NOLINT
-  Ark::Client::Connection<MockApi> connection(tIp, tPort);
-
-  const std::string expected_response = R"({
-    "meta": {
-      "totalCountIsEstimate": false,
-      "count": 1,
-      "pageCount": 762344,
-      "totalCount": 762344,
-      "next": "/api/transactions/search?limit=1&page=2&transform=true",
-      "previous": null,
-      "self": "/api/transactions/search?limit=1&page=1&transform=true",
-      "first": "/api/transactions/search?limit=1&page=1&transform=true",
-      "last": "/api/transactions/search?limit=1&page=762344&transform=true"
-    },
-    "data": [
-      {
-        "id": "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4",
-        "blockId": "37c2f608910d0624ba114ba9855b3762b2095cd9c2866e1a6ead6c887ff5b07c",
-        "version": 1,
-        "type": 0,
-        "amount": "1980000",
-        "fee": "500000",
-        "sender": "DUTnUVuUFrW3SuWQMbR5ibYkcJ16KhfNKM",
-        "senderPublicKey": "02747353898e59c4f784542f357d5dd938a2872adb53abb94924091fddfdd83dc3",
-        "recipient": "DFrnspWhQsJVQswy6qkWWgpyGm4Kj1FA8s",
-        "signature": "30440220015f53fff9d86e0ca38f18066ec64b078b6391d420f27d452f2e530ca50571320220162e95d725c154bee54767ab5e9e10824ad9e77a97b47901381b820b33635b25",
-        "vendorField": "generaliroh - uncle",
-        "confirmations": 10,
-        "timestamp": {
-          "epoch": 72728617,
-          "unix": 1562829817,
-          "human": "2019-07-11T07:23:37.000Z"
-        }
-      }
-    ]
-  })";
-
-  EXPECT_CALL(connection.api.transactions, search(_, _))
-      .Times(1)
-      .WillOnce(Return(expected_response));
-
-std::map<std::string, std::string> body{{
-  "id", "ed46b70a5fad2957c09aa0e0d02b7a2e3e4ab93f0581d1a871e0c44907a4f3e4"
-}};
-
-  const auto transactions = connection.api.transactions.search(body,"?limit=1&page=1");
-
-  auto responseMatches = strcmp(expected_response.c_str(),
-                                transactions.c_str()) == 0;
-  ASSERT_TRUE(responseMatches);
-}
-
-/**/
-
 TEST(api, test_transactions_send) {  // NOLINT
     Ark::Client::Connection<MockApi> connection(tIp, tPort);
 

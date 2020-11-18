@@ -26,19 +26,6 @@ constexpr const uint8_t URL_MAX_LEN = 128U;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-static std::string
-joinQueryBody(const std::map<std::string, std::string>& bodyMap) {
-  return std::accumulate(bodyMap.begin(), bodyMap.end(),
-                         std::string(),
-                         [](const std::string& result,
-                         const std::pair<const std::string, std::string>& p) {
-    return result + (result.empty() ? "" : "&") + p.first + "=" + p.second;
-  });
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
 /**
  * Blockchain
  **/
@@ -62,13 +49,13 @@ std::string Blockchain::get(Host& newHost) {
 std::string Blocks::base() { return "/api/blocks"; }
 
 /**/
-std::string Blocks::get(Host& newHost, const char* blockId) {
+std::string Blocks::get(Host& newHost, const char* identifier) {
   std::string url;
   url.reserve(URL_MAX_LEN);
   url += newHost.toString().c_str();
   url += Blocks::base();
   url += "/";
-  url += blockId;
+  url += identifier;
   return url;
 }
 
@@ -107,31 +94,15 @@ std::string Blocks::all(Host& newHost, const char* const query) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string Blocks::transactions(Host& newHost, const char* blockId) {
+std::string Blocks::transactions(Host& newHost, const char* identifier) {
   std::string url;
   url.reserve(URL_MAX_LEN);
   url += newHost.toString().c_str();
   url += Blocks::base();
   url += "/";
-  url += blockId;
+  url += identifier;
   url += "/transactions";
   return url;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-std::pair<std::string, std::string> Blocks::search(
-    Host& newHost,
-    const std::map<std::string, std::string>& bodyParameters,
-    const char* const query) {
-  std::string url;
-  url.reserve(URL_MAX_LEN);
-  url += newHost.toString().c_str();
-  url += Blocks::base();
-  url += "/search";
-  url += query;
-
-  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,22 +197,6 @@ std::string Locks::all(Host& newHost, const char* const query) {
   url += Locks::base();
   url += query;
   return url;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-std::pair<std::string, std::string> Locks::search(
-    Host& newHost,
-    const std::map<std::string, std::string>& bodyParameters,
-    const char* const query) {
-  std::string url;
-  url.reserve(URL_MAX_LEN);
-  url += newHost.toString().c_str();
-  url += Locks::base();
-  url += "/search";
-  url += query;
-
-  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -457,22 +412,6 @@ std::string Transactions::fees(Host& newHost) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::pair<std::string, std::string> Transactions::search(
-    Host& newHost,
-    const std::map<std::string, std::string>& bodyParameters,
-    const char* const query) {
-  std::string url;
-  url.reserve(URL_MAX_LEN);
-  url += newHost.toString().c_str();
-  url += Transactions::base();
-  url += "/search";
-  url += query;
-
-  return { url, joinQueryBody(bodyParameters) };
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 std::pair<std::string, std::string> Transactions::send(
     Host& newHost,
     std::string& jsonTransaction) {
@@ -636,22 +575,6 @@ std::string Wallets::votes(Host& newHost,
   url += "/votes";
   url += query;
   return url;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-std::pair<std::string, std::string> Wallets::search(
-    Host& newHost,
-    const std::map<std::string, std::string>& bodyParameters,
-    const char* const query) {
-  std::string url;
-  url.reserve(URL_MAX_LEN);
-  url += newHost.toString().c_str();
-  url += Wallets::base();
-  url += "/search";
-  url += query;
-
-  return { url, joinQueryBody(bodyParameters) };
 }
 
 ////////////////////////////////////////////////////////////////////////////////

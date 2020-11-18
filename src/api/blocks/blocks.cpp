@@ -13,8 +13,8 @@ namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Blocks::get(const char* blockId) {
-  return http_->get(paths::Blocks::get(this->host_, blockId).c_str());
+std::string Blocks::get(const char* identifier) {
+  return http_->get(paths::Blocks::get(this->host_, identifier).c_str());
 }
 
 /**/
@@ -37,20 +37,8 @@ std::string Blocks::all(const char* const query) {
 
 /**/
 
-std::string Blocks::transactions(const char* blockId) {
-  return http_->get(paths::Blocks::transactions(this->host_, blockId).c_str());
-}
-
-/**/
-
-std::string Blocks::search(
-    const std::map<std::string, std::string> &bodyParameters,
-    const char* const query) {
-  const auto searchPathPair = paths::Blocks::search(this->host_,
-                                                     bodyParameters,
-                                                     query);
-  return http_->post(searchPathPair.first.c_str(),
-                     searchPathPair.second.c_str());
+std::string Blocks::transactions(const char* identifier) {
+  return http_->get(paths::Blocks::transactions(this->host_, identifier).c_str());
 }
 
 }  // namespace api

@@ -82,49 +82,6 @@ TEST(api, test_wallets) {  // NOLINT
 
 /**/
 
-TEST(api, test_wallets_search) {  // NOLINT
-  Ark::Client::Connection<MockApi> connection(tIp, tPort);
-
-  const std::string expected_response = R"({
-    "meta": {
-      "count": 1,
-      "pageCount": 1,
-      "totalCount": 1,
-      "next": null,
-      "previous": null,
-      "self": "/api/wallets/search?limit=1&page=1",
-      "first": "/api/wallets/search?limit=1&page=1",
-      "last": "/api/wallets/search?limit=1&page=1"
-    },
-    "data": [
-      {
-        "address": "DL6wmfnA2acPLpBjKS4zPGsSwxkTtGANsK",
-        "publicKey": "02511f16ffb7b7e9afc12f04f317a11d9644e4be9eb5a5f64673946ad0f6336f34",
-        "username": "genesis_1",
-        "balance": "10035728150000",
-        "isDelegate": true,
-        "vote": "035c14e8c5f0ee049268c3e75f02f05b4246e746dc42f99271ff164b7be20cf5b8"
-      }
-    ]
-  })";
-
-  EXPECT_CALL(connection.api.wallets, search(_, _))
-      .Times(1)
-      .WillOnce(Return(expected_response));
-
-  const std::map<std::string, std::string> body = {
-    { "username", "genesis_1" }
-  };
-
-  const auto wallets = connection.api.wallets.search(body, "?limit=1&page=1");
-
-  auto responseMatches = strcmp(expected_response.c_str(),
-                                wallets.c_str()) == 0;
-  ASSERT_TRUE(responseMatches);
-}
-
-/**/
-
 TEST(api, test_wallets_top) {  // NOLINT
   Ark::Client::Connection<MockApi> connection(tIp, tPort);
 

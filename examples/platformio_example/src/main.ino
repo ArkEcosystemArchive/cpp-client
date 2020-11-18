@@ -45,8 +45,7 @@ void loop() {
   Serial.println("\nResponse for votes 'a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67':");
   Serial.println(vote.c_str());
 
-  const auto walletsSearch = connection.api.wallets.search({ "username", "genesis_1" });
-  Serial.println("\nResponse for wallet search 'username=genesis_1':");
-  Serial.println(walletsSearch.c_str());
-
+  const auto walletsGet = connection.api.wallets.get("genesis_1");
+  Serial.println("\nResponse for wallet 'genesis_1'::");
+  Serial.println(walletsGet.c_str());
 }

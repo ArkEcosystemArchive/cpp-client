@@ -52,18 +52,6 @@ std::string Transactions::fees() {
 
 /**/
 
-std::string Transactions::search(
-    const std::map<std::string, std::string> &bodyParameters,
-    const char* const query) {
-  const auto searchPathPair = paths::Transactions::search(this->host_,
-                                                          bodyParameters,
-                                                          query);
-  return http_->post(searchPathPair.first.c_str(),
-                     searchPathPair.second.c_str());
-}
-
-/**/
-
 std::string Transactions::send(std::string& jsonTransaction) {
   const auto pathPair = paths::Transactions::send(this->host_, jsonTransaction);
   return http_->post(pathPair.first.c_str(), pathPair.second.c_str());

@@ -10,7 +10,6 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 
-#include <map>
 #include <string>
 
 #include "api/base.h"
@@ -23,12 +22,11 @@ namespace api {  // NOLINT
 class IBlocks : public Base {
  public:
   virtual ~IBlocks() {}
-  virtual std::string get(const char* const blockId) = 0;
+  virtual std::string get(const char* const identifier) = 0;
   virtual std::string first() = 0;
   virtual std::string last() = 0;
   virtual std::string all(const char* const query) = 0;
-  virtual std::string transactions(const char* const blockId) = 0;
-  virtual std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) = 0;
+  virtual std::string transactions(const char* const identifier) = 0;
 
  protected:
   IBlocks(Host& host, IHTTP& http) : Base(host, http) {}
@@ -40,12 +38,11 @@ class Blocks : public IBlocks {
  public:
   Blocks(Host& host, IHTTP& http) : IBlocks(host, http) {}
 
-  std::string get(const char* const blockId) override;
+  std::string get(const char* const identifier) override;
   std::string first() override;
   std::string last() override;
   std::string all(const char* const query) override;
-  std::string transactions(const char* const blockId) override;
-  std::string search(const std::map<std::string, std::string>& bodyParameters, const char* const query) override;
+  std::string transactions(const char* const identifier) override;
 };
 
 }  // namespace api

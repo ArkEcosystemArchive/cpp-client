@@ -35,7 +35,6 @@ public:
   MOCK_METHOD0(last, std::string());
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(transactions, std::string(const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/
@@ -58,7 +57,6 @@ public:
 
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD1(all, std::string(const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD2(unlocked, std::string(std::string&, const char* const));
 };
 
@@ -106,7 +104,6 @@ public:
   MOCK_METHOD1(allUnconfirmed, std::string(const char* const));
   MOCK_METHOD0(types, std::string());
   MOCK_METHOD0(fees, std::string());
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD1(send, std::string(std::string&));
 };
 
@@ -134,7 +131,6 @@ public:
   MOCK_METHOD2(transactionsReceived, std::string(const char* const, const char* const));
   MOCK_METHOD2(transactionsSent, std::string(const char* const, const char* const));
   MOCK_METHOD2(votes, std::string(const char* const, const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/

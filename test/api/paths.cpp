@@ -46,20 +46,6 @@ TEST(paths, test_blocks) {
                                                         "58328125061111756");
   ASSERT_STREQ("0.0.0.0:4003/api/blocks/58328125061111756/transactions",
                transactions.c_str());
-
-  const std::map<std::string, std::string> searchBody = {
-    { "id", "8337447655053578871" },
-    { "previousBlock", "6440284271011893973" },
-    { "version", "0" }
-  };
-  const auto search = paths::Blocks::search(testHost,
-                                            searchBody,
-                                            "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/blocks/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ(
-      "id=8337447655053578871&previousBlock=6440284271011893973&version=0",
-      search.second.c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,18 +84,6 @@ TEST(paths, test_locks) {
 
   const auto all = paths::Locks::all(testHost, "?limit=1&page=5");
   ASSERT_STREQ("0.0.0.0:4003/api/locks?limit=1&page=5", all.c_str());
-
-  const std::map<std::string, std::string> searchBody = {
-    { "lockId", "12345" }
-  };
-  const auto search = paths::Locks::search(testHost,
-                                           searchBody,
-                                           "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/locks/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ(
-      "lockId=12345",
-      search.second.c_str());
 
   std::string jsonIds = R"({
       "ids": "1916b6da532193a1703e53783b146835a98127445941efadb2d973932e2b8d33"
@@ -201,15 +175,6 @@ TEST(paths, test_transactions) {  // NOLINT
   const auto fees = paths::Transactions::fees(testHost);
   ASSERT_STREQ("0.0.0.0:4003/api/transactions/fees", fees.c_str());
 
-  const std::map<std::string, std::string> searchBody = {
-    { "id", "dummy" },
-    { "key", "value" }
-  };
-  const auto search = paths::Transactions::search(testHost, searchBody, "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/transactions/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ("id=dummy&key=value", search.second.c_str());
-
   std::string jsonTransaction = "{"
     "\"id\":\"5ab523d18ac948da82700a71fc0b3c9e764fc0cba91927cb1aa63354564ad23f\","
     "\"signature\":\"3045022100a6da60f9b3e20c80f491d168b8c51a85e0ec56a2448f9e10fc4bcc05a2bf79b8022078fa21b7d46e14c62d38f07e408fdb52f7b6a671894c6d0762913ca4a55e7a99\","
@@ -289,18 +254,6 @@ TEST(paths, test_wallets) {  // NOLINT
   ASSERT_STREQ(
       "0.0.0.0:4003/api/wallets/DNv1iScT2DJBWzpJd1AFYkTx1xkAZ9XVJk/votes?limit=1&page=5",
       votes.c_str());
-
-  const std::map<std::string, std::string> searchBody = {
-    { "username", "baldninja" },
-    { "address", "DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T" },
-    { "publicKey", "03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d" }
-  };
-  const auto search = paths::Wallets::search(testHost, searchBody, "?limit=1&page=5");
-  ASSERT_STREQ("0.0.0.0:4003/api/wallets/search?limit=1&page=5",
-               search.first.c_str());
-  ASSERT_STREQ(
-      "address=DFJ5Z51F1euNNdRUQJKQVdG4h495LZkc6T&publicKey=03d3c6889608074b44155ad2e6577c3368e27e6e129c457418eb3e5ed029544e8d&username=baldninja",
-      search.second.c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
