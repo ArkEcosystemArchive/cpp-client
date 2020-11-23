@@ -60,3 +60,4 @@ build
 /examples/cmake_example/ALL_BUILD.vcxproj
 /examples/cmake_example/Win32
 compile_commands.json
+/extern
