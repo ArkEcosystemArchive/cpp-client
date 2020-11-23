@@ -11,7 +11,6 @@
 #define PATHS_H
 
 #include <cstdio>
-#include <map>
 #include <string>
 
 #include "host/host.h"
@@ -37,37 +36,12 @@ struct Blockchain {
 
 struct Blocks {  // NOLINT
   static std::string base();
-  static std::string get(Host& newHost, const char* const blockId);
+  static std::string get(Host& newHost, const char* const identifier);
   static std::string first(Host& newHost);
   static std::string last(Host& newHost);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
-  static std::string transactions(Host& newHost, const char* const blockId);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
-};
+  static std::string transactions(Host& newHost, const char* const identifier);
 
-////////////////////////////////////////////////////////////////////////////////
-
-struct Businesses {  // NOLINT
-  static std::string base();
-  static std::string get(Host& newHost, const char* const businessId);
-  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
-  static std::string bridgechains(Host& newHost, const char* const businessId, const char* const query = DEFAULT_QUERY);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-struct Bridgechains {  // NOLINT
-  static std::string base();
-  static std::string get(Host& newHost, const char* const bridgechainId);
-  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,13 +56,18 @@ struct Delegates {  // NOLINT
 
 ////////////////////////////////////////////////////////////////////////////////
 
+struct Entities {  // NOLINT
+  static std::string base();
+  static std::string get(Host& newHost, const char* const entityId);
+  static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
 struct Locks {  // NOLINT
   static std::string base();
   static std::string get(Host& newHost, const char* const lockId);
   static std::string all(Host& newHost, const char* const query = DEFAULT_QUERY);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
   static std::pair<std::string, std::string> unlocked(Host& newHost,
                                                       std::string& jsonIds,
                                                       const char* const query = DEFAULT_QUERY);
@@ -130,9 +109,6 @@ struct Transactions {  // NOLINT
   static std::string allUnconfirmed(Host& newHost, const char* const query = DEFAULT_QUERY);
   static std::string types(Host& newHost);
   static std::string fees(Host& newHost);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
   static std::pair<std::string, std::string> send(Host& newHost, std::string& jsonTransaction);
 };
 
@@ -156,9 +132,6 @@ struct Wallets {  // NOLINT
   static std::string transactionsSent(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string transactionsReceived(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
   static std::string votes(Host& newHost, const char* const identifier, const char* const query = DEFAULT_QUERY);
-  static std::pair<std::string, std::string> search(Host& newHost,
-                                                    const std::map<std::string, std::string>& bodyParameters,
-                                                    const char* const query = DEFAULT_QUERY);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

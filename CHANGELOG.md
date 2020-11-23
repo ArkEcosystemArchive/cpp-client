@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 -   added support for https ([#195])
 
+### Changed
+-   refactor to support v3 API ([#201])
+
 ## [1.4.1] - 2020-03-06
 
 ### Added
@@ -96,4 +99,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#183]: https://github.com/ArkEcosystem/cpp-client/pull/183
 [1.4.1]: https://github.com/ArkEcosystem/cpp-client/compare/1.4.0...1.4.1
 [#195]: https://github.com/ArkEcosystem/cpp-client/pull/195
+[#201]: https://github.com/ArkEcosystem/cpp-client/pull/201
 [Unreleased]: https://github.com/ArkEcosystem/cpp-client/compare/1.4.1...develop

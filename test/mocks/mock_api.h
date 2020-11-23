@@ -35,30 +35,6 @@ public:
   MOCK_METHOD0(last, std::string());
   MOCK_METHOD1(all, std::string(const char* const));
   MOCK_METHOD1(transactions, std::string(const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
-};
-
-/**/
-
-class MockBusinesses : public Ark::Client::api::IBusinesses {  // NOLINT
-public:
-  MockBusinesses(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBusinesses(host, http) {}
-
-  MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD1(all, std::string(const char* const));
-  MOCK_METHOD2(bridgechains, std::string(const char* const, const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
-};
-
-/**/
-
-class MockBridgechains : public Ark::Client::api::IBridgechains {  // NOLINT
-public:
-  MockBridgechains(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IBridgechains(host, http) {}
-
-  MOCK_METHOD1(get, std::string(const char* const));
-  MOCK_METHOD1(all, std::string(const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/
@@ -75,13 +51,22 @@ public:
 
 /**/
 
+class MockEntities : public Ark::Client::api::IEntities {  // NOLINT
+public:
+  MockEntities(Ark::Client::Host& host, Ark::Client::IHTTP& http) : IEntities(host, http) {}
+
+  MOCK_METHOD1(get, std::string(const char* const));
+  MOCK_METHOD1(all, std::string(const char* const));
+};
+
+/**/
+
 class MockLocks : public Ark::Client::api::ILocks {  // NOLINT
 public:
   MockLocks(Ark::Client::Host& host, Ark::Client::IHTTP& http) : ILocks(host, http) {}
 
   MOCK_METHOD1(get, std::string(const char* const));
   MOCK_METHOD1(all, std::string(const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD2(unlocked, std::string(std::string&, const char* const));
 };
 
@@ -129,7 +114,6 @@ public:
   MOCK_METHOD1(allUnconfirmed, std::string(const char* const));
   MOCK_METHOD0(types, std::string());
   MOCK_METHOD0(fees, std::string());
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
   MOCK_METHOD1(send, std::string(std::string&));
 };
 
@@ -157,7 +141,6 @@ public:
   MOCK_METHOD2(transactionsReceived, std::string(const char* const, const char* const));
   MOCK_METHOD2(transactionsSent, std::string(const char* const, const char* const));
   MOCK_METHOD2(votes, std::string(const char* const, const char* const));
-  MOCK_METHOD2(search, std::string(const std::map<std::string, std::string>&, const char* const));
 };
 
 /**/
@@ -166,9 +149,8 @@ class MockApi : public Ark::Client::api::Abstract {
 public:
   MockBlockchain blockchain;
   MockBlocks blocks;
-  MockBusinesses businesses;
-  MockBridgechains bridgechains;
   MockDelegates delegates;
+  MockEntities entities;
   MockLocks locks;
   MockNode node;
   MockPeers peers;
@@ -180,9 +162,8 @@ public:
   MockApi() : Abstract(new MockHTTP()),
               blockchain(host_, *http_),
               blocks(host_, *http_),
-              businesses(host_, *http_),
-              bridgechains(host_, *http_),
               delegates(host_, *http_),
+              entities(host_, *http_),
               locks(host_, *http_),
               node(host_, *http_),
               peers(host_, *http_),

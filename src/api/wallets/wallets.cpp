@@ -74,18 +74,6 @@ std::string Wallets::votes(const char *const identifier,
                                           query).c_str());
 }
 
-/**/
-
-std::string Wallets::search(
-    const std::map<std::string, std::string> &bodyParameters,
-    const char* const query) {
-  const auto searchPathPair = paths::Wallets::search(this->host_,
-                                                     bodyParameters,
-                                                     query);
-  return http_->post(searchPathPair.first.c_str(),
-                     searchPathPair.second.c_str());
-}
-
 }  // namespace api
 }  // namespace Client
 }  // namespace Ark

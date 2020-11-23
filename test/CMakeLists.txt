@@ -54,9 +54,8 @@ set(PATH_TEST_SOURCE ${PROJECT_SOURCE_DIR}/api/paths.cpp)
 set(API_TEST_SOURCE
     ${PROJECT_SOURCE_DIR}/api/blockchain.cpp
     ${PROJECT_SOURCE_DIR}/api/blocks.cpp
-    ${PROJECT_SOURCE_DIR}/api/businesses.cpp
-    ${PROJECT_SOURCE_DIR}/api/bridgechains.cpp
     ${PROJECT_SOURCE_DIR}/api/delegates.cpp
+    ${PROJECT_SOURCE_DIR}/api/entities.cpp
     ${PROJECT_SOURCE_DIR}/api/locks.cpp
     ${PROJECT_SOURCE_DIR}/api/node.cpp
     ${PROJECT_SOURCE_DIR}/api/peers.cpp
