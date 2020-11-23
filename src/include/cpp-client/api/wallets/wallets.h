@@ -13,7 +13,6 @@
 #include "api/base.h"
 #include "api/paths.h"
 
-#include <map>
 #include <string>
 
 namespace Ark {
@@ -32,7 +31,6 @@ class IWallets : public Base {
   virtual std::string transactionsReceived(const char *const identifier, const char* const query) = 0;
   virtual std::string transactionsSent(const char *const identifier, const char* const query) = 0;
   virtual std::string votes(const char *const identifier, const char* const query) = 0;
-  virtual std::string search(const std::map<std::string, std::string> &bodyParameters, const char* const query) = 0;
 
  protected:
   IWallets(Host &host, IHTTP &http) : Base(host, http) {}
@@ -52,7 +50,6 @@ class Wallets : public IWallets {
   std::string transactionsReceived(const char *const identifier, const char* const query) override;
   std::string transactionsSent(const char *const identifier, const char* const query) override;
   std::string votes(const char *const identifier, const char* const query) override;
-  std::string search(const std::map<std::string, std::string> &bodyParameters, const char* const query) override;
 };
 
 }  // namespace api

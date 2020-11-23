@@ -14,9 +14,8 @@
 #include "api/api.h"
 #include "api/blockchain/blockchain.hpp"
 #include "api/blocks/blocks.h"
-#include "api/businesses/businesses.h"
-#include "api/bridgechains/bridgechains.h"
 #include "api/delegates/delegates.h"
+#include "api/entities/entities.h"
 #include "api/locks/locks.h"
 #include "api/node/node.h"
 #include "api/peers/peers.h"
@@ -32,9 +31,8 @@ class Api : public api::Abstract {
  public:
   api::Blockchain blockchain;
   api::Blocks blocks;
-  api::Businesses businesses;
-  api::Bridgechains bridgechains;
   api::Delegates delegates;
+  api::Entities entities;
   api::Locks locks;
   api::Node node;
   api::Peers peers;
@@ -46,9 +44,8 @@ class Api : public api::Abstract {
   Api() : Abstract(),
           blockchain(host_, *http_),
           blocks(host_, *http_),
-          businesses(host_, *http_),
-          bridgechains(host_, *http_),
           delegates(host_, *http_),
+          entities(host_, *http_),
           locks(host_, *http_),
           node(host_, *http_),
           peers(host_, *http_),

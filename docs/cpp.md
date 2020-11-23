@@ -54,7 +54,7 @@ const auto transaction = connection.api.transactions.get("ed46b70a5fad2957c09aa0
 
 const auto vote = connection.api.votes.get("a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
 
-const auto walletsSearch = connection.api.wallets.search({"username", "genesis_1"});
+const auto wallets = connection.api.wallets.get("genesis_1");
 ```
 
 > \*note: All API response are of the type `std::string`
@@ -79,6 +79,9 @@ std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?pa
 std::string delegatesGetPath = Ark::Client::api::paths::Delegates::get(dummyHost, "genesis_1");
 // delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
 
+std::string entitiesGetPath = Ark::Client::api::paths::Entities::get(dummyHost, "89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2");
+// entitiesGetPath will be the string "0.0.0.0:4003/api/entities/89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2"
+
 std::string nodeConfigurationPath = Ark::Client::api::paths::Node::configuration(dummyHost);
 // nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
 
@@ -91,14 +94,8 @@ std::string transactionsTypesPath = Ark::Client::api::paths::Transactions::types
 std::string votesGetPath = Ark::Client::api::paths::Votes::get(dummyHost, "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
 // votesGetPath will be the string "0.0.0.0:4003/api/votes/a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67"
 
-// the following is an example of formatting a path and body parameters for an http post
-const std::map<std::string, std::string> searchBody = {
-    {"username", "genesis_1"}
-};
-
-std::pair<std::string, std::string> walletsSearchPath = Ark::Client::API::Paths::Wallets::search(testHost, searchBody, "?page=1&limit=5");
-// walletsSearchPath.first will be the string "0.0.0.0:4003/api/wallets/search?page=1&limit=5"
-// walletsSearchPath.second will be the string "username=genesis_1"
+std::string walletsAllPath = Ark::Client::API::Paths::Wallets::all(testHost, "?page=1&limit=5");
+// walletsAllPath will be the string "0.0.0.0:4003/api/wallets?page=1&limit=5
 ```
 
 # Arduino

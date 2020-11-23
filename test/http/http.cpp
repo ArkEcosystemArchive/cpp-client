@@ -83,7 +83,7 @@ TEST(api, test_http_invalid_post_body) {  // NOLINT
   const auto http = makeHTTP();
 
   // Create a malformed Request URL and 'Post' body.
-  const auto request = "/167.114.29.55:4003/api/wallets/search";
+  const auto request = "/167.114.29.55:4003/api/wallets";
   const auto body = R"({"username":"baldninja"})";
 
   // Post the 'request' and 'body' for a response using HTTP
