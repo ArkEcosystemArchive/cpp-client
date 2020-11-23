@@ -28,7 +28,7 @@ TEST(api, test_node_configuration) {  // NOLINT
       "wif": 170,
       "token": "DARK",
       "symbol": "DѦ",
-      "explorer": "https://dexplorer.ark.io",
+      "explorer": "https://dwallets.ark.io",
       "version": 30,
       "ports": {
         "@arkecosystem/core-p2p": null,
@@ -185,7 +185,7 @@ TEST(api, test_node_crypto) {  // NOLINT
         "client": {
           "token": "DARK",
           "symbol": "DѦ",
-          "explorer": "https://dexplorer.ark.io"
+          "explorer": "https://dwallets.ark.io"
         }
       }
     }

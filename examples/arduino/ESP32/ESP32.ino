@@ -46,11 +46,11 @@ const char* password = "yourWiFiPassword";
 
 /****************************************/
 
-/** 
+/**
  *  This is the IP address of an ARK Node
  *  Specifically, this is a Devnet Node IP
  *  You can find more peers here: https://github.com/ArkEcosystem/peers
- *  
+ *
  *  The Public API port for the ARK network is '4003'
  */
 const char* peer = "167.114.29.55";
@@ -70,7 +70,7 @@ Ark::Client::Connection<Ark::Client::Api> connection(peer, port);
 
 void checkAPI() {
   // With this API endpoint, you can find ARK Blockchain info.
-  // This is equivalent to calling 'https://dexplorer.ark.io/api//blockchain'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/blockchain'
   //
   // {
   //     "data": {
@@ -83,14 +83,14 @@ void checkAPI() {
   // }
   const auto blockchainResponse = connection.api.blockchain.get();
   Serial.print("\nBlockchain Response: ");
-  Serial.println(blockchainResponse.c_str()); 
+  Serial.println(blockchainResponse.c_str());
 
   /********************/
 
   // Here you can call a list of 'All' 'Blocks' on the network.
   // The '1' and '1' refer to the pagination (e.g. response limit and what page)
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/blocks?limit=1&page=1'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/blocks?limit=1&page=1'
   //
   // The response should be a json-formatted object
   // The "pretty print" version would look something like this:
@@ -148,7 +148,7 @@ void checkAPI() {
 
   // The following method can be used to search for a speficit Delegate.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/delegates/boldninja'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/delegates/boldninja'
   //
   // {
   //     "data": {
@@ -187,7 +187,7 @@ void checkAPI() {
 
   // The following method can be used to get the Status of a Node.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/node/status'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/node/status'
   //
   // The response should be a json-formatted object
   // The "pretty print" version would look something like this:
@@ -202,14 +202,14 @@ void checkAPI() {
   // }
   const auto nodeStatus = connection.api.node.status();
   Serial.print("\nNode Status: ");
-  Serial.println(nodeStatus.c_str()); 
+  Serial.println(nodeStatus.c_str());
   /**/
 
   /********************/
 
   // The following method can be used to get a list of 'All' 'Peers' on the network.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/peers?limit=1&page=1'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/peers?limit=1&page=1'
   //
   // {
   //     "meta": {
@@ -241,7 +241,7 @@ void checkAPI() {
 
   // The following method can be used to get a list of 'Transaction' 'Types'.
   //
-  // This is equivalent to calling https://dexplorer.ark.io/api/transactions/types'
+  // This is equivalent to calling https://dwallets.ark.io/api/transactions/types'
   //
   // {
   //     "data": {
@@ -264,7 +264,7 @@ void checkAPI() {
 
   // This method can be used to get a list of 'Vote' Transactions.
   //
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/votes?limit=1&page=1'
+  // This is equivalent to calling 'https://dwallets.ark.io/api/votes?limit=1&page=1'
   //
   // {
   //     "meta": {
@@ -311,8 +311,8 @@ void checkAPI() {
   /********************/
 
   // This method can be used to get a list of 'Top' 'Wallets' (Wallets with the most ARK).
-  // 
-  // This is equivalent to calling 'https://dexplorer.ark.io/api/wallets/top?limit=1&page=1'
+  //
+  // This is equivalent to calling 'https://dwallets.ark.io/api/wallets/top?limit=1&page=1'
   //
   // The response should be a json-formatted object
   // The "pretty print" version would look something like this:
@@ -362,7 +362,7 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   // Begin API Demo
-  checkAPI(); 
+  checkAPI();
 };
 
 /****************************************/
