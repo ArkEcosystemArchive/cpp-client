@@ -91,3 +91,20 @@ jobs:
           cmake --build .
       - name: Run Tests
         run: ./build/test/ark_cpp_client_tests
+
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: CMake
+        run: cmake -D UNIT_TEST=ON -DCURL_STATICLIB=ON -G "Visual Studio 16 2019" .
+      - name: Build and Run Tests
+        run: |
+          msbuild '${{ github.workspace }}\ark_cpp_client.sln'
+          '${{ github.workspace }}\test\Debug\ark_cpp_client_tests.exe'
