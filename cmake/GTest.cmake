@@ -28,6 +28,4 @@ add_subdirectory("${EXTERNAL_LIBRARY_DIR}/googletest/src"
                  "${EXTERNAL_LIBRARY_DIR}/googletest/build"
                  EXCLUDE_FROM_ALL)
 
-include_directories(${EXTERNAL_LIBRARY_DIR}/googletest/src/googlemock/include)
-
 # ------------------------------------------------------------------------------

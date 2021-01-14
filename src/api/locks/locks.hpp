@@ -7,25 +7,31 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/blockchain/blockchain.hpp"
+#ifndef API_LOCKS_HPP
+#define API_LOCKS_HPP
 
 #include <string>
 
+#include "api/api_base.hpp"
 #include "api/api_handler.hpp"
-
-#include "api/blockchain/blockchain_paths.hpp"
+#include "api/paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Blockchain::get() {
-  const auto response =
-      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKCHAIN);
-  return response;
-}
+class Locks : public ApiBase {
+ public:
+  Locks(ApiHandler &apiHandler) : ApiBase(apiHandler) {}
+
+  std::string all(const std::string &query = DEFAULT_QUERY);
+  std::string get(const std::string &lockId);
+  std::string unlocked(const std::string &identifier);
+};
 
 }  // namespace api
 }  // namespace Client
 }  // namespace Ark
+
+#endif  // API_LOCKS_HPP

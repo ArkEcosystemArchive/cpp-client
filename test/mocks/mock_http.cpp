@@ -7,25 +7,21 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/blockchain/blockchain.hpp"
+#include "mocks/mock_http.hpp"
 
+#include <memory>
 #include <string>
 
-#include "api/api_handler.hpp"
-
-#include "api/blockchain/blockchain_paths.hpp"
+#include "http/http_support.hpp"
 
 namespace Ark {
 namespace Client {
-namespace api {
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Blockchain::get() {
-  const auto response =
-      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKCHAIN);
-  return response;
+// Mock Http Factory
+std::unique_ptr<IHttp> getNewMockHttp() {
+  return std::unique_ptr<IHttp>(new MockHttp());
 }
 
-}  // namespace api
 }  // namespace Client
 }  // namespace Ark

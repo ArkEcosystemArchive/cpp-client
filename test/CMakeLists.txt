@@ -34,21 +34,6 @@ include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 set(CONNECTION_TEST_SOURCE ${PROJECT_SOURCE_DIR}/connection/connection.cpp)
 
 # ------------------------------------------------------------------------------
-# Host
-
-set(HOST_TEST_SOURCE ${PROJECT_SOURCE_DIR}/host/host.cpp)
-
-# ------------------------------------------------------------------------------
-# HTTP
-
-set(HTTP_TEST_SOURCE ${PROJECT_SOURCE_DIR}/http/http.cpp)
-
-# ------------------------------------------------------------------------------
-# Paths
-
-set(PATH_TEST_SOURCE ${PROJECT_SOURCE_DIR}/api/paths.cpp)
-
-# ------------------------------------------------------------------------------
 # API
 
 set(API_TEST_SOURCE
@@ -65,14 +50,23 @@ set(API_TEST_SOURCE
     ${PROJECT_SOURCE_DIR}/api/wallets.cpp)
 
 # ------------------------------------------------------------------------------
+# Live Http
+
+set(LIVE_HTTP_SRC ${PROJECT_SOURCE_DIR}/http/http.cpp)
+
+# ------------------------------------------------------------------------------
+# Mock Http
+
+set(MOCK_HTTP_SRC ${PROJECT_SOURCE_DIR}/mocks/mock_http.cpp)
+
+# ------------------------------------------------------------------------------
 # ARK C++ Client Library Source
 
 set(ARK_TEST_SOURCE
     ${CONNECTION_TEST_SOURCE}
-    ${HOST_TEST_SOURCE}
-    ${HTTP_TEST_SOURCE}
-    ${PATH_TEST_SOURCE}
-    ${API_TEST_SOURCE})
+    ${API_TEST_SOURCE}
+    ${LIVE_HTTP_SRC}
+    ${MOCK_HTTP_SRC})
 
 # ------------------------------------------------------------------------------
 
@@ -84,7 +78,7 @@ find_library(${PROJECT_NAME} PUBLIC)
 
 add_executable(${PROJECT_NAME} ${ARK_TEST_SOURCE})
 
-target_link_libraries(${PROJECT_NAME} ark_cpp_client gtest gmock gmock_main)
+target_link_libraries(${PROJECT_NAME} ark_cpp_client gtest gtest_main)
 
 add_test(NAME test COMMAND ${PROJECT_NAME})
 
@@ -101,6 +95,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
 
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
-endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
+endif()  #CMAKE_BUILD_TYPE STREQUAL "Coverage"
 
 # ------------------------------------------------------------------------------

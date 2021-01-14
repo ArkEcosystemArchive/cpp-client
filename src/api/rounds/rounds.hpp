@@ -7,25 +7,28 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/blockchain/blockchain.hpp"
+#ifndef API_ROUNDS_HPP
+#define API_ROUNDS_HPP
 
 #include <string>
 
+#include "api/api_base.hpp"
 #include "api/api_handler.hpp"
-
-#include "api/blockchain/blockchain_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Blockchain::get() {
-  const auto response =
-      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKCHAIN);
-  return response;
-}
+class Rounds : public ApiBase {
+ public:
+  Rounds(ApiHandler &apiHandler) : ApiBase(apiHandler) {}
+
+  std::string delegates(const std::string &roundId);
+};
 
 }  // namespace api
 }  // namespace Client
 }  // namespace Ark
+
+#endif  // API_ROUNDS_HPP

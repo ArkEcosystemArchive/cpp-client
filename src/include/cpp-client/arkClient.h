@@ -11,7 +11,7 @@
 #define ARKCLIENT_H
 
 #include "helpers/client_helpers.h"
-#include "connection/connection.h"
+#include "connection/connection.hpp"
 
 using namespace Ark::Client;
 

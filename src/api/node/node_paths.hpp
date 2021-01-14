@@ -7,25 +7,23 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/blockchain/blockchain.hpp"
-
-#include <string>
-
-#include "api/api_handler.hpp"
-
-#include "api/blockchain/blockchain_paths.hpp"
+#ifndef API_NODE_PATHS_HPP
+#define API_NODE_PATHS_HPP
 
 namespace Ark {
 namespace Client {
 namespace api {
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Blockchain::get() {
-  const auto response =
-      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKCHAIN);
-  return response;
-}
+#define PATHS_NODE "/api/node"
+#define PATHS_NODE_CONFIGURATION PATHS_NODE "/configuration"
+#define PATHS_NODE_CRYPTO PATHS_NODE_CONFIGURATION "/crypto"
+#define PATHS_NODE_FEES PATHS_NODE "/fees"
+#define PATHS_NODE_STATUS PATHS_NODE "/status"
+#define PATHS_NODE_SYNCING PATHS_NODE "/syncing"
 
 }  // namespace api
 }  // namespace Client
 }  // namespace Ark
+
+#endif  // API_NODE_PATHS_HPP

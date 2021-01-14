@@ -7,28 +7,20 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef BASE_H
-#define BASE_H
-
-#include "host/host.h"
-#include "http/http.h"
+#ifndef API_DELEGATES_PATHS_HPP
+#define API_DELEGATES_PATHS_HPP
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-class Base {
- protected:
-  Host& host_;
-  IHTTP* http_;
-
-  template <typename HTTPType>
-  explicit Base(Host& host, HTTPType& http)
-      : host_(host), http_(static_cast<IHTTP*>(&http)) {}
-};
+////////////////////////////////////////////////////////////////////////////////
+#define PATHS_DELEGATES "/api/delegates"
+#define PATHS_DELEGATES_BLOCKS_ENDPOINT "/blocks"
+#define PATHS_DELEGATES_VOTERS_ENDPOINT "/voters"
 
 }  // namespace api
 }  // namespace Client
 }  // namespace Ark
 
-#endif
+#endif  // API_DELEGATES_PATHS_HPP

@@ -7,38 +7,56 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/blocks/blocks.h"
+#include "api/blocks/blocks.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/blocks/blocks_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Blocks::get(const char* identifier) {
-  return http_->get(paths::Blocks::get(this->host_, identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Blocks::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_BLOCKS).append(query));
+  return response;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+std::string Blocks::get(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_BLOCKS).append("/").append(identifier));
+  return response;
+}
 
+////////////////////////////////////////////////////////////////////////////////
 std::string Blocks::first() {
-  return http_->get(paths::Blocks::first(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKS_FIRST);
+  return response;
 }
 
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 std::string Blocks::last() {
-  return http_->get(paths::Blocks::last(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_BLOCKS_LAST);
+  return response;
 }
 
-/**/
-
-std::string Blocks::all(const char* const query) {
-  return http_->get(paths::Blocks::all(this->host_, query).c_str());
-}
-
-/**/
-
-std::string Blocks::transactions(const char* identifier) {
-  return http_->get(paths::Blocks::transactions(this->host_, identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Blocks::transactions(const std::string &identifier,
+                                 const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_BLOCKS)
+                      .append("/")
+                      .append(identifier)
+                      .append(PATHS_BLOCKS_TRANSACTIONS_ENDPOINT)
+                      .append(query));
+  return response;
 }
 
 }  // namespace api

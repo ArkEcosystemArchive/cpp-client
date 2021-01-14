@@ -7,20 +7,30 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/peers/peers.h"
+#include "api/peers/peers.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/peers/peers_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Peers::get(const char* ip) {
-  return http_->get(paths::Peers::get(this->host_, ip).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Peers::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_PEERS).append(query));
+  return response;
 }
 
-/**/
-
-std::string Peers::all(const char* const query) {
-  return http_->get(paths::Peers::all(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Peers::get(const std::string &ip) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_PEERS).append("/").append(ip));
+  return response;
 }
 
 }  // namespace api

@@ -7,20 +7,30 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/votes/votes.h"
+#include "api/votes/votes.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/votes/votes_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Votes::get(const char* identifier) {
-  return http_->get(paths::Votes::get(this->host_, identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Votes::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_VOTES).append(query));
+  return response;
 }
 
-/**/
-
-std::string Votes::all(const char* const query) {
-  return http_->get(paths::Votes::all(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Votes::get(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_VOTES).append("/").append(identifier));
+  return response;
 }
 
 }  // namespace api
