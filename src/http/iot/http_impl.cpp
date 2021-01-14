@@ -66,7 +66,7 @@ class HttpImpl : public AbstractHttp {
  private:
   //////////////////////////////////////////////////////////////////////////////
   inline std::string send(const std::string &request,
-                          const std::string &body = nullptr) {
+                          const std::string &body = "") {
     std::unique_ptr<WiFiClientSecure> client(new WiFiClientSecure);
 #if defined(ESP8266)
     // skip fingerprint verification on the ESP8266
@@ -79,7 +79,7 @@ class HttpImpl : public AbstractHttp {
 
     https.addHeader("Content-Type", "application/json");
     https.begin(*client, request.c_str());
-    body ? https.POST(body) : https.GET();
+    body.length() > 0 ? https.POST(body.c_str()) : https.GET();
 
     const std::string ret = https.getString().c_str();
     https.end();
