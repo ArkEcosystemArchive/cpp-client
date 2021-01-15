@@ -43,11 +43,15 @@ class AbstractConnection : public api::ApiHandler {
   AbstractConnection(const char *domain, int port) : api(*this) {
     constexpr const size_t IP_MAX_STRING_LEN = 17U;
     constexpr const size_t PORT_MAX_STRING_LEN = 5U;
-    std::string peer;
-    peer.reserve(IP_MAX_STRING_LEN + PORT_MAX_STRING_LEN);
-    sprintf(&peer[0], "%s:%d", domain, port);
 
-    this->peer_ = std::move(peer);
+    this->peer_.reserve(IP_MAX_STRING_LEN + PORT_MAX_STRING_LEN);
+    this->peer_ += std::string(domain);
+    this->peer_ += ":";
+
+    char temp[PORT_MAX_STRING_LEN];
+    snprintf(temp, PORT_MAX_STRING_LEN, "%d", port);
+
+    this->peer_ += std::string(temp);
   }
 
   //////////////////////////////////////////////////////////////////////////////
