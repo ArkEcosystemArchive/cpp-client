@@ -50,20 +50,16 @@ const char* password = "yourWiFiPassword";
  *  This is the IP address of an ARK Node
  *  Specifically, this is a Devnet Node IP
  *  You can find more peers here: https://github.com/ArkEcosystem/peers
- *
- *  The Public API port for the ARK network is '4003'
  */
-const char* peer = "167.114.29.55";
-int port = 4003;
-/**/
 
 /****************************************/
 
 /**
- * This is how you define a connection while speficying the API class as a 'template argument'
- * You instantiate a connection by passing a IP address as a 'c_string', and the port as an 'int'.
+ * This is how you define a connection while specifying the API class as a 'template argument'.
+ * 
+ * The Default peer connection is "https://dwallets.ark.io"
  */
-Ark::Client::Connection<Ark::Client::Api> connection(peer, port);
+Ark::Client::Connection<Ark::Client::Api> connection;
 /**/
 
 /****************************************/
