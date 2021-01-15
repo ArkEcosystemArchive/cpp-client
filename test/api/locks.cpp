@@ -1,8 +1,6 @@
 
 #include "gtest/gtest.h"
 
-#include <memory>
-
 #include <arkClient.h>
 
 #include "mocks/mock_http.hpp"

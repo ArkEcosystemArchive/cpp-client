@@ -3,10 +3,12 @@
 
 #include <arkClient.h>
 
+#include "mocks/mock_http.hpp"
+
 ////////////////////////////////////////////////////////////////////////////////
 constexpr auto DEFAULT_PEER_APN = "https://wallets.ark.io";
 constexpr auto ADN_PEER = "167.114.29.55";
-constexpr auto ADN_API_PORT = 4003;
+constexpr int ADN_API_PORT = 4003;
 
 ////////////////////////////////////////////////////////////////////////////////
 TEST(api_connection, constructor_default) {
