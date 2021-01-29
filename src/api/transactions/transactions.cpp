@@ -7,54 +7,68 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/transactions/transactions.h"
+#include "api/transactions/transactions.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/transactions/transactions_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Transactions::getUnconfirmed(const char* identifier) {
-  return http_->get(paths::Transactions::getUnconfirmed(this->host_,
-                                                        identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_TRANSACTIONS).append(query));
+  return response;
 }
 
-/**/
-
-std::string Transactions::all(const char* const query) {
-  return http_->get(paths::Transactions::all(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::allUnconfirmed(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_TRANSACTIONS_UNCONFIRMED).append(query));
+  return response;
 }
 
-/**/
-
-std::string Transactions::get(const char* identifier) {
-  return http_->get(paths::Transactions::get(this->host_, identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::get(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET,
+      std::string(PATHS_TRANSACTIONS).append("/").append(identifier));
+  return response;
 }
 
-/**/
-
-std::string Transactions::allUnconfirmed(const char* const query) {
-  return http_->get(paths::Transactions::allUnconfirmed(this->host_,
-                                                        query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::getUnconfirmed(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_TRANSACTIONS_UNCONFIRMED)
+                      .append("/")
+                      .append(identifier));
+  return response;
 }
 
-/**/
-
-std::string Transactions::types() {
-  return http_->get(paths::Transactions::types(this->host_).c_str());
-}
-
-
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 std::string Transactions::fees() {
-  return http_->get(paths::Transactions::fees(this->host_).c_str());
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_TRANSACTIONS_FEES));
+  return response;
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::types() {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_TRANSACTIONS_TYPES));
+  return response;
+}
 
-std::string Transactions::send(std::string& jsonTransaction) {
-  const auto pathPair = paths::Transactions::send(this->host_, jsonTransaction);
-  return http_->post(pathPair.first.c_str(), pathPair.second.c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Transactions::send(const std::string &jsonTransaction) {
+  const auto response = this->apiHandler_->process(
+      ACTION_POST, PATHS_TRANSACTIONS, jsonTransaction);
+  return response;
 }
 
 }  // namespace api

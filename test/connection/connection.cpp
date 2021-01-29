@@ -1,76 +1,33 @@
 
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 
 #include <arkClient.h>
 
-#include "mocks/mock_api.h"
-#include "host/host.h"
-#include "http/http.h"
-#include "api/base.h"
+#include "mocks/mock_http.hpp"
 
-namespace {
-using namespace Ark::Client;
-constexpr const char* tIp = "167.114.29.55";
-constexpr const int tPort = 4003;
-constexpr const char* tHost = "167.114.29.55:4003";
-constexpr const int tUPort = -1;
-}  // namespace
+////////////////////////////////////////////////////////////////////////////////
+constexpr auto DEFAULT_PEER_APN = "https://wallets.ark.io";
+constexpr auto ADN_PEER = "167.114.29.55";
+constexpr int ADN_API_PORT = 4003;
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_connection, constructor_default) {
+  Connection<Api> connection;
 
-namespace {
-class IMockTestApi : public Ark::Client::api::Base {
- public:
-  virtual ~IMockTestApi() = default;
-  virtual std::string get() = 0;
- protected:
-  IMockTestApi(Ark::Client::Host& host, Ark::Client::IHTTP& http)
-      : Ark::Client::api::Base(host, http) {}
-};
-/**/
-class MockTestApi : public IMockTestApi {
- public:
-  MockTestApi(Ark::Client::Host& host, Ark::Client::IHTTP& http)
-      : IMockTestApi(host, http) {}
-  std::string get() override { return "test"; };
-};
-/**/
-class tApi : public Ark::Client::api::Abstract {
- public:
-  tApi(): Abstract(new MockHTTP()), test_(host_, *http_) {}
-
-  MockTestApi test() { return this->test_; };
- private:
-  MockTestApi test_;
-};
-/**/
-constexpr const char* tMockApi2Response = "test";
-}  // namespace
-
-/**/
-
-TEST(connection, constructor_default) {
-  Connection<MockApi> connection;
-  ASSERT_TRUE(connection.host.ip().empty());
-  ASSERT_EQ(connection.host.port(), tUPort);
+  ASSERT_TRUE(strcmp(connection.getPeer().c_str(), DEFAULT_PEER_ADN) == 0);
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_connection, constructor_custom_peer) {
+  Connection<Api> connection(DEFAULT_PEER_APN);
 
-TEST(connection, constructor_api) {
-  Connection<MockApi> connection1;
-  auto connection2 = (Connection<tApi>());
-
-  ASSERT_STREQ(connection2.api.test().get().c_str(), tMockApi2Response);
+  ASSERT_TRUE(strcmp(connection.getPeer().c_str(), DEFAULT_PEER_APN) == 0);
 }
 
-/**/
+TEST(api_connection, constructor_ip_port) {
+  Connection<Api> connection(ADN_PEER, ADN_API_PORT);
 
-TEST(connection, constructor_ip_port) {
-  Connection<MockApi> connection(tIp, tPort);
-  const auto hostIp = connection.host.ip();
-  ASSERT_STREQ(hostIp.c_str(), tIp);
-  ASSERT_EQ(connection.host.port(), tPort);
-  ASSERT_STREQ(connection.host.toString().c_str(), tHost);
+  constexpr auto expected = "167.114.29.55:4003";
+
+  ASSERT_TRUE(strcmp(connection.getPeer().c_str(), expected) == 0);
 }

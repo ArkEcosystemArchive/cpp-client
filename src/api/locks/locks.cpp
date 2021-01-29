@@ -7,27 +7,38 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/locks/locks.h"
+#include "api/locks/locks.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/locks/locks_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Locks::get(const char* lockId) {
-  return http_->get(paths::Locks::get(this->host_, lockId).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Locks::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_LOCKS).append(query));
+  return response;
 }
 
-/**/
-
-std::string Locks::all(const char* const query) {
-  return http_->get(paths::Locks::all(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Locks::get(const std::string &lockId) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_LOCKS).append("/").append(lockId));
+  return response;
 }
 
-/**/
-
-std::string Locks::unlocked(std::string& jsonIds, const char* const query) {
-  const auto pathPair = paths::Locks::unlocked(this->host_, jsonIds, query);
-  return http_->post(pathPair.first.c_str(), pathPair.second.c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Locks::unlocked(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET,
+      std::string(PATHS_LOCKS_UNLOCKED).append("/").append(identifier));
+  return response;
 }
 
 }  // namespace api

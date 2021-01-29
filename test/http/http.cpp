@@ -4,130 +4,98 @@
 #include <array>
 #include <string>
 
-#include "http/http.h"
+#include "http/http_support.hpp"
 
-// Note: These test HTTP against a live server
+// Note: These test Http against a live server
 
 namespace {
 using namespace Ark::Client;
-constexpr const size_t HTTPS_MAX_ELEMENTS = 3U;
 }  // namespace
 
-TEST(api, test_http_get) {  // NOLINT
-  // Create the HTTP object
-  const auto http = makeHTTP();
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, get_string) {
+  const auto http = DefaultHttp();
 
-  // Create a request
-  const auto request = "postman-echo.com/get?foo=bar";
-
-  // Get the response using HTTP
+  const std::string request = "postman-echo.com/get?foo=bar";
   const auto response = http->get(request);
 
   ASSERT_LT(response.find("bar"), response.length());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, https_get) {
+  const auto https = DefaultHttp();
 
-TEST(api, test_https_get) {  // NOLINT
-  // Create the HTTP object
-  const auto https = makeHTTP();
-
-  // Create a request
-  const auto request = "https://postman-echo.com/get?foo=bar";
-
-  // Get the response using HTTP
+  constexpr auto request = "https://postman-echo.com/get?foo=bar";
   const auto response = https->get(request);
 
   ASSERT_LT(response.find("bar"), response.length());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, post_body_strings) {
+  const auto http = DefaultHttp();
 
-// Tests POSTing of HTTP body.
-TEST(api, test_http_post_body) {  // NOLINT
-  // Create the HTTP object
-  const auto http = makeHTTP();
-
-  // Create a Request URL and 'Post' body.
-  const auto request = "postman-echo.com/post";
-  const auto body = "This should be sent back as part of response body.";
-
-  // Post the 'request' and 'body' for a response using HTTP
+  const std::string request = "postman-echo.com/post";
+  const std::string body = "This should be sent back as part of response body.";
   const auto response = http->post(request, body);
 
   ASSERT_LT(response.find(body), response.length());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, https_post_body) {  // NOLINT
+  const auto https = DefaultHttp();
 
-// Tests POSTing of HTTP body.
-TEST(api, test_https_post_body) {  // NOLINT
-  // Create the HTTP object
-  const auto https = makeHTTP();
+  constexpr auto request = "https://postman-echo.com/post";
+  constexpr auto body = "This should be sent back as part of response body.";
 
-  // Create a Request URL and 'Post' body.
-  const auto request = "https://postman-echo.com/post";
-  const auto body = "This should be sent back as part of response body.";
-
-  // Post the 'request' and 'body' for a response using HTTP
   const auto response = https->post(request, body);
 
   ASSERT_LT(response.find(body), response.length());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, invalid_post_body) {
+  const auto http = DefaultHttp();
 
-// Tests invalid POSTing of HTTP body.
-TEST(api, test_http_invalid_post_body) {  // NOLINT
-  // Create the HTTP object
-  const auto http = makeHTTP();
+  constexpr auto request = "/167.114.29.55:4003/api/wallets";
+  constexpr auto body = R"({"username":"baldninja"})";
 
-  // Create a malformed Request URL and 'Post' body.
-  const auto request = "/167.114.29.55:4003/api/wallets";
-  const auto body = R"({"username":"baldninja"})";
-
-  // Post the 'request' and 'body' for a response using HTTP
   const auto response = http->post(request, body);
 
   // The malformed request will result in the following error being logged:
   // 'curl_easy_perform() failed: URL using bad/illegal format or missing URL'
 
-  // the response will be empty
+  // the response itself will be empty.
   ASSERT_TRUE(response.empty());
 }
 
-/**/
+////////////////////////////////////////////////////////////////////////////////
+TEST(api_http, post_json) {
+  const auto http = DefaultHttp();
 
-// Tests POSTing of JSON.
-TEST(api, test_http_post_json) {  // NOLINT
-  // Create the HTTP object
-  const auto http = makeHTTP();
+  constexpr auto request = "167.114.29.55:4003/api/transactions";
+  constexpr auto txJson = R"({"transactions":[]})";
 
-  // Create a Request URL and an empty Transaction JSON.
-  const auto request = "167.114.29.55:4003/api/transactions";
-  const auto txJson = R"({"transactions":[]})";
-
-  // Post the 'request' and 'txJson' for a response using HTTP
   const auto response = http->post(request, txJson);
 
   ASSERT_LT(response.find("422"), response.length());
 }
 
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 // This tests the use of "http://" in single-line HTTP requests.
-TEST(api, test_http_request_strings) {  // NOLINT
+TEST(api_http, request_strings) {
+  constexpr const size_t HTTPS_MAX_ELEMENTS = 3U;
   std::array<std::string, HTTPS_MAX_ELEMENTS> requests = {
       "postman-echo.com/get",         // No HTTP prefix
       "http://postman-echo.com/get",  // HTTP
       "https://postman-echo.com/get"  // HTTPS
   };
 
-  // Create the HTTP object
-  const auto http = makeHTTP();
+  const auto http = DefaultHttp();
 
   for (auto& i : requests) {
-    // Get the response using HTTP
     const auto response = http->get(i.c_str());
     ASSERT_LT(response.find("args"), response.length());
   };

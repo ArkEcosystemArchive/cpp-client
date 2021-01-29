@@ -7,38 +7,51 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/node/node.h"
+#include "api/node/node.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/node/node_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
+////////////////////////////////////////////////////////////////////////////////
 std::string Node::configuration() {
-  return http_->get(paths::Node::configuration(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_NODE_CONFIGURATION);
+  return response;
 }
 
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 std::string Node::crypto() {
-  return http_->get(paths::Node::crypto(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_NODE_CRYPTO);
+  return response;
 }
 
-/**/
-
-std::string Node::fees(const char* const query) {
-  return http_->get(paths::Node::fees(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Node::fees(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_NODE_FEES).append(query));
+  return response;
 }
 
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 std::string Node::status() {
-  return http_->get(paths::Node::status(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_NODE_STATUS);
+  return response;
 }
 
-/**/
-
+////////////////////////////////////////////////////////////////////////////////
 std::string Node::syncing() {
-  return http_->get(paths::Node::syncing(this->host_).c_str());
+  const auto response =
+      this->apiHandler_->process(ACTION_GET, PATHS_NODE_SYNCING);
+  return response;
 }
 
 }  // namespace api

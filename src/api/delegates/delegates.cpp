@@ -7,38 +7,54 @@
  * file that was distributed with this source code.
  **/
 
-#include "api/delegates/delegates.h"
+#include "api/delegates/delegates.hpp"
+
+#include <string>
+
+#include "api/api_handler.hpp"
+
+#include "api/delegates/delegates_paths.hpp"
 
 namespace Ark {
 namespace Client {
 namespace api {
 
-std::string Delegates::get(const char* identifier) {
-  return http_->get(paths::Delegates::get(this->host_, identifier).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Delegates::all(const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_DELEGATES).append(query));
+  return response;
 }
 
-/**/
-
-std::string Delegates::all(const char* const query) {
-  return http_->get(paths::Delegates::all(this->host_, query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Delegates::get(const std::string &identifier) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_DELEGATES).append("/").append(identifier));
+  return response;
 }
 
-/**/
-
-std::string Delegates::blocks(const char *const identifier,
-                              const char* const query) {
-  return http_->get(paths::Delegates::blocks(this->host_,
-                                             identifier,
-                                             query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Delegates::blocks(const std::string &identifier,
+                              const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_DELEGATES)
+                      .append("/")
+                      .append(identifier)
+                      .append(PATHS_DELEGATES_BLOCKS_ENDPOINT)
+                      .append(query));
+  return response;
 }
 
-/**/
-
-std::string Delegates::voters(const char *const identifier,
-                              const char* const query) {
-  return http_->get(paths::Delegates::voters(this->host_,
-                                             identifier,
-                                             query).c_str());
+////////////////////////////////////////////////////////////////////////////////
+std::string Delegates::voters(const std::string &identifier,
+                              const std::string &query) {
+  const auto response = this->apiHandler_->process(
+      ACTION_GET, std::string(PATHS_DELEGATES)
+                      .append("/")
+                      .append(identifier)
+                      .append(PATHS_DELEGATES_VOTERS_ENDPOINT)
+                      .append(query));
+  return response;
 }
 
 }  // namespace api

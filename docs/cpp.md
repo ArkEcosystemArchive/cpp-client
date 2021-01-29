@@ -29,8 +29,50 @@ Before making a request, you should create a `Connection`.
 A `Connection` expects a `host`, which is an url on which the API can be reached.
 An example `Connection`, that interfaces with the API of an Ark Node, would be created as follows:
 
+#### Create a connection using the default peer ("https://dwallets.ark.io") and http implementation.
 ```cpp
-// Create a connection
+Ark::Client::Connection<Ark::Client::Api> connection;
+```
+
+#### Create a connection using a custom peer and the default http implementation.
+```cpp
+Ark::Client::Connection<Ark::Client::Api> connection("https://wallets.ark.io");
+```
+
+#### Create a connection using a custom peer and a custom http implementation.
+```cpp
+#include <memory>
+#include <string>
+
+////////////////////////////////////////////////////////////////////////////////
+class SomeHttp : public AbstractHttp {
+ public:
+  SomeHttp() = default;
+
+  std::string get(const std::string &request) override { ... }
+  std::string post(const std::string &request,
+                   const std::string &body) override { ... }
+
+  std::string get(const char* request) override { ... }
+  std::string post(const char* request, const char* body) override { ... }
+};
+
+// forward declaration
+std::unique_ptr<IHttp> someNewHttp();
+
+////////////////////////////////////////////////////////////////////////////////
+// in the definition file (*.cpp)
+std::unique_ptr<IHttp> someNewHttp() {
+  return std::unique_ptr<IHttp>(new SomeHttp());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+Ark::Client::Connection<Ark::Client::Api> connection("https://wallets.ark.io", someNewHttp());
+```
+
+#### Create a connection using a peer Ip and a port using the systems default http implementation.
+```cpp
+// !DEPRECATED
 Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
 ```
 
@@ -58,45 +100,6 @@ const auto wallets = connection.api.wallets.get("genesis_1");
 ```
 
 > \*note: All API response are of the type `std::string`
-
-#
-
-### Getting an API Path
-
-There are instances when a client may use a gateway or bridge to do http get/post;
-for this we have provided an interface for obtaining a properly formatted API Path for a given API Endpoint.
-Below are examples of how to access the Path interface:
-
-```cpp
-Ark::Client::Host dummyHost("0.0.0.0:4003");
-
-std::string blockchainGetPath = Ark::Client::api::paths::Blockschain::get(dummyHost);
-// blockchainGetPath will be the string "0.0.0.0:4003/api/blockchain"
-
-std::string blocksAllPath = Ark::Client::API::Paths::Blocks::all(dummyHost, "?page=1&limit=5");
-// blocksAllPath will be the string "0.0.0.0:4003/api/blocks?page=1&limit=5"
-
-std::string delegatesGetPath = Ark::Client::api::paths::Delegates::get(dummyHost, "genesis_1");
-// delegatesGetPath will be the string "0.0.0.0:4003/api/delegates/genesis_1"
-
-std::string entitiesGetPath = Ark::Client::api::paths::Entities::get(dummyHost, "89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2");
-// entitiesGetPath will be the string "0.0.0.0:4003/api/entities/89d4afb16f4c30554ef0dfdc500e6e6b2df949f56374e3fdc09c2ebe9504e2a2"
-
-std::string nodeConfigurationPath = Ark::Client::api::paths::Node::configuration(dummyHost);
-// nodeConfigurationPath will be the string "0.0.0.0:4003/api/node/configuration"
-
-std::string peersAllPath = Ark::Client::API::Paths::Peers::all(dummyHost, "?page=1&limit=5");
-// peersAllPath will be the string "0.0.0.0:4003/api/peers?page=1&limit=5"
-
-std::string transactionsTypesPath = Ark::Client::api::paths::Transactions::types(dummyHost);
-// transactionsTypesPath will be the string "0.0.0.0:4003/api/transactions/types"
-
-std::string votesGetPath = Ark::Client::api::paths::Votes::get(dummyHost, "a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67");
-// votesGetPath will be the string "0.0.0.0:4003/api/votes/a3b890d25824eba36dfc2a5956590c68101378211dab216ae92c123ab1ba4b67"
-
-std::string walletsAllPath = Ark::Client::API::Paths::Wallets::all(testHost, "?page=1&limit=5");
-// walletsAllPath will be the string "0.0.0.0:4003/api/wallets?page=1&limit=5
-```
 
 # Arduino
 

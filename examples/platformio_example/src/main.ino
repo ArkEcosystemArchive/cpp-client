@@ -11,8 +11,8 @@ void setup() {
 }
 
 void loop() {
-  // Create a connection
-  Ark::Client::Connection<Ark::Client::Api> connection("167.114.29.54", 4003);
+  // Create a default connection (devnet, system default http)
+  Ark::Client::Connection<Ark::Client::Api> connection;
 
   // Perform an API call using the connection to access endpoint
   const auto blockchainResponse = connection.api.blockchain.get();
